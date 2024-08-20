@@ -1,6 +1,5 @@
 import AuthManger from "../hooks/api/AuthManger";
 import useAxios from "../hooks/api/useAxios";
-import useGet from "../hooks/api/useGet";
 import { useEffect, useState } from 'react';
 
 
