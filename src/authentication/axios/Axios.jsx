@@ -24,7 +24,7 @@ export const Axios = () => {
             if (response.msg !== "OK") return req;
 
         
-            if(response.msg !== "INVALID"){
+            if(response.msg === "INVALID"){
                 try {
                     const response = await axios.get(`${baseURL}/refreshtoken`, {
                         headers: {
@@ -35,8 +35,9 @@ export const Axios = () => {
                     });
 
                     if (response.status === 200){
-                        //accessToken = response.headers['authorization'];
-                        //localStorage.setItem("access", JSON.stringify(accessToken));
+                        const token = response.headers['authorization'].split('_');
+                        accessToken = token[1];
+                        localStorage.setItem("access", JSON.stringify(accessToken));
                         req.headers.Authorization = `Bearer ${accessToken}`;
                     }
                 } catch (error) {
