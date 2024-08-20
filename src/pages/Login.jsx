@@ -8,8 +8,8 @@ function Login(){
 	const registerFetch = async () => {
 		try{
 			if(!localStorage.getItem("access")){
-				console.log("start regiester");
-				await Register();
+				//console.log("start regiester");
+				//await Register();
 				console.log("start login");
 				await LogIn();
 			}
