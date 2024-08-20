@@ -9,10 +9,12 @@ function Auth() {
 
   return authorization ? (
     <>
-      <h1>토큰이 있습니다.</h1>
+      <button>로그아웃</button>
     </>
   ) : (
-    <h1>토큰이 없습니다.</h1>
+    <>
+      <button>로그인</button>
+    </>
   );
 }
 
