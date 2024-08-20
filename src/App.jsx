@@ -1,38 +1,16 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter } from 'react-router-dom';
 import './styles/App.css'
-import Temp from './components/Temp'
-import AuthManger from './hooks/api/AuthManger'
+import Render from './Render';
 
 function App() {
-	const { Register, LogIn }= AuthManger();
-
-	const registerFetch = async () => {
-		try{
-			if(!localStorage.getItem("access")){
-				console.log("start regiester");
-				await Register();
-				console.log("start login");
-				await LogIn();
-			}
-			
-		} catch(error){
-			console.log(error);
-		}
-	}
-
-	useEffect(() =>{
-		registerFetch();
-	},[]);
-
-
+	
 	return (
 		<>
-		<h1>main</h1>
-		<Temp/>
+		<BrowserRouter>
+        	<Render />
+    	</BrowserRouter>
 		</>
 	)
 }
 
-export default App
+export default App;
