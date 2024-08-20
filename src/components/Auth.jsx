@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 function Auth() {
   const [authorization, setAuthorization] = useState(null);
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("access");
@@ -11,12 +11,13 @@ function Auth() {
   }, []);
 
   const handleLogin = () => {
-    naviagte("/login");
+    navigate("/login");
   };
 
   const handleLogout = () => {
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
+    setAuthorization(null);
   };
 
   return authorization ? (
