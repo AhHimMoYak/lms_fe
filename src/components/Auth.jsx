@@ -10,17 +10,22 @@ function Auth() {
     setAuthorization(token);
   }, []);
 
-  const onClickButton = () => {
+  const handleLogin = () => {
     naviagte("/login");
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
   };
 
   return authorization ? (
     <>
-      <button>로그아웃</button>
+      <button onClick={handleLogout}>로그아웃</button>
     </>
   ) : (
     <>
-      <button onClick={onClickButton}>로그인</button>
+      <button onClick={handleLogin}>로그인</button>
     </>
   );
 }
