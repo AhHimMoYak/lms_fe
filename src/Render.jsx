@@ -2,19 +2,21 @@ import { Routes, Route } from "react-router-dom"
 import { AuthChecker } from "./authentication/AuthChecker"
 import Body from "./pages/Body"
 import App from "./App"
+import Main from "./pages/Main"
+import Mypage from "./pages/Mypage"
+import Login from "./pages/Login"
 
 function Render() {
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<App/>}/>
+        <Route path="/" element={<Main/>}/>
+        <Route path="/login" element={<Login/>}/>
           <Route element={<AuthChecker/>}>
-            
+            <Route path="/mypage" element={<Mypage/>}/>
             <Route path="/test" element={<Body/>}/>
           </Route>
-          
-        
       </Routes>
     </>
   )
