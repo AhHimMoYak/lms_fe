@@ -5,11 +5,9 @@ import Render from './Render';
 function App() {
 	
 	return (
-		<>
 		<BrowserRouter>
         	<Render />
     	</BrowserRouter>
-		</>
 	)
 }
 
