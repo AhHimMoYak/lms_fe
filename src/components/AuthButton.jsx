@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 function AuthButton() {
   const [authorization, setAuthorization] = useState(null);
@@ -21,13 +22,13 @@ function AuthButton() {
   };
 
   return authorization ? (
-    <>
-      <button onClick={handleLogout}>로그아웃</button>
-    </>
+    <Button color="inherit" onClick={handleLogout}>
+      Logout
+    </Button>
   ) : (
-    <>
-      <button onClick={handleLogin}>로그인</button>
-    </>
+    <Button color="inherit" onClick={handleLogin}>
+      Login
+    </Button>
   );
 }
 
