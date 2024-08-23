@@ -1,14 +1,16 @@
 .slider-container{
 padding-top: 1.875%;
     height: 100%;
-    width: 100%;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 
 .slick-list, .slick-slider, .slick-track {
     position: relative;
     display: block;
-    height: 300px;
+    height: 320px;
 }
 
 .slick-loading .slick-slide, .slick-loading .slick-track {
@@ -21,6 +23,7 @@ padding-top: 1.875%;
     touch-action: pan-y;
 }
 .slick-list {
+    align-items: center;
     overflow: hidden;
     margin: 0;
     height: 100%;
@@ -101,20 +104,19 @@ padding-top: 1.875%;
     font-size: 1.5em;
     text-align: center;
     line-height: 0;
-    top: 40%;
+    top: 43%;
     width: 3%;
     height: 8%;
     cursor: pointer;
     border: #213547;
-    /*outline: 0;*/
-    background: #213547;
+    background-color: rgba(191,195,193,0.77);
     color: transparent;
 }
 
 .slick-next:focus, .slick-next:hover, .slick-prev:focus, .slick-prev:hover {
     color: transparent;
     outline: 0;
-    background: #213547;
+    background-color: rgba(191,195,193,0.77);
 }
 
 .slick-next:focus:before, .slick-next:hover:before, .slick-prev:focus:before, .slick-prev:hover:before {
@@ -126,7 +128,8 @@ padding-top: 1.875%;
 }
 
 .slick-prev {
-    background-color: #213547;
+    border: 1px solid lightgray;
+    background-color: rgba(191,195,193,0.77);
     left: -1.5%;
 }
 
@@ -136,6 +139,8 @@ padding-top: 1.875%;
 }
 
 .slick-next {
+    border: 1px solid lightgray;
+    background-color: rgba(191,195,193,0.77);
     right: -2%;
 }
 
@@ -169,10 +174,8 @@ padding-top: 1.875%;
 .dashboard {
     width: 100%;
     border: 0.0625em solid lightgray;
-    top: 0;
     font-size: 3.125em;
     background-color: white;
     padding: 1.25em;
-    border-bottom: 0.125em solid #e0e0e0;
     text-align: left;
 }
