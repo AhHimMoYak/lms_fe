@@ -1,0 +1,37 @@
+
+.CourseButton {
+    background-color: #151515;
+    padding: 2em 10%;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+    gap: 10px;
+    justify-content: center;
+}
+.CourseButton > button {
+    padding: 0.5em 1em;
+    margin: 0.5em 0.5em;
+}
+
+.course-button,
+.course-button.selected{
+    border: none;
+    border-radius: 20em;
+    white-space: nowrap;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #E9ECEF;
+    color: gray;
+    cursor: pointer;
+}
+
+.course-button.selected {
+    background-color: #9EA4AA;
+    color: black;
+}
+
+.course-button:hover {
+    background-color: #d6d9de;
+}
