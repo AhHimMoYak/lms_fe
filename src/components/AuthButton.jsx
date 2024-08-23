@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Auth() {
+function AuthButton() {
   const [authorization, setAuthorization] = useState(null);
   const navigate = useNavigate();
 
@@ -31,4 +31,4 @@ function Auth() {
   );
 }
 
-export default Auth;
+export default AuthButton;
