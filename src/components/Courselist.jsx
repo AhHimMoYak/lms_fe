@@ -16,7 +16,7 @@ const testCourses = [
 
 function Courselist() {
     const [courses, setCourses] = useState([]);
-    const showMaxCnt = 4;
+    const showMaxCnt = 5;
 
     useEffect(() => {
         const getCourses = async () => {
@@ -33,11 +33,11 @@ function Courselist() {
     }, []);
 
     const sliderSettings = {
-        className: 'center',
         infinite: false,
         centerPadding: '60px',
-        swipeToSlide: true,
         slidesToShow: showMaxCnt,
+        slidesToScroll: 1,
+        draggable: courses.length>showMaxCnt,
     };
 
     return (
