@@ -149,18 +149,62 @@ padding-top: 1.875%;
     content: '>';
 }
 
+/*.card {*/
+/*    !*background-image: url("/Users/jy/IdeaProjects/AhHimMoYak_LMS_FE/src/assets/java사진.jpg");*!*/
+/*    color: white;*/
+/*    border-radius: 2em;*/
+/*    box-sizing: border-box;*/
+/*    text-align: center;*/
+/*    background-color: lightpink;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: center;*/
+/*    height: 100%;*/
+/*}*/
 .card {
-    background: lightpink;
     color: white;
-    border-radius: 8%;
+    border-radius: 2em;
     box-sizing: border-box;
-    text-align: left;
+    text-align: center;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     height: 100%;
+    background-size: cover;
+    background-position: center;
 }
 
+.card .text-container {
+    position: absolute;
+    top: 10%;
+    text-align: center;
+    padding: 10px;
+    border-radius: 2em;
+}
+.course_image{
+    width: 100%;
+    height: 100%;
+    border-radius: 2em;
+
+}
+.image_title {
+    margin: 0;
+    color: white;
+    font-size: 1.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.image_instructor {
+    margin: 0;
+    color: white;
+    font-size: 1.2em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.no-image {
+    background-color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2em;
+}
 .listBox {
     margin-left: 8%;
     width: 80%;
@@ -173,6 +217,7 @@ padding-top: 1.875%;
 
 .dashboard {
     width: 100%;
+    height: 10vh;
     border: 0.0625em solid lightgray;
     font-size: 3.125em;
     background-color: white;
