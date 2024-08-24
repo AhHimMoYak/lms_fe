@@ -1,5 +1,6 @@
 .sidebar {
   width: 15%;
+  min-width: 150px;
   height: 100vh;
   padding-top: 10%;
   background-color: #ffffff;
@@ -25,8 +26,8 @@
 }
 
 .profile-picture {
-  width: 80px;
-  height: 80px;
+  width: 6vw;
+  height: 6vw;
   border-radius: 50%;
   background-color: #cccccc;
   background-image: url("../assets/userProfile.png");
@@ -46,7 +47,7 @@
 
 .divider {
   border: 0;
-  height: 0.1em;
+  height: 0.2vh;
   background-color: #dddddd;
   width: 100%;
   margin: 5% 0;
