@@ -1,18 +1,19 @@
 
 .CourseButton {
+    position: relative;
     background-color: #151515;
-    padding: 2em 10%;
+    padding: 2vh 10%;
 }
 
 .button-grid {
     display: grid;
     grid-template-columns: repeat(6, auto);
-    gap: 10px;
+    gap: 10%;
     justify-content: center;
 }
 .CourseButton > button {
-    padding: 0.5em 1em;
-    margin: 0.5em 0.5em;
+    padding: 0.8vh 1vh;
+    margin: 0.5vh 0.5vh;
 }
 
 .course-button,
