@@ -8,10 +8,10 @@
     justify-content: center;
     border: 0;
     line-height: 0;
-    top: 50%;
+    top: 50vh;
     width: 6em;
     height: 3.2em;
-    transform: translateY(-50%);
+    transform: translateY(-35vh);
     cursor: pointer;
     color: transparent;
     z-index: 1;
@@ -48,7 +48,7 @@
 }
 
 [dir=rtl] .slick-prev {
-    right: 1em;
+    right: 1%;
     left: auto;
 }
 
