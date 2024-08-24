@@ -8,10 +8,10 @@
     justify-content: center;
     border: 0;
     line-height: 0;
-    top: 50vh;
-    width: 6em;
-    height: 3.2em;
-    transform: translateY(-35vh);
+    top: 50%;
+    width: 6vh;
+    height: 3.8vh;
+    transform: translateY(-35%);
     cursor: pointer;
     color: transparent;
     z-index: 1;
@@ -62,7 +62,7 @@
 
 [dir=rtl] .slick-next {
     right: auto;
-    left: 1em;
+    left: 1%;
 }
 
 .slick-next:before {
