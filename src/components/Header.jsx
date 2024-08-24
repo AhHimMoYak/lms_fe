@@ -3,7 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import AuthButton from "../components/AuthButton";
+import AuthSection from "../components/AuthSection";
 import { useNavigate } from "react-router-dom";
 
 function Header() {
@@ -24,7 +24,7 @@ function Header() {
               component="div"
               sx={{ flexGrow: 1 }}
             ></Typography>
-            <AuthButton />
+            <AuthSection />
           </Toolbar>
         </AppBar>
       </Box>

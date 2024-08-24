@@ -13,7 +13,7 @@ function decodeToken(token) {
   }
 }
 
-function AuthButton() {
+function AuthSection() {
   const [authorization, setAuthorization] = useState(null);
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
@@ -64,4 +64,4 @@ function AuthButton() {
   );
 }
 
-export default AuthButton;
+export default AuthSection;
