@@ -24,7 +24,7 @@ function AuthButton() {
       setAuthorization(token);
       const claims = decodeToken(token);
       if (claims) {
-        const extractedName = claims.name || claims.username || claims.sub || "사용자";
+        const extractedName = claims.sub;
         setUsername(extractedName);
       }
     }
@@ -47,7 +47,7 @@ function AuthButton() {
 
   return authorization ? (
     <>
-      <div>{`${username}님 반갑습니다.`}</div>
+      <div>{`{ ${username} } 님 반갑습니다.`}</div>
       <Button color="inherit" onClick={handleMyPage}>
         마이 페이지
       </Button>
