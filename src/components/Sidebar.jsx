@@ -6,7 +6,6 @@ import "../styles/Sidebar.css";
 function decodeToken(token) {
   try {
     const claims = jose.decodeJwt(token);
-    console.log(claims);
     return claims;
   } catch (err) {
     console.error("토큰 디코딩 실패:", err.message);
