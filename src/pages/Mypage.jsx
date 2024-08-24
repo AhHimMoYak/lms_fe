@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 
 function Mypage() {
-  const token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtaXJ1bWlydSIsImVtYWlsIjoiYWxmbjA1MUBnbWFpbC5jb20iLCJpc3MiOiJBaGltbW95YWsiLCJpYXQiOjE3MjQxNDkxMTUsImV4cCI6MTcyNDE4NTExNX0.lZHq5HETpUZzotHEuHmC8FDj23uPwSqTdgLA0Kyd-q8";
+  const token = localStorage.getItem("access");
 
   const [currentPage, setCurrentPage] = useState("dashboard");
 
