@@ -10,15 +10,14 @@ function Footer() {
                 <div className="footer-color">채용</div>
             </div>
             <div className="footer-line">
-                <div ><b>(주)아힘모약 대표자 : 000</b></div>
-                <div ><b>사업자번호 : 000-00-0000</b></div>
+                <div className="footer-text"><b>(주)아힘모약 대표자 : 000</b></div>
+                <div className="footer-text"><b>사업자번호 : 000-00-0000</b></div>
             </div>
-            <div className="footer-line" >
-                <div ><b>통신판매업 : 2024-부산센텀A-0000</b></div>
-                <div ><b>이메일 : info@megazone.com</b></div>
+            <div className="footer-line">
+                <div className="footer-text"><b>통신판매업 : 2024-부산센텀A-0000</b></div>
+                <div className="footer-text"><b>이메일 : info@megazone.com</b></div>
             </div>
             <div className="footer-line"><b>전화번호 : 010-0000-0000</b></div>
-
         </footer>
     );
 }
