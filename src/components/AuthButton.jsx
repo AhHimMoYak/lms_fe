@@ -21,14 +21,23 @@ function AuthButton() {
     setAuthorization(null);
   };
 
+  const handleMyPage = () => {
+    navigate("/myPage")
+  }
+
   return authorization ? (
+    <>
+    <Button color="inherit" onClick={handleMyPage}>마이 페이지</Button>
     <Button color="inherit" onClick={handleLogout}>
       Logout
     </Button>
+    </>
   ) : (
+    <>
     <Button color="inherit" onClick={handleLogin}>
       Login
     </Button>
+    </>
   );
 }
 
