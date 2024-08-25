@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthManger from "../hooks/api/AuthManger";
-import "../styles/LoginPage.css";
+import "../styles/LoginComponent.css"
 
 function LoginComponent() {
   const [username, setUsername] = useState(""); 
