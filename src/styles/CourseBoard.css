@@ -1,27 +1,38 @@
 .course-table-container {
-    padding: 20px;
+    padding: 2%;
     margin: 0 auto;
     width: 80%;
     background-color: #f9f9f9;
-    border-radius: 8px;
+    border-radius: 2%;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     min-width: 80vh;
     max-width: 80vh;
 
 }
+.list-top{
+    display: table-cell;
+    vertical-align: inherit;
+    unicode-bidi: isolate;
+}
+.list-url{
+    display: table-cell;
+    vertical-align: inherit;
+    unicode-bidi: isolate;
+    color: black;
+    text-decoration: none;
+}
+
 .coureslist-text{
     text-align: left;
 }
 .course-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin-bottom: 2vh;
 }
 
-.course-table th, .course-table td {
-    padding: 10px 15px;
-    /*border-bottom: 1px solid #ddd;*/
-    /*text-align: left;*/
+.course-table th, .course-table td, .course-table a {
+    padding: 1% 1.5%;
 }
 
 .course-table th {
@@ -34,39 +45,14 @@
 }
 
 .status-button {
-    padding: 5px 10px;
+    padding: 3% 5%;
     background-color: #555;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 1em;
     cursor: pointer;
 }
 
 .status-button:hover {
     background-color: #333;
-}
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.page-arrow, .page-number {
-    margin: 0 5px;
-    cursor: pointer;
-}
-
-.page-number {
-    padding: 5px 10px;
-    border-radius: 50%;
-    background-color: #eee;
-}
-
-.page-number:hover, .page-arrow:hover {
-    background-color: #ddd;
-}
-
-.page-arrow {
-    font-size: 18px;
 }
