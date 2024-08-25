@@ -1,11 +1,9 @@
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
 import Temp from '../components/Temp'
 import AuthManger from '../hooks/api/AuthManger'
 
 function Login(){
     const { Register, LogIn }= AuthManger();
-	const navigate = useNavigate();
 
 	const registerFetch = async () => {
 		try{
@@ -20,7 +18,6 @@ function Login(){
 			console.log(error);
 		}
 
-		navigate("/");
 	}
 
 	useEffect(() =>{
