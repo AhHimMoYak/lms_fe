@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import '../styles/Pagination.css';
 
 const Pagination = ({ coursesPerPage, totalCourses, paginate, currentPage }) => {
@@ -45,14 +45,14 @@ const Pagination = ({ coursesPerPage, totalCourses, paginate, currentPage }) => 
                     <span className="page-link">&#8592;</span>
                 </li>
                 {currentPage > 3 && (
-                    <>
+                    <Fragment>
                         <li className="page-item" onClick={() => paginate(1)}>
                             <span className="page-link">1</span>
                         </li>
                         <li className="page-item disabled">
                             <span className="page-link">...</span>
                         </li>
-                    </>
+                    </Fragment>
                 )}
                 {getPageNumbers().map(number => (
                     <li key={number} className={`page-item ${currentPage === number ? 'active' : ''}`} onClick={() => paginate(number)}>
@@ -60,14 +60,14 @@ const Pagination = ({ coursesPerPage, totalCourses, paginate, currentPage }) => 
                     </li>
                 ))}
                 {currentPage < totalPages - 2 && (
-                    <>
+                    <Fragment>
                         <li className="page-item disabled">
                             <span className="page-link">...</span>
                         </li>
                         <li className="page-item" onClick={() => paginate(totalPages)}>
                             <span className="page-link">{totalPages}</span>
                         </li>
-                    </>
+                    </Fragment>
                 )}
                 <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`} onClick={handleNext}>
                     <span className="page-link">&#8594;</span>
