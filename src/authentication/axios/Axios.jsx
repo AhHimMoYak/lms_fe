@@ -8,7 +8,7 @@ export const Axios = () => {
 
     const axiosInstance = axios.create({
         baseURL : API_BASE_URL,
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` }
+        headers: { Authorization: `[Bearer]${accessToken}` }
     });
 
     axiosInstance.interceptors.request.use(async (req) => {
@@ -16,7 +16,7 @@ export const Axios = () => {
             const response = await axios.get(`${API_BASE_URL}/accesstoken`, {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${accessToken}`
+                    Authorization: `[Bearer]${accessToken}`
                 },
                 cancelToken: source.token,
             });
@@ -29,16 +29,16 @@ export const Axios = () => {
                     const response = await axios.get(`${baseURL}/refreshtoken`, {
                         headers: {
                             "Content-Type": "application/json",
-                            Authorization: `Bearer ${refreshToken}`
+                            Authorization: `[Bearer]${refreshToken}`
                         },
                         cancelToken: source.token,
                     });
 
                     if (response.status === 200){
-                        const token = response.headers['authorization'].split('_');
+                        const token = response.headers['authorization'].split(']');
                         accessToken = token[1];
                         localStorage.setItem("access", JSON.stringify(accessToken));
-                        req.headers.Authorization = `Bearer ${accessToken}`;
+                        req.headers.Authorization = `[Bearer]${accessToken}`;
                     }
                 } catch (error) {
                     localStorage.removeItem("access");
