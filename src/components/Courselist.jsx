@@ -13,12 +13,10 @@ function Courselist() {
     }, []);
 
     useEffect(() => {
-        console.log(data);
         if (Array.isArray(data)) {
             setCourses(data);
         }
     }, [data]);
-
 
     const sliderSettings = {
         infinite: false,
@@ -33,7 +31,7 @@ function Courselist() {
                 {courses.map((course, index) => (
                     <div key={index} className="card no-image">
                         {course.image ? (
-                            <>
+                            <div>
                                 <img className="course_image" src={course.image}/>
                                 <div className="text-container">
                                     <h3 className="image_title">{course.title}</h3>
@@ -41,16 +39,16 @@ function Courselist() {
                                 <div className="instructor-container">
                                     <h3 className="image_instructor">{course["instructor"]}</h3>
                                 </div>
-                            </>
+                            </div>
                         ) : (
-                            <>
+                            <div>
                                 <div className="text-container">
                                     <h3 className="image_title">{course.title}</h3>
                                 </div>
                                 <div className="instructor-container">
                                     <h3 className="image_instructor">{course["instructor"]}</h3>
                                 </div>
-                            </>
+                            </div>
                         )}
                     </div>
                 ))}
