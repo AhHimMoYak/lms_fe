@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import Banner from '../components/Banner';
 import CourseButton from '../components/CourseButton';
+import Header from "../components/Header";
 
 function Main() {
   const [selectedCourse, setSelectedCourse] = useState(null);
 
   return (
+    <Header />
     <div className="courselist">
       <Banner />
       <CourseButton onSelectCourse={setSelectedCourse} />
