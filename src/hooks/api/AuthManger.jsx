@@ -34,7 +34,7 @@ export const AuthManager = () => {
     const LogIn = async ({ username, password }) => {
         try {
             const response = await axios.post(`${API_BASE_URL}/login`, {
-                username,
+                username, 
                 password
             }, {
                 headers: { 'Content-Type': 'application/json' },
@@ -47,14 +47,9 @@ export const AuthManager = () => {
 
             localStorage.setItem("access", JSON.stringify(rawAccessToken[1]));
             localStorage.setItem("refresh", JSON.stringify(rawRefreshToken[1]));
-
-            console.log("Login success");
-            return { success: true };
-
-
         } catch (error) {
             console.log("Login error:", error);
-            return { success: false, message: error.response?.data?.message || "로그인에 실패했습니다." };
+            return { success: false, message: error.response?.data?.message || "로그인에 실패했습니다." }; 
         }
     };
 
@@ -65,3 +60,4 @@ export const AuthManager = () => {
 }
 
 export default AuthManager;
+
