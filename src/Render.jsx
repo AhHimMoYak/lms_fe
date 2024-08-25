@@ -16,7 +16,7 @@ function Render() {
         <Route path="/" element={<Main/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/join" element={<Register/>}/>
-        <Route path="/RegistrationCompletion" element={<RegistrationCompletion/>}/>
+        <Route path="/join/complete" element={<RegistrationCompletion/>}/>
           <Route element={<AuthChecker/>}>
             <Route path="/mypage" element={<Mypage/>}/>
             <Route path="/test" element={<Body/>}/>
