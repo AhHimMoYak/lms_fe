@@ -1,0 +1,58 @@
+.course-table-container {
+    padding: 2%;
+    margin: 0 auto;
+    width: 80%;
+    background-color: #f9f9f9;
+    border-radius: 2%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-width: 50vw;
+    max-width: 80vh;
+
+}
+.list-top{
+    display: table-cell;
+    vertical-align: inherit;
+    unicode-bidi: isolate;
+}
+.list-url{
+    display: table-cell;
+    vertical-align: inherit;
+    unicode-bidi: isolate;
+    color: black;
+    text-decoration: none;
+}
+
+.coureslist-text{
+    text-align: left;
+}
+.course-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2vh;
+}
+
+.course-table th, .course-table td, .course-table a {
+    padding: 1% 1.5%;
+}
+
+.course-table th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+}
+
+.course-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.status-button {
+    padding: 3% 5%;
+    background-color: #555;
+    color: #fff;
+    border: none;
+    border-radius: 1em;
+    cursor: pointer;
+}
+
+.status-button:hover {
+    background-color: #333;
+}
