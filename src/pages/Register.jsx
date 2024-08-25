@@ -11,7 +11,6 @@ function Register() {
     const [birth, setBirth] = useState("");
     const [email, setEmail] = useState("");
     const [errors, setErrors] = useState({});
-    const [successMessage, setSuccessMessage] = useState("");
 
     const { Register } = AuthManager();
     const navigate = useNavigate();
@@ -38,11 +37,9 @@ function Register() {
         }
 
         setErrors({});
-        setSuccessMessage("");
 
         try {
             await Register(username, password, name, gender, birth, email);
-            setSuccessMessage("회원가입이 성공적으로 완료되었습니다!");
             navigate("/RegistrationCompletion");
         } catch (error) {
             console.log("Caught error:", error);
@@ -139,7 +136,6 @@ function Register() {
                         회원가입
                     </button>
                 </form>
-                {successMessage && <p className="register-success">{successMessage}</p>}
                 {errors.general && <p className="register-general-error">{errors.general}</p>}
             </div>
         </div>
