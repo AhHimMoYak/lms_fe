@@ -42,22 +42,26 @@ function AuthSection() {
     navigate("/myPage");
   };
 
-  return username ? (
-    <>
-      <div>{`{ ${username} } 님 반갑습니다.`}</div>
-      <Button color="inherit" onClick={handleMyPage}>
-        마이 페이지
-      </Button>
-      <Button color="inherit" onClick={handleLogout}>
-        Logout
-      </Button>
-    </>
-  ) : (
-    <>
-      <Button color="inherit" onClick={handleLogin}>
-        Login
-      </Button>
-    </>
+  return (
+    <div className="AuthSection">
+      {username ? (
+        <div>
+          {`{ ${username} } 님 반갑습니다.`}
+          <Button color="inherit" onClick={handleMyPage}>
+            마이 페이지
+          </Button>
+          <Button color="inherit" onClick={handleLogout}>
+            Logout
+          </Button>
+        </div>
+      ) : (
+        <div>
+          <Button color="inherit" onClick={handleLogin}>
+            Login
+          </Button>
+        </div>
+      )}
+    </div>
   );
 }
 
