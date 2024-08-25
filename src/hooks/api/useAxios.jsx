@@ -6,12 +6,13 @@ export const useAxios = () => {
     const [error, setError] = useState(null);
     const axiosInstance = Axios();
 
-    const fetchData = async (url, requestMethod, body = null) => {
+    const fetchData = async (url, requestMethod, body = null, contentType = "application/json") => {
         try {
             const response = await axiosInstance({
             url,
             method : requestMethod,
-            data : body
+            data : body,
+            headers: {"Content-Type": contentType}
             });
             setData(response.data);
         } catch (error) {

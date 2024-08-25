@@ -32,9 +32,11 @@ export const AuthManger = () => {
             }, {
                 headers: { 'Content-Type': 'application/json' },
             });
-
-                const rawAccessToken = response.headers['authorization'].split('_');
-                const rawRefreshToken = response.headers['refresh'].split('_');
+            
+                const rawAccessToken = response.headers['authorization'].split(']');
+                const rawRefreshToken = response.headers['refresh'].split(']');
+                //console.log(rawAccessToken[1]);
+                //console.log(rawRefreshToken[1]);
 
                 localStorage.setItem("access", JSON.stringify(rawAccessToken[1]));
                 localStorage.setItem("refresh", JSON.stringify(rawRefreshToken[1]));
