@@ -1,35 +1,35 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import '../styles/CourseBoard.css';
+import useAxios from "../hooks/api/useAxios.jsx";
+import {useNavigate} from "react-router-dom";
+import Pagination from "./Pagination.jsx";
 
-// 테스트용 데이터
-const testCourses = [
-    { title: 'DataBase In Action1', instructor: '이동림', period: 'yyyy.mm.dd ~ yyyy.mm.dd' },
-    { title: 'DataBase In Action2', instructor: '이동림', period: 'yyyy.mm.dd ~ yyyy.mm.dd' },
-    { title: 'DataBase In Action3', instructor: '이동림', period: 'yyyy.mm.dd ~ yyyy.mm.dd' },
-    { title: 'DataBase In Action4', instructor: '이동림', period: 'yyyy.mm.dd ~ yyyy.mm.dd' },
-    { title: 'DataBase In Action5', instructor: '이동림', period: 'yyyy.mm.dd ~ yyyy.mm.dd' },
-    { title: 'DataBase In Action6', instructor: '이동림', period: 'yyyy.mm.dd ~ yyyy.mm.dd' },
-    { title: 'DataBase In Action7', instructor: '이동림', period: 'yyyy.mm.dd ~ yyyy.mm.dd' },
-    { title: 'DataBase In Action8', instructor: '이동림', period: 'yyyy.mm.dd ~ yyyy.mm.dd' },
-    { title: 'DataBase In Action9', instructor: '이동림', period: 'yyyy.mm.dd ~ yyyy.mm.dd' },
-    { title: 'DataBase In Action10', instructor: '이동림', period: 'yyyy.mm.dd ~ yyyy.mm.dd' },
-];
-
-function Courselist() {
+function CourseBoard() {
     const [courses, setCourses] = useState([]);
+    const {fetchData, data, error} = useAxios()
+    const navigate = useNavigate();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [coursesPerPage] = useState(10);
 
     useEffect(() => {
-        const getCourses = async () => {
-            try {
-                const courses = testCourses;
-                setCourses(courses);
-            } catch (error) {
-                console.error('Error fetching courses:', error);
-            }
-        };
-
-        getCourses();
+        fetchData("/enrollment/course", "get");
     }, []);
+
+    useEffect(() => {
+        console.log(data)
+        if (Array.isArray(data)) {
+            setCourses(data);
+        }
+    }, [data]);
+    const handleTitleClick = (id) => {
+        navigate(`/mypage/course/${id}`);
+    };
+
+    const indexOfLastCourse = currentPage * coursesPerPage;
+    const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
+    const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <div className="course-table-container">
@@ -37,27 +37,39 @@ function Courselist() {
             <table className="course-table">
                 <thead>
                 <tr>
-                    <th>No.</th>
-                    <th>제목</th>
-                    <th>강사</th>
-                    <th>강의 시청기간</th>
-                    <th>진행상태</th>
+                    <th className="list-top">No.</th>
+                    <th className="list-top">제목</th>
+                    <th className="list-top">강사</th>
+                    <th className="list-top">강의 시청기간</th>
+                    <th className="list-top">진행상태</th>
                 </tr>
                 </thead>
                 <tbody>
-                {courses.map((course, index) => (
+                {currentCourses.map((course, index) => (
                     <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{course.title}</td>
-                        <td>{course.instructor}</td>
-                        <td>{course.period}</td>
-                        <td><button className="status-button">응답 (percent%)</button></td>
+                        <td className="list-content">{indexOfFirstCourse+index + 1}</td>
+                        <a href="#"
+                           onClick={(e)=> {
+                               e.preventDefault();
+                               handleTitleClick(course["courseId"]);}} className="list-url">{course.title}</a>
+                        <td className="list-content">{course["instructor"]}</td>
+                        <td className="list-content">{course["period"]}</td>
+                        <td className="list-content">
+                            <button className="status-button">응답 (percent%)</button>
+                        </td>
                     </tr>
+
                 ))}
                 </tbody>
             </table>
+            <Pagination
+                coursesPerPage={coursesPerPage}
+                totalCourses={courses.length}
+                paginate={paginate}
+                currentPage={currentPage}
+            />
         </div>
     );
 }
 
-export default Courselist;
+export default CourseBoard;
