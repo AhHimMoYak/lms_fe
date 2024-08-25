@@ -5,12 +5,12 @@ export const AuthManger = () => {
     const Register = async () => {
         try {
             const response = await axios.post(`${API_BASE_URL}/join`, {
-                username: "mirumiru",
-                password: "password12#",
-                name: "장미루",
-                gender: "MALE",
-                birth: "2000-04-15",
-                email: "alfn051@gmail.com"
+                "username" : "mirumiru",
+                "password" : "password12#",
+                "name" : "장미루",
+                "gender" : "MALE",
+                "birth" : "2000-04-15",
+                "email" : "alfn051@gmail.com"
             }, {
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -33,7 +33,6 @@ export const AuthManger = () => {
                 headers: { 'Content-Type': 'application/json' },
             });
 
-            if (response.status === 200) {
                 const rawAccessToken = response.headers['authorization'].split('_');
                 const rawRefreshToken = response.headers['refresh'].split('_');
 
@@ -42,9 +41,7 @@ export const AuthManger = () => {
 
                 console.log("Login success");
                 return { success: true }; 
-            } else {
-                return { success: false, message: "Unexpected response status" }; 
-            }
+
             
         } catch (error) {
             console.log("Login error:", error);
