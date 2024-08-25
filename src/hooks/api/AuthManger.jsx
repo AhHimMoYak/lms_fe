@@ -1,58 +1,70 @@
 import axios from "axios";
-import { API_BASE_URL } from "../../api-config";
+import {API_BASE_URL} from "../../api-config";
 
-export const AuthManger = () => {
-    const Register = async () => {
+export const AuthManager = () => {
+    const Register = async (username, password, name, gender, birth, email) => {
         try {
-            const response = await axios.post(`${API_BASE_URL}/join`, {
-                "username" : "mirumiru",
-                "password" : "password12#",
-                "name" : "장미루",
-                "gender" : "MALE",
-                "birth" : "2000-04-15",
-                "email" : "alfn051@gmail.com"
-            }, {
-                headers: { 'Content-Type': 'application/json' }
+            const userData = {
+                username,
+                password,
+                name,
+                gender,
+                birth,
+                email
+            };
+
+            console.log("Register Request Data:", userData);
+
+            const response = await axios.post(`${API_BASE_URL}/join`, userData, {
+                headers: {'Content-Type': 'application/json'}
             });
 
-            if (response.status === 200) {
-                console.log("Register success");
-            }
+            console.log("Register Response Data:", response.data);
 
+            return response.data;
         } catch (error) {
-            console.log("Registration error:", error);
+            if (error.response && error.response.data) {
+                console.error("Register Error Response Data:", error.response.data);
+                throw error.response.data;
+            } else {
+                console.error("Register Error:", error);
+                throw {general: "회원가입에 실패했습니다. 다시 시도해주세요."};
+            }
         }
     };
 
-    const LogIn = async ({ username, password }) => {
+    const LogIn = async (username, password) => {
         try {
             const response = await axios.post(`${API_BASE_URL}/login`, {
                 username,
                 password
             }, {
-                headers: { 'Content-Type': 'application/json' },
+                headers: {'Content-Type': 'application/json'},
             });
 
-                const rawAccessToken = response.headers['authorization'].split('_');
-                const rawRefreshToken = response.headers['refresh'].split('_');
+            const accessToken = response.headers['authorization'].split(' ')[1];
+            const refreshToken = response.headers['refresh'].split(' ')[1];
 
-                localStorage.setItem("access", JSON.stringify(rawAccessToken[1]));
-                localStorage.setItem("refresh", JSON.stringify(rawRefreshToken[1]));
+            localStorage.setItem("access", accessToken);
+            localStorage.setItem("refresh", refreshToken);
 
-                console.log("Login success");
-                return { success: true };
-
-
+            console.log("Login successful");
+            return response.data;
         } catch (error) {
-            console.log("Login error:", error);
-            return { success: false, message: error.response?.data?.message || "로그인에 실패했습니다." };
+            if (error.response && error.response.data) {
+                console.error("Login Error Response Data:", error.response.data);
+                throw error.response.data;
+            } else {
+                console.error("Login Error:", error);
+                throw {general: "로그인에 실패했습니다. 다시 시도해주세요."};
+            }
         }
     };
 
     return {
+        Register,
         LogIn,
-        Register
     };
 }
 
-export default AuthManger;
+export default AuthManager;
