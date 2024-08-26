@@ -47,6 +47,8 @@ export const AuthManager = () => {
 
             localStorage.setItem("access", JSON.stringify(rawAccessToken[1]));
             localStorage.setItem("refresh", JSON.stringify(rawRefreshToken[1]));
+
+            return { success: true };
         } catch (error) {
             console.log("Login error:", error);
             return { success: false, message: error.response?.data?.message || "로그인에 실패했습니다." }; 
