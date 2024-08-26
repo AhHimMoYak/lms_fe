@@ -2,22 +2,26 @@ import {useState, useEffect} from 'react';
 import Slider from 'react-slick';
 import '../styles/Courselist.css';
 import useAxios from "../hooks/api/useAxios.jsx";
+import {useNavigate} from "react-router-dom";
 
 function Courselist() {
     const [courses, setCourses] = useState([]);
     const {fetchData, data} = useAxios();
     const showMaxCnt = 5;
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchData("/enrollment/course", "get");
-    }, []);
+    },[]);
 
     useEffect(() => {
         if (Array.isArray(data)) {
             setCourses(data);
         }
     }, [data]);
-
+    const handleTitleClick =(id)=>{
+        navigate(`/mypage/course/${id}`);
+    }
     const sliderSettings = {
         infinite: false,
         slidesToShow: showMaxCnt,
@@ -29,7 +33,10 @@ function Courselist() {
         <div className="slider-container">
             <Slider {...sliderSettings}>
                 {courses.map((course, index) => (
-                    <div key={index} className="card no-image">
+                    <a href="#"
+                         onClick={(e)=> {
+                             e.preventDefault();
+                             handleTitleClick(course["courseId"]);}} key={index} className="card no-image">
                         {course.image ? (
                             <div>
                                 <img className="course_image" src={course.image}/>
@@ -50,7 +57,7 @@ function Courselist() {
                                 </div>
                             </div>
                         )}
-                    </div>
+                    </a>
                 ))}
             </Slider>
         </div>
