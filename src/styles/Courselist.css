@@ -35,6 +35,9 @@
     height: 90%;
     margin-right: 8%;
 }
+a{
+    text-decoration-line: none;
+}
 .slick-list:focus {
     outline: 0;
 }
