@@ -18,7 +18,7 @@ function LoginComponent() {
     const result = await LogIn({ username, password });
     
     if (result.success) {
-      navigate("/Main"); 
+      navigate("/"); 
     } else {
       setError(result.message || "로그인에 실패했습니다. 다시 시도해주세요."); 
       console.log("로그인 실패:", result.message);
