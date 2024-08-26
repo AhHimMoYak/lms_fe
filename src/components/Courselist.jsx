@@ -19,9 +19,13 @@ function Courselist() {
             setCourses(data);
         }
     }, [data]);
-    const handleTitleClick =(id)=>{
-        navigate(`/mypage/course/${id}`);
-    }
+    const handleTitleClick = (id) => {
+        navigate(`/mypage/course/${id}`,{
+            state :{
+                courseId:id
+            }
+        });
+    };
     const sliderSettings = {
         infinite: false,
         slidesToShow: showMaxCnt,
