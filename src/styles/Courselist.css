@@ -1,0 +1,229 @@
+.slider-container{
+    padding-top: 1.875%;
+    height: 100%;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    min-width: 740px;
+}
+
+
+.slick-list, .slick-slider, .slick-track {
+    position: relative;
+    display: block;
+    height: 320px;
+}
+
+.slick-loading .slick-slide, .slick-loading .slick-track {
+    visibility: hidden;
+}
+.slick-slider {
+    margin-left: 8%;
+    margin-right: 8%;
+    box-sizing: border-box;
+    touch-action: pan-y;
+}
+.slick-list {
+    align-items: center;
+    overflow: hidden;
+    margin: 0;
+    height: 100%;
+    padding: 0;
+}
+
+.slick-slide > div {
+    height: 90%;
+    margin-right: 8%;
+}
+.slick-list:focus {
+    outline: 0;
+}
+
+.slick-list.dragging {
+    cursor: pointer;
+    cursor: hand;
+}
+
+.slick-track {
+    top: 0;
+    left: 0;
+    margin-bottom: 0;
+    height: 100%;
+}
+
+
+.slick-track:after {
+    clear: both;
+}
+
+.slick-slide {
+    float: left;
+}
+.slick-slide img {
+    display: block;
+}
+
+.slick-slide.slick-loading img {
+    display: none;
+}
+
+.slick-slide.dragging img {
+    pointer-events: none;
+}
+
+.slick-initialized .slick-slide {
+    display: block;
+    height: 100%;
+}
+
+.slick-vertical .slick-slide {
+    display: block;
+    height: 100%;
+    border: 1px solid transparent;
+}
+
+.slick-arrow.slick-hidden {
+    display: none;
+}
+
+.slick-next:before, .slick-prev:before {
+    font-family: slick;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.slick-loading .slick-list {
+    background: center center no-repeat #fff;
+}
+
+.slick-next, .slick-prev {
+    border-radius: 2.5em;
+    position: absolute;
+    display: none;
+    padding: 0;
+    z-index: 1000;
+    font-size: 1.5em;
+    text-align: center;
+    line-height: 0;
+    top: 43%;
+    width: 3%;
+    height: 8%;
+    cursor: pointer;
+    border: #213547;
+    background-color: rgba(191,195,193,0.77);
+    color: transparent;
+}
+
+.slick-next:focus, .slick-next:hover, .slick-prev:focus, .slick-prev:hover {
+    color: transparent;
+    outline: 0;
+    background-color: rgba(191,195,193,0.77);
+}
+
+.slick-next:focus:before, .slick-next:hover:before, .slick-prev:focus:before, .slick-prev:hover:before {
+    opacity: 1;
+}
+
+.slick-next.slick-disabled:before, .slick-prev.slick-disabled:before {
+    opacity: 0.25;
+}
+
+.slick-prev {
+    border: 1px solid lightgray;
+    background-color: rgba(191,195,193,0.77);
+    left: -1.5%;
+}
+
+.slick-prev:before {
+    color: white;
+    content: '<';
+}
+
+.slick-next {
+    border: 1px solid lightgray;
+    background-color: rgba(191,195,193,0.77);
+    right: -2%;
+}
+
+.slick-next:before {
+    color: white;
+    content: '>';
+}
+
+.card {
+    color: white;
+    border-radius: 2em;
+    box-sizing: border-box;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.card .text-container {
+    text-align: left;
+    padding: 2vh;
+    width: 80%;
+    min-width: 10vw;
+    margin-top: 1vh;
+}
+
+.card .instructor-container {
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    bottom: 2%;
+    width: 30%;
+}
+
+.course_image {
+    width: 100%;
+    height: 100%;
+    border-radius: 2em;
+}
+
+.image_title {
+    margin: 0;
+    color: white;
+    font-size: 1.2em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.image_instructor {
+    color: white;
+    font-size: 1.2em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.no-image {
+    background-color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2em;
+    min-width: 10vw;
+}
+.listBox {
+    margin-left: 8%;
+    width: 80%;
+    border: 0.0625em solid lightgray;
+    border-radius: 1%;
+    padding: 1%;
+    text-align: left;
+    height: 100%;
+}
+
+.dashboard {
+    width: 100%;
+    height: 10vh;
+    border: 0.0625em solid lightgray;
+    font-size: 3.125em;
+    background-color: white;
+    padding: 1.25em;
+    text-align: left;
+}
