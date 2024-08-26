@@ -48,7 +48,7 @@
 .curriculum-table {
     width: 100%;
     border-collapse: collapse;
-    border: 1px solid #ddd;
+    border: 0.2vh solid #ddd;
 }
 
 .curriculum-column {
@@ -56,33 +56,33 @@
 }
 
 .curriculum-table th {
-    padding: 12px;
+    padding: 1.4vh;
     text-align: center;
-    border: 1px solid #ddd;
+    border: 0.1em solid #ddd;
     color: #666;
 }
 
 .curriculumTitle {
-    padding: 10px;
-    border: 1px solid #ddd;
+    padding: 1.5vh;
+    border: 0.1em solid #ddd;
     cursor: pointer;
     background-color: #f9f9f9;
     font-weight: bold;
 }
 .curriculum-number, .curriculum-title {
-    padding: 12px;
+    padding: 1.3vh;
     text-align: center;
     border: none;
 }
 
 .curriculum-table th:first-child,
 .curriculum-table td:first-child {
-    border-left: 1px solid #ddd;
+    border-left: 0.1em solid #ddd;
 }
 
 .curriculum-table th:last-child,
 .curriculum-table td:last-child {
-    border-right: 1px solid #ddd;
+    border-right: 0.1em solid #ddd;
 }
 
 .curriculumTitle:hover {
@@ -91,15 +91,15 @@
 .contentsList {
     list-style-type: none;
     margin: 0;
-    padding: 10px 20px;
-    border: 1px solid #ddd;
+    padding: 10vh 20vh;
+    border: 0.1em solid #ddd;
     border-top: none;
 }
 
 .contentsList li {
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
-    font-size: 14px;
+    padding: 8vh 0;
+    border-bottom: 0.1em solid #eee;
+    font-size: 1em;
 }
 
 .contentsList li:last-child {
@@ -111,8 +111,7 @@
     padding: 1.3vh;
     padding-right: 4vh;
     text-align: right;
-    border: 1px solid #ddd;
-    font-weight: bold;
+    border: 0.1em solid #ddd;
     white-space: nowrap;
     vertical-align: middle;
 }
@@ -128,14 +127,14 @@
     text-align: center;
 }
 .type{
-    border-left: 1px solid #ddd ;
+    border-left: 0.1em solid #ddd ;
     width: 10vh;
 }
 .play-button {
     background-color: white;
     border: none;
     color: black;
-    font-size: 16px;
+    font-size: 1em;
     cursor: pointer;
     padding: 0;
 }
