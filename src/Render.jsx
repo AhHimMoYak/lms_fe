@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import RegistrationCompletion from "./pages/RegistrationCompletion.jsx";
 import Courselist from "./components/Courselist.jsx"
 import CourseBoard from "./components/CourseBoard.jsx"
+import Curriculum from "./components/Curriculum.jsx"
 
 function Render() {
 
@@ -25,7 +26,7 @@ function Render() {
 				<Route path="dashboard" element={<Courselist/>}/>
 				<Route path="course" element={<CourseBoard/>}/>
 				<Route path="qna" element={<></>}/>
-
+				<Route path="course/:courseId" element={<Curriculum/>}/>
 			</Route>
 			<Route path="/test" element={<Body/>}/>
 		</Route>

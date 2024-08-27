@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Outlet } from "react-router-dom";
+import Title from "../components/Title";
 
 function Mypage() {
   const token = localStorage.getItem("access");
@@ -18,7 +19,7 @@ function Mypage() {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
-      <div className="main-content"><Outlet/></div>
+      <div className="main-content"><Title/><Outlet/></div>
     </div>
     <Footer/>
     </Fragment>

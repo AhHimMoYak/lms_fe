@@ -41,14 +41,14 @@ function Courselist() {
                          onClick={(e)=> {
                              e.preventDefault();
                              handleTitleClick(course["courseId"]);}} key={index} className="card no-image">
-                        {course.image ? (
+                        {course.imagePath ? (
                             <div>
-                                <img className="course_image" src={course.image}/>
+                                <img className="course_image" src={course.imagePath}/>
                                 <div className="text-container">
                                     <h3 className="image_title">{course.title}</h3>
                                 </div>
                                 <div className="instructor-container">
-                                    <h3 className="image_instructor">{course["instructor"]}</h3>
+                                    <h3 className="image_instructor">{course.instructor}</h3>
                                 </div>
                             </div>
                         ) : (

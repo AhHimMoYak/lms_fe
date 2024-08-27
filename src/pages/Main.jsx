@@ -1,5 +1,4 @@
 import { Fragment, useState } from 'react';
-import Banner from '../components/Banner';
 import CourseButton from '../components/CourseButton';
 import CourseCardList from '../components/CourseCardList';
 import Header from '../components/Header';
