@@ -1,29 +1,35 @@
 import { Fragment, useState } from 'react';
 import Banner from '../components/Banner';
 import CourseButton from '../components/CourseButton';
-import Header from "../components/Header";
+import CourseCardList from '../components/CourseCardList';
+import Header from '../components/Header';
+import Banner from '../components/Banner';
 
-function Main() {
-  const [selectedCourse, setSelectedCourse] = useState(null);
+const Main = () => {
+    const [selectedCategory, setSelectedCategory] = useState(1);
+
+    const handleSelectCourse = (category) => {
+        const categoryNumber = category.categoryNumber; // categoryNumber 추출
+        setSelectedCategory(categoryNumber);
+        console.log("handleSelectCourse 안에서의 categoryNumber : " + categoryNumber);
+    };
 
   return (
 	<Fragment>
 		<Header />
 		<div className="courselist">
-		<Banner />
-		<CourseButton onSelectCourse={setSelectedCourse} />
+            <Banner />
+            <CourseButton onSelectCourse={handleSelectCourse} />
 
-		{/*코스별로 렌더링 될 내용*/}
-		{selectedCourse && (
-			<div style={{ marginTop: '20px', textAlign: 'center' }}>
-			<h2>{selectedCourse.categoryNumber}</h2>
-			<p>Here is the content for {selectedCourse.title}.</p>
-			</div>
-		)}
+            {selectedCategory !== null && ( // selectedCategory가 null이 아닌 경우에만 렌더링
+                <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                    <CourseCardList category={selectedCategory} />
+                </div>
+            )}
 		</div>
 	</Fragment>
     
   );
 }
-
+    
 export default Main;
