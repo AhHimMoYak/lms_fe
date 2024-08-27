@@ -1,0 +1,16 @@
+.CourseList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.CourseCardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.MuiPagination-root {
+    margin-top: 20px;
+}
