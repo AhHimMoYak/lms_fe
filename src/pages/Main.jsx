@@ -3,6 +3,7 @@ import CourseButton from '../components/CourseButton';
 import CourseCardList from '../components/CourseCardList';
 import Header from '../components/Header';
 import Banner from '../components/Banner';
+import Footer from '../components/Footer';
 
 const Main = () => {
     const [selectedCategory, setSelectedCategory] = useState(1);
@@ -10,7 +11,7 @@ const Main = () => {
     const handleSelectCourse = (category) => {
         const categoryNumber = category.categoryNumber; // categoryNumber 추출
         setSelectedCategory(categoryNumber);
-        console.log("handleSelectCourse 안에서의 categoryNumber : " + categoryNumber);
+        //console.log("handleSelectCourse 안에서의 categoryNumber : " + categoryNumber);
     };
 
   return (
@@ -26,6 +27,7 @@ const Main = () => {
                 </div>
             )}
 		</div>
+    <Footer/>
 	</Fragment>
     
   );
