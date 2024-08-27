@@ -7,6 +7,7 @@ import Mypage from "./pages/Mypage"
 import Login from "./pages/Login"
 import Register from "./pages/Register";
 import RegistrationCompletion from "./pages/RegistrationCompletion.jsx";
+import Stream from "./pages/Stream.jsx";
 
 function Render() {
 
@@ -21,6 +22,7 @@ function Render() {
             <Route path="/mypage" element={<Mypage/>}/>
             <Route path="/test" element={<Body/>}/>
           </Route>
+        <Route path="/stream" element={<Stream/>}/>
       </Routes>
     </>
   )
