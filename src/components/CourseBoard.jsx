@@ -21,7 +21,11 @@ function CourseBoard() {
         }
     }, [data]);
     const handleTitleClick = (id) => {
-        navigate(`/mypage/course/${id}`);
+        navigate(`/mypage/course/${id}`,{
+            state :{
+                courseId:id
+            }
+        });
     };
 
     const indexOfLastCourse = currentPage * coursesPerPage;
