@@ -46,7 +46,7 @@ function AuthSection() {
     <div className="AuthSection">
       {username ? (
         <div>
-          {`{ ${username} } 님 반갑습니다.`}
+          {` ${username} 님 반갑습니다.`}
           <Button color="inherit" onClick={handleMyPage}>
             마이 페이지
           </Button>
