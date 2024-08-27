@@ -1,0 +1,38 @@
+
+.main-header {
+    height: 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5% 5%;
+    background-color: #333;
+    color: white;
+}
+
+.logo a {
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+}
+
+.main-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.main-nav ul li {
+    display: inline;
+}
+
+.main-nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.main-nav ul li a:hover {
+    text-decoration: underline;
+}
