@@ -4,22 +4,23 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import '../styles/CourseCard.css';
 
 export default function CourseCard({ title, image, tutorName }) {
     return (
-        <Card sx={{ maxWidth: 300, boxShadow: 3, borderRadius: 2 }}>
+        <Card className="CourseCard">
             <CardActionArea>
                 <CardMedia
                     component="img"
-                    height="140"
                     image={image}
                     alt={title}
+                    className="CourseCardMedia"
                 />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                <CardContent className="CourseCardContent">
+                    <Typography gutterBottom variant="h6" component="div" className="CourseCardTitle">
                         {title}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="body2" className="CourseCardTutor">
                         {tutorName}
                     </Typography>
                 </CardContent>
