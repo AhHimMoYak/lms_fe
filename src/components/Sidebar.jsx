@@ -1,6 +1,7 @@
 import React from "react";
 import * as jose from "jose";
 import "../styles/Sidebar.css";
+import { useNavigate } from "react-router-dom";
 
 // 토큰 디코딩 함수
 function decodeToken(token) {
@@ -14,6 +15,7 @@ function decodeToken(token) {
 }
 
 const Sidebar = ({ token, currentPage, setCurrentPage }) => {
+  const navigate = useNavigate();
   const claims = decodeToken(token);
 
   if (!claims) {
@@ -21,7 +23,9 @@ const Sidebar = ({ token, currentPage, setCurrentPage }) => {
   }
 
   const handleNavigation = (page) => {
-    setCurrentPage(page);
+    //setCurrentPage(page);
+    navigate(`${page}`);
+    
   };
 
   const { sub, email } = claims;
@@ -46,9 +50,9 @@ const Sidebar = ({ token, currentPage, setCurrentPage }) => {
         </button>
         <button
           className={`nav-button ${
-            currentPage === "courseList" ? "active" : ""
+            currentPage === "courselist" ? "active" : ""
           }`}
-          onClick={() => handleNavigation("courseList")}
+          onClick={() => handleNavigation("courselist")}
         >
           <span className="icon">📚</span> 코스 목록
         </button>
