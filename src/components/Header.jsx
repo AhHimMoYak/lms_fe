@@ -3,8 +3,9 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import AuthSection from "../components/AuthSection";
+import AuthSection from "./AuthSection";
 import { useNavigate } from "react-router-dom";
+import "../styles/Header.css";
 
 function Header() {
   const navigate = useNavigate();
@@ -14,21 +15,14 @@ function Header() {
   }
   
   return (
-    <div className="Header">
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <div><button onClick={handleRedirecToHome}>아힘모약</button></div>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 1 }}
-            ></Typography>
-            <AuthSection />
-          </Toolbar>
-        </AppBar>
-      </Box>
-    </div>
+    <header className="main-header">
+        <div className="logo">
+            <a onClick={handleRedirecToHome}>아힘모약</a>
+        </div>
+        <nav className="main-nav">
+        <AuthSection />
+        </nav>
+    </header>
   );
 }
 
