@@ -16,7 +16,6 @@ function CourseBoard() {
     }, []);
 
     useEffect(() => {
-        console.log(data)
         if (Array.isArray(data)) {
             setCourses(data);
         }
