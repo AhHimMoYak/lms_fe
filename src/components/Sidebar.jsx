@@ -50,9 +50,9 @@ const Sidebar = ({ token, currentPage, setCurrentPage }) => {
         </button>
         <button
           className={`nav-button ${
-            currentPage === "courselist" ? "active" : ""
+            currentPage === "course" ? "active" : ""
           }`}
-          onClick={() => handleNavigation("courselist")}
+          onClick={() => handleNavigation("course")}
         >
           <span className="icon">📚</span> 코스 목록
         </button>
