@@ -1,15 +1,14 @@
 .footer {
-    bottom: 0;
-    width: 100%;
+    width: 80%;
     height: 30vh;
     background: black;
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-left: 20vh;
-    position: absolute;
+    padding-left: 20%;
 }
+
 .footer-color{
     color: lightgray;
 }
