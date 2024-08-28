@@ -2,17 +2,17 @@
   width: 15%;
   min-width: 150px;
   height: 100vh;
-  padding-top: 10%;
   background-color: #ffffff;
   color: #000000;
   padding: 2%;
-  position: fixed;
+  /* position: fixed; */
   left: 0;
   top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   border-right: 0.1em solid #dddddd;
+  /* border: 1px solid black; */
 }
 
 .top-spacing {
