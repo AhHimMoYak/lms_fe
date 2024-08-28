@@ -25,6 +25,10 @@ function LoginComponent() {
     }
   };
 
+  const handleRegister = ()=> {
+    navigate("/join");
+  }
+
   return (
     <div className="login-page">
       <div className="login-container">
@@ -51,7 +55,7 @@ function LoginComponent() {
         {error && <p className="login-error">{error}</p>} {/* 에러 메시지 표시 */}
         <div className="login-links">
           <div className="left-links">
-            <a href="#" className="login-link">회원가입</a>
+            <a onClick={handleRegister} className="login-link">회원가입</a>
           </div>
           <div className="right-links">
             <a href="#" className="login-link">계정 찾기</a>
