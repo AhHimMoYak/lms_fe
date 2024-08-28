@@ -11,9 +11,7 @@
   },
   "dependencies": {
     "@fontsource/roboto": "^5.0.14",
-    "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.7",
-    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@stomp/stompjs": "^7.0.0",
     "axios": "^1.7.4",
     "jose": "^5.7.0",
