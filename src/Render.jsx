@@ -10,11 +10,11 @@ import RegistrationCompletion from "./pages/RegistrationCompletion.jsx";
 import Courselist from "./components/Courselist.jsx"
 import CourseBoard from "./components/CourseBoard.jsx"
 import Curriculum from "./components/Curriculum.jsx"
+import Stream from "./pages/Stream.jsx";
 
 function Render() {
 
-  return (
-    
+  return (    
     <Routes>
 		<Route path="/" element={<Main/>}/>
 		<Route path="/login" element={<Login/>}/>
@@ -30,8 +30,8 @@ function Render() {
 			</Route>
 			<Route path="/test" element={<Body/>}/>
 		</Route>
+    <Route path="/stream" element={<Stream/>}/>
     </Routes>
-    
   )
 }
 
