@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "@fontsource/roboto": "^5.0.14",
-    "@mui/material": "^5.16.7",
+    "@mui/material": "^6.0.0",
     "@stomp/stompjs": "^7.0.0",
     "axios": "^1.7.4",
     "jose": "^5.7.0",
