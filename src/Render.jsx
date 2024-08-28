@@ -28,9 +28,10 @@ function Render() {
 				<Route path="qna" element={<></>}/>
 				<Route path="course/:courseId" element={<Curriculum/>}/>
 			</Route>
+			<Route path="/stream" element={<Stream/>}/>
 			<Route path="/test" element={<Body/>}/>
 		</Route>
-    <Route path="/stream" element={<Stream/>}/>
+    
     </Routes>
   )
 }
