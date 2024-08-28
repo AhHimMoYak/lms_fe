@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "@mui/material/Button";
 import * as jose from "jose";
-import "../styles/AuthSection.css";
 
 function decodeToken(token) {
   try {
@@ -47,7 +45,7 @@ function AuthSection() {
     <div className="AuthSection">
       {username ? (
         <ul>
-          {` ${username} 님 반갑습니다.`}
+          <li>{` ${username} 님 반갑습니다.`}</li>
           <li><a  onClick={handleMyPage} >마이 페이지</a></li>
           <li><a  onClick={handleLogout} >Logout</a></li>
         </ul>

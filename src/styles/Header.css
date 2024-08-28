@@ -5,13 +5,16 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.5% 5%;
-    background-color: #333;
-    color: white;
+    background-color: #fff;
+    color: #333;
+    box-shadow: 0px 5px 10px rgb(215, 212, 212);
+    position: relative;
+    z-index: 5;
 }
 
 .logo a {
-    color: white;
-    font-size: 24px;
+    color: #333;
+    font-size: 1.5em;
     text-decoration: none;
 }
 
@@ -20,7 +23,7 @@
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 20px;
+    gap: 1vw;
 }
 
 .main-nav ul li {
@@ -28,9 +31,9 @@
 }
 
 .main-nav ul li a {
-    color: white;
+    color: #333;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 1.5em;
 }
 
 .main-nav ul li a:hover {

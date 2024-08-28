@@ -57,6 +57,7 @@ function Banner() {
         return () => clearInterval(intervalId)
     }, [])
 
+
     return (
         <div className='banner-slide'>
             <button className='prev-button' onClick={() => moveToSlide('prev')}>
@@ -67,10 +68,11 @@ function Banner() {
                     <div className='show-image'
                          key={index}
                          style={{
-                             transform: `translateX(${-1100 * imageSlide}px)`,
+                             transform: `translateX(${-99.9 * imageSlide}%)`,
+                             backgroundSize: 'cover'
                          }}
                     >
-                        <img src={image} alt={`Slide ${index + 1}`} style={{width: '100%', height: 'auto'}}/>
+                        <img src={image} alt={`Slide ${index + 1}`} style={{width: '100%', height: 'auto', objectFit: 'cover' }}/>
                     </div>
                 ))
             }

@@ -1,38 +1,47 @@
-
 .CourseButton {
-    position: relative;
-    background-color: #151515;
-    padding: 2vh 10%;
+    box-shadow: 0px 5px 10px rgb(240, 237, 237);
+    padding: 2vh 5%;
+    border-radius: 8px;
+    max-width: 100%;
 }
 
 .button-grid {
     display: grid;
-    grid-template-columns: repeat(6, auto);
-    gap: 10%;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
     justify-content: center;
 }
-.CourseButton > button {
-    padding: 0.8vh 1vh;
-    margin: 0.5vh 0.5vh;
-}
 
-.course-button,
-.course-button.selected{
+.course-button {
     border: none;
-    border-radius: 20em;
-    white-space: nowrap;
-    box-sizing: border-box;
-    font-size: 16px;
-    background-color: #E9ECEF;
-    color: gray;
+    border-radius: 4px;
+    padding: 1% 2%;
+    margin: 1% 1% 0 0;
+    font-size: 1em;
+    font-weight: bold;
+    background-color: #ffffff;
+    color: #7561f0;
     cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+    text-align: center;
+    line-height: 1.5;
+    min-width: 150px;
+    border: 1px solid #e0e0e0;
 }
 
 .course-button.selected {
-    background-color: #9EA4AA;
-    color: black;
+    background-color: #7561f0;
+    color: #ffffff;
 }
 
 .course-button:hover {
-    background-color: #d6d9de;
+    background-color: #f0f8ff;
+    color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.course-button:active {
+    background-color: #0056b3;
+    color: #ffffff;
+    transform: translateY(0);
 }

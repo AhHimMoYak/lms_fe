@@ -2,11 +2,9 @@
   width: 15%;
   min-width: 150px;
   height: 100vh;
-  padding-top: 10%;
   background-color: #ffffff;
   color: #000000;
   padding: 2%;
-  position: fixed;
   left: 0;
   top: 0;
   display: flex;

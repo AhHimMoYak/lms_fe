@@ -4,6 +4,7 @@ import CourseCardList from '../components/CourseCardList';
 import Header from '../components/Header';
 import Banner from '../components/Banner';
 import Footer from '../components/Footer';
+import "../styles/Main.css";
 
 const Main = () => {
     const [selectedCategory, setSelectedCategory] = useState(1);
@@ -22,7 +23,7 @@ const Main = () => {
             <CourseButton onSelectCourse={handleSelectCourse} />
 
             {selectedCategory !== null && ( // selectedCategory가 null이 아닌 경우에만 렌더링
-                <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                <div className="cardlist">
                     <CourseCardList category={selectedCategory} />
                 </div>
             )}

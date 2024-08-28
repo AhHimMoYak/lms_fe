@@ -34,7 +34,7 @@ const CourseButton = ({onSelectCourse}) => {
                 </button>
 
             ))
-            };
+            }
         </div>
     );
 };

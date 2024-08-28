@@ -1,9 +1,9 @@
 .slider-container{
     padding-top: 1.875%;
     height: 100%;
-    width: 80%;
-    margin-left: 10%;
-    margin-right: 10%;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
     min-width: 740px;
 }
 
@@ -105,7 +105,7 @@ a{
     display: none;
     padding: 0;
     z-index: 1000;
-    font-size: 1.5em;
+    /* font-size: 1.5em; */
     text-align: center;
     line-height: 0;
     top: 43%;
@@ -132,37 +132,39 @@ a{
 }
 
 .slick-prev {
+    min-width: 3%;
+    min-height: 15%;
     border: 1px solid lightgray;
     background-color: rgba(191,195,193,0.77);
-    left: -1.5%;
+    left: -5%;
 }
 
 .slick-prev:before {
-    color: white;
+    color: black;
     content: '<';
 }
 
 .slick-next {
+    min-width: 3%;
+    min-height: 15%;
     border: 1px solid lightgray;
     background-color: rgba(191,195,193,0.77);
-    right: -2%;
+    right: -5%;
 }
 
 .slick-next:before {
-    color: white;
+    color: black;
     content: '>';
 }
 
 .card {
-    color: white;
     border-radius: 2em;
     box-sizing: border-box;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    /* display: flex;
+    flex-direction: column; */
+    /* justify-content: space-between; */
     height: 100%;
-    background-size: cover;
     background-position: center;
     position: relative;
 }
@@ -176,24 +178,48 @@ a{
 }
 
 .card .instructor-container {
-    text-align: center;
+    text-align: left;
     padding: 10px;
     position: absolute;
     bottom: 2%;
-    width: 30%;
+    width: 50%;
 }
 
 .course_image {
+    position: relative;
     width: 100%;
     height: 100%;
+    overflow: hidden;
     border-radius: 2em;
+}
+
+.course_image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: inherit;
+    background-size: inherit;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(50%); /* 배경 이미지를 어둡게 설정 */
+    z-index: 1; /* 내부 요소들보다 뒤에 배치 */
+}
+
+.text-container,
+.instructor-container {
+    position: relative;
+    z-index: 2; /* 가상 요소보다 앞에 배치하여 밝기를 유지 */
+    color: white; /* 텍스트를 흰색으로 설정하여 어두운 배경에서 잘 보이도록 함 */
 }
 
 .image_title {
     margin: 0;
     color: white;
     font-size: 1.2em;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); */
 }
 
 .image_instructor {
@@ -203,15 +229,15 @@ a{
     text-align: center;
 }
 
-.no-image {
+/* .no-image {
     background-color: #ccc;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 2em;
     min-width: 10vw;
-}
-.listBox {
+} */
+/* .listBox {
     margin-left: 8%;
     width: 80%;
     border: 0.0625em solid lightgray;
@@ -219,9 +245,9 @@ a{
     padding: 1%;
     text-align: left;
     height: 100%;
-}
+} */
 
-.dashboard {
+/* .dashboard {
     width: 100%;
     height: 10vh;
     border: 0.0625em solid lightgray;
@@ -229,4 +255,4 @@ a{
     background-color: white;
     padding: 1.25em;
     text-align: left;
-}
+} */
