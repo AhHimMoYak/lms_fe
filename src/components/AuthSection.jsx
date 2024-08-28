@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "@mui/material/Button";
 import * as jose from "jose";
-import "../styles/AuthSection.css";
 
 function decodeToken(token) {
   try {
