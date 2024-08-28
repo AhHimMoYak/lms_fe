@@ -37,30 +37,25 @@ function Courselist() {
         <div className="slider-container">
             <Slider {...sliderSettings}>
                 {courses.map((course, index) => (
+                    // course.imagePath = "",
                     <a href="#"
-                         onClick={(e)=> {
-                             e.preventDefault();
-                             handleTitleClick(course["courseId"]);}} key={index} className="card no-image">
-                        {course.imagePath ? (
-                            <div>
-                                <img className="course_image" src={course.imagePath}/>
+                        onClick={(e)=> {
+                            e.preventDefault();
+                            handleTitleClick(course["courseId"]);}} key={index} className="card">
+                        <div className="course_image"
+                            style={{
+                                backgroundImage : course.imagePath ? `url(${course.imagePath})` : 'none',
+                                backgroundColor: course.imagePath ? 'transparent' : '#ccc',
+                                backgroundSize: 'cover'
+                            }}>
                                 <div className="text-container">
                                     <h3 className="image_title">{course.title}</h3>
                                 </div>
                                 <div className="instructor-container">
                                     <h3 className="image_instructor">{course.instructor}</h3>
                                 </div>
-                            </div>
-                        ) : (
-                            <div>
-                                <div className="text-container">
-                                    <h3 className="image_title">{course.title}</h3>
-                                </div>
-                                <div className="instructor-container">
-                                    <h3 className="image_instructor">{course["instructor"]}</h3>
-                                </div>
-                            </div>
-                        )}
+
+                        </div>
                     </a>
                 ))}
             </Slider>
