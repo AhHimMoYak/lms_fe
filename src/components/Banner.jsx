@@ -52,16 +52,10 @@ function Banner() {
         )
     }
 
-
     useEffect(() => {
         autoMoveSlide();
         return () => clearInterval(intervalId)
     }, [])
-
-    const handlePaginationClick = (index) => {
-        setImageSlide(index);
-        autoMoveSlide();
-    }
 
 
     return (
