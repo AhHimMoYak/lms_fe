@@ -1,0 +1,56 @@
+.livebanner {
+    background-color: #333;
+    width: 80vw;
+    color: white;
+    padding: 3vh;
+    position: relative;
+    height: 20vh;
+    margin: 5vh auto ;
+    border-radius: 1em;
+    max-width: 150vh;
+    min-width: 20vh;
+}
+
+.liveTitle {
+    padding: 1vh 0.8vh;
+    margin: 0 0;
+    position: relative;
+    left: 2vh;
+    display: flex;
+    font-size: 4vh;
+}
+
+.livebuttons {
+    padding: 1.5vh;
+    margin: 0 0;
+    position: absolute;
+    bottom: 3vh;
+    right: 3vh;
+    display: flex;
+    gap: 1.3vh;
+}
+
+.btn {
+    padding: 1vh 2vh;
+    border-radius: 1vh;
+    text-decoration: none;
+    font-size: 1.8vh;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-on-air {
+    background-color: #d9534f;
+    color: white;
+}
+
+.btn-off {
+    background-color: white;
+    color: #333;
+}
+
+.btn-enter {
+    background-color: white;
+    color: #333;
+}

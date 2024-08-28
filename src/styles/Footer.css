@@ -1,0 +1,33 @@
+.footer {
+    width: 80%;
+    height: 30vh;
+    background: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 20%;
+}
+
+.footer-color{
+    color: lightgray;
+}
+.footer .footer-box {
+    display: flex;
+    width: 100%;
+    margin-bottom: 3vh;
+    text-align: center;
+}
+.footer .footer-line {
+    display: flex;
+    text-align: center;
+}
+.footer .footer-text{
+    display: flex;
+}
+.footer .footer-line div {
+    margin-right: 3vh;
+}
+.footer .footer-box div {
+    margin-right: 3vh;
+}

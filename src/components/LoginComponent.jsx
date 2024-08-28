@@ -18,12 +18,16 @@ function LoginComponent() {
     const result = await LogIn({ username, password });
     
     if (result.success) {
-      navigate("/Main"); 
+      navigate("/"); 
     } else {
       setError(result.message || "로그인에 실패했습니다. 다시 시도해주세요."); 
       console.log("로그인 실패:", result.message);
     }
   };
+
+  const handleRegister = ()=> {
+    navigate("/join");
+  }
 
   return (
     <div className="login-page">
@@ -51,7 +55,7 @@ function LoginComponent() {
         {error && <p className="login-error">{error}</p>} {/* 에러 메시지 표시 */}
         <div className="login-links">
           <div className="left-links">
-            <a href="#" className="login-link">회원가입</a>
+            <a onClick={handleRegister} className="login-link">회원가입</a>
           </div>
           <div className="right-links">
             <a href="#" className="login-link">계정 찾기</a>
