@@ -9,7 +9,7 @@ function CurriculumListLiveBanner() {
     const navigate = useNavigate();
 
     const handleEnterClick = () => {
-        navigate('/test')
+        navigate('/stream');
     }
 
     return (
