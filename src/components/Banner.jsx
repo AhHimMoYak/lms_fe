@@ -52,17 +52,10 @@ function Banner() {
         )
     }
 
-
     useEffect(() => {
         autoMoveSlide();
         return () => clearInterval(intervalId)
     }, [])
-
-    const handlePaginationClick = (index) => {
-        setImageSlide(index);
-        autoMoveSlide();
-    }
-
 
     return (
         <div className='banner-slide'>
@@ -82,18 +75,6 @@ function Banner() {
                 ))
             }
             </div>
-            <ol className='slide-index'>
-                {
-                    images.map((_, index) => (
-                        <li key={index}
-                            className={`index-item ${imageSlide === index ? 'active' : ''}`}
-                            onClick={() => handlePaginationClick(index)}
-                        >
-                            {index + 1}
-                    </li>
-                    ))
-                }
-            </ol>
             <button
                 className='next-button'
                 onClick={() => moveToSlide('next')}>
