@@ -1,4 +1,4 @@
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import "../styles/Sidebar.css";
 import { useNavigate } from "react-router-dom";
 
