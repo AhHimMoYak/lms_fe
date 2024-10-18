@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import * as jose from "jose";
+import jwtDecode from "jwt-decode";
 
 function decodeToken(token) {
   try {
-    const claims = jose.decodeJwt(token);
+    const claims = jwtDecode(token);
     return claims;
   } catch (err) {
     console.error("토큰 디코딩 실패:", err.message);
@@ -46,12 +46,18 @@ function AuthSection() {
       {username ? (
         <ul>
           <li>{` ${username} 님 반갑습니다.`}</li>
-          <li><a  onClick={handleMyPage} >마이 페이지</a></li>
-          <li><a  onClick={handleLogout} >Logout</a></li>
+          <li>
+            <a onClick={handleMyPage}>마이 페이지</a>
+          </li>
+          <li>
+            <a onClick={handleLogout}>Logout</a>
+          </li>
         </ul>
       ) : (
         <ul>
-          <li><a  onClick={handleLogin} >Login</a></li>
+          <li>
+            <a onClick={handleLogin}>Login</a>
+          </li>
         </ul>
       )}
     </div>
