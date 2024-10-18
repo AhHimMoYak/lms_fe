@@ -10,6 +10,45 @@ import Live from "./pages/Main/Live";
 import IntrodcutionFrame from "./components/Main/IntroductionFrame";
 import VideoExplaine from "./pages/Main/VideoExplaine";
 import LiveExplaine from "./pages/Main/VideoExplaine copy";
+import MypageFrame from "./components/Employee/MypageFrame";
+import Dashbaord from "./pages/Employee/Dashboard";
+import CourseListFrame from "./components/Employee/Courses/CourseListFrame";
+import CourseList from "./pages/Employee/CourseList";
+import LiveList from "./pages/Employee/LiveList";
+import CourseDetailedFrame from "./components/Employee/Courses/CourseDetailedFrame";
+import CourseDetailed from "./pages/Employee/CourseDetailed";
+import QnAList from "./pages/Employee/QnAList";
+import QnADetailed from "./pages/Employee/QnADetailed";
+import QnAEdit from "./pages/Employee/QnAEdit";
+import QnAPost from "./pages/Employee/QnAPost";
+import NoticeList from "./pages/Employee/NoticeList";
+import NoticeDetailed from "./pages/Employee/NoticeDetailed";
+import LiveDetailedFrame from "./components/Employee/Courses/LiveDetailedFrame copy";
+import LiveDetaild from "./pages/Employee/LiveDetaild";
+import VideoStream from "./pages/Employee/VideoStream";
+import LiveStream from "./pages/Employee/LiveStream";
+import QnATotalList from "./pages/Employee/QnATotalList";
+import InquiryFrame from "./components/Employee/Inquiry/InquiryFrame";
+import ReceiveInquiry from "./pages/Employee/ReceiveInquiry";
+import InquiryDetailed from "./pages/Employee/InquiryDetailed";
+import InquiryEdit from "./pages/Employee/InquiryEdit";
+import InquiryPost from "./pages/Employee/InquiryPost";
+import SuperDashboard from "./pages/Supervisor/SuperDashboard";
+import ManageFrame from "./components/Supervisor/MypageFrame";
+import EmployeeList from "./pages/Supervisor/EmployeeList";
+import EmployeeDetailed from "./pages/Supervisor/EmployeeDetailed";
+import EnrollmentFrame from "./components/Supervisor/Courses/EnrollmentFrame";
+import EnrollmentList from "./pages/Supervisor/EnrollmentList";
+import EnrollmentDetailed from "./pages/Supervisor/EnrollmentDetailed";
+import CompanyDetailed from "./pages/Supervisor/CompanyDetailed";
+import CompanyEdit from "./pages/Supervisor/CompanyEdit";
+import DepartmentList from "./pages/Supervisor/DepartmentList";
+import DepartmentEdit from "./pages/Supervisor/DepartmentEdit";
+import DepartmentPost from "./pages/Supervisor/DepartmentPost";
+import ReceiveNotice from "./pages/Supervisor/ReceiveNotice";
+import NoticeEdit from "./pages/Supervisor/NoticeEdit";
+import NoticePost from "./pages/Supervisor/NoticePost";
+import CompanyFrame from "./components/Supervisor/Company/CompanyFrame";
 
 function Render() {
   return (
@@ -64,9 +103,9 @@ function Render() {
                 </Route>
               </Route>
 
-              <Route path="live/:courseId" element={<LiveDetailed />}>
-                <Route path="" element={<CourseDetailed />} />
-                <Route path="detail" element={<CourseDetailed />} />
+              <Route path="live/:courseId/*" element={<LiveDetailedFrame />}>
+                <Route path="" element={<LiveDetaild />} />
+                <Route path="detail" element={<LiveDetaild />} />
                 {/* qna?page = {number}&own=true */}
                 <Route path="qna" element={<QnAList />}>
                   <Route path=":courseId" element={<QnADetailed />}>
@@ -98,11 +137,11 @@ function Render() {
                 <Route path=":courseId" element={<NoticeDetailed />} />
               </Route>
 
-              <Route path="message/*" element={<MessageFrame />}>
-                <Route path="" element={<ReceiveMessage />} />
-                <Route path=":id" element={<MessageDetailed />}>
-                  <Route path="edit" element={<MessageEdit />} />
-                  <Route path="post" element={<MessagePost />} />
+              <Route path="inquiry/*" element={<InquiryFrame />}>
+                <Route path="" element={<ReceiveInquiry />} />
+                <Route path=":id" element={<InquiryDetailed />}>
+                  <Route path="edit" element={<InquiryEdit />} />
+                  <Route path="post" element={<InquiryPost />} />
                 </Route>
               </Route>
             </Route>
@@ -110,7 +149,7 @@ function Render() {
 
           <Route element={PrivateRoleRoute("SUPERVISOR")}>
             <Route element={<MypageFrame />}>
-              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="dashboard" element={<SuperDashboard />} />
               <Route path="managed/*" element={<ManageFrame />}>
                 <Route path="" element={<EmployeeList />} />
                 <Route path=":id" element={<EmployeeDetailed />} />
@@ -141,11 +180,11 @@ function Render() {
                 </Route>
               </Route>
 
-              <Route path="message/*" element={<MessageFrame />}>
-                <Route path="" element={<ReceiveMessage />} />
-                <Route path=":id" element={<MessageDetailed />}>
-                  <Route path="edit" element={<MessageEdit />} />
-                  <Route path="post" element={<MessagePost />} />
+              <Route path="inquiry/*" element={<InquiryFrame />}>
+                <Route path="" element={<ReceiveInquiry />} />
+                <Route path=":id" element={<InquiryDetailed />}>
+                  <Route path="edit" element={<InquiryEdit />} />
+                  <Route path="post" element={<InquiryPost />} />
                 </Route>
               </Route>
             </Route>
