@@ -38,7 +38,7 @@ function AuthSection() {
   };
 
   const handleMyPage = () => {
-    navigate("/myPage");
+    navigate("/mypage");
   };
 
   return (
