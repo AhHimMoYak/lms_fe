@@ -14,18 +14,7 @@ function Mypage() {
   return (
     <Fragment>
       <Header/>
-      <div className="app-container">
-      <Sidebar
-        token={token}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
-      <div className="main-content">
-        <Title/>
-        <div className="main-source"><Outlet/></div>
-      </div>
-    </div>
-    <Footer/>
+      <Outlet/>
     </Fragment>
     
   );
