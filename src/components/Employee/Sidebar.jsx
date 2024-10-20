@@ -1,4 +1,4 @@
-const CourseSidebar = () => {
+const Sidebar = () => {
   return (
     <div style={{ width: "30%", height: "100vh", backgroundColor: "skyblue" }}>
       사이드바 생성
@@ -6,4 +6,4 @@ const CourseSidebar = () => {
   );
 };
 
-export default CourseSidebar;
+export default Sidebar;
