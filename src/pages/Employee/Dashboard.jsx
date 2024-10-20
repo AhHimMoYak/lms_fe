@@ -1,4 +1,4 @@
-function Dashbaord() {
+function Dashboard() {
   return (
     <div
       style={{
@@ -8,4 +8,4 @@ function Dashbaord() {
   );
 }
 
-export default Dashbaord;
+export default Dashboard;
