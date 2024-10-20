@@ -13,6 +13,17 @@ export const Axios = () => {
 
   if (accessToken === null) return axiosInstance;
 
+  axiosInstance = axios.create({
+    baseURL: API_BASE_URL,
+    headers: { 
+      "Content-Type": "application/json",
+      Authorization: `[Bearer]${accessToken}`,
+     },
+    
+  });
+
+  return axiosInstance;
+
   axiosInstance.interceptors.request.use(async (req) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/accesstoken`, {
