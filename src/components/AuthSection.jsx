@@ -41,6 +41,7 @@ function AuthSection() {
     const token = localStorage.getItem("access");
     const decodedToken = jwtDecode(token);
     const userRole = decodedToken.role;
+    console.log(decodedToken);
 
     if (userRole === "COMPANY") navigate("/mypage/dashboard");
     if (userRole === "SUPERVISOR") navigate("/mypage/status");

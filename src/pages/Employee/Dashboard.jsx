@@ -4,7 +4,9 @@ function Dashboard() {
       style={{
         backgroundColor: "purple",
       }}
-    ></div>
+    >
+      dashboard
+    </div>
   );
 }
 

@@ -4,7 +4,9 @@ function CourseDetailed() {
       style={{
         backgroundColor: "purple",
       }}
-    ></div>
+    >
+      CourseDetailed
+    </div>
   );
 }
 

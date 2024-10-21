@@ -36,13 +36,11 @@ function Render() {
       <Route element={<AuthChecker />}>
         {/* 마이페이지 공통 사용 부분 */}
         <Route path="mypage/*" element={<Mypage />}>
+          <Route path="*" element={<EmployeeRouter />} />
+          <Route path="*" element={<SupervisorRoutes />} />
           {/* 역할에 따른 페이지 구성 분리 및 접근 제한 */}
-          <Route element={PrivateRoleRoute("COMPANY")}>
-            <Route path="*" element={<EmployeeRouter />} />
-          </Route>
-          <Route element={PrivateRoleRoute("SUPERVISOR")}>
-            <Route path="*" element={<SupervisorRoutes />} />
-          </Route>
+          <Route element={PrivateRoleRoute("COMPANY")}></Route>
+          <Route element={PrivateRoleRoute("SUPERVISOR")}></Route>
 
           <Route element={PrivateRoleRoute("MANAGER")}></Route>
 
