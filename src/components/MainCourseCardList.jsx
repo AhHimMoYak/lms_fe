@@ -5,7 +5,8 @@ import "../styles/CourseCardList.css";
 import Pagination from "@mui/material/Pagination";
 import { Box, Typography, CircularProgress } from "@mui/material";
 
-const CourseCardList = ({ category }) => {
+const CourseCardList = () => {
+  const category = 1;
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
   const { fetchData, data } = useAxios();
@@ -17,7 +18,6 @@ const CourseCardList = ({ category }) => {
 
   useEffect(() => {
     if (category) {
-      console.log("category : " + category);
       setLoading(true);
       fetchData(`/course/main?categoryNum=${category}&size=6`, "get");
     }

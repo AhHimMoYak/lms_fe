@@ -9,7 +9,7 @@ function Main() {
       }}
     >
       main page 구성요소
-      <MainCourseCardList category={1} />
+      <MainCourseCardList />
     </div>
   );
 }
