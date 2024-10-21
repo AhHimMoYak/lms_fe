@@ -1,3 +1,6 @@
+import { useState } from "react";
+import MainCourseCardList from "../../components/MainCourseCardList";
+
 function Main() {
   return (
     <div
@@ -6,6 +9,7 @@ function Main() {
       }}
     >
       main page 구성요소
+      <MainCourseCardList category={1} />
     </div>
   );
 }
