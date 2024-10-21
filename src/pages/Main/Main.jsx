@@ -1,4 +1,3 @@
-import { useState } from "react";
 import MainCourseCardList from "../../components/MainCourseCardList";
 
 function Main() {

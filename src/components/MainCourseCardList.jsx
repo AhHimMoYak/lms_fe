@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import useAxios from "../hooks/api/useAxios.jsx";
 import CourseCard from "./CourseCard.jsx";
 import "../styles/CourseCardList.css";
-import Pagination from "@mui/material/Pagination";
 import { Box, Typography, CircularProgress } from "@mui/material";
 
 const CourseCardList = () => {
@@ -29,10 +28,6 @@ const CourseCardList = () => {
       setLoading(false);
     }
   }, [data]);
-
-  const handlePageChange = (event, value) => {
-    setCurrentPage(value);
-  };
 
   return (
     <Box className="CourseList">
