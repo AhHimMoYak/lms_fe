@@ -4,7 +4,9 @@ function CourseList() {
       style={{
         backgroundColor: "purple",
       }}
-    ></div>
+    >
+      CourseList
+    </div>
   );
 }
 
