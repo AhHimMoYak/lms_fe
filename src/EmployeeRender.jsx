@@ -1,6 +1,5 @@
 import { Route } from "react-router-dom";
 
-
 import Dashboard from "./pages/Employee/Dashboard";
 import MypageFrame from "./components/Employee/MypageFrame";
 
@@ -26,52 +25,49 @@ import InquiryDetailed from "./pages/Employee/InquiryDetailed";
 import InquiryEdit from "./pages/Employee/InquiryEdit";
 import InquiryPost from "./pages/Employee/InquiryPost";
 
-
 const EmployeeRouter = () => (
   <MypageFrame>
     <Route path="dashboard" element={<Dashboard />} />
     <Route path="applied/*" element={<CourseListFrame />}>
-    <Route path="" element={<CourseList />} />
-    <Route path="live" element={<LiveList />} />
+      <Route path="" element={<CourseList />} />
+      <Route path="live" element={<LiveList />} />
     </Route>
     <Route path="completed/*" element={<CourseListFrame />}>
-    <Route path="" element={<CourseList />} />
-    <Route path="live" element={<LiveList />} />
+      <Route path="" element={<CourseList />} />
+      <Route path="live" element={<LiveList />} />
     </Route>
 
-    {/* <Route path="course/:courseId" element={<Dashboard />}/> */}
-
     <Route path="course/:courseId/*" element={<CourseDetailedFrame />}>
-        <Route path="" element={<CourseDetailed />} />
-        <Route path="detail" element={<CourseDetailed />} />
-        {/* qna?page = {number}&own=true */}
-        <Route path="qna" element={<QnAList />}>
-            <Route path=":courseId" element={<QnADetailed />}>
-            <Route path="edit" element={<QnAEdit />} />
-            </Route>
-            <Route path="post" element={<QnAPost />} />
+      <Route path="" element={<CourseDetailed />} />
+      <Route path="detail" element={<CourseDetailed />} />
+      {/* qna?page = {number}&own=true */}
+      <Route path="qna" element={<QnAList />}>
+        <Route path=":courseId" element={<QnADetailed />}>
+          <Route path="edit" element={<QnAEdit />} />
         </Route>
+        <Route path="post" element={<QnAPost />} />
+      </Route>
 
-        {/* notice?page={number} */}
-        <Route path="notice" element={<NoticeList />}>
-            <Route path=":id" element={<NoticeDetailed />} />
-        </Route>
-        </Route>
+      {/* notice?page={number} */}
+      <Route path="notice" element={<NoticeList />}>
+        <Route path=":id" element={<NoticeDetailed />} />
+      </Route>
+    </Route>
 
-        <Route path="live/:courseId/*" element={<LiveDetailedFrame />}>
-        <Route path="" element={<LiveDetaild />} />
-        <Route path="detail" element={<LiveDetaild />} />
-        {/* qna?page = {number}&own=true */}
-        <Route path="qna" element={<QnAList />}>
-            <Route path=":courseId" element={<QnADetailed />}>
-            <Route path="edit" element={<QnAEdit />} />
-            </Route>
-            <Route path="post" element={<QnAPost />} />
+    <Route path="live/:courseId/*" element={<LiveDetailedFrame />}>
+      <Route path="" element={<LiveDetaild />} />
+      <Route path="detail" element={<LiveDetaild />} />
+      {/* qna?page = {number}&own=true */}
+      <Route path="qna" element={<QnAList />}>
+        <Route path=":courseId" element={<QnADetailed />}>
+          <Route path="edit" element={<QnAEdit />} />
         </Route>
-        {/* notice?page={number} */}
-        <Route path="notice" element={<NoticeList />}>
-            <Route path=":id" element={<NoticeDetailed />} />
-        </Route>
+        <Route path="post" element={<QnAPost />} />
+      </Route>
+      {/* notice?page={number} */}
+      <Route path="notice" element={<NoticeList />}>
+        <Route path=":id" element={<NoticeDetailed />} />
+      </Route>
     </Route>
 
     {/* lecture?content="" */}
@@ -80,26 +76,25 @@ const EmployeeRouter = () => (
 
     {/* qna?own=false&page={number} */}
     <Route path="qna" element={<QnATotalList />}>
-    <Route path=":courseId" element={<QnADetailed />}>
+      <Route path=":courseId" element={<QnADetailed />}>
         <Route path="edit" element={<QnAEdit />} />
-    </Route>
-    <Route path="post" element={<QnAPost />} />
+      </Route>
+      <Route path="post" element={<QnAPost />} />
     </Route>
 
     {/* notice?page={number}&type=total(courseId) */}
     <Route path="notice" element={<NoticeList />}>
-    {/* notice/:courseId?board={boradId} */}
-    <Route path=":courseId" element={<NoticeDetailed />} />
+      {/* notice/:courseId?board={boradId} */}
+      <Route path=":courseId" element={<NoticeDetailed />} />
     </Route>
 
     <Route path="inquiry/*" element={<InquiryFrame />}>
-    <Route path="" element={<ReceiveInquiry />} />
-    <Route path=":id" element={<InquiryDetailed />}>
+      <Route path="" element={<ReceiveInquiry />} />
+      <Route path=":id" element={<InquiryDetailed />}>
         <Route path="edit" element={<InquiryEdit />} />
         <Route path="post" element={<InquiryPost />} />
+      </Route>
     </Route>
-    </Route>
-   
   </MypageFrame>
 );
 
