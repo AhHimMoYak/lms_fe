@@ -1,4 +1,5 @@
 import MainCourseCardList from "../../components/MainCourseCardList";
+// import NoticeBoard from "../../components/NoticeBoard";
 
 function Main() {
   return (
@@ -9,6 +10,7 @@ function Main() {
     >
       main page 구성요소
       <MainCourseCardList />
+      {/* <NoticeBoard /> */}
     </div>
   );
 }

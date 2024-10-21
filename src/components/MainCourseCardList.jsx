@@ -4,7 +4,7 @@ import CourseCard from "./CourseCard.jsx";
 import "../styles/CourseCardList.css";
 import { Box, Typography, CircularProgress } from "@mui/material";
 
-const CourseCardList = () => {
+const MainCourseCardList = () => {
   const category = 1;
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -60,4 +60,4 @@ const CourseCardList = () => {
   );
 };
 
-export default CourseCardList;
+export default MainCourseCardList;
