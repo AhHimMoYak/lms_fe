@@ -6,10 +6,10 @@ function Title(){
 
     const [name, setName] = useState("대시보드");
     const params = useParams();
-    console.log(params);
+    //console.log(params);
 
     useEffect(() => {
-        console.log(location.pathname);
+        //console.log(location.pathname);
         if(location.pathname === "/mypage" || location.pathname === "/mypage/dashboard"){
             setName("대시보드");
         }

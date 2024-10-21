@@ -1,39 +1,56 @@
-import { Routes, Route } from "react-router-dom"
-import { AuthChecker } from "./authentication/AuthChecker"
-import Body from "./pages/Body"
-import App from "./App"
-import Main from "./pages/Main"
-import Mypage from "./pages/Mypage"
-import Login from "./pages/Login"
-import Register from "./pages/Register";
-import RegistrationCompletion from "./pages/RegistrationCompletion.jsx";
-import Courselist from "./components/Courselist.jsx"
-import CourseBoard from "./components/CourseBoard.jsx"
-import Curriculum from "./components/Curriculum.jsx"
-import Stream from "./pages/Stream.jsx";
+import { Routes, Route } from "react-router-dom";
+import { AuthChecker } from "./authentication/AuthChecker";
+import Mypage from "./pages/Mypage";
+import { PrivateRoleRoute } from "./authentication/PrivateRoleRoute";
+import BasicFrame from "./components/Main/BasicFrame";
+
+import CourseFrame from "./components/Main/CourseFrame";
+import Main from "./pages/Main/Main";
+import Video from "./pages/Main/Video";
+import Live from "./pages/Main/Live";
+import IntrodcutionFrame from "./components/Main/IntroductionFrame";
+import VideoExplaine from "./pages/Main/VideoExplaine";
+import LiveExplaine from "./pages/Main/VideoExplaine copy";
+import Login from "./pages/Login";
+import EmployeeRouter from "./EmployeeRender";
+import SupervisorRoutes from "./SupervisorRoutes";
 
 function Render() {
-
-  return (    
+  return (
     <Routes>
-		<Route path="/" element={<Main/>}/>
-		<Route path="/login" element={<Login/>}/>
-		<Route path="/join" element={<Register/>}/>
-		<Route path="/join/complete" element={<RegistrationCompletion/>}/>
-		<Route element={<AuthChecker/>}>
-			<Route path="/mypage/*" element={<Mypage/>}>
-				<Route path="" element={<Courselist/>}/>
-				<Route path="dashboard" element={<Courselist/>}/>
-				<Route path="course" element={<CourseBoard/>}/>
-				<Route path="qna" element={<></>}/>
-				<Route path="course/:courseId" element={<Curriculum/>}/>
-			</Route>
-			<Route path="/stream" element={<Stream/>}/>
-			<Route path="/test" element={<Body/>}/>
-		</Route>
-    
+      {/* 기존 메인 페이지 */}
+      <Route element={<BasicFrame />}>
+        <Route path="/" element={<Main />} />
+        <Route path="/course/*" element={<CourseFrame />}>
+          <Route path="video" element={<Video />} />
+          <Route path="live" element={<Live />} />
+        </Route>
+        <Route path="/introduction/*" element={<IntrodcutionFrame />}>
+          <Route path="video/:courseId" element={<VideoExplaine />} />
+          <Route path="live/:courseId" element={<LiveExplaine />} />
+        </Route>
+      </Route>
+      <Route path="/login" element={<Login />} />
+
+      {/* 로그인 사용자 구분 */}
+      <Route element={<AuthChecker />}>
+        {/* 마이페이지 공통 사용 부분 */}
+        <Route path="mypage/*" element={<Mypage />}>
+          {/* 역할에 따른 페이지 구성 분리 및 접근 제한 */}
+          <Route element={PrivateRoleRoute("COMPANY")}>
+            <Route path="*" element={<EmployeeRouter />} />
+          </Route>
+          <Route element={PrivateRoleRoute("SUPERVISOR")}>
+            <Route path="*" element={<SupervisorRoutes />} />
+          </Route>
+
+          <Route element={PrivateRoleRoute("MANAGER")}></Route>
+
+          <Route element={PrivateRoleRoute("INSTRUCTOR")}></Route>
+        </Route>
+      </Route>
     </Routes>
-  )
+  );
 }
 
-  export default Render
+export default Render;
