@@ -21,6 +21,7 @@
     border-bottom: 0.1em solid #ddd;
     text-align: center;
     font-size: 0.8em;
+    width: 25%;
 }
 
 .create-qna{
@@ -74,7 +75,7 @@
     border: none;
     background-color: white;
     cursor: pointer;
-    font-size: 0.7em;
+    font-size: 0.5em;
     border-radius: 0.5em;
     transition: background-color 0.3s;
 }
