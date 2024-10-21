@@ -38,7 +38,12 @@ function AuthSection() {
   };
 
   const handleMyPage = () => {
-    navigate("/mypage");
+    const token = localStorage.getItem("access");
+    const decodedToken = jwtDecode(token);
+    const userRole = decodedToken.role;
+
+    if (userRole === "COMPANY") navigate("/mypage/dashboard");
+    if (userRole === "SUPERVISOR") navigate("/mypage/status");
   };
 
   return (
