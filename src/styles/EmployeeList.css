@@ -1,0 +1,99 @@
+/* 페이지 전체 컨테이너 */
+.employeeList-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+/* 내부 컨테이너 */
+.employeeList-container {
+    width: 80%;
+    max-width: 1000px;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+/* 타이틀 */
+.employeeList-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* 필터 섹션 */
+.employeeList-filter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.employeeList-filter input {
+    padding: 8px;
+    width: 200px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.employeeList-filter button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.employeeList-filter button:hover {
+    background-color: #0056b3;
+}
+
+/* 테이블 */
+.employeeList-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.employeeList-table th,
+.employeeList-table td {
+    padding: 12px 8px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.employeeList-table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+.employeeList-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* 페이징 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.pagination button {
+    padding: 8px 12px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #5a6268;
+}
