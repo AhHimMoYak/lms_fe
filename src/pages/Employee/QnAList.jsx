@@ -39,7 +39,7 @@ function QnAList() {
                 <thead>
                 <tr>
                     <th>No.</th>
-                    <th>강좌명</th>
+                    <th>제목</th>
                     <th>날짜</th>
                     <th>답변 여부</th>
                 </tr>
