@@ -35,9 +35,7 @@ const MainCourseCardList = () => {
       {loading ? (
         <Box className="LoadingContainer">
           <CircularProgress />
-          <Typography sx={{ marginLeft: "15px" }}>
-            Loading courses...
-          </Typography>
+          <Typography className="loadingText">Loading courses...</Typography>
         </Box>
       ) : courses.length > 0 ? (
         <>
