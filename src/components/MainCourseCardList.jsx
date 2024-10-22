@@ -19,7 +19,7 @@ const MainCourseCardList = () => {
   useEffect(() => {
     if (category) {
       setLoading(true);
-      fetchData(`/course/main?categoryNum=${category}&size=6`, "get");
+      fetchData(`/course/preview?categoryNum=${category}&size=6`, "get");
     }
   }, [category]);
 
