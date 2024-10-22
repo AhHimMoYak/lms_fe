@@ -1,7 +1,14 @@
+.courselist-header{
+    display: flex;
+    justify-content: space-between; /* 양 끝으로 정렬 */
+    align-items: center; /* 세로 가운데 정렬 */
+    padding: 2em 2em 0.5em 5.5em;
+    border-radius: 10px;
+}
+
 .courselist-name{
-    padding: 1em 3em 0.5em;
     font-size: 1.5em;
-    text-align: left;
+    color: #212121;
 }
 
 /* 테이블 기본 스타일 */
@@ -26,8 +33,8 @@
 
 .create-qna{
     float: right;
-    margin-right: 5%;
-    margin-top: 3em;
+    margin-right: 10%;
+    margin-top: 5em;
     font-size: 0.3em;
     border: 0.2em snow solid;
     border-radius: 0.5em;
