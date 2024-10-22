@@ -1,0 +1,25 @@
+.MainCourseList {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.MainCourseCardContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.LoadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.NoCoursesText {
+  text-align: center;
+  margin-top: 20px;
+  color: #666;
+}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useAxios from "../hooks/api/useAxios.jsx";
 import CourseCard from "./CourseCard.jsx";
 import "../styles/CourseCardList.css";
+import "../styles/MainCourseList.css";
 import { Box, Typography, CircularProgress } from "@mui/material";
 
 const MainCourseCardList = () => {
@@ -30,7 +31,7 @@ const MainCourseCardList = () => {
   }, [data]);
 
   return (
-    <Box className="CourseList">
+    <Box className="MainCourseList">
       {loading ? (
         <Box className="LoadingContainer">
           <CircularProgress />
