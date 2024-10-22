@@ -19,6 +19,9 @@ function QnAList() {
     const handlePageChange = (newPage) => {
         navigate(`?page=${newPage}`);
     };
+    const handleCreateQnA= ()=>{
+        navigate(`/mypage/course/${courseId}/qna/post`)
+    }
     // 에러 처리
     if (error) {
         return <div>에러 발생: {error.message}</div>;
@@ -29,12 +32,11 @@ function QnAList() {
         return <div>로딩 중...</div>;
     }
     const totalPages = data.totalPage
-    // 전체 페이지 수 계산
-    console.log(totalPages)
     return (
         <div className="qna-list-container">
-            <div className="courselist-name">{data.courseTitle || "강좌 제목 없음"}
-            <button className="create-qna"> 글작성 </button></div>
+            <div className="courselist-header">
+            <div className="courselist-name">{data.courseTitle || "강좌 제목 없음"}</div>
+            <button className="create-qna" onClick={handleCreateQnA}> 글작성 </button></div>
             <table className="qna-table">
                 <thead>
                 <tr>
@@ -49,7 +51,7 @@ function QnAList() {
                     <tr key={board.id}>
                         <td>{(page - 1) * 10 + index + 1}</td>
                         <td>{board.title}</td>
-                        <td>2024.01.01</td>
+                        <td> {new Date(board.createdAt).toISOString().split("T")[0]}</td>
                         <td className={board.commitCount > 0 ? "answered" : "not-answered"}>
                             {board.commitCount >0 ? "완료" : "답변하지 않음"}
                         </td>
