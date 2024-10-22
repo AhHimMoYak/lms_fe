@@ -2,20 +2,75 @@ import {useEffect, useState} from "react";
 import useAxios from "../../hooks/api/useAxios.jsx";
 
 import '/src/styles/EmployeeList.css'
-import {useLocation, useParams} from "react-router-dom";
 
 function EmployeeList() {
-    const {companyId, departmentId} = useParams()
-    const {data, error, fetchData} = useAxios();
-    const {campanyIdData, companyIdError, companyIdfetchData} = useAxios();
 
+    const { data: employees, error, fetchData: fetchEmployeeData } = useAxios();
+    const {data: companyID ,fetchData: fetchCompanyIdData} = useAxios();
+    const {fetchData: deleteDepartmentData} = useAxios();
 
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filterEmployees, setFilterEmployees] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const employeesPerPage = 10;
+    const [totalPages, setTotalPages] = useState(1);
+
+    // 1. 회사 id 가져오는 useEffect
     useEffect(() => {
-        fetchData(`/api/v1/supervisor/?${companyId}`, "GET");
-    }, [companyId]);
+        fetchCompanyIdData("/users/companyId", "GET");
+    },[]);
 
-    console.log(data)
-    //if(error) return <div className="employeeList-error">오류가 발생했습니다: {error.message}</div>
+    //2. 가져온 회사 id 로 회사 직원 가져오는 useEffect
+    useEffect(() => {
+        if (companyID) {
+            fetchEmployeeData(`/supervisor/?companyId=${companyID}`, "GET");
+        }
+    }, [companyID]);
+
+    //3. 필터링된 직원 목록 초기화
+    useEffect(() => {
+        if(employees){
+            setFilterEmployees(employees)
+        }
+    }, [employees]);
+
+    const handleSearch = () => {
+        if (searchTerm) {
+            const filtered = employees.filter((employee) =>
+                employee.name.includes(searchTerm) ||
+                employee.email.includes(searchTerm)
+            );
+            setFilterEmployees(filtered);
+            setCurrentPage(1);
+        }
+    };
+
+    const handleReset = () => {
+        setFilterEmployees(employees);
+        setSearchTerm("");
+        setCurrentPage(1);
+    }
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    }
+
+
+    // const handleDelete = (departmentId, affiliationId) => {
+    //     const confirmDelete = window.confirm("정말 삭제하시겠습니까?");
+    //     if(confirmDelete){
+    //         deleteDepartmentData(`/supervisor/department?companyId=${companyID}&affiliationId=${affiliationId}&departmentId=${departmentId}`,"DELETE")
+    //             .then(()=>{
+    //                 alert("삭제가 완료되었습니다.");
+    //                 fetchEmployeeData()
+    //             })
+    //             .catch((error) => {
+    //                 alert("삭제에 실패했습니다. 다시 시도해주세요");
+    //                 console.log(error);
+    //             })
+    //     }
+    //
+    // }
 
     return (
         <div className="employeeList-page">
@@ -23,9 +78,14 @@ function EmployeeList() {
                 <h2 className="employeeList-title">사원 목록</h2>
 
                 <div className="employeeList-filter">
-                    <input type="text" placeholder="검색어를 입력하세요"/>
-                    <button>검색</button>
-                    <button>초기화</button>
+                    <input
+                        type="text"
+                        placeholder="사원 이름 또는 이메일을 입력하세요"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <button id="searchButton" name="searchButton" onClick={handleSearch}>검색</button>
+                    <button id="resetButton" name="resetButton" onClick={handleReset}>초기화</button>
                 </div>
 
                 <table className="employeeList-table">
@@ -36,36 +96,39 @@ function EmployeeList() {
                         <th>부서</th>
                         <th>성별</th>
                         <th>이메일</th>
+
                     </tr>
                     </thead>
                     <tbody>
-                    {data && data.length > 0 ? (
-                        data.map((user, index) => (
-                            <tr key={user.email}>
+                    {filterEmployees && filterEmployees.length > 0 ? (
+                        filterEmployees.map((user, index) => (
+                            <tr key={user.id}>
                                 <td>{index + 1}</td>
-                                <td>{user.username}</td>
-                                {/*<td>{user.departmentName}</td>*/}
+                                <td>{user.name}</td>
+                                <td>{user.departmentName}</td>
                                 <td>{user.gender}</td>
                                 <td>{user.email}</td>
-                                <td>
-                                    <button>수정</button>
-                                </td>
-                                <td>
-                                    <button>삭제</button>
-                                </td>
+
                             </tr>
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="6">사원이 없습니다.</td>
+                            <td colSpan="5">사원이 없습니다.</td>
                         </tr>
                     )}
                     </tbody>
                 </table>
 
                 <div className="pagination">
-                    <button>1</button>
-                    <button>2</button>
+                    {[...Array(totalPages).keys()].map((page) => (
+                        <button
+                            key={page + 1}
+                            onClick={() => handlePageChange(page + 1)}
+                            className={currentPage === page + 1 ? "active" : "pagination"}
+                        >
+                            {page + 1}
+                        </button>
+                    ))}
                 </div>
             </div>
         </div>
