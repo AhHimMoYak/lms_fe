@@ -31,8 +31,13 @@ function EmployeeList() {
     useEffect(() => {
         if(employees){
             setFilterEmployees(employees)
+            setTotalPages(Math.ceil(employees.length / employeesPerPage))
         }
     }, [employees]);
+
+    const indexOfLastEmployee = currentPage * employeesPerPage;
+    const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
+    const currentEmployees = filterEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
 
     const handleSearch = () => {
         if (searchTerm) {
@@ -42,6 +47,7 @@ function EmployeeList() {
             );
             setFilterEmployees(filtered);
             setCurrentPage(1);
+            setTotalPages(Math.ceil(filtered.length / employeesPerPage));
         }
     };
 
@@ -49,6 +55,7 @@ function EmployeeList() {
         setFilterEmployees(employees);
         setSearchTerm("");
         setCurrentPage(1);
+        setTotalPages(Math.ceil(employees.length / employeesPerPage));
     }
 
     const handlePageChange = (pageNumber) => {
@@ -100,8 +107,8 @@ function EmployeeList() {
                     </tr>
                     </thead>
                     <tbody>
-                    {filterEmployees && filterEmployees.length > 0 ? (
-                        filterEmployees.map((user, index) => (
+                    {currentEmployees && currentEmployees.length > 0 ? (
+                        currentEmployees.map((user, index) => (
                             <tr key={user.id}>
                                 <td>{index + 1}</td>
                                 <td>{user.name}</td>
