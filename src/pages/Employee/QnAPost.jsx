@@ -1,16 +1,16 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import useAxios from "../../hooks/api/useAxios.jsx";
 import "../../styles/Employee/QnAPost.css";
 
 function QnAPost() {
-    const {courseId} = useParams(); // URL에서 courseId 추출
+    const {courseId} = useParams();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const {fetchData} = useAxios();
+    const {data, fetchData} = useAxios();
     const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         // 서버로 전송할 요청 DTO
@@ -19,15 +19,16 @@ function QnAPost() {
             content: content
         };
 
-        try {
-            // 데이터 전송 (useAxios 사용)
-            await fetchData(`/courseBoard/QNA/${courseId}`, "POST", requestDTO);
-            // 데이터 전송이 성공하면 게시물 리스트 페이지로 이동
-            navigate(`/mypage/course/${courseId}/qna/questions`);
-        } catch (error) {
-            console.error("게시물 작성 중 오류가 발생했습니다:", error);
-        }
+        fetchData(`/courseBoard/QNA/${courseId}`, "POST", requestDTO);
     };
+
+    useEffect(() => {
+        if (data && data.msg) {
+            navigate(`/mypage/course/${courseId}/qna/questions`);
+            console.log(data.msg);
+        }
+    }, [data]);
+
 
     return (
         <div className="qna-post-container">
