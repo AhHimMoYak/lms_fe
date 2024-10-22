@@ -1,53 +1,12 @@
+// Video.jsx
 import React, { useEffect, useState, memo, useCallback } from "react";
 import { useLocation } from "react-router-dom";
-import useAxios from "../../hooks/api/useAxios.jsx";
-import "../../styles/CourseCard.css";
+import CourseList from "../../components/CourseList.jsx";
+import "../../styles/VideoPage.css"; // 새로운 외부 CSS 파일 추가
 import CourseSidebar from '../../components/Main/CourseSidebar.jsx';
+import '../../styles/CourseSidebar.css'; // CourseSidebar 관련 CSS 파일 추가
 
 const MemoizedCourseSidebar = memo(CourseSidebar);
-
-const CourseList = ({ selectedCategory, currentPage, setLoading, setTotalCourses }) => {
-    const { data: response, error, fetchData } = useAxios();
-
-    useEffect(() => {
-        const fetchCourses = async () => {
-            setLoading(true);
-            const url = `/course/main?categoryNum=${selectedCategory}&page=${currentPage}&size=12`;
-            await fetchData(url, "GET");
-            setLoading(false);
-        };
-
-        fetchCourses();
-    }, [selectedCategory, currentPage]);
-
-    useEffect(() => {
-        if (response) {
-            setTotalCourses(response.totalElements);
-        }
-    }, [response]);
-
-    if (error) return <div>Error: {error.message}</div>;
-
-    const courses = response ? response.content : [];
-
-    return (
-        <div className="course-container">
-            {courses.length === 0 ? (
-                <div>해당 카테고리에는 코스가 없습니다.</div>
-            ) : (
-                courses.map((course) => (
-                    <div className="CourseCard" key={course.id}>
-                        <img className="CourseCardMedia" src={course.image} alt={course.title} />
-                        <div className="CourseCardContent">
-                            <h3 className="CourseCardTitle">{course.title}</h3>
-                            <p className="CourseCardTutor">{course.tutorName}</p>
-                        </div>
-                    </div>
-                ))
-            )}
-        </div>
-    );
-};
 
 function Video() {
     const query = new URLSearchParams(useLocation().search);
@@ -66,20 +25,32 @@ function Video() {
     }, []);
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", height: "100vh" }}>
+        <div className="video-page-container">
             <MemoizedCourseSidebar onCategorySelect={handleCategorySelect} />
-            <div style={{ flex: 1, padding: "20px" }}>
-                <h2 style={{ textAlign: "center", marginBottom: "20px" }}>{selectedCategoryTitle}</h2>
+            <div className="course-list-container">
+                <h2 className="category-title">{selectedCategoryTitle}</h2>
                 <CourseList
                     selectedCategory={selectedCategory}
                     currentPage={currentPage}
                     setLoading={setLoading}
                     setTotalCourses={setTotalCourses}
                 />
-                <div className="pagination" style={{ textAlign: "center", marginTop: "20px" }}>
-                    <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage <= 1}>이전</button>
-                    <span style={{ margin: "0 10px" }}>페이지 {currentPage} / {Math.ceil(totalCourses / 12)}</span>
-                    <button onClick={() => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(totalCourses / 12)))} disabled={currentPage >= Math.ceil(totalCourses / 12)}>다음</button>
+                <div className="pagination">
+                    <button
+                        className="pagination-button"
+                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                        disabled={currentPage <= 1}
+                    >
+                        이전
+                    </button>
+                    <span className="pagination-info">페이지 {currentPage} / {Math.ceil(totalCourses / 12)}</span>
+                    <button
+                        className="pagination-button"
+                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(totalCourses / 12)))}
+                        disabled={currentPage >= Math.ceil(totalCourses / 12)}
+                    >
+                        다음
+                    </button>
                 </div>
             </div>
         </div>
