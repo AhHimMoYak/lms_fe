@@ -14,6 +14,7 @@ function EmployeeList() {
     const [currentPage, setCurrentPage] = useState(1);
     const employeesPerPage = 10;
     const [totalPages, setTotalPages] = useState(1);
+    const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
 
     // 1. 회사 id 가져오는 useEffect
     useEffect(() => {
@@ -38,6 +39,25 @@ function EmployeeList() {
     const indexOfLastEmployee = currentPage * employeesPerPage;
     const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
     const currentEmployees = filterEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
+
+    const handleSort = (key) => {
+        let direction = 'ascending';
+        if(sortConfig.key === key && sortConfig.direction === 'ascending') {
+            direction = 'descending';
+        }
+        setSortConfig({key, direction});
+
+        const sortedEmployees = [...filterEmployees].sort((a, b) => {
+            if (a[key] < b[key]) {
+                return direction === 'ascending' ? -1 : 1;
+            }
+            if (a[key] > b[key]) {
+                return direction === 'ascending' ? 1 : -1;
+            }
+            return 0;
+        });
+        setFilterEmployees(sortedEmployees);
+    }
 
     const handleSearch = () => {
         if (searchTerm) {
@@ -99,8 +119,12 @@ function EmployeeList() {
                     <thead>
                     <tr>
                         <th>No.</th>
-                        <th>사원 이름</th>
-                        <th>부서</th>
+                        <th onClick={() => handleSort('name')} className="sortable">
+                            사원 이름 {sortConfig.key === 'name' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
+                        </th>
+                        <th onClick={() => handleSort('departmentName')} className="sortable">
+                            부서 {sortConfig.key === 'departmentName' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
+                        </th>
                         <th>성별</th>
                         <th>이메일</th>
 
@@ -119,9 +143,11 @@ function EmployeeList() {
                             </tr>
                         ))
                     ) : (
-                        <tr>
-                            <td colSpan="5">사원이 없습니다.</td>
-                        </tr>
+                        Array.from({ length: employeesPerPage }).map((_, idx) => (
+                            <tr key={idx}>
+                                <td colSpan="5">{idx === 0 ? '사원이 없습니다.' : ''}</td>
+                            </tr>
+                        ))
                     )}
                     </tbody>
                 </table>
