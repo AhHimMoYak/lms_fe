@@ -1,0 +1,55 @@
+.list_wrapper {
+  padding: 20px;
+  max-width: 2160px;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+}
+
+.list_wrapper > div:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.list_wrapper > div:nth-child(even) {
+  background-color: #e9e9e9;
+}
+
+.list_wrapper > div {
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.pagination button {
+  padding: 10px 15px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  background-color: white;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 1em;
+  transition: all 0.3s ease;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination span {
+  font-size: 1em;
+  font-weight: bold;
+}

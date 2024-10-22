@@ -1,3 +1,5 @@
+import "../styles/NoticeItem.css";
+
 const NoticeItem = ({ title, content, createAt }) => {
   return (
     <div>
