@@ -2,8 +2,11 @@ import {useEffect, useState} from "react";
 import useAxios from "../../hooks/api/useAxios.jsx";
 
 import '/src/styles/EmployeeList.css'
+import {useNavigate} from "react-router-dom";
 
 function EmployeeList() {
+
+    const navigate = useNavigate();
 
     const { data: employees, error, fetchData: fetchEmployeeData } = useAxios();
     const {data: companyID ,fetchData: fetchCompanyIdData} = useAxios();
@@ -82,22 +85,9 @@ function EmployeeList() {
         setCurrentPage(pageNumber);
     }
 
-
-    // const handleDelete = (departmentId, affiliationId) => {
-    //     const confirmDelete = window.confirm("정말 삭제하시겠습니까?");
-    //     if(confirmDelete){
-    //         deleteDepartmentData(`/supervisor/department?companyId=${companyID}&affiliationId=${affiliationId}&departmentId=${departmentId}`,"DELETE")
-    //             .then(()=>{
-    //                 alert("삭제가 완료되었습니다.");
-    //                 fetchEmployeeData()
-    //             })
-    //             .catch((error) => {
-    //                 alert("삭제에 실패했습니다. 다시 시도해주세요");
-    //                 console.log(error);
-    //             })
-    //     }
-    //
-    // }
+    const handleRowClick = (userId) => {
+        navigate(`/mypage/managed/:${userId}`);
+    };
 
     return (
         <div className="employeeList-page">
@@ -133,8 +123,8 @@ function EmployeeList() {
                     <tbody>
                     {currentEmployees && currentEmployees.length > 0 ? (
                         currentEmployees.map((user, index) => (
-                            <tr key={user.id}>
-                                <td>{index + 1}</td>
+                            <tr key={user.id} onClick={()=> handleRowClick(user.id)} className="clickable-row">
+                                <td>{indexOfFirstEmployee + index + 1}</td>
                                 <td>{user.name}</td>
                                 <td>{user.departmentName}</td>
                                 <td>{user.gender}</td>
