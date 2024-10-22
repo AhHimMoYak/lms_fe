@@ -3,22 +3,23 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     padding: 0.2em 2em 2em 2em;
     border-radius: 0.5em;
     width: 80%;
-    height: 65vh;
-    margin: 5% auto;
+    height: 100%;
+    margin: 0 auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
 }
+
 /* 제목 (h2) 스타일 */
-.qna-post-title {
-    position: relative;
-    top:1em;
-    right: 7em;
-    font-size: 2em;
-    margin-bottom: 1em;
+.qna-post-container h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 0.2em;
 }
+
 /* 폼 내부 구성 */
 .qna-post-form {
     width: 100%;
@@ -35,6 +36,7 @@
     border: 0.08em solid #ccc;
     outline: #ccc;
     font-size: 1em;
+
 }
 
 /* 내용 입력 상자 */
@@ -47,11 +49,12 @@
     height: 40vh;
     padding: 1em;
     box-sizing: border-box;
-    border-radius: 5px;
+    border-radius: 0.3em;
     border: 0.08em solid #ccc;
     resize: none; /* 사용자가 크기 조정 불가하게 설정 */
     font-size: 1em;
     outline: #ccc;
+    min-height: 50vh;
 }
 
 /* 제출 버튼 */
