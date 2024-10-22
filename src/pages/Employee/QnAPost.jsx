@@ -25,7 +25,7 @@ function QnAPost() {
     useEffect(() => {
         if (data && data.msg) {
             navigate(`/mypage/course/${courseId}/qna/questions`);
-            console.log(data.msg);
+            alert(data.msg);
         }
     }, [data]);
 
