@@ -79,6 +79,15 @@
     background-color: #f9f9f9;
 }
 
+.clickable-row {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.clickable-row:hover {
+    background-color: #f1f1f1; /* 마우스를 올렸을 때 행의 배경색 변경 */
+}
+
 .sortable {
     cursor: pointer;
     user-select: none;
@@ -88,7 +97,6 @@
     text-decoration: underline;
     color: gray;
 }
-
 
 
 /* 페이징 */
