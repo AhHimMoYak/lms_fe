@@ -28,21 +28,24 @@ const NoticeList = () => {
     }
   };
 
+  const paddedNotices = [...notices];
+  while (paddedNotices.length < 10) {
+    paddedNotices.push({ title: "", createAt: "" });
+  }
+
   return (
-    <div>
+    <div className="noticeList">
+      <div className="more_button_wrapper">
+        <button className="more_button">더보기</button>
+      </div>
       <div className="list_wrapper">
-        {notices.length > 0 ? (
-          notices.map((notice, index) => (
-            <NoticeItem
-              key={index}
-              title={notice.title}
-              content={notice.content}
-              createAt={notice.createAt}
-            />
-          ))
-        ) : (
-          <div>No notices available.</div>
-        )}
+        {paddedNotices.map((notice, index) => (
+          <NoticeItem
+            key={index}
+            title={notice.title || " "}
+            createAt={notice.createAt || " "}
+          />
+        ))}
       </div>
       <div className="pagination">
         <button

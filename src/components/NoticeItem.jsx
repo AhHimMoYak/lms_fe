@@ -10,8 +10,8 @@ const NoticeItem = ({ title, createAt }) => {
   };
 
   return (
-    <div>
-      <div className="title_col">{truncateText(title, 60)}</div>
+    <div className="noticeItem">
+      <div className="title_col">{truncateText(title, 50)}</div>
       <div className="createAt_col">{dateFormat(createAt)}</div>
     </div>
   );
