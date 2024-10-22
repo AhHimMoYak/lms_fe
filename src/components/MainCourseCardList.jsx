@@ -41,7 +41,7 @@ const MainCourseCardList = () => {
         </Box>
       ) : courses.length > 0 ? (
         <>
-          <Box className="CourseCardContainer">
+          <Box className="MainCourseCardContainer">
             {courses.map((course) => (
               <CourseCard
                 key={course.id}

@@ -1,8 +1,10 @@
 .list_wrapper {
   padding: 20px;
   max-width: 2160px;
+  height: 950px;
   margin: 0 auto;
-  border: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
 .list_wrapper > div:nth-child(odd) {
@@ -16,7 +18,6 @@
 .list_wrapper > div {
   padding: 15px;
   margin-bottom: 10px;
-  border-radius: 8px;
   transition: background-color 0.3s ease;
 }
 

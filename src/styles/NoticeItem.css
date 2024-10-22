@@ -5,19 +5,13 @@
 }
 
 .title_col {
+  max-width: 2000px;
   font-weight: bold;
   font-size: 1.4em;
   color: #333;
   padding-bottom: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-.content_col {
-  font-size: 1em;
-  margin: 10px 0;
-  line-height: 1.6;
-  color: #555;
-  padding-bottom: 10px;
+  text-align: left;
+  height: 30px;
 }
 
 .createAt_col {
@@ -25,5 +19,5 @@
   font-size: 0.85em;
   text-align: right;
   padding-top: 5px;
-  border-top: 1px solid #eee;
+  height: 10px;
 }

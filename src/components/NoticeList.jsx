@@ -29,19 +29,21 @@ const NoticeList = () => {
   };
 
   return (
-    <div className="list_wrapper">
-      {notices.length > 0 ? (
-        notices.map((notice, index) => (
-          <NoticeItem
-            key={index}
-            title={notice.title}
-            content={notice.content}
-            createAt={notice.createAt}
-          />
-        ))
-      ) : (
-        <div>No notices available.</div>
-      )}
+    <div>
+      <div className="list_wrapper">
+        {notices.length > 0 ? (
+          notices.map((notice, index) => (
+            <NoticeItem
+              key={index}
+              title={notice.title}
+              content={notice.content}
+              createAt={notice.createAt}
+            />
+          ))
+        ) : (
+          <div>No notices available.</div>
+        )}
+      </div>
       <div className="pagination">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
