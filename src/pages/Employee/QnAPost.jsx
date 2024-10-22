@@ -32,7 +32,7 @@ function QnAPost() {
 
     return (
         <div className="qna-post-container">
-            <div className="qna-post-title">Q&A 게시물 작성</div>
+            <h2>Q&A 게시물 작성</h2>
             <form className="qna-post-form" onSubmit={handleSubmit}>
                 <div className="title-box">
                     <input
