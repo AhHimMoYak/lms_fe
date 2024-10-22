@@ -6,7 +6,8 @@ const NoticeItem = ({ title, createAt }) => {
   };
 
   const dateFormat = (date) => {
-    return date.replace("T", " ");
+    const index = date.indexOf("T");
+    return index !== -1 ? date.slice(0, index).replace("T", " ") : date;
   };
 
   return (

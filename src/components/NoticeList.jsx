@@ -47,7 +47,11 @@ const NoticeList = () => {
           />
         ))}
       </div>
-      <div className="pagination">
+      {/* Pagination moved outside of the list wrapper */}
+      <div
+        className="pagination"
+        style={{ marginTop: "3vh", marginBottom: "2vh" }}
+      >
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
