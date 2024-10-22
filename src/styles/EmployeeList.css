@@ -3,13 +3,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 50vh;
     background-color: #f5f5f5;
     padding: 20px;
 }
 
 /* 내부 컨테이너 */
 .employeeList-container {
+    min-height: 45em;
     width: 80%;
     max-width: 1000px;
     background-color: white;
