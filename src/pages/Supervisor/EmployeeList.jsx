@@ -27,7 +27,7 @@ function EmployeeList() {
     //2. 가져온 회사 id 로 회사 직원 가져오는 useEffect
     useEffect(() => {
         if (companyID) {
-            fetchEmployeeData(`/supervisor/?companyId=${companyID}`, "GET");
+            fetchEmployeeData(`/supervisor/?companyId=${companyID}`, "GET")
         }
     }, [companyID]);
 
@@ -86,7 +86,7 @@ function EmployeeList() {
     }
 
     const handleRowClick = (userId) => {
-        navigate(`/mypage/managed/:${userId}`);
+        navigate(`/mypage/managed/${userId}`);
     };
 
     return (
