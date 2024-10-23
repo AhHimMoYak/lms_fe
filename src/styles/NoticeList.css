@@ -55,7 +55,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 10px;
+  padding-bottom: 1%;
   border-bottom: 2px solid #000000;
 }
 
@@ -65,7 +65,7 @@
 }
 
 .loadingText {
-  margin-left: 15px;
+  margin-left: 50%;
 }
 
 .board_title {
