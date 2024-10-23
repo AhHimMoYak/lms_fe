@@ -1,5 +1,5 @@
 /* 전체 폼 컨테이너 */
-.qna-post-container {
+.qna-container {
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -14,14 +14,14 @@
 }
 
 /* 제목 (h2) 스타일 */
-.qna-post-container h2 {
+.qna-container h2 {
     font-size: 1.5em;
     font-weight: bold;
     margin-bottom: 0.2em;
 }
 
 /* 폼 내부 구성 */
-.qna-post-form {
+.qna-form {
     width: 100%;
 }
 
