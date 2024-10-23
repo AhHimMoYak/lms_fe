@@ -2,12 +2,15 @@ import {useEffect} from "react";
 import useAxios from "../../hooks/api/useAxios.jsx";
 
 import '/src/styles/EmployeeDetailed.css'
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 function EmployeeDetailed() {
 
     const {id} = useParams();
+    const navigate = useNavigate();
     const {data: employee, error, fetchData: fetchUserId} = useAxios();
+    const {fetchData: deleteDepartmentData} = useAxios();
+    const {data: course, fetchData: fetchUserCourse} = useAxios();
 
     useEffect(() => {
         console.log("현재 사원:", id)
@@ -16,14 +19,15 @@ function EmployeeDetailed() {
     //사원의 상세 정보 가져오는 api
     useEffect(() => {
         if (id) {
-            fetchUserId(`supervisor/user?userId=${id}`, "GET");
+            fetchUserId(`/supervisor/user?userId=${id}`, "GET");
+            fetchUserCourse(`/course/userCourseList?userId=${id}`,"GET");
         }
     }, [id]);
 
-
     useEffect(() => {
-        if (employee) {
+        if (employee != null) {
             console.log(employee)
+            console.log(course)
         }
     }, [employee]);
 
@@ -31,21 +35,22 @@ function EmployeeDetailed() {
         return <div>Loading...</div>;
     }
 
-    // const handleDelete = (departmentId, affiliationId) => {
-    //     const confirmDelete = window.confirm("정말 삭제하시겠습니까?");
-    //     if(confirmDelete){
-    //         deleteDepartmentData(`/supervisor/department?companyId=${companyID}&affiliationId=${affiliationId}&departmentId=${departmentId}`,"DELETE")
-    //             .then(()=>{
-    //                 alert("삭제가 완료되었습니다.");
-    //                 fetchEmployeeData()
-    //             })
-    //             .catch((error) => {
-    //                 alert("삭제에 실패했습니다. 다시 시도해주세요");
-    //                 console.log(error);
-    //             })
-    //     }
-    //
-    // }
+
+    const handleDelete = (departmentId, affiliationId) => {
+        const confirmDelete = window.confirm("정말 삭제하시겠습니까?");
+        if(confirmDelete){
+            deleteDepartmentData(`/supervisor/user?userId=${id}`,"DELETE")
+                .then(()=>{
+                    alert("삭제가 완료되었습니다.");
+                    navigate('/mypage/managed');
+                })
+                .catch((error) => {
+                    alert("삭제에 실패했습니다. 다시 시도해주세요");
+                    console.log(error);
+                })
+        }
+    }
+
 
     return (
         <div className="employeeDetailed-page">
@@ -56,7 +61,7 @@ function EmployeeDetailed() {
                     <table className="employeeDetailed-info-table">
                         <thead>
                         <tr>
-                            <th>사원이름</th>
+                            <th>사원 이름</th>
                             <th>아이디</th>
                             <th>생년월일</th>
                             <th>부서</th>
@@ -78,6 +83,44 @@ function EmployeeDetailed() {
                         </tbody>
                     </table>
                 </div>
+
+                <div className="employeeDetailed-buttons">
+                    <button className="employeeDetailed-delete"
+                    onClick={handleDelete}>삭제</button>
+                </div>
+
+                <dive className="employeeDetailed-course">
+                    <h3>수강 중인 코스</h3>
+                    <table className="employeeDetailed-course-table">
+                        <thead>
+                        <tr>
+                            <th>코스 제목</th>
+                            <th>훈련 기관</th>
+                            <th>카테고리</th>
+                            <th>수료 날짜</th>
+                            <th>진행률</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {course && course.map((course, index) => (
+                            <tr key={index}>
+                                <td>{course.title}</td>
+                                <td>{course.institutionName}</td>
+                                <td>{course.category}</td>
+                                <td>{course.endDate}</td>
+                                <td>
+                                    <div className="progress-bar">
+                                        <div className="progress" style={{ width: `${course.progress}%` }}></div>
+                                        <span>{course.progress}%</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                </dive>
+
             </div>
         </div>
 
