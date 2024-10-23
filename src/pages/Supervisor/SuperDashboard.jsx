@@ -4,7 +4,9 @@ function SuperDashboard() {
       style={{
         backgroundColor: "purple",
       }}
-    ></div>
+    >
+      SuperDashboard
+    </div>
   );
 }
 
