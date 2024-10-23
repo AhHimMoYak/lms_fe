@@ -8,7 +8,7 @@ function QnAList() {
     const page = parseInt(query.get("page")) || 1;
     const own = query.get("own") || false;
     const { courseId } = useParams();
-    const { data, error, fetchData } = useAxios();
+    const { data, fetchData } = useAxios();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,12 +22,10 @@ function QnAList() {
     const handleCreateQnA= ()=>{
         navigate(`/mypage/course/${courseId}/qna/post`)
     }
-    // 에러 처리
-    if (error) {
-        return <div>에러 발생: {error.message}</div>;
+    const handleRowClick=(courseBoardId)=>{
+        navigate(`/mypage/course/${courseId}/qna/${courseBoardId}`);
     }
 
-    // 로딩 중일 때 처리
     if (!data) {
         return <div>로딩 중...</div>;
     }
@@ -35,8 +33,9 @@ function QnAList() {
     return (
         <div className="qna-list-container">
             <div className="courselist-header">
-            <div className="courselist-name">{data.courseTitle || "강좌 제목 없음"}</div>
-            <button className="create-qna" onClick={handleCreateQnA}> 글작성 </button></div>
+                <div className="courselist-name">{data.courseTitle || "강좌 제목 없음"}</div>
+                <button className="create-qna" onClick={handleCreateQnA}> 글작성</button>
+            </div>
             <table className="qna-table">
                 <thead>
                 <tr>
@@ -48,12 +47,12 @@ function QnAList() {
                 </thead>
                 <tbody>
                 {data.boards.map((board, index) => (
-                    <tr key={board.id}>
+                    <tr key={board.id} onClick={() => handleRowClick(board.boardId)}>
                         <td>{(page - 1) * 10 + index + 1}</td>
                         <td>{board.title}</td>
                         <td> {new Date(board.createdAt).toISOString().split("T")[0]}</td>
                         <td className={board.commitCount > 0 ? "answered" : "not-answered"}>
-                            {board.commitCount >0 ? "완료" : "답변하지 않음"}
+                            {board.commitCount > 0 ? "완료" : "답변하지 않음"}
                         </td>
                     </tr>
                 ))}
@@ -62,22 +61,31 @@ function QnAList() {
 
             {/* 페이지네이션 버튼 */}
             <div className="pagination">
-                <button
-                    onClick={() => handlePageChange(page - 1)}
-                    disabled={page === 1}
-                >
+                <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
                     {"<"}
                 </button>
 
-                {Array.from({ length: totalPages }, (_, i) => (
-                    <button
-                        key={i + 1}
-                        onClick={() => handlePageChange(i + 1)}
-                        className={page === i + 1 ? "active" : ""}
-                    >
-                        {i + 1}
-                    </button>
-                ))}
+                {(() => {
+                    const groupSize = 5; // 한 번에 보여줄 페이지 수
+                    const currentGroup = Math.floor((page - 1) / groupSize);
+                    const startPage = currentGroup * groupSize + 1;
+                    const endPage = Math.min(startPage + groupSize - 1, totalPages);
+
+                    const pages = [];
+                    for (let i = startPage; i <= endPage; i++) {
+                        pages.push(
+                            <button
+                                key={i}
+                                onClick={() => handlePageChange(i)}
+                                className={page === i ? "active" : ""}
+                            >
+                                {i}
+                            </button>
+                        );
+                    }
+
+                    return pages;
+                })()}
 
                 <button
                     onClick={() => handlePageChange(page + 1)}
@@ -89,4 +97,5 @@ function QnAList() {
         </div>
     );
 }
+
 export default QnAList;
