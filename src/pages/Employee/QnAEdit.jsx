@@ -1,6 +1,7 @@
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import useAxios from "../../hooks/api/useAxios.jsx";
+import "../../styles/Employee/QnAPost.css";
 
 function QnAEdit() {
     const location = useLocation();
@@ -37,9 +38,9 @@ function QnAEdit() {
     }
 
     return (
-        <div className="qna-post-container">
+        <div className="qna-container">
             <h2>Q&A 게시물 수정</h2>
-            <form className="qna-post-form" onSubmit={handleSubmit}>
+            <form className="qna-form" onSubmit={handleSubmit}>
                 <div className="title-box">
                     <input
                         type="text"
