@@ -14,7 +14,7 @@ import QnAEdit from "./pages/Employee/QnAEdit";
 import QnAPost from "./pages/Employee/QnAPost";
 import NoticeList from "./pages/Employee/NoticeList";
 import NoticeDetailed from "./pages/Employee/NoticeDetailed";
-import LiveDetailedFrame from "./components/Employee/Courses/LiveDetailedFrame copy";
+import LiveDetailedFrame from "./components/Employee/Courses/CourseListFrame";
 import LiveDetaild from "./pages/Employee/LiveDetaild";
 import VideoStream from "./pages/Employee/VideoStream";
 import LiveStream from "./pages/Employee/LiveStream";
@@ -42,11 +42,11 @@ const EmployeeRouter = () => (
         <Route path="" element={<CourseDetailed />} />
         <Route path="detail" element={<CourseDetailed />} />
         {/* qna?page = {number}&own=true */}
-        <Route path="qna" element={<QnAList />}>
-          <Route path=":courseId" element={<QnADetailed />}>
+        <Route path="qna" element={<QnAListFrame />}>
+            <Route path="questions" element={<QnAList />}/>
+            <Route path=":courseBoardId" element={<QnADetailed />}/>
             <Route path="edit" element={<QnAEdit />} />
-          </Route>
-          <Route path="post" element={<QnAPost />} />
+            <Route path="post" element={<QnAPost />} />
         </Route>
 
         {/* notice?page={number} */}
