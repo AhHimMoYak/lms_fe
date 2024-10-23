@@ -12,10 +12,6 @@ function EmployeeDetailed() {
     const {fetchData: deleteDepartmentData} = useAxios();
     const {data: course, fetchData: fetchUserCourse} = useAxios();
 
-    useEffect(() => {
-        console.log("현재 사원:", id)
-    }, [id]);
-
     //사원의 상세 정보 가져오는 api
     useEffect(() => {
         if (id) {
@@ -23,13 +19,6 @@ function EmployeeDetailed() {
             fetchUserCourse(`/course/userCourseList?userId=${id}`,"GET");
         }
     }, [id]);
-
-    useEffect(() => {
-        if (employee != null) {
-            console.log(employee)
-            console.log(course)
-        }
-    }, [employee]);
 
     if (!employee) {
         return <div>Loading...</div>;
@@ -46,7 +35,6 @@ function EmployeeDetailed() {
                 })
                 .catch((error) => {
                     alert("삭제에 실패했습니다. 다시 시도해주세요");
-                    console.log(error);
                 })
         }
     }
