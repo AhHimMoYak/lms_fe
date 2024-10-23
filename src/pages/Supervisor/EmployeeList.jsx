@@ -134,11 +134,9 @@ function EmployeeList() {
                             </tr>
                         ))
                     ) : (
-                        Array.from({ length: employeesPerPage }).map((_, idx) => (
-                            <tr key={idx}>
-                                <td colSpan="5">{idx === 0 ? '사원이 없습니다.' : ''}</td>
-                            </tr>
-                        ))
+                        <tr>
+                            <td colSpan="5" className="no-employees">사원이 없습니다.</td>
+                        </tr>
                     )}
                     </tbody>
                 </table>
