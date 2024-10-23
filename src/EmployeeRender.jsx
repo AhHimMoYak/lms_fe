@@ -24,6 +24,7 @@ import ReceiveInquiry from "./pages/Employee/ReceiveInquiry";
 import InquiryDetailed from "./pages/Employee/InquiryDetailed";
 import InquiryEdit from "./pages/Employee/InquiryEdit";
 import InquiryPost from "./pages/Employee/InquiryPost";
+import QnAListFrame from "./components/Employee/Courses/QnAListFrame";
 
 const EmployeeRouter = () => (
   <Routes>
