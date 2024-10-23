@@ -54,7 +54,7 @@ function VideoExplain() {
                     />
                     <div className="lecture-details">
                         <h2>{data.title}</h2>
-                        <p>강사명: {data.tutorName}</p>
+                        <p>{data.tutorName} 강사</p>
                     </div>
                 </div>
             </div>
@@ -99,12 +99,11 @@ function VideoExplain() {
                     {data.curriculumList && data.curriculumList.length > 0 ? (
                         data.curriculumList.map((curriculum, index) => (
                             <div key={curriculum.id} className="curriculum-section">
-                                <div className="section-header">
+                                <div className="section-header" onClick={() => toggleCurriculum(index)}>
                                     <h4>{curriculum.title}</h4>
-                                    <button onClick={() => toggleCurriculum(index)}>
-                                        {activeCurriculum === index ? '접기' : '펼치기'}
-                                    </button>
-                                    <span>{curriculum.contentList.length}개</span>
+                                    <p className="curriculum-detail-toggle">
+                                        {activeCurriculum === index ? '▼' : '▶'}
+                                    </p>
                                 </div>
                                 {activeCurriculum === index && (
                                     <div className="section-content">
