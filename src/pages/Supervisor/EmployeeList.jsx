@@ -26,8 +26,9 @@ function EmployeeList() {
 
     //2. 가져온 회사 id 로 회사 직원 가져오는 useEffect
     useEffect(() => {
-        if (companyID) {
-            fetchEmployeeData(`/supervisor/?companyId=${companyID}`, "GET")
+        if (companyID != null) {
+            const id = companyID.id;
+            fetchEmployeeData(`/supervisor?companyId=${id}`, "GET")
         }
     }, [companyID]);
 
