@@ -18,7 +18,6 @@ function QnAEdit() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // 서버로 전송할 요청 DTO
         const requestDTO = {
             title: title,
             content: content
@@ -28,7 +27,6 @@ function QnAEdit() {
 
     useEffect(() => {
         if (data && data.msg) {
-            console.log(data);
             navigate(`/mypage/course/${courseId}/qna/${courseBoardId}`);
             alert(data.msg);
         }
