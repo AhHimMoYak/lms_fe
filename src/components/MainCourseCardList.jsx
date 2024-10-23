@@ -11,6 +11,8 @@ const MainCourseCardList = () => {
   const [loading, setLoading] = useState(false);
   const { fetchData, data } = useAxios();
 
+  const size = 6;
+
   useEffect(() => {
     setCourses([]);
     setLoading(true);
@@ -19,7 +21,7 @@ const MainCourseCardList = () => {
   useEffect(() => {
     if (category) {
       setLoading(true);
-      fetchData(`/course/preview?categoryNum=${category}&size=6`, "get");
+      fetchData(`/course/preview?categoryNum=${category}&size=${size}`, "get");
     }
   }, [category]);
 

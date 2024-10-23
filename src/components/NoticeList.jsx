@@ -10,9 +10,10 @@ const NoticeList = () => {
   const [totalPages, setTotalPages] = useState(1);
 
   const type = "NOTICE";
+  const size = 5;
 
   useEffect(() => {
-    fetchData(`/board?type=${type}&page=${currentPage}&size=10`, "get");
+    fetchData(`/board?type=${type}&page=${currentPage}&size=${size}`, "get");
   }, [currentPage]);
 
   useEffect(() => {
@@ -29,13 +30,14 @@ const NoticeList = () => {
   };
 
   const paddedNotices = [...notices];
-  while (paddedNotices.length < 10) {
+  while (paddedNotices.length < size) {
     paddedNotices.push({ title: "", createAt: "" });
   }
 
   return (
     <div className="noticeList">
-      <div className="more_button_wrapper">
+      <div className="title_wrapper">
+        <div className="board_title">공지사항</div>
         <button className="more_button">더보기</button>
       </div>
       <div className="list_wrapper">

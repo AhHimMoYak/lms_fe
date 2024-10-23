@@ -4,8 +4,8 @@
   align-items: center;
   list-style: none;
   padding: 0;
-  margin-top: 3vh; /* 여백 추가 */
-  margin-bottom: 2vh; /* 여백 추가 */
+  margin-top: 3vh;
+  margin-bottom: 2vh;
 }
 
 .page-item {
@@ -51,10 +51,12 @@
   background-color: #f0f0f0;
 }
 
-.more_button_wrapper {
+.title_wrapper {
   display: flex;
-  justify-content: flex-end; /* 오른쪽 끝으로 정렬 */
-  margin-bottom: 2%; /* 아래 여백 */
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #000000;
 }
 
 .noticeList {
@@ -64,4 +66,25 @@
 
 .loadingText {
   margin-left: 15px;
+}
+
+.board_title {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: black;
+}
+
+.more_button {
+  font-size: 1em;
+  padding: 0.5em 1em;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.more_button:hover {
+  background-color: #0056b3;
 }
