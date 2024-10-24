@@ -1,7 +1,7 @@
-import { Routes, Route } from "react-router-dom";
-import { AuthChecker } from "./authentication/AuthChecker";
+import {Routes, Route} from "react-router-dom";
+import {AuthChecker} from "./authentication/AuthChecker";
 import Mypage from "./pages/Mypage";
-import { PrivateRoleRoute } from "./authentication/PrivateRoleRoute";
+import {PrivateRoleRoute} from "./authentication/PrivateRoleRoute";
 import BasicFrame from "./components/Main/BasicFrame";
 
 import CourseFrame from "./components/Main/CourseFrame";
@@ -9,7 +9,7 @@ import Main from "./pages/Main/Main";
 import Video from "./pages/Main/Video";
 import Live from "./pages/Main/Live";
 import IntrodcutionFrame from "./components/Main/IntroductionFrame";
-import VideoExplaine from "./pages/Main/VideoExplaine";
+import VideoExplain from "./pages/Main/VideoExplain.jsx";
 import LiveExplaine from "./pages/Main/VideoExplaine copy";
 import Login from "./pages/Login";
 import EmployeeRouter from "./EmployeeRender";
@@ -50,7 +50,6 @@ function Render() {
           <Route element={PrivateRoleRoute("INSTRUCTOR")}></Route>
         </Route>
       </Route>
-
     </Routes>
   );
 }
