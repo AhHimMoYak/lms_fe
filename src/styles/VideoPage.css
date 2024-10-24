@@ -8,26 +8,26 @@
 
 .course-list-container {
     flex: 1;
-    padding: 20px;
+    padding: 2vh;
 }
 
 .category-title {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 2vh;
 }
 
 .pagination {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 2vh;
 }
 
 .pagination-info {
-    margin: 0 10px;
+    margin: 0 1vw;
 }
 
 button {
-    padding: 10px 20px;
-    margin: 0 5px;
+    padding: 2vh 4vw;
+    margin: 0 1vw;
     border: none;
     background-color: #f0f0f0;
     cursor: pointer;
