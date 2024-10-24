@@ -9,12 +9,12 @@ import Main from "./pages/Main/Main";
 import Video from "./pages/Main/Video";
 import Live from "./pages/Main/Live";
 import IntrodcutionFrame from "./components/Main/IntroductionFrame";
-import VideoExplain from "./pages/Main/VideoExplain.jsx";
 import LiveExplaine from "./pages/Main/VideoExplaine copy";
 import Login from "./pages/Login";
 import EmployeeRouter from "./EmployeeRender";
 import SupervisorRoutes from "./SupervisorRoutes";
 import LiveStream from "./pages/Employee/LiveStream.jsx";
+import VideoExplaine from "./pages/Main/VideoExplaine.jsx";
 
 function Render() {
   return (
