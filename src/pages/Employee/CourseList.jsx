@@ -27,9 +27,11 @@ function CourseList() {
     }
 
     const course = courseData?.content ?? [];
+    const totalPages = courseData?.totalPages ?? 1;
 
-    const courseid = courseData?.content[0].id ?? [];
-
+    const handlePageChange = (newPage) => {
+        navigate(`?page=${newPage}`)
+    }
 
     return (
         <div className="mycourse-list-container">
@@ -48,7 +50,8 @@ function CourseList() {
                     <tbody>
                     {course && course.length > 0 ? (
                         course.map((courseItem, index) => (
-                            <tr key={index} onClick={()=>handleRowClick(courseid)} className="course-clickable-row">
+                            <tr key={index} onClick={() => handleRowClick(course[index].id)}
+                                className="course-clickable-row">
                                 <td>No.{courseItem.id}</td>
                                 <td>{courseItem.title}</td>
                                 <td>{courseItem.category || "N/A"}</td>
@@ -62,6 +65,17 @@ function CourseList() {
                     )}
                     </tbody>
                 </table>
+
+                <div className="courselist-pagination"></div>
+                {Array.from({length: totalPages}, (_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => handlePageChange(index + 1)}
+                        className= {`pagination-button ${page === index + 1 ? "active" : ""}`}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
             </div>
         </div>
     );
