@@ -1,6 +1,7 @@
 import AuthManger from "../hooks/api/AuthManger";
 import useAxios from "../hooks/api/useAxios";
 import { useEffect, useState } from 'react';
+import VideoPlayer from "./VideoPlayer.jsx";
 
 
 
@@ -11,23 +12,15 @@ function StreamVideo() {
 
     return(
         <>
-            <div className="stream-container">
 
             <div className="video-container">
-                <video className="video-player" controls>
-                    <source src="your-streaming-url-here" type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-            <div className="info-container">
-                <div className="stream-info">
-                    <h2>실시간으로 자바에 대해서 배워보기</h2>
-                    <p>심종연 강사</p>
-                    <p>Viewers: 123</p>
-                </div>
+                {/*<video className="video-player" controls>*/}
+                {/*    <source src="http://172.16.10.251:8085/hls/2_hd1080.m3u8" type="video/m3u8" />*/}
+                {/*    Your browser does not support the video tag.*/}
+                {/*</video>*/}
+                <VideoPlayer src="http://172.16.10.251:8085/hls/2_hd1080.m3u8" type="m3u8" />
             </div>
 
-            </div>
         </>
     );
 }

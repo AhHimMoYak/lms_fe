@@ -1,0 +1,38 @@
+.stream-page {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.video-container {
+    flex: 3;
+    background-color: black;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.stream-container {
+    flex: 3;
+}
+
+.video-player {
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+
+}
+
+.info-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+
+}
+
+.stream-info {
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+}

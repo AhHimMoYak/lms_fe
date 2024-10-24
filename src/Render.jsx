@@ -14,6 +14,7 @@ import LiveExplaine from "./pages/Main/VideoExplaine copy";
 import Login from "./pages/Login";
 import EmployeeRouter from "./EmployeeRender";
 import SupervisorRoutes from "./SupervisorRoutes";
+import LiveStream from "./pages/Employee/LiveStream.jsx";
 
 function Render() {
   return (
@@ -28,6 +29,8 @@ function Render() {
         <Route path="/introduction/*" element={<IntrodcutionFrame />}>
           <Route path="video/:courseId" element={<VideoExplaine />} />
           <Route path="live/:courseId" element={<LiveExplaine />} />
+        </Route>
+        <Route path="/live/:streamKey" element={<LiveStream />}>
         </Route>
       </Route>
       <Route path="/login" element={<Login />} />
@@ -47,6 +50,7 @@ function Render() {
           <Route element={PrivateRoleRoute("INSTRUCTOR")}></Route>
         </Route>
       </Route>
+
     </Routes>
   );
 }
