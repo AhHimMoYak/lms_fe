@@ -1,0 +1,101 @@
+.mycourse-list-container {
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    background-color: #f5f5f5;
+    padding: 3vh;
+}
+
+.mycourse-list {
+    width: 95%;
+    margin: 0 auto;
+    padding-top: 5vh;
+}
+
+.mycourse-list-title {
+    text-align: center;
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 5vh;
+    color: #333;
+}
+
+.mycourse-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 1em;
+    padding: 4vh;
+    margin-bottom: 2vh;
+}
+
+.mycourse-list-table thead tr {
+    background-color: #f8f8f8;
+    border-bottom: 2px solid #dcdcdc;
+}
+
+.mycourse-list-table tbody tr {
+    border-bottom: 1px solid #dcdcdc;
+}
+
+.mycourse-list-table thead th,
+.mycourse-list-table thead td {
+    padding: 1vh;
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.5em;
+    border-bottom: 1px solid #dcdcdc;
+}
+
+.mycourse-list-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.mycourse-list-table tbody td {
+    padding: 1.5vh;
+    text-align: left;
+    font-size: 1.3em;
+}
+
+/* Pagination Styling */
+.courselist-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    padding: 0.5vh 0;
+}
+
+.pagination-button {
+    border: 1px solid #dcdcdc;
+    padding: 1vh 1.5vw;
+    margin: 0 0.3vw;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    background-color: #ffffff;
+    text-align: center;
+    appearance: none;
+    box-sizing: border-box;
+}
+
+.pagination-button:hover {
+    background-color: #e6e6e6;
+}
+
+.pagination-button.active {
+    background-color: lightgrey;
+    color: #fff;
+    border: none;
+}
+
+.pagination-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-button:active {
+    transform: scale(0.95);
+}
+
+
