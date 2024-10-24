@@ -1,7 +1,7 @@
-import { Routes, Route } from "react-router-dom";
-import { AuthChecker } from "./authentication/AuthChecker";
+import {Routes, Route} from "react-router-dom";
+import {AuthChecker} from "./authentication/AuthChecker";
 import Mypage from "./pages/Mypage";
-import { PrivateRoleRoute } from "./authentication/PrivateRoleRoute";
+import {PrivateRoleRoute} from "./authentication/PrivateRoleRoute";
 import BasicFrame from "./components/Main/BasicFrame";
 
 import CourseFrame from "./components/Main/CourseFrame";
@@ -9,11 +9,12 @@ import Main from "./pages/Main/Main";
 import Video from "./pages/Main/Video";
 import Live from "./pages/Main/Live";
 import IntrodcutionFrame from "./components/Main/IntroductionFrame";
-import VideoExplaine from "./pages/Main/VideoExplaine";
 import LiveExplaine from "./pages/Main/VideoExplaine copy";
 import Login from "./pages/Login";
 import EmployeeRouter from "./EmployeeRender";
 import SupervisorRoutes from "./SupervisorRoutes";
+import LiveStream from "./pages/Employee/LiveStream.jsx";
+import VideoExplaine from "./pages/Main/VideoExplaine.jsx";
 
 function Render() {
   return (
@@ -28,6 +29,8 @@ function Render() {
         <Route path="/introduction/*" element={<IntrodcutionFrame />}>
           <Route path="video/:courseId" element={<VideoExplaine />} />
           <Route path="live/:courseId" element={<LiveExplaine />} />
+        </Route>
+        <Route path="/live/:streamKey" element={<LiveStream />}>
         </Route>
       </Route>
       <Route path="/login" element={<Login />} />
