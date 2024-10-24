@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-function QnAListFrame() {
+function LiveDetailedFrame() {
   return (
     <div>
       <Outlet />
@@ -8,4 +8,4 @@ function QnAListFrame() {
   );
 }
 
-export default QnAListFrame;
+export default LiveDetailedFrame;
