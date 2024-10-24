@@ -1,0 +1,111 @@
+.dashboard-container {
+    padding: 0.5vw;
+    background-color: #f5f5f5;
+}
+
+.dashboard-title {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 1.5vh;
+    margin-left: 7vw;
+    text-align: left;
+}
+
+.course-cards-container {
+    width: 75%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1vw;
+}
+
+.course-card {
+    width: 12vw;
+    background-color: #ffffff;
+    border-radius: 0.5em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+}
+
+.course-card-header {
+    height: 15vh;
+}
+
+.course-card-body {
+    padding: 1vw;
+}
+
+.course-title {
+    font-size: 0.8em;
+    font-weight: bold;
+    margin: 1.5vh 0;
+}
+
+/* Q&A 게시물 스타일 */
+.qna-list-container {
+    margin: 2vw auto;
+    padding: 1.5vw;
+    border-radius: 0.5em;
+}
+
+.qna-list-title {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 2vh;
+    text-align: left;
+    margin-left: 6vw;
+}
+
+.write-qna-table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.8em;
+}
+
+.write-qna-table th, .write-qna-table td {
+    padding: 1.3vw;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: left;
+}
+
+.write-qna-table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    text-align: left;
+
+}
+
+.qna-table-row:hover {
+    background-color: #f9f9f9;
+}
+
+.write-qna-table {
+    font-weight: 500;
+    text-align: left;
+}
+
+.qna-author, .qna-course, .qna-created {
+    font-size: 14px;
+    color: #666;
+    text-align: left;
+}
+
+.qna-author {
+    font-weight: bold;
+    text-align: left;
+}
+
+.qna-course {
+  text-align: left;
+}
+
+.qna-created {
+    text-align: left;
+}
