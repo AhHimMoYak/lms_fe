@@ -9,7 +9,6 @@ function CourseFrame() {
 
   return (
     <div style={containerStyle}>
-      <CourseSidebar />
       <Outlet />
     </div>
   );
