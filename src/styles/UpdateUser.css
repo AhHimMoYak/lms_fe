@@ -1,0 +1,97 @@
+.update-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.update-container {
+    background-color: #fff;
+    padding: 1.5vh 1vw;
+    border-radius: 0.5vw;
+    box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 0, 0.1);
+    width: 80vw;
+    max-width: 30vw;
+}
+
+.update-title {
+    font-size: 1.5vw;
+    margin-bottom: 0.8vw;
+    text-align: center;
+    color: #333;
+}
+
+.update-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.update-field {
+    margin-bottom: 1.5vh;
+    position: relative;
+}
+
+.update-input {
+    width: calc(100% - 1.5vw);
+    padding: 1vh 0.6vw;
+    border: 0.15vw solid #ccc;
+    border-radius: 0.3vw;
+    font-size: 0.9vw;
+}
+
+/* 비활성화된 입력 필드 */
+.update-input.disabled {
+    background-color: #e9e9e9;
+    color: #666;
+    cursor: not-allowed;
+}
+
+/* 에러 발생 시 스타일 */
+.update-input.error {
+    border-color: red;
+}
+
+.update-error-container {
+    height: 1.5vh;
+    margin-top: 0.7vh;
+    overflow: hidden;
+}
+
+.update-error {
+    color: red;
+    font-size: 0.5em;
+    margin: 0;
+}
+
+/* 버튼 스타일 */
+.update-button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 1vh 0.5vw;
+    border-radius: 1em;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 50%; /* PasswordPrompt 페이지와 동일한 크기 */
+    margin-top: 1.5vh;
+    align-self: center; /* 중앙 정렬 */
+}
+
+.update-button:hover {
+    background-color: #000000;
+}
+
+.update-general-error {
+    color: red;
+    font-size: 0.5em;
+    text-align: center;
+    margin-top: 1vh;
+}
+
+.update-general-error-container {
+    height: 3vh;
+    overflow-y: auto;
+    margin-top: 0.5vh;
+}
