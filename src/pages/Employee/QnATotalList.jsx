@@ -16,19 +16,19 @@ function QnATotalList() {
         fetchQna(`/courseBoard/myBoard?page=${page}&size=10`,"GET")
     }, [page]);
 
-    useEffect(() => {
-        if (qnaData) {
-            console.log(qnaData)
-        }
-    }, [qnaData]);
-
     if (!qnaData) {
         return <div>로딩 중...</div>;
     }
+
+    const handleRowClick = (boardId) => {
+        navigate(`/mypage/qna/${boardId}`);
+    }
+
+    const totalPages = qnaData.totalPage
+
     const handlePageChange = (newPage) => {
-        navigate(`?page=${newPage}`);
+            navigate(`?page=${newPage}`);
     };
-    const totalPages = qnaData.totalPage;
 
     return (
         <div className="myQna-list-container">
@@ -47,7 +47,8 @@ function QnATotalList() {
                     </thead>
                     <tbody>
                     {qnaData.boards.map((board, index) => (
-                        <tr key={board.boardId}>
+                        <tr key={board.boardId} onClick={()=>handleRowClick(board.boardId)}
+                            className= "myQna-clickable-row">
                             <td>{(page - 1) * 10 + index + 1}</td>
                             <td>{board.courseName}</td>
                             <td>{board.title}</td>
@@ -61,40 +62,17 @@ function QnATotalList() {
                     </tbody>
                 </table>
 
-                <div className="pagination">
-                    <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
-                        {"<"}
-                    </button>
-
-                    {(() => {
-                        const groupSize = 5; // 한 번에 보여줄 페이지 수
-                        const currentGroup = Math.floor((page - 1) / groupSize);
-                        const startPage = currentGroup * groupSize + 1;
-                        const endPage = Math.min(startPage + groupSize - 1, totalPages);
-
-                        const pages = [];
-                        for (let i = startPage; i <= endPage; i++) {
-                            pages.push(
-                                <button
-                                    key={i}
-                                    onClick={() => handlePageChange(i)}
-                                    className={page === i ? "active" : ""}
-                                >
-                                    {i}
-                                </button>
-                            );
-                        }
-
-                        return pages;
-                    })()}
-
+                <div className="courselist-pagination"></div>
+                {Array.from({length: totalPages}, (_, index) => (
                     <button
-                        onClick={() => handlePageChange(page + 1)}
-                        disabled={page === totalPages}
+                        key={index}
+                        onClick={() => handlePageChange(index + 1)}
+                        className= {`pagination-button ${page === index + 1 ? "active" : ""}`}
                     >
-                        {">"}
+                        {index + 1}
                     </button>
-                </div>
+                ))}
+
             </div>
         </div>
     );
