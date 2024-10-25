@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import useAxios from "../../hooks/api/useAxios.jsx";
 
-// import '/src/styles/EmployeeDetailed.css'
+import '/src/styles/EmployeeDetailed.css'
 import {useNavigate, useParams} from "react-router-dom";
 
 function EmployeeDetailed() {
