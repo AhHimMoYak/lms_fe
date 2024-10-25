@@ -1,0 +1,34 @@
+.sidebar {
+    width: 25%;
+    height: auto;
+    max-height: 100vh;
+    overflow-y: auto;
+    background-color: #ffffff; /* 배경 색상 */
+    padding: 20px;
+    box-sizing: border-box;
+    border-right: 0.1em solid #dddddd; /* 오른쪽 경계선 */
+}
+
+.category-title {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.category-button {
+    display: block;
+    margin: 6px 0;
+    padding: 10px;
+    background-color: #f9f9f9; /* 버튼 배경 색상 */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+    transition: background-color 0.2s; /* 호버 효과 */
+}
+
+.category-button:hover {
+    background-color: #e0e0e0; /* 호버 시 색상 변화 */
+}

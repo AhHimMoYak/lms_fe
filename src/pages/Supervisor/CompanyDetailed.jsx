@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import useAxios from "../../hooks/api/useAxios.jsx";
 
-import '/src/styles/CompanyDetailed.css'
+//import '/src/styles/CompanyDetailed.css'
 
 function CompanyDetailed() {
 
