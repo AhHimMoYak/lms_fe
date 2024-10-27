@@ -52,7 +52,7 @@ function QnAList() {
                         <td>{board.title}</td>
                         <td> {new Date(board.createdAt).toISOString().split("T")[0]}</td>
                         <td className={board.commitCount > 0 ? "answered" : "not-answered"}>
-                            {board.commitCount > 0 ? "완료" : "답변하지 않음"}
+                            {board.commitCount > 0 ? "완료" : "미완료"}
                         </td>
                     </tr>
                 ))}
