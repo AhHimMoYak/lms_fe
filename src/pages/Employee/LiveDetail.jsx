@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import useAxios from "../../hooks/api/useAxios.jsx";
 import { useNavigate } from 'react-router-dom';
-import '../../styles/LiveList.css';
+import '../../styles/LiveDetail.css';
 
-const LiveList = () => {
+const LiveDetail = () => {
     const [liveCourses, setLiveCourses] = useState({ on: [], canStart: [], end: [] });
     const { data, error, fetchData } = useAxios();
     const navigate = useNavigate();
@@ -73,4 +73,4 @@ const LiveList = () => {
     );
 };
 
-export default LiveList;
+export default LiveDetail;
