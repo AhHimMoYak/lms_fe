@@ -1,10 +1,9 @@
 // Video.jsx
 import React, { useEffect, useState, memo, useCallback } from "react";
 import { useLocation } from "react-router-dom";
-import CourseList from "../../components/CourseList.jsx";
-import "../../styles/VideoPage.css"; // 새로운 외부 CSS 파일 추가
-import CourseSidebar from '../../components/Main/CourseSidebar.jsx';
-import '../../styles/CourseSidebar.css'; // CourseSidebar 관련 CSS 파일 추가
+import CourseList from "../../components/Main/CourseList";
+import "../../styles/Main/Video.css"; // 새로운 외부 CSS 파일 추가
+import CourseSidebar from "../../components/Main/CourseSidebar.jsx";
 
 const MemoizedCourseSidebar = memo(CourseSidebar);
 
@@ -38,15 +37,23 @@ function Video() {
                 <div className="pagination">
                     <button
                         className="pagination-button"
-                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                        onClick={() =>
+                            setCurrentPage((prev) => Math.max(prev - 1, 1))
+                        }
                         disabled={currentPage <= 1}
                     >
                         이전
                     </button>
-                    <span className="pagination-info">페이지 {currentPage} / {Math.ceil(totalCourses / 12)}</span>
+                    <span className="pagination-info">
+                        페이지 {currentPage} / {Math.ceil(totalCourses / 12)}
+                    </span>
                     <button
                         className="pagination-button"
-                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(totalCourses / 12)))}
+                        onClick={() =>
+                            setCurrentPage((prev) =>
+                                Math.min(prev + 1, Math.ceil(totalCourses / 12))
+                            )
+                        }
                         disabled={currentPage >= Math.ceil(totalCourses / 12)}
                     >
                         다음

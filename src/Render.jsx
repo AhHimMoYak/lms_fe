@@ -1,23 +1,23 @@
 import { Routes, Route } from "react-router-dom";
 import { AuthChecker } from "./authentication/AuthChecker";
-import BasicFrame from "./components/Main/BasicFrame";
+import BasicFrame from "./components/BasicFrame.jsx";
 
-import CourseFrame from "./components/Main/CourseFrame";
+import CourseFrame from "./components/Mypage/CourseFrame.jsx";
 import Main from "./pages/Main/Main";
 import Video from "./pages/Main/Video";
-import Login from "./pages/Login";
-import LiveStream from "./pages/Employee/LiveStream";
+import Login from "./pages/Main/Login.jsx";
+import LiveStream from "./pages/Material/LiveStream.jsx";
 import VideoExplain from "./pages/Main/VideoExplain";
-import Register from "./pages/Register.jsx";
-import UpdateUser from "./pages/UpdateUser";
-import PasswordPrompt from "./pages/PasswordPrompt";
-import MypageFrame from "./components/Employee/MypageFrame";
-import Dashboard from "./pages/Employee/Dashboard";
-import CourseList from "./pages/Employee/CourseList";
-import CourseDetailed from "./pages/Employee/CourseDetailed";
-import LiveDetail from "./pages/Employee/LiveDetail";
-import QnAList from "./pages/Employee/QnAList";
-import QnATotalList from "./pages/Employee/QnATotalList";
+import Register from "./pages/Main/Register";
+import UpdateUser from "./pages/Mypage/UpdateUser.jsx";
+import PasswordPrompt from "./pages/Mypage/PasswordPrompt.jsx";
+import MypageFrame from "./components/Mypage/MypageFrame.jsx";
+import Dashboard from "./pages/Mypage/Dashboard.jsx";
+import CourseList from "./pages/Mypage/CourseList.jsx";
+import CourseDetailed from "./pages/Mypage/CourseDetailed.jsx";
+import LiveDetail from "./pages/Mypage/LiveDetail.jsx";
+import QnAList from "./pages/Mypage/QnAList.jsx";
+import QnATotalList from "./pages/Mypage/QnATotalList.jsx";
 
 function Render() {
     return (
