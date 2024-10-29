@@ -1,24 +1,52 @@
-.MainCourseList {
-  max-width: 1000px;
-  margin: 0.3rem auto;
-  padding: 0.3rem;
-}
 
-.MainCourseCardContainer {
+.course-list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.3rem;
-  margin-top: 0;
+  grid-template-columns: repeat(3, 1fr); /* 가로로 3개씩 */
+  gap: 2vw; /* 카드들 간의 간격 */
+  justify-items: center; /* 카드들을 가로로 가운데 정렬 */
+  padding: 2vw;
 }
 
-.LoadingContainer {
+.course-main-card {
+  width:25vw;
+  height: 30vh;
+  border-radius: 0.5em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 5%;
+  flex-direction: column;
+  background-color: #ffffff;
+
 }
 
-.NoCoursesText {
+.course-main-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.course-main-card-header {
+  height: 13vh;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
+
+.course-main-card-content {
+  padding: 0.5vw;
+  flex: 1;
   text-align: center;
-  color: #666;
+  height: 3vh;
+}
+
+.course-main-card-title {
+  font-weight: bold;
+  font-size: 1em;
+  margin-bottom: 0.5vh;
+  color: #333;
+}
+
+.course-main-card-tutor {
+  font-size: 0.9em;
+  color: #777;
 }
