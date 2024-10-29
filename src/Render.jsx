@@ -18,6 +18,7 @@ import CourseDetailed from "./pages/Mypage/CourseDetailed.jsx";
 import LiveDetail from "./pages/Mypage/LiveDetail.jsx";
 import QnAList from "./pages/Mypage/QnAList.jsx";
 import QnATotalList from "./pages/Mypage/QnATotalList.jsx";
+import UserInformFrame from "./components/Mypage/UserInformFrame.jsx";
 
 function Render() {
     return (
@@ -44,8 +45,11 @@ function Render() {
                     </Route>
                     <Route path="qna" element={<QnATotalList />} />
 
-                    <Route path="passwordPrompt" element={<PasswordPrompt />} />
-                    <Route path="updateUser" element={<UpdateUser />} />
+                    <Route path="user/*" element={<UserInformFrame />}>
+                        <Route path="" element={<PasswordPrompt />} />
+                        <Route path="reconfirm" element={<PasswordPrompt />} />
+                        <Route path="update" element={<UpdateUser />} />
+                    </Route>
                 </Route>
                 {/* </Route> */}
             </Route>
