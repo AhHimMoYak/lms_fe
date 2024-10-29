@@ -18,8 +18,10 @@ import CourseDetailed from "./pages/Mypage/CourseDetailed.jsx";
 import LiveDetail from "./pages/Mypage/LiveDetail.jsx";
 import QnAList from "./pages/Mypage/QnAList.jsx";
 import QnATotalList from "./pages/Mypage/QnATotalList.jsx";
+import UserInformFrame from "./components/Mypage/UserInformFrame.jsx";
 import QnADetailed from "./pages/Mypage/QnADetailed.jsx";
 import QnAEdit from "./pages/Mypage/QnAEdit.jsx";
+import QnAPost from "./pages/Mypage/QnAPost.jsx";
 
 function Render() {
     return (
@@ -43,13 +45,23 @@ function Render() {
                         <Route path="contents" element={<CourseDetailed />} />
                         <Route path="live" element={<LiveDetail />} />
                         <Route path="qna" element={<QnAList />} />
-                        <Route path="qna/:courseBoardId" element={<QnADetailed />} />
-                        <Route path="qna/edit/:courseBoardId" element={<QnAEdit />} />
+                        <Route path="qna/post" element={<QnAPost />} />
+                        <Route
+                            path="qna/:courseBoardId"
+                            element={<QnADetailed />}
+                        />
+                        <Route
+                            path="qna/edit/:courseBoardId"
+                            element={<QnAEdit />}
+                        />
                     </Route>
                     <Route path="qna" element={<QnATotalList />} />
 
-                    <Route path="passwordPrompt" element={<PasswordPrompt />} />
-                    <Route path="updateUser" element={<UpdateUser />} />
+                    <Route path="user/*" element={<UserInformFrame />}>
+                        <Route path="" element={<PasswordPrompt />} />
+                        <Route path="reconfirm" element={<PasswordPrompt />} />
+                        <Route path="update" element={<UpdateUser />} />
+                    </Route>
                 </Route>
                 {/* </Route> */}
             </Route>

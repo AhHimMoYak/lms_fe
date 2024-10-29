@@ -1,15 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import useAxios from "../../hooks/api/useAxios.jsx";
-import { useNavigate } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import '../../styles/LiveDetail.css';
 
 const LiveDetail = () => {
     const [liveCourses, setLiveCourses] = useState({ on: [], canStart: [], end: [] });
     const { data, error, fetchData } = useAxios();
     const navigate = useNavigate();
+    const {courseId} = useParams();
+
+    const formatDateTime = (dateTime) => {
+        const date = new Date(dateTime);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
+    };
 
     useEffect(() => {
-        fetchData('live?courseId=1', 'get'); // 나중에 courseId 받아와서 사용해야할 듯
+        fetchData(`/live?courseProvideId=${courseId}`, "GET");
     }, []);
 
     useEffect(() => {
@@ -20,6 +31,7 @@ const LiveDetail = () => {
 
             setLiveCourses({ on: onCourses, canStart: canStartCourses, end: endCourses });
         }
+        console.log(data);
     }, [data]);
 
     if (error) {
@@ -40,7 +52,8 @@ const LiveDetail = () => {
                             <li key={course.key} className="listItem" onClick={() => handleCourseClick(course.key)}>
                                 <h3 className="listItemTitle">{course.title}</h3>
                                 <p className="listItemDetail">강사: {course.instructor}</p>
-                                <p className="listItemDetail">강의 시간: {course.startTime} - {course.endTime}</p>
+                                <p className="listItemDetail">강의
+                                    시간: {formatDateTime(course.startTime)} - {formatDateTime(course.endTime)}</p>
                             </li>
                         ))}
                     </ul>
@@ -51,7 +64,8 @@ const LiveDetail = () => {
                         {liveCourses.canStart.map(course => (
                             <li key={course.key} className="listItem">
                                 <h3 className="listItemTitle">{course.title}</h3>
-                                <p className="listItemDetail">예정된 날짜: {course.startTime}</p>
+                                <p className="listItemDetail">강사: {course.instructor}</p>
+                                <p className="listItemDetail">예정된 날짜: {formatDateTime(course.startTime)}</p>
                             </li>
                         ))}
                     </ul>
@@ -63,7 +77,7 @@ const LiveDetail = () => {
                             <li key={course.key} className="listItem">
                                 <h3 className="listItemTitle">{course.title}</h3>
                                 <p className="listItemDetail">강사: {course.instructor}</p>
-                                <p className="listItemDetail">종료 날짜: {course.endTime}</p>
+                                <p className="listItemDetail">종료 날짜: {formatDateTime(course.endTime)}</p>
                             </li>
                         ))}
                     </ul>

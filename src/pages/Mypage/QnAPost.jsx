@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import useAxios from "../../hooks/api/useAxios.jsx";
-import "../../styles/Employee/QnAContainer.css";
+import "../../styles/Mypage/QnAContainer.css"
 
 function QnAPost() {
     const {courseId} = useParams();
@@ -18,13 +18,13 @@ function QnAPost() {
             content: content
         };
 
-        fetchData(`/courseBoard/QNA/${courseId}`, "POST", requestDTO);
+        fetchData(`/course/${courseId}/board/qna`, "POST", requestDTO);
     };
 
     useEffect(() => {
-        if (data && data.msg) {
-            navigate(`/mypage/course/${courseId}/qna/questions`);
-            alert(data.msg);
+        if (data) {
+            alert(data);
+            navigate(`/mypage/course/${courseId}/qna`);
         }
     }, [data]);
 
