@@ -9,7 +9,7 @@ function CourseDetailed() {
     const [activeCurriculum, setActiveCurriculum] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
-        fetchData(`/course/detail/${courseId}`, "get");
+        fetchData(`/course/${courseId}`, "get");
     }, [courseId]);
 
     const toggleCurriculum = (index) => {
@@ -21,7 +21,7 @@ function CourseDetailed() {
     };
 
     const clickContent = () => {
-        navigate("/mypage"); //임시
+        navigate("/mypage/course"); //임시
     };
 
     if (!data) {

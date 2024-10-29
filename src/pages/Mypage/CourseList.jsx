@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 
-import '/src/styles/CourseListCss.css'
+import '../../styles/CourseListCss.css'
 import useAxios from "../../hooks/api/useAxios.jsx";
 import {useLocation, useNavigate} from "react-router-dom";
 
@@ -13,8 +13,8 @@ function CourseList() {
     const {data: courseData, error, fetchData: fetchUserCourse} = useAxios();
 
     useEffect(() => {
-        fetchUserCourse(`/course/myPage?page=${page}&size=6`, "GET");
-    }, [page]);
+        fetchUserCourse(`/course`, "GET");
+    }, []);
 
     useEffect(() => {
         if (courseData) {
@@ -26,7 +26,7 @@ function CourseList() {
         navigate(`/mypage/course/${courseid}`)
     }
 
-    const course = courseData?.content ?? [];
+    const course = courseData ?? [];
     const totalPages = courseData?.totalPages ?? 1;
 
     const handlePageChange = (newPage) => {
@@ -42,7 +42,6 @@ function CourseList() {
                     <tr>
                         <td>No.</td>
                         <th>코스 제목</th>
-                        <th>카테고리</th>
                         <th>강사</th>
                     </tr>
                     </thead>
@@ -52,10 +51,9 @@ function CourseList() {
                         course.map((courseItem, index) => (
                             <tr key={index} onClick={() => handleRowClick(course[index].id)}
                                 className="course-clickable-row">
-                                <td>No.{courseItem.id}</td>
+                                <td>No.{index+1}</td>
                                 <td>{courseItem.title}</td>
-                                <td>{courseItem.category || "N/A"}</td>
-                                <td>{courseItem.tutorName || "N/A"}</td>
+                                <td>{courseItem.tutor || "N/A"}</td>
                             </tr>
                         ))
                     ) : (
