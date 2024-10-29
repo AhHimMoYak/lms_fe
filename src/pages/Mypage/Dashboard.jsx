@@ -6,19 +6,29 @@ import { useNavigate } from "react-router-dom";
 function Dashboard() {
     const { data, fetchData } = useAxios();
     const navigate = useNavigate();
+    const { data: qnaBoardData, fetchData: fetchBoardData } = useAxios();
+
+    const clickDetailCourse = (courseId) => {
+        navigate(`/mypage/course/${courseId}`);
+    };
+    const clickDetailBoard = (courseId, courseBoardId) => {
+        navigate(`/mypage/course/${courseId}/qna/${courseBoardId}`);
+    };
+    const clickListCourse = () => {
+        navigate('/mypage/courses');
+    };
+    const clickListQnA = () => {
+        navigate('/mypage/qna');
+    }
 
     useEffect(() => {
         fetchData(`/course`, "GET");
     }, []);
 
+    useEffect(() => {
+        fetchBoardData('/board/qna', "GET");
+    }, []);
 
-    const clickDetailCourse = (courseId) => {
-        navigate(`/mypage/course/${courseId}`);
-    };
-
-    const clickListCourse = () => {
-        navigate("/mypage/courses");
-    };
 
     return (
         <div className="dashboard-container">
@@ -29,7 +39,7 @@ function Dashboard() {
                 </button>
             </div>
             <div className="course-cards-container">
-                {data?.map((course) => (
+                {data?.slice(0, 4).map((course) => (
                     <div
                         key={course.id}
                         className="course-card"
@@ -37,13 +47,55 @@ function Dashboard() {
                     >
                         <div
                             className="course-card-header"
-                            style={{ backgroundColor: getRandomColor() }}
+                            style={{backgroundColor: getRandomColor()}}
                         ></div>
                         <div className="course-card-body">
                             <h3 className="course-title">{course.title}</h3>
                         </div>
                     </div>
                 ))}
+            </div>
+            <div className="qna-list-container">
+                <div className="dashboard-header">
+                    <h2 className="dashboard-title">작성한 QnA</h2>
+                    <button className="more-button" onClick={clickListQnA}>
+                        더보기
+                    </button>
+                </div>
+                <table className="write-qna-table">
+                    <thead>
+                    <tr>
+                    <th>No.</th>
+                        <th>코스명</th>
+                        <th>제목</th>
+                        <th>답변</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {qnaBoardData?.slice(0, 5).map((qna, index) => (
+                        <tr
+                            key={qna.boardId}
+                            className="qna-table-row"
+                            onClick={() =>
+                                clickDetailBoard(qna.courseId, qna.boardId)
+                            }
+                        >
+                            <td className="que-idx">{index + 1}</td>
+                            <td className="qna-course">{qna.courseTitle}</td>
+                            <td className="qna-title">{qna.title}</td>
+                            <td
+                                className={
+                                    qna.commitCount > 0
+                                        ? "qna-answered"
+                                        : "qna-not-answered"
+                                }
+                            >
+                                {qna.commitCount > 0 ? "완료" : "미답변"}
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
             </div>
         </div>
     );
