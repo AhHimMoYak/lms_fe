@@ -1,7 +1,7 @@
 import useAxios from "../../hooks/api/useAxios.jsx";
 import {useEffect, useState} from "react";
 import {useNavigate,useParams} from "react-router-dom";
-import "../../styles/Employee/QnADetailed.css";
+import "../../styles/Mypage/QnADetailed.css";
 import {jwtDecode} from "jwt-decode";
 
 function QnADetailed() {
@@ -12,7 +12,7 @@ function QnADetailed() {
 
     const accessToken = localStorage.getItem('access');
     useEffect(() => {
-        fetchData(`/courseBoard/${courseId}/QNA?courseBoardId=${courseBoardId}`, "GET");
+        fetchData(`/course/${courseId}/board/QNA/${courseBoardId}`, "GET");
         if (accessToken) {
             const user = jwtDecode(accessToken);
             setUsername(user.sub);
