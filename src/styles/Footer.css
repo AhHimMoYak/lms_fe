@@ -1,15 +1,15 @@
 .footer {
-    width: 80%;
+    width: 89.1vw;
     height: 30vh;
     background: black;
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-left: 20%;
+    padding-left: 10vw;
 }
 
-.footer-color{
+.footer-color {
     color: lightgray;
 }
 .footer .footer-box {
@@ -17,12 +17,14 @@
     width: 100%;
     margin-bottom: 3vh;
     text-align: center;
+    font-size: 0.5em;
 }
 .footer .footer-line {
     display: flex;
     text-align: center;
+    font-size: 0.7em;
 }
-.footer .footer-text{
+.footer .footer-text {
     display: flex;
 }
 .footer .footer-line div {
