@@ -31,7 +31,7 @@ function QnAList() {
             console.log(data);
         }
     }, [data]);
-    if (!data) {
+    if (!data || !courseData) {
         return <div>로딩 중...</div>;
     }
     const itemsPerPage = 10; // 한 페이지당 보여줄 게시물 수
