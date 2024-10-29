@@ -1,37 +1,46 @@
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import useAxios from "../../hooks/api/useAxios.jsx";
-import "../../styles/Employee/QnAContainer.css";
+import "../../styles/QnAContainer.css"
 
 function QnAEdit() {
-    const location = useLocation();
-    const {courseBoardId} = location.state || {};
+    const {courseBoardId} = useParams();
     const {courseId} = useParams();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const {data, fetchData} = useAxios();
+    const {data: updateData, fetchData: updateRetchData} = useAxios();
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchData(`/courseBoard/${courseId}/QNA?courseBoardId=${courseBoardId}`, "GET");
+        fetchData(`/course/${courseId}/board/QNA/${courseBoardId}`, "GET");
+    }, [courseBoardId]);
 
-    }, []);
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const requestDTO = {
+        const requestDto = {
             title: title,
-            content: content
+            content: content,
         };
-        fetchData(`/courseBoard/${courseId}?courseBoardId=${courseBoardId}`, "PATCH", requestDTO);
-    }
+        console.log(requestDto);
 
+        updateRetchData(`/course/${courseId}/board/${courseBoardId}`, "PATCH", requestDto);
+
+    }
     useEffect(() => {
-        if (data && data.msg) {
-            navigate(`/mypage/course/${courseId}/qna/${courseBoardId}`);
-            alert(data.msg);
+        if (data) {
+            setTitle(data.title);
+            setContent(data.content);
         }
     }, [data]);
+
+    useEffect(() => {
+        if (updateData) {
+            alert(updateData);
+            navigate(`/mypage/course/${courseId}/qna`);
+        }
+    }, [updateData]);
 
     if (!data) {
         return <div>로딩 중...</div>;

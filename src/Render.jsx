@@ -18,6 +18,8 @@ import CourseDetailed from "./pages/Mypage/CourseDetailed.jsx";
 import LiveDetail from "./pages/Mypage/LiveDetail.jsx";
 import QnAList from "./pages/Mypage/QnAList.jsx";
 import QnATotalList from "./pages/Mypage/QnATotalList.jsx";
+import QnADetailed from "./pages/Mypage/QnADetailed.jsx";
+import QnAEdit from "./pages/Mypage/QnAEdit.jsx";
 
 function Render() {
     return (
@@ -41,6 +43,8 @@ function Render() {
                         <Route path="contents" element={<CourseDetailed />} />
                         <Route path="live" element={<LiveDetail />} />
                         <Route path="qna" element={<QnAList />} />
+                        <Route path="qna/:courseBoardId" element={<QnADetailed />} />
+                        <Route path="qna/edit/:courseBoardId" element={<QnAEdit />} />
                     </Route>
                     <Route path="qna" element={<QnATotalList />} />
 
