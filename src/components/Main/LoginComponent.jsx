@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthManger from "../../hooks/api/AuthManger.jsx";
+import AuthManager from "../../hooks/api/AuthManger.jsx";
 import "../../styles/Main/LoginComponent.css";
 
 function LoginComponent() {
@@ -9,7 +9,7 @@ function LoginComponent() {
     const [error, setError] = useState("");
 
     const navigate = useNavigate();
-    const { LogIn } = AuthManger();
+    const { LogIn } = AuthManager();
 
     const handleLogin = async (e) => {
         e.preventDefault();
