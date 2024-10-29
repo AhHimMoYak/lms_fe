@@ -17,14 +17,14 @@ function QnADetailed() {
             const user = jwtDecode(accessToken);
             setUsername(user.sub);
         }
-    }, [courseBoardId, username]);
+    }, [courseBoardId]);
     const onClickEdit = ()=>{
-        navigate(`/mypage/course/${courseId}/qna/edit`, {state:{courseBoardId:courseBoardId}});
+        navigate(`/mypage/course/${courseId}/qna/edit/${courseBoardId}`, {state:{courseBoardId:courseBoardId}});
     }
     const onClickDelete = () => {
         const isConfirmed = window.confirm("정말로 삭제하시겠습니까?");
         if (isConfirmed) {
-            fetchData(`/courseBoard/${courseId}?courseBoardId=${courseBoardId}`, "DELETE");
+            fetchData(`/course/${courseId}/board/QNA/${courseBoardId}`, "DELETE");
             navigate(`/mypage/course/${courseId}/qna/questions`);
         }
     };
@@ -36,7 +36,7 @@ function QnADetailed() {
         <div className="qna-board-container">
             <div className="qna-board-header">
                 <h2>QnA 게시판</h2>
-             {data.username === username && (
+             {data.user === username && (
                     <div className="qna-board-actions">
                         <button className="edit-button" onClick={() => onClickEdit(courseBoardId)}>수정</button>
                         <button className="delete-button" onClick={onClickDelete}>삭제</button>
@@ -47,7 +47,7 @@ function QnADetailed() {
                 <div className="qna-board-item">
                     <div className="qna-board-title">
                         <span>{data.title}</span>
-                        <span className="qna-board-author">{data.username}</span>
+                        <span className="qna-board-author">{data.user}</span>
                     </div>
                     <div className="qna-board-question">
                         <p>{data.content}</p>

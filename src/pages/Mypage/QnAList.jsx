@@ -65,7 +65,7 @@ function QnAList() {
                 {currentPageData.map((board, index) => (
                     <tr
                         key={board.id}
-                        onClick={() => handleRowClick(board.id)}
+                        onClick={() => handleRowClick(board.boardId)}
                     >
                         <td>{(page - 1) * itemsPerPage + index + 1}</td>
                         <td>{board.title}</td>
