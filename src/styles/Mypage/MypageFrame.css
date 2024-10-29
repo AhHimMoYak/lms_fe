@@ -1,6 +1,7 @@
 .mypage-container {
     display: flex;
-    height: 100vh;
+    height: auto;
+    min-height: 80vh;
     width: auto;
     background-color: #f5f5f5;
 }
@@ -8,6 +9,8 @@
 .main-container {
     flex: 1;
     width: 70%;
-    height: 100vh;
+    /* height: 100vh; */
     margin-top: 2vh;
+    flex-direction: column;
+    display: flex;
 }
