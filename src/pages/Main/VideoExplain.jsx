@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"; // useParams 훅 가져오기
+import {useState, useEffect} from "react";
+import {useParams} from "react-router-dom"; // useParams 훅 가져오기
 import useAxios from "../../hooks/api/useAxios.jsx";
 import "/src/styles/Main/VideoExplain.css";
 
 function VideoExplain() {
-    const { data, error, fetchData, isLoading } = useAxios(); // isLoading 추가
-    const { courseId } = useParams();
+    const {data, error, fetchData, isLoading} = useAxios(); // isLoading 추가
+    const {data: Enrollment, fetchData: fetchEnrollment} = useAxios();
+    const {courseId} = useParams();
     const [activeCurriculum, setActiveCurriculum] = useState(null);
+    const [isEnrolled, setIsEnrolled] = useState(false);
 
     // API 호출
     useEffect(() => {
@@ -23,7 +25,7 @@ function VideoExplain() {
     const scrollToSection = (sectionId) => {
         const section = document.getElementById(sectionId);
         if (section) {
-            section.scrollIntoView({ behavior: "smooth" });
+            section.scrollIntoView({behavior: "smooth"});
         }
     };
 
@@ -45,6 +47,34 @@ function VideoExplain() {
         return <div>데이터를 불러올 수 없습니다.</div>;
     }
 
+    const handleEnrollmentToggle = () => {
+        if (isEnrolled) {
+            if (window.confirm("수강신청을 취소하시겠습니까?")) {
+                fetchEnrollment(`/course/${courseId}/enroll`, "DELETE")
+                    .then(() => {
+                        alert("수강신청이 취소되었습니다.");
+                        setIsEnrolled(false);
+                    })
+                    .catch((error) => {
+                        console.error("Failed to cancel enrollment:", error);
+                    });
+            }
+        } else {
+            if (window.confirm("수강신청을 하시겠습니까?")) {
+                fetchEnrollment(`/course/${courseId}/enroll`, "GET")
+                    .then(() => {
+                        alert("수강신청이 완료되었습니다.");
+                        setIsEnrolled(true);
+                    })
+                    .catch((error) => {
+                        console.error("Failed to enroll:", error);
+                    });
+            }
+        }
+    };
+
+    const enrollmentPeriod = new Date(data.endDate).setHours(23, 59, 59, 999) >= new Date();
+
     return (
         <div className="container">
             <div className="lecture-info">
@@ -54,7 +84,16 @@ function VideoExplain() {
                         <p>{data.tutor} 강사</p>
                     </div>
                 </div>
-                <button className="course-provide-button"> 수강신청 </button>
+                {enrollmentPeriod ? (
+                        <button className="course-provide-button" onClick={handleEnrollmentToggle}>
+                            {isEnrolled ? "수강 취소" : "수강 신청"}
+                        </button>
+                    )
+                    : (
+                        <div className="course-provide-button-disabled">
+                            수강신청 기간이 아닙니다
+                        </div>
+                    )}
             </div>
 
             <div className="lecture-details-section">
@@ -82,18 +121,18 @@ function VideoExplain() {
                     <h3>- 소개</h3>
                     <table className="info-table">
                         <tbody>
-                            <tr>
-                                <th>강의명</th>
-                                <td>{data.title}</td>
-                            </tr>
-                            <tr>
-                                <th>강사명</th>
-                                <td>{data.tutor}</td>
-                            </tr>
-                            <tr>
-                                <th>교육 소개</th>
-                                <td>{data.introduction}</td>
-                            </tr>
+                        <tr>
+                            <th>강의명</th>
+                            <td>{data.title}</td>
+                        </tr>
+                        <tr>
+                            <th>강사명</th>
+                            <td>{data.tutor}</td>
+                        </tr>
+                        <tr>
+                            <th>교육 소개</th>
+                            <td>{data.introduction}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -142,20 +181,20 @@ function VideoExplain() {
                     <h3>- 평가</h3>
                     <table>
                         <thead>
-                            <tr>
-                                <th>항목</th>
-                                <th>배점(%)</th>
-                            </tr>
+                        <tr>
+                            <th>항목</th>
+                            <th>배점(%)</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>시험</td>
-                                <td>50</td>
-                            </tr>
-                            <tr>
-                                <td>퀴즈</td>
-                                <td>50</td>
-                            </tr>
+                        <tr>
+                            <td>시험</td>
+                            <td>50</td>
+                        </tr>
+                        <tr>
+                            <td>퀴즈</td>
+                            <td>50</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
