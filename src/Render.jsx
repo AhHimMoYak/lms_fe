@@ -22,14 +22,14 @@ import QnATotalList from "./pages/Mypage/QnATotalList.jsx";
 function Render() {
     return (
         <Routes>
+            <Route path="/signin" element={<Login />} />
+            <Route path="/signup" element={<Register />} />
+
             <Route element={<BasicFrame />}>
                 <Route path="/" element={<Main />} />
                 <Route path="course" element={<Video />} />
                 <Route path="/course/:courseId" element={<VideoExplain />} />
                 <Route path="/live/:streamKey" element={<LiveStream />} />
-
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
 
                 {/* <Route element={<AuthChecker />}> */}
                 <Route path="mypage/*" element={<MypageFrame />}>
