@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../../styles/CourseListCss.css";
+import "../../styles/Mypage/CourseList.css";
 import useAxios from "../../hooks/api/useAxios.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
 
