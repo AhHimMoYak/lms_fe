@@ -1,19 +1,25 @@
 .mycourse-list-container {
     justify-content: center;
     align-items: center;
-    min-height: 60vh;
+    max-height: 92vh;
     background-color: #fff;
     padding: 3vh;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     width: 75vw;
     height: 92vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .mycourse-list {
     width: 95%;
     margin: 0 auto;
     padding-top: 1vh;
+
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .mycourse-list-title {
@@ -26,6 +32,7 @@
 
 .mycourse-list-table {
     width: 100%;
+    flex-grow: 1;
     border-collapse: collapse;
     background-color: white;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -64,7 +71,7 @@
 }
 
 /* Pagination Styling */
-.courselist-pagination {
+/* .courselist-pagination {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -102,4 +109,33 @@
 
 .pagination-button:active {
     transform: scale(0.95);
+} */
+
+.courselist-pagination {
+    margin-top: auto; /* 항상 맨 아래로 이동 */
+    padding: 10px 0;
+    text-align: center;
+}
+
+.pagination-button {
+    margin: 0 5px;
+    padding: 8px 12px;
+    border: none;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+.pagination-button.active {
+    color: #384955;
+    border: 2px solid #384955;
+    border-radius: 4px;
+}
+
+.pagination-button:hover:not(.active) {
+    background: #f0f0f0;
+}
+
+.pagination-button:first-of-type,
+.pagination-button:last-of-type {
+    padding: 8px;
 }

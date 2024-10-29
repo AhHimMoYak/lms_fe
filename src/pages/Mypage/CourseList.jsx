@@ -1,12 +1,11 @@
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
 import "../../styles/CourseListCss.css";
 import useAxios from "../../hooks/api/useAxios.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function CourseList() {
     const navigate = useNavigate();
-
+    const [pageSize, setPageSize] = useState(5); // 페이지 크기 설정
     const query = new URLSearchParams(useLocation().search);
     const page = parseInt(query.get("page")) || 1;
     const { data: courseData, error, fetchData: fetchUserCourse } = useAxios();
@@ -26,7 +25,11 @@ function CourseList() {
     };
 
     const course = courseData ?? [];
-    const totalPages = courseData?.totalPages ?? 1;
+    const totalCourses = course.length;
+    const totalPages = Math.ceil(totalCourses / pageSize);
+
+    // 현재 페이지에 해당하는 코스 목록 필터링
+    const currentCourses = course.slice((page - 1) * pageSize, page * pageSize);
 
     const handlePageChange = (newPage) => {
         navigate(`?page=${newPage}`);
@@ -46,16 +49,18 @@ function CourseList() {
                     </thead>
 
                     <tbody>
-                        {course && course.length > 0 ? (
-                            course.map((courseItem, index) => (
+                        {currentCourses && currentCourses.length > 0 ? (
+                            currentCourses.map((courseItem, index) => (
                                 <tr
                                     key={index}
                                     onClick={() =>
-                                        handleRowClick(course[index].id)
+                                        handleRowClick(currentCourses[index].id)
                                     }
                                     className="course-clickable-row"
                                 >
-                                    <td>No.{index + 1}</td>
+                                    <td>
+                                        No.{(page - 1) * pageSize + index + 1}
+                                    </td>
                                     <td>{courseItem.title}</td>
                                     <td>{courseItem.tutor || "N/A"}</td>
                                 </tr>
@@ -68,18 +73,19 @@ function CourseList() {
                     </tbody>
                 </table>
 
-                <div className="courselist-pagination"></div>
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => handlePageChange(index + 1)}
-                        className={`pagination-button ${
-                            page === index + 1 ? "active" : ""
-                        }`}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
+                <div className="courselist-pagination">
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => handlePageChange(index + 1)}
+                            className={`pagination-button ${
+                                page === index + 1 ? "active" : ""
+                            }`}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+                </div>
             </div>
         </div>
     );
