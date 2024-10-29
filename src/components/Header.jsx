@@ -1,25 +1,48 @@
-import * as React from "react";
-import AuthSection from "./AuthSection";
+// Header.jsx
 import { useNavigate } from "react-router-dom";
 import "../styles/Header.css";
+import AuthManager from "../hooks/api/AuthManger.jsx";
+import { jwtDecode } from "jwt-decode";
+import UserMenu from "./UserMenu";
+import NoneUserMenu from "./NoneUserMenu";
+import logoIcon from "../assets/logo.png";
+
+function decodeToken() {
+    try {
+        const token = localStorage.getItem("access");
+        const claims = jwtDecode(token);
+        return claims.sub;
+    } catch (err) {
+        console.error("토큰 디코딩 실패:", err.message);
+        return null;
+    }
+}
 
 function Header() {
-  const navigate = useNavigate();
-  
-  const handleRedirecToHome = () => {
-    navigate("/");
-  }
-  
-  return (
-    <header className="main-header">
-        <div className="logo">
-            <a onClick={handleRedirecToHome}>아힘모약</a>
-        </div>
-        <nav className="main-nav">
-        <AuthSection />
-        </nav>
-    </header>
-  );
+    const { LogOut } = AuthManager();
+    const navigate = useNavigate();
+
+    const handleLogoClick = () => navigate("/");
+    const handleLogoutClick = () => {
+        LogOut();
+    };
+
+    return (
+        <header className="header">
+            <img
+                src={logoIcon}
+                alt="User Icon"
+                className="logo"
+                onClick={handleLogoClick}
+            />
+
+            {decodeToken() ? (
+                <UserMenu onLogout={handleLogoutClick} />
+            ) : (
+                <NoneUserMenu />
+            )}
+        </header>
+    );
 }
 
 export default Header;

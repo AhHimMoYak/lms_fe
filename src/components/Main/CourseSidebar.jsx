@@ -1,5 +1,5 @@
-import React, { useState, useCallback, memo } from 'react';
-import "../../styles/CourseSidebar.css";
+import React, { useState, useCallback, memo } from "react";
+import "../../styles/Main/CourseSidebar.css";
 
 const CourseSidebar = memo(({ onCategorySelect }) => {
     const [categories] = useState([
@@ -30,10 +30,13 @@ const CourseSidebar = memo(({ onCategorySelect }) => {
         { id: 25, title: "농림어업" },
     ]);
 
-    const handleCategoryClick = useCallback((id, title) => {
-        onCategorySelect(id, title); // 카테고리 선택 이벤트 호출 (제목도 함께 전달)
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // 화면을 맨 위로 스크롤
-    }, [onCategorySelect]);
+    const handleCategoryClick = useCallback(
+        (id, title) => {
+            onCategorySelect(id, title); // 카테고리 선택 이벤트 호출 (제목도 함께 전달)
+            window.scrollTo({ top: 0, behavior: "smooth" }); // 화면을 맨 위로 스크롤
+        },
+        [onCategorySelect]
+    );
 
     return (
         <div className="sidebar">
@@ -41,7 +44,9 @@ const CourseSidebar = memo(({ onCategorySelect }) => {
             {categories.map((category) => (
                 <button
                     key={category.id}
-                    onClick={() => handleCategoryClick(category.id, category.title)} // 카테고리 클릭 이벤트
+                    onClick={() =>
+                        handleCategoryClick(category.id, category.title)
+                    } // 카테고리 클릭 이벤트
                     className="category-button"
                 >
                     {category.title}
