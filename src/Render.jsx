@@ -21,6 +21,7 @@ import QnATotalList from "./pages/Mypage/QnATotalList.jsx";
 import UserInformFrame from "./components/Mypage/UserInformFrame.jsx";
 import QnADetailed from "./pages/Mypage/QnADetailed.jsx";
 import QnAEdit from "./pages/Mypage/QnAEdit.jsx";
+import QnAPost from "./pages/Mypage/QnAPost.jsx";
 
 function Render() {
     return (
@@ -44,6 +45,7 @@ function Render() {
                         <Route path="contents" element={<CourseDetailed />} />
                         <Route path="live" element={<LiveDetail />} />
                         <Route path="qna" element={<QnAList />} />
+                        <Route path="qna/post" element={<QnAPost />} />
                         <Route
                             path="qna/:courseBoardId"
                             element={<QnADetailed />}
