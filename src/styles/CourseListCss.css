@@ -2,8 +2,12 @@
     justify-content: center;
     align-items: center;
     min-height: 60vh;
-    background-color: #f5f5f5;
+    background-color: #fff;
     padding: 3vh;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    width: 75vw;
+    height: 92vh;
 }
 
 .mycourse-list {
@@ -31,7 +35,7 @@
 }
 
 .mycourse-list-table thead tr {
-    background-color: #f8f8f8;
+    background-color: #b1c4e8;
     border-bottom: 2px solid #dcdcdc;
 }
 
@@ -46,6 +50,7 @@
     font-weight: bold;
     font-size: 1.5em;
     border-bottom: 1px solid #dcdcdc;
+    background-color: #e0f1ff;
 }
 
 .mycourse-list-table tbody tr:nth-child(even) {
@@ -77,6 +82,7 @@
     text-align: center;
     appearance: none;
     box-sizing: border-box;
+    border-radius: 10px;
 }
 
 .pagination-button:hover {
@@ -85,7 +91,7 @@
 
 .pagination-button.active {
     background-color: lightgrey;
-    color: #fff;
+    color: #000;
     border: none;
 }
 
@@ -97,5 +103,3 @@
 .pagination-button:active {
     transform: scale(0.95);
 }
-
-
