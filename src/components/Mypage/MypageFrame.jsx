@@ -1,23 +1,13 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 
+import "../../styles/Mypage/MypageFrame.css";
+
 function MypageFrame() {
-    const containerStyle = {
-        display: "flex",
-        height: "100vh",
-    };
-
-    const mainContainerSytle = {
-        flex: 1,
-        width: "70%",
-        height: "100vh",
-        backgroundColor: "purple",
-    };
-
     return (
-        <div style={containerStyle}>
+        <div className="mypage-container">
             <Sidebar />
-            <div style={mainContainerSytle}>
+            <div className="main-container">
                 <Outlet />
             </div>
         </div>

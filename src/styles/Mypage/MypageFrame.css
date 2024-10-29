@@ -1,0 +1,13 @@
+.mypage-container {
+    display: flex;
+    height: 100vh;
+    width: auto;
+    background-color: #f0f4fc;
+}
+
+.main-container {
+    flex: 1;
+    width: 70%;
+    height: 100vh;
+    margin-top: 5vh;
+}
