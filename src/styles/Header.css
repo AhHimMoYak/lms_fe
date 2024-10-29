@@ -1,7 +1,7 @@
 /* 기본 헤더 스타일 */
 .header {
-    width: 90%;
-    padding: 2vh 5vw;
+    width: 89vw;
+    padding: 0.5vh 5vw;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -13,13 +13,27 @@
     z-index: 100;
 }
 
-.logo {
-    width: 5vw;
-    height: 3vh;
-    cursor: pointer;
+.header.header-mypage {
+    width: 89vw;
+    padding: 0.5vh 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #000;
+    color: #fff;
+    transition: top 0.3s;
+    top: 0;
+    left: 0;
+    z-index: 100; /* mypage 경로일 때 배경색 변경 */
 }
 
-/* 버튼 스타일 */
+.logo {
+    width: 5vw;
+    height: 7vh;
+    cursor: pointer;
+    display: block;
+    position: relative;
+}
 
 .header-buttons,
 .user-menu {
@@ -29,50 +43,48 @@
 }
 
 .header-buttons button {
-    border: none; /* 버튼 테두리 제거 */
-    cursor: pointer; /* 커서 포인터 설정 */
-    font-weight: bold; /* 폰트 굵게 설정 */
-    font-size: 0.9em; /* 폰트 크기 설정 */
-    background: none; /* 기본 배경색 제거 */
-    color: inherit; /* 텍스트 색상은 상속받음 */
-    padding: 5px 10px; /* 기본 패딩 추가 (선택사항) */
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9em;
+    background: none;
+    color: inherit;
+    padding: 1vh 2vw;
 }
 
-/* Sign In 버튼 스타일 */
 .auth-buttons button:first-child {
-    border: 2px solid #519ffb; /* 파란색 테두리 */
-    background-color: #fff; /* 배경색 흰색 */
-    color: #519ffb; /* 글자 색 파란색 */
-    padding: 5px 10px; /* 패딩 추가 */
-    border-radius: 3px; /* 모서리 둥글게 */
-    cursor: pointer; /* 커서 포인터 */
+    border: 2px solid #519ffb;
+    background-color: #fff;
+    color: #519ffb;
+    padding: 0.7vh 1vw;
+    border-radius: 3px;
+    cursor: pointer;
 }
 
-/* Sign Up 버튼 스타일 */
 .auth-buttons button:last-child {
-    padding: 5px 10px; /* 패딩 설정 */
-    background-color: #519ffb; /* 배경색 파란색 */
-    color: #fff; /* 글자 색 흰색 */
-    border: none; /* 테두리 없음 */
-    cursor: pointer; /* 커서 포인터 */
-    border-radius: 3px; /* 모서리 둥글게 */
+    padding: 0.8vh 1vw;
+    background-color: #519ffb;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
 }
 
 /* 유저 아이콘 및 드롭다운 스타일 */
 .user-icon {
-    width: 30px;
-    height: 30px;
+    width: 2vw;
+    height: 4vh;
     cursor: pointer;
 }
 
 .user-dropdown {
     position: absolute;
-    top: 50px;
-    right: 20px;
+    top: 7%;
+    right: 1%;
     display: flex;
     flex-direction: column;
     background-color: #444;
-    padding: 10px;
+    padding: 0.7%;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -80,7 +92,7 @@
 .user-dropdown button {
     background: none;
     color: #fff;
-    padding: 5px;
+    padding: 1vh 0.3vw;
     border: none;
     text-align: left;
     cursor: pointer;
@@ -88,4 +100,5 @@
 
 .user-dropdown button:hover {
     background-color: #555;
+    border-radius: 3px;
 }
