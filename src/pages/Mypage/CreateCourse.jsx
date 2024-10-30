@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import useAxios from "/src/hooks/api/useAxios";
 import { useNavigate } from "react-router-dom";
-import "../../styles/CourePost.css"
+import "../../styles/CoursePost.css"
 
 function CreateCourse() {
     const {data, fetchData } = useAxios();
@@ -49,8 +49,12 @@ function CreateCourse() {
 
     return (
         <div className="course-post-container">
-            <h2 className="title">코스 등록</h2>
+            <h2>
+                코스 등록
+            </h2>
+
             <form onSubmit={handleSubmit} className="course-post-form">
+                <div className="title-category-container">
                 <input
                     className="input-field"
                     type="text"
@@ -61,15 +65,6 @@ function CreateCourse() {
                     onChange={handleChange}
                     required
                 />
-                <textarea
-                    id="introduction"
-                    name="introduction"
-                    className="textarea-field"
-                    placeholder="소개"
-                    value={formData.introduction}
-                    onChange={handleChange}
-                    required
-                />
                 <select
                     className="input-field"
                     id="category"
@@ -77,6 +72,7 @@ function CreateCourse() {
                     value={formData.category}
                     onChange={handleChange}
                     required
+                    style={{marginLeft: "10px"}}
                 >
                     <option value="">카테고리 선택</option>
                     <option value="ALL">전체</option>
@@ -105,6 +101,16 @@ function CreateCourse() {
                     <option value="ENVIRONMENTAL_ENERGY_SAFETY">환경·에너지·안전</option>
                     <option value="AGRICULTURE_FORESTRY_FISHERIES">농림어업</option>
                 </select>
+                </div>
+                <textarea
+                    id="introduction"
+                    name="introduction"
+                    className="textarea-field"
+                    placeholder="소개"
+                    value={formData.introduction}
+                    onChange={handleChange}
+                    required
+                />
                 <label htmlFor="beginDate">시작 날짜: </label>
                 <input
                     type="date"
@@ -115,7 +121,6 @@ function CreateCourse() {
                     onChange={handleChange}
                     required
                 />
-
                 <label htmlFor="endDate">종료 날짜: </label>
                 <input
                     type="date"
