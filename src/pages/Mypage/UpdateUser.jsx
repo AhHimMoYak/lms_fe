@@ -1,17 +1,30 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
+import useAxios from '/src/hooks/api/useAxios';
 import '/src/styles/UpdateUser.css';
 
 function UpdateUser() {
+    const { data, error, fetchData } = useAxios();
     const [userInfo, setUserInfo] = useState({
-        id: 'user123',
+        id: '',
         password: '',
-        email: 'user@example.com',
-        phone: '010-1234-5678',
-        gender: '남',
-        birthDate: '1990-01-01',
+        email: '',
+        phone: '',
+        gender: '',
+        birth: '',
     });
 
     const [errors, setErrors] = useState({});
+
+    useEffect(() => {
+        // 서버에서 사용자 정보를 가져와서 userInfo를 업데이트합니다.
+        fetchData('/user/info', 'GET');
+    }, []);
+
+    useEffect(() => {
+        if (data) {
+            setUserInfo(data);
+        }
+    }, [data]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,6 +40,7 @@ function UpdateUser() {
         if (!userInfo.phone) newErrors.phone = '전화번호를 입력해 주세요';
 
         if (Object.keys(newErrors).length === 0) {
+            // 서버와 통신하여 회원정보 업데이트 요청
             alert('회원정보가 수정되었습니다.');
         } else {
             setErrors(newErrors);
@@ -40,17 +54,17 @@ function UpdateUser() {
                 <form className="update-form" onSubmit={(e) => e.preventDefault()}>
                     {/* 아이디 (수정 불가, 회색 처리) */}
                     <div className="update-field">
-                        <label>아이디:</label>
+                        <label className="update-label">아이디:</label>
                         <input
                             type="text"
-                            value={userInfo.id}
+                            value={userInfo.id || '로딩 중...'}
                             disabled
                             className="update-input disabled"
                         />
                     </div>
                     {/* 비밀번호 */}
                     <div className="update-field">
-                        <label>비밀번호:</label>
+                        <label className="update-label">비밀번호:</label>
                         <input
                             type="password"
                             name="password"
@@ -67,7 +81,7 @@ function UpdateUser() {
                     </div>
                     {/* 이메일 */}
                     <div className="update-field">
-                        <label>이메일:</label>
+                        <label className="update-label">이메일:</label>
                         <input
                             type="email"
                             name="email"
@@ -84,7 +98,7 @@ function UpdateUser() {
                     </div>
                     {/* 전화번호 */}
                     <div className="update-field">
-                        <label>전화번호:</label>
+                        <label className="update-label">전화번호:</label>
                         <input
                             type="tel"
                             name="phone"
@@ -101,7 +115,7 @@ function UpdateUser() {
                     </div>
                     {/* 성별 (수정 불가, 회색 처리) */}
                     <div className="update-field">
-                        <label>성별:</label>
+                        <label className="update-label">성별:</label>
                         <input
                             type="text"
                             value={userInfo.gender}
@@ -111,10 +125,10 @@ function UpdateUser() {
                     </div>
                     {/* 생년월일 (수정 불가, 회색 처리) */}
                     <div className="update-field">
-                        <label>생년월일:</label>
+                        <label className="update-label">생년월일:</label>
                         <input
                             type="text"
-                            value={userInfo.birthDate}
+                            value={userInfo.birth}
                             disabled
                             className="update-input disabled"
                         />

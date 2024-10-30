@@ -1,37 +1,58 @@
-import React, { useState } from "react";
-import "/src/styles/Mypage/PasswordPrompt.css";
+import {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import useAxios from '/src/hooks/api/useAxios';
+import '/src/styles/Mypage/PasswordPrompt.css';
 
-function PasswordPrompt({ onSuccess }) {
-    const [password, setPassword] = useState("");
+function PasswordPrompt() {
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+    const {passwordData, passwordError, fetchData} = useAxios();
 
-    const handlePasswordSubmit = (e) => {
-        e.preventDefault();
-        if (password === "1234") {
-            // 임시 비밀번호 확인 로직
-            onSuccess();
-        } else {
-            alert("비밀번호가 올바르지 않습니다.");
-        }
+    const handleChange = (e) => {
+        setPassword(e.target.value);
+        setError(''); // 입력 시 에러 초기화
     };
+
+    const handleSubmit = () => {
+        if (!password) {
+            setError('비밀번호를 입력해 주세요');
+            return;
+        }
+
+        fetchData('/user/verification', "post", {password});
+    };
+
+    useEffect(() => {
+        if (passwordData) {
+            navigate('/mypage/user/update');
+        } else if (passwordError) {
+            setError('비밀번호가 일치하지 않습니다.');
+        }
+    }, [passwordData, passwordError]);
 
     return (
         <div className="password-prompt-page">
             <div className="password-prompt-container">
-                <h2 className="password-prompt-title">비밀번호 입력</h2>
-                <form
-                    onSubmit={handlePasswordSubmit}
-                    className="password-prompt-form"
-                >
+                <h2 className="password-prompt-title">비밀번호 확인</h2>
+                <form className="password-prompt-form" onSubmit={(e) => e.preventDefault()}>
                     <div className="password-prompt-field">
+                        <label>비밀번호:</label>
                         <input
                             type="password"
+                            name="password"
+                            placeholder="비밀번호를 입력해 주세요"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="비밀번호 입력"
-                            className="password-prompt-input"
+                            onChange={handleChange}
+                            className={`password-input ${error ? 'error' : ''}`}
                         />
+                        {error && (
+                            <div className="password-error-container">
+                                <p className="password-error">{error}</p>
+                            </div>
+                        )}
                     </div>
-                    <button type="submit" className="password-prompt-button">
+                    <button type="button" onClick={handleSubmit} className="password-prompt-button">
                         확인
                     </button>
                 </form>
