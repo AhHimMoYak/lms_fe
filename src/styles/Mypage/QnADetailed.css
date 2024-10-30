@@ -87,3 +87,7 @@
     font-size: 0.7em;
     margin-top: 0.1em;
 }
+
+.qna-board-container .qna-back-button {
+    margin-top: 2vh;
+}
