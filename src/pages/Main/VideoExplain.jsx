@@ -5,7 +5,7 @@ import "/src/styles/Main/VideoExplain.css";
 
 function VideoExplain() {
     const {data, error, fetchData, isLoading} = useAxios(); // isLoading 추가
-    const {data: Enrollment, fetchData: fetchEnrollment} = useAxios();
+    const {data: enrollment, error: enrollmentError, fetchData: fetchEnrollment} = useAxios();
     const {courseId} = useParams();
     const [activeCurriculum, setActiveCurriculum] = useState(null);
     const [isEnrolled, setIsEnrolled] = useState(false);
@@ -21,6 +21,29 @@ function VideoExplain() {
             console.log("API response:", data); // 응답 데이터 구조 확인
         }
     }, [data]);
+
+    useEffect(() => {
+        if (enrollment) {
+            if (isEnrolled) {
+                alert("수강신청이 취소되었습니다.");
+                setIsEnrolled(false);
+            } else{
+                alert("수강신청이 완료되었습니다.");
+                setIsEnrolled(true);
+            }
+        }
+    }, [enrollment]);
+
+    useEffect(() => {
+        if (enrollmentError) {
+            console.error("Enrollment Error:", enrollmentError);
+            if (enrollmentError.response && enrollmentError.response.status !== 200 && enrollmentError.response.status !== 201) {
+                console.error("Response Data:", enrollmentError.response.data);
+            }
+            alert(`${enrollmentError.response.data}. 담당자에게 문의해주세요`);
+        }
+    }, [enrollmentError]);
+
 
     const scrollToSection = (sectionId) => {
         const section = document.getElementById(sectionId);
@@ -51,24 +74,10 @@ function VideoExplain() {
         if (isEnrolled) {
             if (window.confirm("수강신청을 취소하시겠습니까?")) {
                 fetchEnrollment(`/course/${courseId}/enroll`, "DELETE")
-                    .then(() => {
-                        alert("수강신청이 취소되었습니다.");
-                        setIsEnrolled(false);
-                    })
-                    .catch((error) => {
-                        console.error("Failed to cancel enrollment:", error);
-                    });
             }
         } else {
             if (window.confirm("수강신청을 하시겠습니까?")) {
                 fetchEnrollment(`/course/${courseId}/enroll`, "GET")
-                    .then(() => {
-                        alert("수강신청이 완료되었습니다.");
-                        setIsEnrolled(true);
-                    })
-                    .catch((error) => {
-                        console.error("Failed to enroll:", error);
-                    });
             }
         }
     };
