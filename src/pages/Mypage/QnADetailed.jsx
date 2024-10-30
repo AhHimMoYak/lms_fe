@@ -18,9 +18,11 @@ function QnADetailed() {
             setUsername(user.sub);
         }
     }, [courseBoardId]);
+
     const onClickEdit = ()=>{
-        navigate(`/mypage/course/${courseId}/qna/edit/${courseBoardId}`, {state:{courseBoardId:courseBoardId}});
+        navigate(`/mypage/course/${courseId}/qna/${courseBoardId}/edit`, {state:{courseBoardId:courseBoardId}});
     }
+
     const onClickDelete = () => {
         const isConfirmed = window.confirm("정말로 삭제하시겠습니까?");
         if (isConfirmed) {
@@ -28,6 +30,10 @@ function QnADetailed() {
             navigate(`/mypage/course/${courseId}/qna/questions`);
         }
     };
+
+    const handleList = () => {
+        navigate(`/mypage/course/${courseId}/qna`);
+    }
     // 로딩 중일 때 처리
     if (!data) {
         return <div>로딩 중...</div>;
@@ -66,6 +72,9 @@ function QnADetailed() {
                     )}
                 </div>
             </div>
+            <button className="qna-back-button" onClick={handleList}>
+                    목록
+            </button>
         </div>
     );
 }
