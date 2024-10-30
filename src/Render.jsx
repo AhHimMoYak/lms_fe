@@ -27,12 +27,13 @@ import QnAEdit from "./pages/Mypage/QnAEdit.jsx";
 import QnAPost from "./pages/Mypage/QnAPost.jsx";
 import VideoPlayer from "./pages/Mypage/VideoPlayer.jsx";
 import CreateLive from "./pages/Mypage/CreateLive.jsx";
+import ModifyCourse from "./pages/Mypage/ModifyCourse.jsx";
 
 function Render() {
     return (
         <Routes>
-            <Route path="/signin" element={<Login />} />
-            <Route path="/signup" element={<Register />} />
+            <Route path="/signin" element={<Login/>}/>
+            <Route path="/signup" element={<Register/>}/>
             <Route path="/stream/video" element={<VideoPlayer />} />
 
             <Route element={<BasicFrame />}>
@@ -62,6 +63,7 @@ function Render() {
                     <Route path="createCourse" element={<CreateCourse />} />
                     <Route path=":courseId/createCurriculum" element={<CreateCurriculum />} />
                     <Route path="qna" element={<QnATotalList />} />
+                    <Route path=":courseId/modify" element={<ModifyCourse/>}/>
 
                     <Route path="user/*" element={<UserInformFrame />}>
                         <Route path="" element={<PasswordPrompt />} />
