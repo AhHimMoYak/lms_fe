@@ -52,7 +52,7 @@ function Render() {
                         <Route path="qna" element={<QnAList />} />
                         <Route path="qna/post" element={<QnAPost />} />
                         <Route path="qna/:courseBoardId" element={<QnADetailed />} />
-                        <Route path="qna/edit/:courseBoardId" element={<QnAEdit />} />
+                        <Route path="qna/:courseBoardId/edit" element={<QnAEdit />} />
                     </Route>
 
                     <Route path="qna" element={<QnATotalList />} />
