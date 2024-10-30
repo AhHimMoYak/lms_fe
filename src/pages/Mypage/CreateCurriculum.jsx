@@ -1,32 +1,41 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import useAxios from '/src/hooks/api/useAxios';
 import {useParams} from 'react-router-dom';
+import MediaUpload from "./MediaUpload.jsx";
+import "../../styles/CreateCurriculum.css"
 
 function CreateCurriculum() {
     const {courseId} = useParams();
-    const {fetchData} = useAxios();
+    const {data, fetchData} = useAxios();
     const [formData, setFormData] = useState({
-        title: ''
+        title: '',
+        idx:'',
+        curriculums:[]
     });
-    const [message, setMessage] = useState('');
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
+        const newIdx = formData.curriculums.length + 1;
+         fetchData(`/course/${courseId}/curriculum`, "post",
+            {
+                title: formData.title,
+                idx: newIdx
+            });
+    }
 
-        try {
-            const response = await fetchData(`/course/${courseId}/curriculum`, "post", {title: formData.title}, "application/json");
-            if (response && response.data) {
-                setMessage('커리큘럼 등록 성공');
-                setFormData({title: ''});
-            }
-        } catch (error) {
-            if (error.response && error.response.status === 400) {
-                setMessage('커리큘럼 등록에 실패했습니다. 다시 시도해주세요.');
-            } else {
-                setMessage('오류가 발생했습니다. 다시 시도해주세요.');
-            }
+    useEffect(() => {
+        if (data) {
+            console.log(data);
+            setFormData((prevState) => ({
+                ...prevState,
+                curriculums: [
+                    ...prevState.curriculums,
+                    {idx: prevState.curriculums.length + 1, title: prevState.title,curriculumId: data},
+                ],
+                title: '',
+            }));
         }
-    };
+    }, [data]);
 
     const handleTitleChange = (e) => {
         const {value} = e.target;
@@ -37,22 +46,37 @@ function CreateCurriculum() {
     };
 
     return (
-        <div>
-            <h2>커리큘럼 등록</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="title">커리큘럼 제목:</label>
-                    <input
-                        type="text"
-                        id="title"
-                        value={formData.title}
-                        onChange={handleTitleChange}
-                        required
-                    />
-                </div>
-                <button type="submit">등록</button>
+        <div className="curriculum-container">
+            <h2 className="curriculum-input">커리큘럼 등록</h2>
+            <form onSubmit={handleSubmit} className="curriculum-post-form">
+                <input
+                    type="text"
+                    id="title"
+                    className="input-title-field"
+                    placeholder={`커리큘럼 제목`}
+                    value={formData.title}
+                    onChange={handleTitleChange}
+                    required
+                /><button type="submit" className="curriculum-submit">등록</button>
             </form>
-            {message && <p>{message}</p>}
+            <h3>생성한 커리큘럼</h3>
+            <div>
+                {formData.curriculums.map((curriculum, index) => (
+                    <div key={index}>
+                        <button className="collapsible" onClick={() => {
+                            const content = document.getElementById(`content-${index}`);
+                            if (content.style.display === 'block') {
+                                content.style.display = 'none';
+                            } else {
+                                content.style.display = 'block';
+                            }
+                        }}> {curriculum.title}</button>
+                        <div id={`content-${index}`} className="content" style={{display: 'none'}}>
+                            <MediaUpload courseId={courseId} curriculumId={curriculum.curriculumId}/>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
