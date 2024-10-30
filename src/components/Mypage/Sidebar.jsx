@@ -37,9 +37,11 @@ const Sidebar = () => {
                     </li>
                     <li>
                         <NavLink
-                            to="/mypage/courses"
-                            className={({ isActive }) =>
-                                isActive ? "sidebar_active" : ""
+                            to="/mypage/course"
+                            className={() =>
+                                checkIsActive("/mypage/course")
+                                    ? "sidebar_active"
+                                    : ""
                             }
                         >
                             나의 코스
@@ -48,8 +50,10 @@ const Sidebar = () => {
                     <li>
                         <NavLink
                             to="/mypage/qna"
-                            className={({ isActive }) =>
-                                isActive ? "sidebar_active" : ""
+                            className={() =>
+                                checkIsActive("/mypage/qna")
+                                    ? "sidebar_active"
+                                    : ""
                             }
                         >
                             QnA

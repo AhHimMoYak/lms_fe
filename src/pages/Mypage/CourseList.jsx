@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import "../../styles/CourseListCss.css";
+import "../../styles/Mypage/CourseList.css";
 import useAxios from "../../hooks/api/useAxios.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function CourseList() {
     const navigate = useNavigate();
-    const [pageSize, setPageSize] = useState(5); // 페이지 크기 설정
+    const [pageSize, setPageSize] = useState(8); // 페이지 크기 설정
     const query = new URLSearchParams(useLocation().search);
     const page = parseInt(query.get("page")) || 1;
     const { data: courseData, error, fetchData: fetchUserCourse } = useAxios();
@@ -72,6 +72,13 @@ function CourseList() {
                         )}
                     </tbody>
                 </table>
+
+                <div
+                    className="gap"
+                    style={{
+                        height: `${(pageSize - currentCourses.length) * 8}vh`,
+                    }}
+                ></div>
 
                 <div className="courselist-pagination">
                     {Array.from({ length: totalPages }, (_, index) => (

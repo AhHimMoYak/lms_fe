@@ -39,7 +39,7 @@ function Render() {
                 <Route path="mypage/*" element={<MypageFrame />}>
                     <Route path="" element={<Dashboard />} />
                     <Route path="dashboard" element={<Dashboard />} />
-                    <Route path="courses" element={<CourseList />} />
+                    <Route path="course" element={<CourseList />} />
                     <Route path="course/:courseId" element={<CourseFrame />}>
                         <Route path="" element={<CourseDetailed />} />
                         <Route path="contents" element={<CourseDetailed />} />
