@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
 import useAxios from "/src/hooks/api/useAxios";
 import { useNavigate } from "react-router-dom";
-import "../../styles/CourePost.css"
 
 function CreateCourse() {
     const {data, fetchData } = useAxios();
