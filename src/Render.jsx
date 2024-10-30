@@ -32,7 +32,7 @@ function Render() {
         <Routes>
             <Route path="/signin" element={<Login />} />
             <Route path="/signup" element={<Register />} />
-            <Route path="/testVideo" element={<VideoPlayer />} />
+            <Route path="/stream/video" element={<VideoPlayer />} />
 
             <Route element={<BasicFrame />}>
                 <Route path="/" element={<Main />} />
@@ -51,26 +51,14 @@ function Render() {
                         <Route path="live" element={<LiveDetail />} />
                         <Route path="qna" element={<QnAList />} />
                         <Route path="qna/post" element={<QnAPost />} />
-                        <Route
-                            path="qna/:courseBoardId"
-                            element={<QnADetailed />}
-                        />
-                        <Route
-                            path="qna/edit/:courseBoardId"
-                            element={<QnAEdit />}
-                        />
+                        <Route path="qna/:courseBoardId" element={<QnADetailed />} />
+                        <Route path="qna/edit/:courseBoardId" element={<QnAEdit />} />
                     </Route>
 
                     <Route path="qna" element={<QnATotalList />} />
-                    <Route
-                        path=":courseId/uploadMedia/:curriculumId"
-                        element={<MediaUpload />}
-                    />
+                    <Route path=":courseId/uploadMedia/:curriculumId" element={<MediaUpload />} />
                     <Route path="createCourse" element={<CreateCourse />} />
-                    <Route
-                        path=":courseId/createCurriculum"
-                        element={<CreateCurriculum />}
-                    />
+                    <Route path=":courseId/createCurriculum" element={<CreateCurriculum />} />
                     <Route path="qna" element={<QnATotalList />} />
 
                     <Route path="user/*" element={<UserInformFrame />}>
