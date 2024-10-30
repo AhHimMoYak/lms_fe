@@ -1,13 +1,13 @@
 .mycourse-list-container {
     justify-content: center;
     align-items: center;
-    max-height: 92vh;
+    min-height: 92vh;
     background-color: #fff;
     padding: 3vh;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     width: 75vw;
-    height: 92vh;
+    height: auto;
     display: flex;
     flex-direction: column;
 }
@@ -78,15 +78,13 @@
 /* Pagination Styling */
 .courselist-pagination {
     margin-top: auto; /* 항상 맨 아래로 이동 */
-    padding: 10px 0;
+    padding: 1vh 0;
     text-align: center;
     margin-bottom: 2vh;
 }
 
 .pagination-button {
-    margin: 0 5px;
-    padding: 8px 12px;
-    border: none;
+    margin: 0 1vw;
     background-color: #f0f0f0;
     cursor: pointer;
 }
