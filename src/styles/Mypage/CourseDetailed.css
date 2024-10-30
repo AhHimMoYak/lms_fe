@@ -1,4 +1,8 @@
 /* 전체 강의 정보 컨테이너 스타일 */
+.course-detail-container {
+    display: block; /* 기본적으로 block으로 높이 변화 반영 */
+    width: 100%;
+}
 .course-details {
     display: flex;
     align-items: center;

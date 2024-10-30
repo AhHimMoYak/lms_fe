@@ -13,83 +13,104 @@ function QnATotalList() {
     const { data: qnaData, error, fetchData: fetchQna } = useAxios();
 
     useEffect(() => {
-        fetchQna(`/courseBoard/myBoard?page=${page}&size=10`, "GET");
+        fetchQna(`/board/qna`, "GET");
     }, [page]);
 
     if (!qnaData) {
         return <div>로딩 중...</div>;
     }
 
-    const handleRowClick = (boardId) => {
-        navigate(`/mypage/qna/${boardId}`);
+    const handleRowClick = (courseId,courseBoardId) => {
+        navigate(`/mypage/course/${courseId}/qna/${courseBoardId}`);
     };
-
-    const totalPages = qnaData.totalPage;
 
     const handlePageChange = (newPage) => {
         navigate(`?page=${newPage}`);
     };
+    const itemsPerPage = 10; // 한 페이지당 보여줄 게시물 수
+    const totalPages = Math.ceil(qnaData.length / itemsPerPage);
 
+    const currentPageData = qnaData.slice(
+        (page - 1) * itemsPerPage,
+        page * itemsPerPage
+    );
     return (
         <div className="myQna-list-container">
             <div className="myQna-list-header">
                 <h2 className="myQna-list-title">내 QNA 목록</h2>
                 <table className="myQna-list-table">
                     <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>코스</th>
-                            <th>제목</th>
-                            <th>종류</th>
-                            <th>질문일</th>
-                            <th>답변 여부</th>
-                        </tr>
+                    <tr>
+                        <th>No.</th>
+                        <th>코스</th>
+                        <th>제목</th>
+                        <th>답변 여부</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {qnaData.boards.map((board, index) => (
-                            <tr
-                                key={board.boardId}
-                                onClick={() => handleRowClick(board.boardId)}
-                                className="myQna-clickable-row"
+                    {currentPageData.map((board, index) => (
+                        <tr
+                            key={board.boardId}
+                            onClick={() => handleRowClick(board.courseId, board.boardId)}
+                            className="myQna-clickable-row"
+                        >
+                            <td>{(page - 1) * 10 + index + 1}</td>
+                            <td>{board.courseTitle}</td>
+                            <td>{board.title}</td>
+                            <td
+                                className={
+                                    board.commitCount > 0
+                                        ? "answered"
+                                        : "not-answered"
+                                }
                             >
-                                <td>{(page - 1) * 10 + index + 1}</td>
-                                <td>{board.courseName}</td>
-                                <td>{board.title}</td>
-                                <td>{board.type}</td>
-                                <td>
-                                    {" "}
-                                    {
-                                        new Date(board.createdAt)
-                                            .toISOString()
-                                            .split("T")[0]
-                                    }
-                                </td>
-                                <td
-                                    className={
-                                        board.commitCount > 0
-                                            ? "answered"
-                                            : "not-answered"
-                                    }
-                                >
-                                    {board.commitCount > 0 ? "완료" : "미완료"}
-                                </td>
-                            </tr>
-                        ))}
+                                {board.commitCount > 0 ? "완료" : "미완료"}
+                            </td>
+                        </tr>
+                    ))}
                     </tbody>
                 </table>
-
-                <div className="courselist-pagination"></div>
-                {Array.from({ length: totalPages }, (_, index) => (
+                <div className="pagination">
                     <button
-                        key={index}
-                        onClick={() => handlePageChange(index + 1)}
-                        className={`pagination-button ${
-                            page === index + 1 ? "active" : ""
-                        }`}
+                        onClick={() => handlePageChange(page - 1)}
+                        disabled={page === 1}
                     >
-                        {index + 1}
+                        {"<"}
                     </button>
-                ))}
+
+                    {(() => {
+                        const groupSize = 5; // 한 번에 보여줄 페이지 수
+                        const currentGroup = Math.floor((page - 1) / groupSize);
+                        const startPage = currentGroup * groupSize + 1;
+                        const endPage = Math.min(
+                            startPage + groupSize - 1,
+                            totalPages
+                        );
+
+                        const pages = [];
+                        for (let i = startPage; i <= endPage; i++) {
+                            pages.push(
+                                <button
+                                    key={i}
+                                    onClick={() => handlePageChange(i)}
+                                    className={page === i ? "active" : ""}
+                                >
+                                    {i}
+                                </button>
+                            );
+                        }
+
+                        return pages;
+                    })()}
+
+                    <button
+                        onClick={() => handlePageChange(page + 1)}
+                        disabled={page === totalPages}
+                    >
+                        {">"}
+                    </button>
+                </div>
+
             </div>
         </div>
     );

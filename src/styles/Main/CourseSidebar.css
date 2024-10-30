@@ -1,13 +1,13 @@
-.sidebar {
+/* .sidebar {
     width: 25%;
     height: auto;
     max-height: 100vh;
     overflow-y: auto;
-    background-color: #ffffff; /* 배경 색상 */
+    background-color: #ffffff; 
     padding: 20px;
     box-sizing: border-box;
-    border-right: 0.1em solid #dddddd; /* 오른쪽 경계선 */
-}
+    border-right: 0.1em solid #dddddd; 
+} */
 
 .category-title {
     margin-bottom: 20px;

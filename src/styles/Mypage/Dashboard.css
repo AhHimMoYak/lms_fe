@@ -94,7 +94,7 @@
 
 .write-qna-table th,
 .write-qna-table td {
-    padding: 2vh 3vw;
+    padding: 2vh 2vw;
     border-bottom: 0.1em solid #e0e0e0;
     text-align: left;
     min-width: 5vw;
@@ -127,6 +127,11 @@
 .qna-author {
     font-weight: bold;
     text-align: left;
+}
+
+.que-idx{
+    width: 1vw;
+    padding: 0;
 }
 
 .qna-course {
