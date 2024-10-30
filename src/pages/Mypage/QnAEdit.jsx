@@ -1,7 +1,7 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import useAxios from "../../hooks/api/useAxios.jsx";
-import "../../styles/QnAContainer.css"
+import "../../styles/Mypage/QnAEdit.css"
 
 function QnAEdit() {
     const {courseBoardId} = useParams();
@@ -28,6 +28,11 @@ function QnAEdit() {
         updateRetchData(`/course/${courseId}/board/${courseBoardId}`, "PATCH", requestDto);
 
     }
+
+    const handleList = () => {
+        navigate(`/mypage/course/${courseId}/qna/${courseBoardId}`);
+    }
+
     useEffect(() => {
         if (data) {
             setTitle(data.title);
@@ -66,8 +71,11 @@ function QnAEdit() {
                         required
                     />
                 </div>
-                <button type="submit" className="submit-button">
+                <button type="submit" className="qna-submit-button">
                     작성완료
+                </button>
+                <button className="qna-back-button" onClick={handleList}>
+                    취소
                 </button>
             </form>
         </div>
