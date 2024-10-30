@@ -62,7 +62,6 @@ function Render() {
                     <Route path=":courseId/uploadMedia/:curriculumId" element={<MediaUpload/>}/>
                     <Route path="createCourse" element={<CreateCourse/>}/>
                     <Route path=":courseId/createCurriculum" element={<CreateCurriculum/>}/>
-                    <Route path=":courseId/createCurriculum" element={<CreateCurriculum/>}/>
                     <Route path="qna" element={<QnATotalList />} />
 
                     <Route path="user/*" element={<UserInformFrame />}>
