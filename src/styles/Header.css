@@ -1,6 +1,7 @@
 /* 기본 헤더 스타일 */
 .header {
     width: 89vw;
+    height: 10vh;
     padding: 0.5vh 5vw;
     display: flex;
     align-items: center;
