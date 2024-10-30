@@ -21,6 +21,7 @@ import QnATotalList from "./pages/Mypage/QnATotalList.jsx";
 import MediaUpload from "./pages/Mypage/MediaUpload.jsx";
 import CreateCourse from "./pages/Mypage/CreateCourse.jsx";
 import CreateCurriculum from "./pages/Mypage/CreateCurriculum.jsx";
+import ModifyCourse from "./pages/Mypage/ModifyCourse.jsx";
 
 function Render() {
     return (
@@ -50,6 +51,7 @@ function Render() {
                     <Route path="passwordPrompt" element={<PasswordPrompt/>}/>
                     <Route path="updateUser" element={<UpdateUser/>}/>
                     <Route path="createCourse" element={<CreateCourse/>}/>
+                    <Route path=":courseId/modify" element={<ModifyCourse/>}/>
                     <Route path=":courseId/createCurriculum" element={<CreateCurriculum/>}/>
                     <Route path=":courseId/createCurriculum" element={<CreateCurriculum/>}/>
                 </Route>
