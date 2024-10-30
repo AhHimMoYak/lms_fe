@@ -98,6 +98,7 @@ function CourseDetailed() {
                                                         <span className="item-content-link">
                                                             {content.type === "MATERIAL" ? (
                                                                 <Download
+                                                                    size={20}
                                                                     onClick={() =>
                                                                         clickContent({
                                                                             curriculumId: curriculum.id,
@@ -108,6 +109,7 @@ function CourseDetailed() {
                                                                 />
                                                             ) : content.type === "VIDEO" ? (
                                                                 <Play
+                                                                    size={20}
                                                                     onClick={() =>
                                                                         clickContent({
                                                                             curriculumId: curriculum.id,
