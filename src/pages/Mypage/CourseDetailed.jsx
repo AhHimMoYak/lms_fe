@@ -32,7 +32,7 @@ function CourseDetailed() {
         <div className="course-detail-container">
             <div className="course-details">
                 <h2>{data.title}</h2>
-                <p>{data.tutorName} 강사</p>
+                <p>{data.tutor} 강사</p>
             </div>
             <div id="chapter-infomation" className="chapter-infomation">
                 {data.curriculumList && data.curriculumList.length > 0 ? (

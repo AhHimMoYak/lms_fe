@@ -5,7 +5,8 @@ import AuthManager from "../hooks/api/AuthManger.jsx";
 import { decodeToken } from "../authentication/decodeToken.jsx";
 import UserMenu from "./UserMenu";
 import NoneUserMenu from "./NoneUserMenu";
-import logoIcon from "../assets/logo_white_background.png";
+import logoIcon_origianl from "../assets/logo.png";
+import logoIcon_balck from "../assets/logo_white_background.png";
 
 function Header() {
     const { LogOut } = AuthManager();
@@ -22,7 +23,7 @@ function Header() {
     return (
         <header className={`header ${isMypage ? "header-mypage" : ""}`}>
             <img
-                src={logoIcon}
+                src={isMypage ? logoIcon_balck : logoIcon_origianl}
                 alt="User Icon"
                 className="logo"
                 onClick={handleLogoClick}

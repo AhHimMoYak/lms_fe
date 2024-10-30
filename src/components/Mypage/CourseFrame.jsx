@@ -1,39 +1,53 @@
 import { NavLink, Outlet } from "react-router-dom";
 import "../../styles/Mypage/CourseFrame.css";
+import { patch } from "@mui/material";
 
 function CourseFrame() {
-    const containerStyle = {
-        display: "flex",
-        height: "100vh",
+    const checkIsActive = (path) => {
+        return location.pathname.includes(path);
+    };
+
+    const checkIsContent = (path) => {
+        const regex = new RegExp(`^/mypage/course/\\d+(/${path})?$`);
+        return regex.test(location.pathname);
     };
 
     return (
-        <div style={containerStyle}>
-            <h2>나의 코스</h2>
-            <div className="tabs">
-                <NavLink
-                    to="contents"
-                    className={({ isActive }) => (isActive ? "active" : "")}
-                >
-                    강의
-                </NavLink>
-                <NavLink
-                    to="live"
-                    className={({ isActive }) => (isActive ? "active" : "")}
-                >
-                    라이브
-                </NavLink>
-                <NavLink
-                    to="qna"
-                    className={({ isActive }) => (isActive ? "active" : "")}
-                >
-                    QnA
-                </NavLink>
-            </div>
+        <div className="course-frame">
+            <div className="course-tab-frame">
+                <div className="course-frame-title">나의 코스</div>
+                <div className="course-tabs">
+                    <NavLink
+                        to="contents"
+                        className={() =>
+                            checkIsContent("contents")
+                                ? "course_tab_active"
+                                : ""
+                        }
+                    >
+                        강의
+                    </NavLink>
+                    <NavLink
+                        to="live"
+                        className={() =>
+                            checkIsActive("live") ? "course_tab_active" : ""
+                        }
+                    >
+                        라이브
+                    </NavLink>
+                    <NavLink
+                        to="qna"
+                        className={() =>
+                            checkIsActive("qna") ? "course_tab_active" : ""
+                        }
+                    >
+                        QnA
+                    </NavLink>
+                </div>
 
-            {/* 중첩된 경로의 컴포넌트를 렌더링할 Outlet */}
-            <div className="tab-content">
-                <Outlet />
+                <div className="course-tab-content">
+                    <Outlet />
+                </div>
             </div>
         </div>
     );
