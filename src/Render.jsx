@@ -21,6 +21,10 @@ import QnATotalList from "./pages/Mypage/QnATotalList.jsx";
 import MediaUpload from "./pages/Mypage/MediaUpload.jsx";
 import CreateCourse from "./pages/Mypage/CreateCourse.jsx";
 import CreateCurriculum from "./pages/Mypage/CreateCurriculum.jsx";
+// import UserInformFrame from "./components/Mypage/UserInformFrame.jsx";
+import QnADetailed from "./pages/Mypage/QnADetailed.jsx";
+import QnAEdit from "./pages/Mypage/QnAEdit.jsx";
+import QnAPost from "./pages/Mypage/QnAPost.jsx";
 
 function Render() {
     return (
@@ -44,16 +48,28 @@ function Render() {
                         <Route path="contents" element={<CourseDetailed/>}/>
                         <Route path="live" element={<LiveDetail/>}/>
                         <Route path="qna" element={<QnAList/>}/>
+                        <Route path="qna/post" element={<QnAPost/>}/>
+                        <Route
+                            path="qna/:courseBoardId"
+                            element={<QnADetailed/>}
+                        />
+                        <Route
+                            path="qna/edit/:courseBoardId"
+                            element={<QnAEdit/>}
+                        />
                     </Route>
                     <Route path="qna" element={<QnATotalList/>}/>
-                    <Route path=":courseId/uploadMedia/:curriculumId" element={<MediaUpload/>}/>
-                    <Route path="passwordPrompt" element={<PasswordPrompt/>}/>
-                    <Route path="updateUser" element={<UpdateUser/>}/>
+                    {/*<Route path=":courseId/uploadMedia/:curriculumId" element={<MediaUpload/>}/>*/}
                     <Route path="createCourse" element={<CreateCourse/>}/>
                     <Route path=":courseId/createCurriculum" element={<CreateCurriculum/>}/>
-                    <Route path=":courseId/createCurriculum" element={<CreateCurriculum/>}/>
+                    <Route path="qna" element={<QnATotalList/>}/>
+
+                    {/*<Route path="user/*" element={<UserInformFrame/>}>*/}
+                    {/*    <Route path="" element={<PasswordPrompt/>}/>*/}
+                    {/*    <Route path="reconfirm" element={<PasswordPrompt/>}/>*/}
+                    {/*    <Route path="update" element={<UpdateUser/>}/>*/}
+                    {/*</Route>*/}
                 </Route>
-                {/* </Route> */}
             </Route>
         </Routes>
     );
