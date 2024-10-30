@@ -25,29 +25,31 @@ import UserInformFrame from "./components/Mypage/UserInformFrame.jsx";
 import QnADetailed from "./pages/Mypage/QnADetailed.jsx";
 import QnAEdit from "./pages/Mypage/QnAEdit.jsx";
 import QnAPost from "./pages/Mypage/QnAPost.jsx";
+import VideoPlayer from "./pages/Mypage/VideoPlayer.jsx";
 
 function Render() {
     return (
         <Routes>
-            <Route path="/signin" element={<Login/>}/>
-            <Route path="/signup" element={<Register/>}/>
+            <Route path="/signin" element={<Login />} />
+            <Route path="/signup" element={<Register />} />
+            <Route path="/testVideo" element={<VideoPlayer />} />
 
-            <Route element={<BasicFrame/>}>
-                <Route path="/" element={<Main/>}/>
-                <Route path="course" element={<Video/>}/>
-                <Route path="/course/:courseId" element={<VideoExplain/>}/>
-                <Route path="/live/:streamKey" element={<LiveStream/>}/>
+            <Route element={<BasicFrame />}>
+                <Route path="/" element={<Main />} />
+                <Route path="course" element={<Video />} />
+                <Route path="/course/:courseId" element={<VideoExplain />} />
+                <Route path="/live/:streamKey" element={<LiveStream />} />
 
                 {/* <Route element={<AuthChecker />}> */}
-                <Route path="mypage/*" element={<MypageFrame/>}>
-                    <Route path="" element={<Dashboard/>}/>
-                    <Route path="dashboard" element={<Dashboard/>}/>
-                    <Route path="courses" element={<CourseList/>}/>
-                    <Route path="course/:courseId" element={<CourseFrame/>}>
-                        <Route path="" element={<CourseDetailed/>}/>
-                        <Route path="contents" element={<CourseDetailed/>}/>
-                        <Route path="live" element={<LiveDetail/>}/>
-                        <Route path="qna" element={<QnAList/>}/>
+                <Route path="mypage/*" element={<MypageFrame />}>
+                    <Route path="" element={<Dashboard />} />
+                    <Route path="dashboard" element={<Dashboard />} />
+                    <Route path="course" element={<CourseList />} />
+                    <Route path="course/:courseId" element={<CourseFrame />}>
+                        <Route path="" element={<CourseDetailed />} />
+                        <Route path="contents" element={<CourseDetailed />} />
+                        <Route path="live" element={<LiveDetail />} />
+                        <Route path="qna" element={<QnAList />} />
                         <Route path="qna/post" element={<QnAPost />} />
                         <Route
                             path="qna/:courseBoardId"
@@ -58,10 +60,17 @@ function Render() {
                             element={<QnAEdit />}
                         />
                     </Route>
-                    <Route path="qna" element={<QnATotalList/>}/>
-                    <Route path=":courseId/uploadMedia/:curriculumId" element={<MediaUpload/>}/>
-                    <Route path="createCourse" element={<CreateCourse/>}/>
-                    <Route path=":courseId/createCurriculum" element={<CreateCurriculum/>}/>
+
+                    <Route path="qna" element={<QnATotalList />} />
+                    <Route
+                        path=":courseId/uploadMedia/:curriculumId"
+                        element={<MediaUpload />}
+                    />
+                    <Route path="createCourse" element={<CreateCourse />} />
+                    <Route
+                        path=":courseId/createCurriculum"
+                        element={<CreateCurriculum />}
+                    />
                     <Route path="qna" element={<QnATotalList />} />
 
                     <Route path="user/*" element={<UserInformFrame />}>
