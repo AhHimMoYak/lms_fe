@@ -1,55 +1,64 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import useAxios from "/src/hooks/api/useAxios";
-import { useNavigate } from "react-router-dom";
-import "../../styles/CourePost.css"
+import { useNavigate, useParams } from "react-router-dom";
 
-function CreateCourse() {
-    const {data, fetchData } = useAxios();
+function ModifyCourse() {
+    const { data, fetchData } = useAxios();
     const navigate = useNavigate();
+    const { courseId } = useParams();
     const [formData, setFormData] = useState({
-        title: '',
-        category: '',
-        introduction: '',
-        beginDate: '',
-        endDate: '',
+        title: "",
+        category: "",
+        introduction: "",
+        beginDate: "",
+        endDate: "",
     });
 
     useEffect(() => {
-        if (data) {
-            alert("코스가 성공적으로 생성되었습니다.");
-            navigate(`/mypage/${data}/createCurriculum`);
+        fetchData(`/course/${courseId}`, "GET");
+    }, [courseId]);
+
+    useEffect(() => {
+        if (data && data.title) {
+            setFormData({
+                title: data.title,
+                category: data.category,
+                introduction: data.introduction,
+                beginDate: data.beginDate,
+                endDate: data.endDate,
+            });
         }
     }, [data]);
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!formData.beginDate || !formData.endDate) {
             alert("시작 날짜와 종료 날짜는 필수입니다.");
             return;
-
         }
-        fetchData("/course", "post", {
+        fetchData(`/course/${courseId}`, "patch", {
             title: formData.title,
             introduction: formData.introduction,
             category: formData.category,
             beginDate: new Date(formData.beginDate),
-            endDate: new Date(formData.endDate)
+            endDate: new Date(formData.endDate),
+        }).then(() => {
+            alert("코스가 성공적으로 수정되었습니다.");
+            navigate(`/mypage/courses`);
         });
+    };
 
-
-    }
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prevState => ({
+        setFormData((prevState) => ({
             ...prevState,
-            [name]: value
+            [name]: value,
         }));
     };
 
     return (
         <div className="course-post-container">
-            <h2 className="title">코스 등록</h2>
+            <h2 className="title">코스 수정</h2>
             <form onSubmit={handleSubmit} className="course-post-form">
                 <input
                     className="input-field"
@@ -127,11 +136,11 @@ function CreateCourse() {
                     required
                 />
                 <button type="submit" className="submit-total-button">
-                    등록
+                    수정
                 </button>
             </form>
         </div>
     );
 }
 
-export default CreateCourse;
+export default ModifyCourse;

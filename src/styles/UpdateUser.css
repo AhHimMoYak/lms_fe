@@ -8,18 +8,19 @@
 
 .update-container {
     background-color: #fff;
-    padding: 1.5vh 1vw;
-    border-radius: 0.5vw;
-    box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 0, 0.1);
+    padding: 2vh 2vw;
+    border-radius: 1vw;
+    box-shadow: 0 0.3vw 0.5vw rgba(0, 0, 0, 0.1);
     width: 80vw;
-    max-width: 30vw;
+    max-width: 28vw;
 }
 
 .update-title {
-    font-size: 1.5vw;
-    margin-bottom: 0.8vw;
+    font-size: 1.6vw;
+    margin-bottom: 1.5vh;
     text-align: center;
     color: #333;
+    font-weight: bold;
 }
 
 .update-form {
@@ -28,16 +29,30 @@
 }
 
 .update-field {
-    margin-bottom: 1.5vh;
+    display: flex;
+    align-items: center;
+    margin-bottom: 2vh;
     position: relative;
+    border: 0.15vw solid #ccc;
+    border-radius: 0.4vw;
+    padding: 1.2vh 0.8vw;
+    background-color: #fff;
+}
+
+.update-label {
+    font-size: 0.9vw;
+    color: #555;
+    width: 20%;
+    text-align: left;
 }
 
 .update-input {
-    width: calc(100% - 1.5vw);
-    padding: 1vh 0.6vw;
-    border: 0.15vw solid #ccc;
-    border-radius: 0.3vw;
+    flex: 1;
+    border: none;
+    outline: none;
     font-size: 0.9vw;
+    background-color: transparent;
+    padding-left: 0.8vw;
 }
 
 /* 비활성화된 입력 필드 */
@@ -53,14 +68,14 @@
 }
 
 .update-error-container {
-    height: 1.5vh;
-    margin-top: 0.7vh;
+    margin-top: 0.5vh;
     overflow: hidden;
+    height: 1.8vh;
 }
 
 .update-error {
     color: red;
-    font-size: 0.5em;
+    font-size: 0.7em;
     margin: 0;
 }
 
@@ -69,23 +84,24 @@
     background-color: #333;
     color: #fff;
     border: none;
-    padding: 1vh 0.5vw;
+    padding: 1.5vh 1vw;
     border-radius: 1em;
-    font-size: 1.2em;
+    font-size: 1em;
     cursor: pointer;
     transition: background-color 0.2s;
-    width: 50%; /* PasswordPrompt 페이지와 동일한 크기 */
-    margin-top: 1.5vh;
-    align-self: center; /* 중앙 정렬 */
+    width: 100%;
+    max-width: 50%;
+    margin-top: 2vh;
+    align-self: center;
 }
 
 .update-button:hover {
-    background-color: #000000;
+    background-color: #000;
 }
 
 .update-general-error {
     color: red;
-    font-size: 0.5em;
+    font-size: 0.8em;
     text-align: center;
     margin-top: 1vh;
 }

@@ -1,5 +1,5 @@
-import { Routes, Route } from "react-router-dom";
-import { AuthChecker } from "./authentication/AuthChecker";
+import {Routes, Route} from "react-router-dom";
+import {AuthChecker} from "./authentication/AuthChecker";
 import BasicFrame from "./components/BasicFrame.jsx";
 
 import CourseFrame from "./components/Mypage/CourseFrame.jsx";
@@ -26,12 +26,14 @@ import QnADetailed from "./pages/Mypage/QnADetailed.jsx";
 import QnAEdit from "./pages/Mypage/QnAEdit.jsx";
 import QnAPost from "./pages/Mypage/QnAPost.jsx";
 import VideoPlayer from "./pages/Mypage/VideoPlayer.jsx";
+import CreateLive from "./pages/Mypage/CreateLive.jsx";
+import ModifyCourse from "./pages/Mypage/ModifyCourse.jsx";
 
 function Render() {
     return (
         <Routes>
-            <Route path="/signin" element={<Login />} />
-            <Route path="/signup" element={<Register />} />
+            <Route path="/signin" element={<Login/>}/>
+            <Route path="/signup" element={<Register/>}/>
             <Route path="/stream/video" element={<VideoPlayer />} />
 
             <Route element={<BasicFrame />}>
@@ -49,6 +51,7 @@ function Render() {
                         <Route path="" element={<CourseDetailed />} />
                         <Route path="contents" element={<CourseDetailed />} />
                         <Route path="live" element={<LiveDetail />} />
+                        <Route path="create" element={<CreateLive/>}/>
                         <Route path="qna" element={<QnAList />} />
                         <Route path="qna/post" element={<QnAPost />} />
                         <Route path="qna/:courseBoardId" element={<QnADetailed />} />
@@ -60,6 +63,7 @@ function Render() {
                     <Route path="createCourse" element={<CreateCourse />} />
                     <Route path=":courseId/createCurriculum" element={<CreateCurriculum />} />
                     <Route path="qna" element={<QnATotalList />} />
+                    <Route path=":courseId/modify" element={<ModifyCourse/>}/>
 
                     <Route path="user/*" element={<UserInformFrame />}>
                         <Route path="" element={<PasswordPrompt />} />
