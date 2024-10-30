@@ -67,7 +67,7 @@ function CourseDetailed() {
     return (
         <div className="course-detail-container">
             <div className="course-details">
-                <h2>{data.title}</h2>
+                <div className="course-detail-title">{data.title}</div>
                 <p>{data.tutor} 강사</p>
             </div>
             <div id="chapter-infomation" className="chapter-infomation">
