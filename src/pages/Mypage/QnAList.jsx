@@ -49,7 +49,7 @@ function QnAList() {
                     {courseData.title || "강좌 제목 없음"}
                 </div>
                 <button className="create-qna" onClick={handleCreateQnA}>
-                    글작성
+                    질문하기
                 </button>
             </div>
             <table className="qna-table">
@@ -63,7 +63,7 @@ function QnAList() {
                 <tbody>
                     {currentPageData.map((board, index) => (
                         <tr
-                            key={board.id}
+                            key={board.boardId}
                             onClick={() => handleRowClick(board.boardId)}
                         >
                             <td>{(page - 1) * itemsPerPage + index + 1}</td>
@@ -82,7 +82,7 @@ function QnAList() {
                 </tbody>
             </table>
 
-            <div className="pagination">
+            <div className="qna-pagination">
                 <button
                     onClick={() => handlePageChange(page - 1)}
                     disabled={page === 1}
