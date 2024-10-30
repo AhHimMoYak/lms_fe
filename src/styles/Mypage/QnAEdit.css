@@ -57,26 +57,5 @@
     min-height: 50vh;
 }
 
-/* 제출 버튼 */
-.submit-button {
-    float: right;
-    padding: 0.3em 1em;
-    margin-top: 0.005em;
-    margin-right: 1em;
-    font-size: 0.8em;
-    background-color: #1976d2;
-    color: white;
-    border: none;
-    border-radius: 0.5em;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.submit-button:hover {
-    background-color: #1565c0;
-    transform: scale(1.00);
-}
-
-.submit-button:active {
-    transform: scale(0.95);
-}
+/* 제출 버튼 QnAPost.css 에 위치 */
+/* 취소 버튼 QnAPost.css 에 위치 */
