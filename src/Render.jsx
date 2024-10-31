@@ -78,7 +78,7 @@ function Render() {
                             <Route path="course" element={<CourseList />} />
                             <Route path="manage/*" element={<ManageFrame />}>
                                 <Route path="course/create" element={<CreateCourse />} />
-                                <Route path=":courseId/curriculum/create" element={<CreateCurriculum />} /> {/*# 커리큘럼 생성*/}
+                                <Route path=":courseId/curriculum/create" element={<CreateCurriculum />} />
                             </Route>
                             <Route path="course/:courseId" element={<CourseFrame />}>
                                 <Route path="" element={<CourseDetailed />} />
@@ -92,9 +92,6 @@ function Render() {
                                 <Route path="qna/:courseBoardId/edit" element={<QnAEdit />} />
                             </Route>
                             <Route path="qna" element={<QnATotalList />} />
-                            {/* <Route path="createCourse" element={<CreateCourse />} /> # 코스 생성// */}
-                            {/* <Route path="course/:courseId/modify" element={<ModifyCourse />} /> # 코스 수정(모달) */}
-                            {/* <Route path="course/:courseId/:curriculumId/modify" element={<ModifyCurriculum />} /># 커리큘럼 1개 수정 (모달) */}
                             <Route path="user/*" element={<UserInformFrame />}>
                                 <Route path="" element={<PasswordPrompt />} />
                                 <Route path="reconfirm" element={<PasswordPrompt />} />
