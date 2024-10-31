@@ -57,6 +57,7 @@ function UpdateUser() {
             navigate(`/mypage/dashboard`)
         } else {
             setErrors(newErrors);
+            alert("필수정보를 입력해주세요.")
         }
     };
 
