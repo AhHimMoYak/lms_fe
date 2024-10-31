@@ -1,5 +1,5 @@
 import MainCourseCardList from "../../components/Main/MainCourseCardList";
-import NoticeList from "../../components/Main/NoticeList";
+import MainBanner from "../../components/Main/MainBanner.jsx";
 
 function Main() {
     return (
@@ -8,9 +8,8 @@ function Main() {
                 height: "100vh",
             }}
         >
-            main page 구성요소
-            <MainCourseCardList />
-            <NoticeList />
+            <MainBanner/>
+            <MainCourseCardList/>
         </div>
     );
 }
