@@ -1,7 +1,7 @@
 import React, { useEffect, useState, memo, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../../styles/Main/Video.css";
-import "../../styles/Main/CourseCardList.css";
+import "../../styles/Main/MainCourseCardList.css";
 import CourseSidebar from "../../components/Main/CourseSidebar.jsx";
 import useAxios from "../../hooks/api/useAxios";
 
@@ -59,29 +59,30 @@ function Video() {
     return (
         <div className="video-page-container">
             <MemoizedCourseSidebar onCategorySelect={handleCategorySelect} />
-            <div className="CourseList">
+            <div className="course-list-container">
                 <h2 className="category-title">{selectedCategoryTitle}</h2>
                 {loading ? (
-                    <div className="LoadingContainer">로딩 중...</div>
+                    <div className="LoadingContainer"></div>
                 ) : courses.length === 0 ? (
                     <div className="NoCoursesText">해당 카테고리에는 코스가 없습니다.</div>
                 ) : (
                     <div className="CourseCardContainer">
                         {courses.map((course, index) => {
                             const colors = ["#3F51B5", "#FF9800", "#9C27B0", "#4CAF50", "#009688", "#F44336"];
+                            const diabledColor = "#999999";
                             return (
                                 <div
                                     className="CourseCard"
                                     key={course.id}
-                                    style={{
-                                        background: colors[index % colors.length],
-                                    }}
+                                    style={course.state === "NOT_STARTED"
+                                        ? {background: colors[index % colors.length]}
+                                        : {background: diabledColor, color: diabledColor}}
                                     onClick={() => handleCardClick(course.id)}
                                 >
                                     <div className="CourseCardHeader"></div>
                                     <div className="CourseCardContent">
                                         <h3 className="CourseCardTitle">{course.title}</h3>
-                                        <p className="CourseCardTutor">{course.tutorName}</p>
+                                        <p className="CourseCardTutor">{course.tutor}</p>
                                     </div>
                                 </div>
                             );
@@ -97,8 +98,8 @@ function Video() {
                         이전
                     </button>
                     <span className="pagination-info">
-                        페이지 {currentPage + 1} / {Math.ceil(totalCourses / 12)}
-                    </span>
+                    페이지 {currentPage + 1} / {Math.ceil(totalCourses / 12)}
+                </span>
                     <button
                         className="pagination-button"
                         onClick={() => setCurrentPage((prev) =>
@@ -112,6 +113,8 @@ function Video() {
             </div>
         </div>
     );
+
 }
 
 export default Video;
+
