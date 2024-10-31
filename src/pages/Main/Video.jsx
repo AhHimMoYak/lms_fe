@@ -1,60 +1,110 @@
-// Video.jsx
 import React, { useEffect, useState, memo, useCallback } from "react";
-import { useLocation } from "react-router-dom";
-import CourseList from "../../components/Main/CourseList";
-import "../../styles/Main/Video.css"; // 새로운 외부 CSS 파일 추가
+import { useLocation, useNavigate } from "react-router-dom";
+import "../../styles/Main/Video.css";
+import "../../styles/Main/CourseCardList.css";
 import CourseSidebar from "../../components/Main/CourseSidebar.jsx";
+import useAxios from "../../hooks/api/useAxios";
 
 const MemoizedCourseSidebar = memo(CourseSidebar);
 
 function Video() {
     const query = new URLSearchParams(useLocation().search);
-    const initialCategory = parseInt(query.get("type")) || 1;
-    const initialPage = parseInt(query.get("page")) || 1;
+    const initialPage = parseInt(query.get("page")) || 0;
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(initialPage);
     const [totalCourses, setTotalCourses] = useState(0);
-    const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+    const [selectedCategory, setSelectedCategory] = useState("ALL");
     const [selectedCategoryTitle, setSelectedCategoryTitle] = useState("전체");
 
-    const handleCategorySelect = useCallback((categoryId, categoryTitle) => {
-        setSelectedCategory(categoryId);
-        setCurrentPage(1);
+    const { data: response, error, fetchData } = useAxios();
+    const navigate = useNavigate();
+
+    const handleCategorySelect = useCallback((categoryValue, categoryTitle) => {
+        setSelectedCategory(categoryValue);
+        setCurrentPage(0);
         setSelectedCategoryTitle(categoryTitle);
     }, []);
+
+    useEffect(() => {
+        const fetchCourses = async () => {
+            setLoading(true);
+
+            const url = selectedCategory && selectedCategory !== "ALL"
+                ? `/course/all?category=${selectedCategory}&page=${currentPage}&size=12`
+                : `/course/all?page=${currentPage}&size=12`;
+
+            await fetchData(url, "GET");
+            setLoading(false);
+        };
+
+        fetchCourses();
+    }, [selectedCategory, currentPage]);
+
+    useEffect(() => {
+        if (response) {
+            setTotalCourses(response.totalElements);
+        }
+    }, [response]);
+
+    if (error) {
+        return <div className="error-message">Error fetching courses: {error.message}</div>;
+    }
+
+    const courses = response ? response.content : [];
+
+    const handleCardClick = (courseId) => {
+        navigate(`/course/${courseId}`);
+    };
 
     return (
         <div className="video-page-container">
             <MemoizedCourseSidebar onCategorySelect={handleCategorySelect} />
-            <div className="course-list-container">
+            <div className="CourseList">
                 <h2 className="category-title">{selectedCategoryTitle}</h2>
-                <CourseList
-                    selectedCategory={selectedCategory}
-                    currentPage={currentPage}
-                    setLoading={setLoading}
-                    setTotalCourses={setTotalCourses}
-                />
-                <div className="pagination">
+                {loading ? (
+                    <div className="LoadingContainer">로딩 중...</div>
+                ) : courses.length === 0 ? (
+                    <div className="NoCoursesText">해당 카테고리에는 코스가 없습니다.</div>
+                ) : (
+                    <div className="CourseCardContainer">
+                        {courses.map((course, index) => {
+                            const colors = ["#3F51B5", "#FF9800", "#9C27B0", "#4CAF50", "#009688", "#F44336"];
+                            return (
+                                <div
+                                    className="CourseCard"
+                                    key={course.id}
+                                    style={{
+                                        background: colors[index % colors.length],
+                                    }}
+                                    onClick={() => handleCardClick(course.id)}
+                                >
+                                    <div className="CourseCardHeader"></div>
+                                    <div className="CourseCardContent">
+                                        <h3 className="CourseCardTitle">{course.title}</h3>
+                                        <p className="CourseCardTutor">{course.tutorName}</p>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+                <div className="PaginationContainer">
                     <button
                         className="pagination-button"
-                        onClick={() =>
-                            setCurrentPage((prev) => Math.max(prev - 1, 1))
-                        }
-                        disabled={currentPage <= 1}
+                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
+                        disabled={currentPage <= 0}
                     >
                         이전
                     </button>
                     <span className="pagination-info">
-                        페이지 {currentPage} / {Math.ceil(totalCourses / 12)}
+                        페이지 {currentPage + 1} / {Math.ceil(totalCourses / 12)}
                     </span>
                     <button
                         className="pagination-button"
-                        onClick={() =>
-                            setCurrentPage((prev) =>
-                                Math.min(prev + 1, Math.ceil(totalCourses / 12))
-                            )
-                        }
-                        disabled={currentPage >= Math.ceil(totalCourses / 12)}
+                        onClick={() => setCurrentPage((prev) =>
+                            Math.min(prev + 1, Math.ceil(totalCourses / 12) - 1)
+                        )}
+                        disabled={currentPage >= Math.ceil(totalCourses / 12) - 1}
                     >
                         다음
                     </button>
