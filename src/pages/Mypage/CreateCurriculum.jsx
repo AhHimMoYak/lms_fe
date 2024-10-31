@@ -1,12 +1,13 @@
 import {useEffect, useState} from 'react';
 import useAxios from '/src/hooks/api/useAxios';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import MediaUpload from "./MediaUpload.jsx";
 import "../../styles/CreateCurriculum.css"
 
 function CreateCurriculum() {
     const {courseId} = useParams();
     const {data, fetchData} = useAxios();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         title: '',
         idx:'',
@@ -21,6 +22,10 @@ function CreateCurriculum() {
                 title: formData.title,
                 idx: newIdx
             });
+    }
+
+    const clickToMove = () => {
+        navigate("/education/course");
     }
 
     useEffect(() => {
@@ -77,6 +82,7 @@ function CreateCurriculum() {
                     </div>
                 ))}
             </div>
+            <button className="exit-create-course" onClick={clickToMove}>완료</button>
         </div>
     );
 }
