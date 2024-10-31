@@ -10,16 +10,32 @@ function Dashboard() {
     const { data: qnaBoardData, fetchData: fetchBoardData } = useAxios();
 
     const clickDetailCourse = (courseId) => {
-        navigate(`/mypage/course/${courseId}`);
+        if (decodeTokenTutor()) {
+            navigate(`/education/course/${courseId}`);
+        } else {
+            navigate(`/mypage/course/${courseId}`);
+        }
     };
     const clickDetailBoard = (courseId, courseBoardId) => {
-        navigate(`/mypage/course/${courseId}/qna/${courseBoardId}`);
+        if (decodeTokenTutor()) {
+            navigate(`/education/course/${courseId}/qna/${courseBoardId}`);
+        } else {
+            navigate(`/mypage/course/${courseId}/qna/${courseBoardId}`);
+        }
     };
     const clickListCourse = () => {
-        navigate("/mypage/course");
+        if (decodeTokenTutor()) {
+            navigate("/education/course");
+        } else {
+            navigate("/mypage/course");
+        }
     };
     const clickListQnA = () => {
-        navigate("/mypage/qna");
+        if (decodeTokenTutor()) {
+            navigate("/education/qna");
+        } else {
+            navigate("/mypage/qna");
+        }
     };
 
     useEffect(() => {

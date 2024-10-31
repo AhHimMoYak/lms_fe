@@ -1,17 +1,13 @@
-.course-CourseList {
-    padding: 2.5vh;
-    max-width: calc(100vw - 250px); /* 사이드바의 너비를 고려한 max-width */
-    margin: 0 auto;
-}
-
 .course-CourseCardContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* 자동으로 채워지도록 설정 */
+    grid-template-columns: repeat(6, minmax(220px, 300px));
     gap: 2vw;
-    height: 60vh;
+    height: auto;
     margin-bottom: 4vh;
-    max-width: 1600px;
+    max-width: 1650px;
+    justify-content: space-between;
 }
+
 
 .course-CourseCard {
     border-radius: 0.5vw;
@@ -72,5 +68,7 @@
     display: flex;
     justify-content: center;
     margin-top: 6vh;
+    position: sticky;
+    bottom: 0;
 }
 

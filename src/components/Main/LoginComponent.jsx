@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 import AuthManager from "../../hooks/api/AuthManger.jsx";
 import "../../styles/Main/LoginComponent.css";
 
@@ -9,13 +9,13 @@ function LoginComponent() {
     const [error, setError] = useState("");
 
     const navigate = useNavigate();
-    const { LogIn } = AuthManager();
+    const {LogIn} = AuthManager();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         setError("");
 
-        const result = await LogIn({ username, password });
+        const result = await LogIn({username, password});
 
         if (result.success) {
             navigate("/");
@@ -28,13 +28,20 @@ function LoginComponent() {
     };
 
     const handleRegister = () => {
-        navigate("/join");
+        navigate("/signup");
     };
 
     return (
         <div className="login-page">
             <div className="login-container">
-                <h2 className="login-title">야힘모약 로그인</h2>
+                <div className="logo-container">
+                    <div id="logo">
+                        <a href="/">
+                            <img src="../../../src/assets/logo.png"/>
+                        </a>
+                    </div>
+                </div>
+
                 <form className="login-form" onSubmit={handleLogin}>
                     <input
                         type="text"
@@ -60,14 +67,6 @@ function LoginComponent() {
                     <div className="left-links">
                         <a onClick={handleRegister} className="login-link">
                             회원가입
-                        </a>
-                    </div>
-                    <div className="right-links">
-                        <a href="#" className="login-link">
-                            계정 찾기
-                        </a>
-                        <a href="#" className="login-link">
-                            비밀번호 찾기
                         </a>
                     </div>
                 </div>
