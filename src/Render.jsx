@@ -44,7 +44,7 @@ function Render() {
                 <Route path="/" element={<Main />} />
                 <Route path="course" element={<Video />} />
                 <Route path="/course/:courseId" element={<VideoExplain />} />
-                <Route path="/live/:streamKey" element={<LiveStream />} />
+                <Route path="/live/:streamkey" element={<LiveStream />} />
 
                 <Route element={<AuthChecker />}>
                     <Route path="mypage/*" element={<MypageFrame />}>
@@ -56,7 +56,6 @@ function Render() {
                             <Route path="contents" element={<CourseDetailed />} />
                             <Route path="live" element={<LiveDetail />} />
                             <Route  path="quiz/:liveId" element={<QuizPost />}/>
-                            <Route path="create" element={<CreateLive />} />
                             <Route path="qna" element={<QnAList />} />
                             <Route path="qna/post" element={<QnAPost />} />
                             <Route path="qna/:courseBoardId" element={<QnADetailed />} />
@@ -78,13 +77,13 @@ function Render() {
                             <Route path="dashboard" element={<Dashboard />} />
                             <Route path="course" element={<CourseList />} />
                             <Route path="manage/*" element={<ManageFrame />}>
-                                <Route path="course/create" element={<CreateCourse />} /> {/*# 코스 생성*/}
+                                <Route path="course/create" element={<CreateCourse />} />
                                 <Route path=":courseId/curriculum/create" element={<CreateCurriculum />} /> {/*# 커리큘럼 생성*/}
                             </Route>
                             <Route path="course/:courseId" element={<CourseFrame />}>
                                 <Route path="" element={<CourseDetailed />} />
                                 <Route path="contents" element={<CourseDetailed />} />
-                                <Route path="contents/modify" element={<ModifyCourse />} /> # 코스 수정
+                                <Route path="modify" element={<ModifyCourse />} /> # 코스 수정
                                 <Route path="live" element={<LiveDetail />} />
                                 <Route path="live/create" element={<CreateLive />} /> # 라이브 생성
                                 <Route path="qna" element={<QnAList />} />
