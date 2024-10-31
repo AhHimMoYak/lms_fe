@@ -51,11 +51,12 @@ function Render() {
                         <Route path="" element={<Dashboard />} />
                         <Route path="dashboard" element={<Dashboard />} />
                         <Route path="course" element={<CourseList />} />
+
                         <Route path="course/:courseId" element={<CourseFrame />}>
                             <Route path="" element={<CourseDetailed />} />
                             <Route path="contents" element={<CourseDetailed />} />
                             <Route path="live" element={<LiveDetail />} />
-                            <Route  path="quiz/:liveId" element={<QuizPost />}/>
+                            
                             <Route path="qna" element={<QnAList />} />
                             <Route path="qna/post" element={<QnAPost />} />
                             <Route path="qna/:courseBoardId" element={<QnADetailed />} />
@@ -80,18 +81,22 @@ function Render() {
                                 <Route path="course/create" element={<CreateCourse />} />
                                 <Route path=":courseId/curriculum/create" element={<CreateCurriculum />} />
                             </Route>
+
                             <Route path="course/:courseId" element={<CourseFrame />}>
                                 <Route path="" element={<CourseDetailed />} />
                                 <Route path="contents" element={<CourseDetailed />} />
-                                <Route path="modify" element={<ModifyCourse />} /> # 코스 수정
+                                <Route path="modify" element={<ModifyCourse />} /> 
+
                                 <Route path="live" element={<LiveDetail />} />
-                                <Route path="live/create" element={<CreateLive />} /> # 라이브 생성
+                                <Route path="live/create" element={<CreateLive />} /> 
+                                <Route path="live/:liveId/quiz" element={<QuizPost />}/>
+
                                 <Route path="qna" element={<QnAList />} />
-                                <Route path="qna/post" element={<QnAPost />} />
                                 <Route path="qna/:courseBoardId" element={<QnADetailed />} />
                                 <Route path="qna/:courseBoardId/edit" element={<QnAEdit />} />
                             </Route>
                             <Route path="qna" element={<QnATotalList />} />
+
                             <Route path="user/*" element={<UserInformFrame />}>
                                 <Route path="" element={<PasswordPrompt />} />
                                 <Route path="reconfirm" element={<PasswordPrompt />} />
