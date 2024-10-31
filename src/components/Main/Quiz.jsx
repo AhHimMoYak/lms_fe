@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 
-import '/src/styles/Main/QuizList.css'
+import '/src/styles/Main/Quiz.css'
 import useAxios from "../../hooks/api/useAxios.jsx";
 import {useParams} from "react-router-dom";
 
@@ -8,7 +8,8 @@ const Quiz = ({}) => {
 
     const {liveId} = useParams();
     const [option, setOption] = useState('');
-    const [quiz, setQuiz] = useState('');
+    const [quizList, setQuizList] = useState('');
+    const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
     const {data, error, fetchData} = useAxios();
     const [message, setMessage] = useState('');
     const [submitted, setSubmitted] = useState('');
@@ -17,8 +18,12 @@ const Quiz = ({}) => {
         setOption(Number(e.target.value));
     }
 
-    const handleOptionSubmit = (option) => {
-        if (option === data[0].answer) {
+    const handleOptionSubmit = () => {
+        const currentQuiz = quizList[currentQuizIndex];
+        console.log("Selected option:", option);
+        console.log("Correct answer:", currentQuiz.answer);
+
+        if (option === currentQuiz.answer) {
             setMessage('정답');
         } else {
             setMessage('오답');
@@ -26,41 +31,57 @@ const Quiz = ({}) => {
         setSubmitted(true);
     }
 
+    const handleNextQuiz = () => {
+        setSubmitted(false);
+        setMessage('');
+        setOption(null);
+        setCurrentQuizIndex((prevIndex) => prevIndex + 1);
+    };
+
     useEffect(() => {
         fetchData(`/live/${liveId}/quiz`, "GET");
     }, []);
 
     useEffect(() => {
         if (data) {
-            setQuiz(data[0])
+            setQuizList(data)
         }
     }, [data]);
 
+    const currentQuiz = quizList[currentQuizIndex];
 
     return (
         <div className="quiz-page">
             <div className="quiz-container">
-                <h2 className="quiz-title">{quiz.question}</h2>
-                <form>
-                    {quiz.options?.map((opt) => (
-                        <label key={opt.idx}>
-                            <input
-                                type="radio"
-                                value={opt.idx}
-                                checked={option === opt.idx}
-                                onChange={handleOptionChange}
-                            />
-                            {opt.text}
-                        </label>
-                    ))}
-                </form>
-                {!submitted && (
-                    <button type="button" onClick={() => handleOptionSubmit(option)}>제출</button>
+                {currentQuiz ? (
+                    <>
+                        <h2 className="quiz-title">{currentQuiz.question}</h2>
+                        <form>
+                            {currentQuiz.options?.map((opt) => (
+                                <label key={opt.idx}>
+                                    <input
+                                        type="radio"
+                                        value={opt.idx}
+                                        checked={option === opt.idx}
+                                        onChange={handleOptionChange}
+                                    />
+                                    {opt.text}
+                                </label>
+                            ))}
+                        </form>
+                        {!submitted ? (
+                            <button type="button" onClick={handleOptionSubmit}>제출</button>
+                        ) : (
+                            <button type="button" onClick={handleNextQuiz}>다음</button>
+                        )}
+                        {message && <p className="quiz-message">{message}</p>}
+                    </>
+                ) : (
+                    <p>모든 퀴즈를 완료했습니다!</p>
                 )}
-                {message && <p className="quiz-message">{message}</p>}
             </div>
         </div>
     );
-}
+};
 
 export default Quiz;
