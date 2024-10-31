@@ -16,7 +16,7 @@ function Dashboard() {
         navigate(`/mypage/course/${courseId}/qna/${courseBoardId}`);
     };
     const clickListCourse = () => {
-        navigate("/mypage/courses");
+        navigate("/mypage/course");
     };
     const clickListQnA = () => {
         navigate("/mypage/qna");

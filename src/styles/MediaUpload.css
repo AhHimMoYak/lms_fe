@@ -1,0 +1,74 @@
+.content-container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.content-item {
+    margin-bottom: 1vh;
+    padding: 2vh 4vw;
+    border: 0.05em solid #e0e0e0;
+    border-radius: 0.5em;
+    background-color: #fafafa;
+    font-size: 0.7em;
+}
+
+.content-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vw;
+}
+
+.input-select{
+    font-size: 1em;
+    width: 100%;
+    padding: 1vw;
+    border: 0.05em solid #ccc;
+    border-radius: 0.5em;
+}
+.input-file {
+    width: 70%;
+    padding: 1vw;
+    border: 0.05em solid #ccc;
+    border-radius: 0.5em;
+}
+
+.title-upload-container {
+    display: flex;
+    align-items: center;
+}
+
+.input-title {
+    flex: 1;
+    padding: 1vw;
+    border: 0.05em solid #ccc;
+    border-radius: 0.5em;
+}
+
+.submit-content-button {
+    padding: 1vh 1.5vw;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 0.5em;
+    cursor: pointer;
+    margin-left: 1vw;
+    font-size: 0.8em;
+}
+
+.submit-content-button:hover {
+    background-color: #218838;
+}
+
+.add-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 1vh 2vw;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.add-button:hover {
+    background-color: #0056b3;
+}

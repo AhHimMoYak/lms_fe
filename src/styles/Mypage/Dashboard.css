@@ -38,18 +38,17 @@
 }
 
 .more-button {
-    margin-top: 1vh;
-    background-color: lightgrey;
-    border: none;
-    font-size: 0.3em;
-    padding: 0.3vw 0.6vw;
+    padding: 0.25em 1em 0.2em 1em;
+    margin-top: 0.1em;
+    margin-right: 1%;
+
+    width: 5vw;
+    font-size: 0.8em;
+    background-color: #fff;
+    border: 2px #002c75 solid;
+    color: #002c75;
     border-radius: 0.5em;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.more-button:hover {
-    background-color: #0056b3;
 }
 
 .course-cards-container {

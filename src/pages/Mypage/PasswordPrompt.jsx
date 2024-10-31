@@ -1,58 +1,76 @@
-import {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import useAxios from '/src/hooks/api/useAxios';
-import '/src/styles/Mypage/PasswordPrompt.css';
+import { useEffect, useState } from "react";
+import "/src/styles/Mypage/PasswordPrompt.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function PasswordPrompt() {
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const accessToken = JSON.parse(localStorage.getItem("access"));
+    const API_BASE_URL = "http://localhost:8080/api/v1";
     const navigate = useNavigate();
-    const {passwordData, passwordError, fetchData} = useAxios();
+    const [password, setPassword] = useState("");
+    const [submitAttempted, setSubmitAttempted] = useState(false);
 
-    const handleChange = (e) => {
-        setPassword(e.target.value);
-        setError(''); // 입력 시 에러 초기화
-    };
+    const login = async (password) => {
+        try {
+            const response = await axios.post(
+                `${API_BASE_URL}/user/verification`,
+                {
+                    password,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `[Bearer]${accessToken}`,
+                    },
+                }
+            );
 
-    const handleSubmit = () => {
-        if (!password) {
-            setError('비밀번호를 입력해 주세요');
-            return;
+            return { success: true };
+        } catch (error) {
+            return {
+                success: false,
+                message: error.response?.message || "비밀번호가 일치하지 않습니다",
+            };
         }
-
-        fetchData('/user/verification', "post", {password});
     };
 
     useEffect(() => {
-        if (passwordData) {
-            navigate('/mypage/user/update');
-        } else if (passwordError) {
-            setError('비밀번호가 일치하지 않습니다.');
+        if (submitAttempted) {
+            const verifyPassword = async () => {
+                setSubmitAttempted(false);
+                const result = await login(password);
+
+                if (result.success) {
+                    navigate("/mypage/user/update");
+                } else {
+                    alert(result.message);
+                }
+            };
+
+            verifyPassword();
         }
-    }, [passwordData, passwordError]);
+    }, [submitAttempted]);
+
+    const handlePasswordSubmit = (e) => {
+        e.preventDefault();
+        setSubmitAttempted(true);
+    };
 
     return (
         <div className="password-prompt-page">
             <div className="password-prompt-container">
-                <h2 className="password-prompt-title">비밀번호 확인</h2>
-                <form className="password-prompt-form" onSubmit={(e) => e.preventDefault()}>
+                <h2 className="password-prompt-title">비밀번호 입력</h2>
+                <form onSubmit={handlePasswordSubmit} className="password-prompt-form">
                     <div className="password-prompt-field">
-                        <label>비밀번호:</label>
                         <input
                             type="password"
-                            name="password"
-                            placeholder="비밀번호를 입력해 주세요"
                             value={password}
-                            onChange={handleChange}
-                            className={`password-input ${error ? 'error' : ''}`}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="비밀번호 입력"
+                            className="password-prompt-input"
                         />
-                        {error && (
-                            <div className="password-error-container">
-                                <p className="password-error">{error}</p>
-                            </div>
-                        )}
                     </div>
-                    <button type="button" onClick={handleSubmit} className="password-prompt-button">
+                    <button type="submit" className="password-prompt-button">
                         확인
                     </button>
                 </form>

@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
 import "../../styles/Mypage/CourseFrame.css";
+import { decodeTokenTutor } from "../../authentication/decodeTokenTutor";
 
 function CourseFrame() {
     const checkIsActive = (path) => {
@@ -7,6 +8,10 @@ function CourseFrame() {
     };
 
     const checkIsContent = (path) => {
+        if (decodeTokenTutor()) {
+            const regex = new RegExp(`^/education/course/\\d+(/${path})?$`);
+            return regex.test(location.pathname);
+        }
         const regex = new RegExp(`^/mypage/course/\\d+(/${path})?$`);
         return regex.test(location.pathname);
     };
@@ -14,7 +19,7 @@ function CourseFrame() {
     return (
         <div className="course-frame">
             <div className="course-tab-frame">
-                <div className="course-frame-title">나의 코스</div>
+                <div className="course-frame-title">{decodeTokenTutor() ? "강의 정보" : "나의 코스"}</div>
                 <div className="course-tabs">
                     <NavLink to="contents" className={() => (checkIsContent("contents") ? "course_tab_active" : "")}>
                         강의
