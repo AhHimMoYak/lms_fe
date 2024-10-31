@@ -29,7 +29,6 @@ import QnAPost from "./pages/Mypage/QnAPost.jsx";
 import VideoPlayer from "./pages/Mypage/VideoPlayer.jsx";
 import CreateLive from "./pages/Mypage/CreateLive.jsx";
 import ModifyCourse from "./pages/Mypage/ModifyCourse.jsx";
-import ModifyCurriculum from "./pages/Mypage/ModifyCurriculum.jsx";
 import EducationFrame from "./components/Education/EducationFrame.jsx";
 import ManageFrame from "./components/Education/ManageFrame.jsx";
 
@@ -50,7 +49,7 @@ function Render() {
                     <Route path="mypage/*" element={<MypageFrame />}>
                         <Route path="" element={<Dashboard />} />
                         <Route path="dashboard" element={<Dashboard />} />
-                        <Route path="courses" element={<CourseList />} />
+                        <Route path="course" element={<CourseList />} />
                         <Route path="course/:courseId" element={<CourseFrame />}>
                             <Route path="" element={<CourseDetailed />} />
                             <Route path="contents" element={<CourseDetailed />} />
@@ -85,15 +84,14 @@ function Render() {
                                 <Route path="contents" element={<CourseDetailed />} />
                                 <Route path="contents/modify" element={<ModifyCourse />} /> # 코스 수정
                                 <Route path="live" element={<LiveDetail />} />
-                                <Route path="live/create" element={<CreateLive />} />
+                                <Route path="live/create" element={<CreateLive />} /> # 라이브 생성
                                 <Route path="qna" element={<QnAList />} />
                                 <Route path="qna/post" element={<QnAPost />} />
                                 <Route path="qna/:courseBoardId" element={<QnADetailed />} />
                                 <Route path="qna/:courseBoardId/edit" element={<QnAEdit />} />
                             </Route>
                             <Route path="qna" element={<QnATotalList />} />
-                            <Route path=":courseId/uploadMedia/:curriculumId" element={<MediaUpload />} /> # 컨텐츠 업로드
-                            <Route path="createCourse" element={<CreateCourse />} /> # 코스 생성//
+                            {/* <Route path="createCourse" element={<CreateCourse />} /> # 코스 생성// */}
                             {/* <Route path="course/:courseId/modify" element={<ModifyCourse />} /> # 코스 수정(모달) */}
                             {/* <Route path="course/:courseId/:curriculumId/modify" element={<ModifyCurriculum />} /># 커리큘럼 1개 수정 (모달) */}
                             <Route path="user/*" element={<UserInformFrame />}>
