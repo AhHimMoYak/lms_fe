@@ -1,95 +1,156 @@
+/* 회원가입 페이지 전체 배경 설정 */
 .register-page {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
+    height: 110vh;
+    background: linear-gradient(to bottom right, #4facfe, #00f2fe);
+    font-family: 'Roboto', sans-serif;
 }
 
+/* 회원가입 컨테이너 설정 */
 .register-container {
-    background-color: #fff;
-    padding: 1.5vh 1vw;
-    border-radius: 0.5vw;
-    box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 0, 0.1);
-    width: 80vw;
-    max-width: 30vw;
-}
-
-.register-title {
-    font-size: 1.5vw;
-    margin-bottom: 0.8vw;
+    height: 65vh;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    width: 27vw;
     text-align: center;
-    color: #333;
+    animation: fadeIn 1s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
 }
 
+/* 회원가입 타이틀 스타일 */
+.register-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #333;
+    font-weight: bold;
+}
+
+/* 회원가입 필드 스타일 */
+.register-field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+/* 회원가입 폼 입력창 스타일 */
 .register-form {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
-.register-field {
-    margin-bottom: 1.5vh;
-    position: relative;
+.register-input, .register-select {
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 2px solid #d1d5db;
+    border-radius: 0.5rem;
+    transition: border-color 0.3s;
 }
 
-.register-input {
-    width: calc(100% - 1.5vw);
-    padding: 1vh 0.6vw;
-    border: 0.15vw solid #ccc;
-    border-radius: 0.3vw;
-    font-size: 0.9vw;
-}
-.register-select {
-      width: calc(100% - 0.1vw);
-      padding: 0.6vw;
-      border: 0.15vw solid #ccc;
-      border-radius: 0.3vw;
-      font-size: 0.9vw;
-  }
-
-.register-input.error, .register-select.error {
-    border-color: red;
+.register-input:focus, .register-select:focus {
+    border-color: #4facfe;
+    outline: none;
 }
 
+/* 에러 메시지 스타일 */
 .register-error-container {
-    height: 1.5vh;
-    margin-top: 0.7vh ;
-    overflow: hidden;
+    text-align: left;
+    margin-top: 0.5rem;
 }
 
 .register-error {
-    color: red;
-    font-size: 0.5em;
-    margin: 0;
+    color: #ff5252;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    text-align: left;
 }
 
-
-
+/* 회원가입 버튼 스타일 */
 .register-button {
-    background-color: #333;
+    background: linear-gradient(to right, #4facfe, #00f2fe);
     color: #fff;
+    font-size: 1.1rem;
     border: none;
-    padding: 1vh 0.5vw;
-    border-radius: 1em;
-    font-size: 1.2em;
+    border-radius: 0.5rem;
+    padding: 0.8rem;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: transform 0.3s;
     width: 100%;
 }
 
 .register-button:hover {
-    background-color: #000000;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
-.register-general-error {
-    color: red;
-    font-size: 0.5em;
-    text-align: center;
-    margin-top: 1vh;
+/* 애니메이션 효과 */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
-.register-general-error-container {
-    height: 3vh;
-    overflow-y: auto;
-    margin-top: 0.5vh;
+/* 왼쪽과 오른쪽 링크 구분 */
+.left-links, .right-links {
+    display: flex;
+    gap: 1rem;
+}
+
+/* 모바일 반응형 디자인 */
+@media (max-width: 480px) {
+    .register-container {
+        width: 90%;
+        padding: 2rem;
+    }
+
+    .register-title {
+        font-size: 1.5rem;
+    }
+
+    .register-input, .register-select {
+        font-size: 0.9rem;
+        padding: 0.6rem;
+    }
+
+    .register-button {
+        font-size: 1rem;
+        padding: 0.6rem;
+    }
+}
+
+/* 회원가입 도움말 텍스트 스타일 */
+.help-text {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+/* 중복 확인 버튼 스타일 */
+.duplicate-check-button {
+    background: #4facfe;
+    color: #fff;
+    border: none;
+    padding: 0.6rem;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    margin-left: 1rem;
+    transition: background-color 0.3s;
+}
+
+.duplicate-check-button:hover {
+    background: #00c3fe;
 }
