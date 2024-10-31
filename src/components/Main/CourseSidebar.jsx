@@ -46,17 +46,17 @@ const CourseSidebar = memo(({ onCategorySelect }) => {
 
     return (
         <div>
-            <div className={`sidebar ${isExpanded ? "expanded" : "collapsed"}`}>
+            <div className={`course-sidebar ${isExpanded ? "course-expanded" : "collapsed"}`}>
 
                 {isExpanded && (
                     <>
-                        <h2 className="category-title">카테고리</h2>
-                        <div className="category-container">
+                        <h2 className="course-category-title">카테고리</h2>
+                        <div className="course-category-container">
                             {categories.map((category) => (
                                 <button
                                     key={category.id}
                                     onClick={() => handleCategoryClick(category.value, category.title)}
-                                    className="category-button"
+                                    className="course-category-button"
                                 >
                                     {category.title}
                                 </button>
@@ -65,7 +65,7 @@ const CourseSidebar = memo(({ onCategorySelect }) => {
                     </>
                 )}
             </div>
-            <div className="toggle-button" onClick={toggleSidebar}>
+            <div className="course-toggle-button" onClick={toggleSidebar}>
                 {isExpanded ? "▲" : "▼"}
             </div>
         </div>
