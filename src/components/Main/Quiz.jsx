@@ -4,7 +4,7 @@ import '/src/styles/Main/QuizList.css'
 import useAxios from "../../hooks/api/useAxios.jsx";
 import {useParams} from "react-router-dom";
 
-const QuizList = ({}) => {
+const Quiz = ({}) => {
 
     const {liveId} = useParams();
     const [option, setOption] = useState('');
@@ -63,4 +63,4 @@ const QuizList = ({}) => {
     );
 }
 
-export default QuizList;
+export default Quiz;
