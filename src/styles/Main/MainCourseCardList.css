@@ -1,10 +1,10 @@
-.CourseList {
+.course-CourseList {
     padding: 2.5vh;
     max-width: calc(100vw - 250px); /* 사이드바의 너비를 고려한 max-width */
     margin: 0 auto;
 }
 
-.CourseCardContainer {
+.course-CourseCardContainer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* 자동으로 채워지도록 설정 */
     gap: 2vw;
@@ -13,7 +13,7 @@
     max-width: 1600px;
 }
 
-.CourseCard {
+.course-CourseCard {
     border-radius: 0.5vw;
     overflow: hidden;
     box-shadow: 0 0.5vh 0.75vh rgba(0, 0, 0, 0.1);
@@ -24,16 +24,16 @@
     background-color: #fff;
 }
 
-.CourseCard:hover {
+.course-CourseCard:hover {
     transform: translateY(-0.5vh);
 }
 
-.CourseCardHeader {
+.course-CourseCardHeader {
     flex-grow: 1;
     background-color: inherit;
 }
 
-.CourseCardContent {
+.course-CourseCardContent {
     padding: 1vh;
     background-color: white;
     text-align: center;
@@ -41,18 +41,18 @@
     align-items: center;
 }
 
-.CourseCardTitle {
+.course-CourseCardTitle {
     font-size: 1.1em;
     font-weight: bold;
     margin-bottom: 0.5vh;
 }
 
-.CourseCardTutor {
+.course-CourseCardTutor {
     font-size: 0.9em;
     color: #555;
 }
 
-.LoadingContainer {
+.course-LoadingContainer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -61,14 +61,14 @@
     color: #666;
 }
 
-.NoCoursesText {
+.course-NoCoursesText {
     text-align: center;
     margin-top: 6vh;
     font-size: 1.2em;
     color: #888;
 }
 
-.PaginationContainer {
+.course-PaginationContainer {
     display: flex;
     justify-content: center;
     margin-top: 6vh;

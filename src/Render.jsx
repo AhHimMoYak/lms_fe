@@ -31,6 +31,7 @@ import CreateLive from "./pages/Mypage/CreateLive.jsx";
 import ModifyCourse from "./pages/Mypage/ModifyCourse.jsx";
 import ModifyCurriculum from "./pages/Mypage/ModifyCurriculum.jsx";
 import EducationFrame from "./components/Education/EducationFrame.jsx";
+import ManageFrame from "./components/Education/ManageFrame.jsx";
 import QuizPost from "./pages/QuizPost.jsx"
 
 function Render() {
@@ -39,6 +40,7 @@ function Render() {
             <Route path="/signin" element={<Login />} />
             <Route path="/signup" element={<Register />} />
             <Route path="/stream/video" element={<VideoPlayer />} />
+
             <Route element={<BasicFrame />}>
                 <Route path="/" element={<Main />} />
                 <Route path="course" element={<Video />} />
@@ -49,7 +51,7 @@ function Render() {
                     <Route path="mypage/*" element={<MypageFrame />}>
                         <Route path="" element={<Dashboard />} />
                         <Route path="dashboard" element={<Dashboard />} />
-                        <Route path="course" element={<CourseList />} />
+                        <Route path="courses" element={<CourseList />} />
                         <Route path="course/:courseId" element={<CourseFrame />}>
                             <Route path="" element={<CourseDetailed />} />
                             <Route path="contents" element={<CourseDetailed />} />
@@ -76,19 +78,28 @@ function Render() {
                             <Route path="" element={<Dashboard />} />
                             <Route path="dashboard" element={<Dashboard />} />
                             <Route path="course" element={<CourseList />} />
+                            <Route path="manage/*" element={<ManageFrame />}>
+                                <Route path="course/create" element={<CreateCourse />} /> # 코스 생성
+                                <Route path="course/:courseId/modify" element={<ModifyCourse />} /> # 코스 수정
+                                <Route path=":courseId/createCurriculum" element={<CreateCurriculum />} /> # 커리큘럼
+                                <Route path=":courseId/uploadMedia/:curriculumId" element={<MediaUpload />} /> # 컨텐츠 업로드
+                                <Route path="course/:courseId/:curriculumId/modify" element={<ModifyCurriculum />} /># 커리큘럼 수정
+                            </Route>
                             <Route path="course/:courseId" element={<CourseFrame />}>
                                 <Route path="" element={<CourseDetailed />} />
                                 <Route path="contents" element={<CourseDetailed />} />
                                 <Route path="live" element={<LiveDetail />} />
                                 <Route path="live/create" element={<CreateLive />} />
                                 <Route path="qna" element={<QnAList />} />
+                                <Route path="qna/post" element={<QnAPost />} />
                                 <Route path="qna/:courseBoardId" element={<QnADetailed />} />
+                                <Route path="qna/:courseBoardId/edit" element={<QnAEdit />} />
                             </Route>
                             <Route path="qna" element={<QnATotalList />} />
                             <Route path=":courseId/uploadMedia/:curriculumId" element={<MediaUpload />} /> # 컨텐츠 업로드
-                            <Route path="createCourse" element={<CreateCourse />} /> # 코스 생성
+                            <Route path="createCourse" element={<CreateCourse />} /> # 코스 생성//
                             <Route path=":courseId/createCurriculum" element={<CreateCurriculum />} /> # 커리큘럼
-                            <Route path="course/:courseId/modify" element={<ModifyCourse />} /> # 코스 수정
+                            <Route path="course/:courseId/modify" element={<ModifyCourse />} /> # 코스 수정//
                             <Route path="course/:courseId/:curriculumId/modify" element={<ModifyCurriculum />} /># 커리큘럼 수정
                             <Route path="user/*" element={<UserInformFrame />}>
                                 <Route path="" element={<PasswordPrompt />} />

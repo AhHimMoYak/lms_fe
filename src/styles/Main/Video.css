@@ -1,10 +1,9 @@
-.video-page-container {
+.course-video-page-container {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 120vh;
     box-sizing: border-box;
-    padding: 0 2vw;
 }
 
 .course-list-container {
@@ -25,7 +24,7 @@
     gap: 2vw;
 }
 
-.CourseCard {
+.course-CourseCard {
     border-radius: 0.5vw;
     overflow: hidden;
     box-shadow: 0 0.5vh 0.75vh rgba(0, 0, 0, 0.1);
@@ -36,16 +35,16 @@
     background-color: #fff;
 }
 
-.CourseCard:hover {
+.course-CourseCard:hover {
     transform: translateY(-0.5vh);
 }
 
-.CourseCardHeader {
+.course-CourseCardHeader {
     flex-grow: 1;
     background-color: inherit;
 }
 
-.CourseCardContent {
+.course-CourseCardContent {
     padding: 1vh;
     background-color: white;
     text-align: center;
@@ -53,18 +52,18 @@
     align-items: center;
 }
 
-.CourseCardTitle {
+.course-CourseCardTitle {
     font-size: 1.1em;
     font-weight: bold;
     margin-bottom: 0.5vh;
 }
 
-.CourseCardTutor {
+.course-CourseCardTutor {
     font-size: 0.9em;
     color: #555;
 }
 
-.LoadingContainer {
+.course-LoadingContainer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -73,28 +72,28 @@
     color: #666;
 }
 
-.NoCoursesText {
+.course-NoCoursesText {
     text-align: center;
     margin-top: 6vh;
     font-size: 1.2em;
     color: #888;
 }
 
-.pagination-button:disabled {
+.course-pagination-button:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
 }
 
-.pagination-button:hover:not(:disabled) {
+.course-pagination-button:hover:not(:disabled) {
     background-color: #e0e0e0;
     transform: scale(1.05);
 }
-.pagination-button:focus {
+.course-pagination-button:focus {
     outline: none; /* 기본 outline 제거 */
     box-shadow: none; /* 포커스 시 생기는 그림자 제거 */
 }
 
-.pagination-info {
+.course-pagination-info {
     margin: 0 1vw;
     font-size: 1em; /* 폰트 크기 추가 */
 }
