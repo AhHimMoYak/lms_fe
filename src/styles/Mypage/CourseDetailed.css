@@ -18,7 +18,12 @@
 .course-details p {
     font-size: 0.9em;
     margin-left: 1em;
+    margin-right: 1em;
     margin-bottom: 1vh;
+}
+
+.edit-icon {
+    cursor: pointer;
 }
 
 /* 커리큘럼 표 스타일 */
