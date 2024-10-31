@@ -103,7 +103,6 @@ function VideoExplain() {
                 <div className="course-tabs">
                     <button onClick={() => scrollToSection("learning-goal")}>소개</button>
                     <button onClick={() => scrollToSection("chapter-info")}>커리큘럼</button>
-                    <button onClick={() => scrollToSection("instructor-intro")}>강사진 소개</button>
                     <button onClick={() => scrollToSection("completion-criteria")}>평가</button>
                 </div>
 

@@ -1,13 +1,12 @@
-import React, {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import "/src/styles/Mypage/PasswordPrompt.css";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
-function PasswordPrompt({onSuccess}) {
+function PasswordPrompt() {
     const accessToken = JSON.parse(localStorage.getItem("access"));
-    const API_BASE_URL = "http://localhost:8080/api/v1"
-    const navigate = useNavigate()
+    const API_BASE_URL = "http://localhost:8080/api/v1";
+    const navigate = useNavigate();
     const [password, setPassword] = useState("");
     const [submitAttempted, setSubmitAttempted] = useState(false);
 
@@ -26,14 +25,14 @@ function PasswordPrompt({onSuccess}) {
                 }
             );
 
-            return {success: true};
+            return { success: true };
         } catch (error) {
             return {
                 success: false,
                 message: error.response?.message || "비밀번호가 일치하지 않습니다",
             };
         }
-    }
+    };
 
     useEffect(() => {
         if (submitAttempted) {

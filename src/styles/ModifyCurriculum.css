@@ -1,0 +1,55 @@
+.curriculum-modify-container {
+    background-color: #ffffff;
+    padding: 4vw 3vw;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    width: 60%;
+    margin: 3vh auto;
+}
+
+.curriculum-modify-container h2 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 3vh;
+    font-weight: bold;
+    color: #333;
+}
+
+.curriculum-modify-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.input-field {
+    width: 100%;
+    padding: 1.5vh 1vw;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1.1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-field:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.3);
+    outline: none;
+}
+
+button.submit-total-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 2vh 2vw;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-top: 2vh;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button.submit-total-button:hover {
+    background-color: #218838;
+    transform: scale(1.02);
+}

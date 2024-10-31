@@ -1,24 +1,16 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import ReactPlayer from "react-player";
 import useAxios from "../../hooks/api/useAxios";
 
 export default function VideoPlayer() {
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const info = queryParams.get("info");
+
     const [isPlaying, setIsPlaying] = useState(false);
-    const [info, setInfo] = useState(null);
     const [url, setUrl] = useState("");
-    const { data, error, fetchData } = useAxios();
-
-    useEffect(() => {
-        fetchData("course/1/curriculum/1/contents/451", "get");
-    }, []);
-
-    useEffect(() => {
-        if (data) {
-            console.log(data.fileInfo);
-            setInfo(data.fileInfo);
-        }
-    }, [data]);
 
     useEffect(() => {
         if (info) {
@@ -28,14 +20,7 @@ export default function VideoPlayer() {
 
     return (
         <div>
-            <ReactPlayer
-                className="player"
-                url={url}
-                controls={true}
-                playing={isPlaying}
-                width="100vw"
-                height="100vh"
-            />
+            <ReactPlayer className="player" url={url} controls={true} playing={isPlaying} width="100vw" height="100vh" />
         </div>
     );
 }

@@ -1,16 +1,16 @@
 import useAxios from "../../hooks/api/useAxios.jsx";
-import {useEffect, useState} from "react";
-import {useNavigate,useParams} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import "../../styles/Mypage/QnADetailed.css";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 function QnADetailed() {
-    const {courseId, courseBoardId} = useParams();
-    const {data, fetchData} = useAxios();
-    const [username, setUsername] = useState('');
+    const { courseId, courseBoardId } = useParams();
+    const { data, fetchData } = useAxios();
+    const [username, setUsername] = useState("");
     const navigate = useNavigate();
 
-    const accessToken = localStorage.getItem('access');
+    const accessToken = localStorage.getItem("access");
     useEffect(() => {
         fetchData(`/course/${courseId}/board/QNA/${courseBoardId}`, "GET");
         if (accessToken) {
@@ -18,15 +18,21 @@ function QnADetailed() {
             setUsername(user.sub);
         }
     }, [courseBoardId]);
-    const onClickEdit = ()=>{
-        navigate(`/mypage/course/${courseId}/qna/edit/${courseBoardId}`, {state:{courseBoardId:courseBoardId}});
-    }
+
+    const onClickEdit = () => {
+        navigate(`/mypage/course/${courseId}/qna/${courseBoardId}/edit`, { state: { courseBoardId: courseBoardId } });
+    };
+
     const onClickDelete = () => {
         const isConfirmed = window.confirm("정말로 삭제하시겠습니까?");
         if (isConfirmed) {
-            fetchData(`/course/${courseId}/board/QNA/${courseBoardId}`, "DELETE");
+            fetchData(`/course/${courseId}/board/${courseBoardId}`, "DELETE");
             navigate(`/mypage/course/${courseId}/qna/questions`);
         }
+    };
+
+    const handleList = () => {
+        navigate(`/mypage/course/${courseId}/qna`);
     };
     // 로딩 중일 때 처리
     if (!data) {
@@ -36,12 +42,16 @@ function QnADetailed() {
         <div className="qna-board-container">
             <div className="qna-board-header">
                 <h2>QnA 게시판</h2>
-             {data.user === username && (
+                {data.user === username && (
                     <div className="qna-board-actions">
-                        <button className="edit-button" onClick={() => onClickEdit(courseBoardId)}>수정</button>
-                        <button className="delete-button" onClick={onClickDelete}>삭제</button>
+                        <button className="edit-button" onClick={() => onClickEdit(courseBoardId)}>
+                            수정
+                        </button>
+                        <button className="delete-button" onClick={onClickDelete}>
+                            삭제
+                        </button>
                     </div>
-                    )}
+                )}
             </div>
             <div className="qna-board-content">
                 <div className="qna-board-item">
@@ -66,6 +76,9 @@ function QnADetailed() {
                     )}
                 </div>
             </div>
+            <button className="qna-back-button" onClick={handleList}>
+                목록
+            </button>
         </div>
     );
 }

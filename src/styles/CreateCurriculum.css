@@ -1,0 +1,101 @@
+.curriculum-post-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 60%;
+    margin: 0 auto;
+    justify-content: flex-start;
+}
+.input-title-field {
+    flex: 4;
+    padding: 0.8vw;
+    font-size: 0.8em;
+    border: 0.07em solid #ccc;
+    border-radius: 0.5em;
+    margin-right: 1vw;
+}
+.collapsible {
+    background-color: #f1f1f1;
+    color: #444;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 18px;
+    transition: 0.4s;
+    margin-top: 10px;
+    border-radius: 4px;
+}
+
+.collapsible:hover {
+    background-color: #ddd;
+}
+
+.collapsible:after {
+    content: '\25BC';
+    font-size: 13px;
+    color: #777;
+    float: right;
+    margin-left: 5px;
+}
+
+.collapsible.active:after {
+    content: '\25B2';
+}
+.curriculum-submit {
+    flex: 1; /* 버튼 크기 조정 */
+    text-align: center;
+    padding: 0.8vw; /* 패딩을 줄여서 버튼 높이를 입력 필드와 맞춤 */
+    font-size: 0.8em;
+    background-color: #28a745;
+    border: none;
+    border-radius: 0.5em;
+    cursor: pointer;
+    color: #fff;
+    width: 20%;
+}
+
+.curriculum-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 2vw;
+    border: 0.05em solid #ccc;
+    border-radius: 0.5em;
+    background-color: #f9f9f9;
+}
+
+.curriculum-input {
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.curriculum-input .input-field {
+    width: 100%;
+    padding: 0.8vw;
+    font-size: 0.8em;
+    border: 0.07em solid #ccc;
+    border-radius: 0.5em;
+    margin: 0.1em;
+}
+
+.curriculum-input .input-field:focus {
+    border-color: #666666;
+    outline: none;
+    box-shadow: 0 0 3px #666666;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+}
+
+.input-container .input-field {
+    flex: 1;
+}
+
+.input-container .add-button {
+    margin-left: 1vw;
+}

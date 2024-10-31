@@ -1,15 +1,16 @@
-import {useNavigate, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import useAxios from "../../hooks/api/useAxios.jsx";
-import "../../styles/QnAContainer.css"
+import "../../styles/Mypage/QnAEdit.css";
+import { decodeTokenTutor } from "../../authentication/decodeTokenTutor.jsx";
 
 function QnAEdit() {
-    const {courseBoardId} = useParams();
-    const {courseId} = useParams();
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const {data, fetchData} = useAxios();
-    const {data: updateData, fetchData: updateRetchData} = useAxios();
+    const { courseBoardId } = useParams();
+    const { courseId } = useParams();
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+    const { data, fetchData } = useAxios();
+    const { data: updateData, fetchData: updateRetchData } = useAxios();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,8 +27,16 @@ function QnAEdit() {
         console.log(requestDto);
 
         updateRetchData(`/course/${courseId}/board/${courseBoardId}`, "PATCH", requestDto);
+    };
 
-    }
+    const handleList = () => {
+        if (decodeTokenTutor()) {
+            navigate(`/education/course/${courseId}/qna/${courseBoardId}`);
+        } else {
+            navigate(`/mypage/course/${courseId}/qna/${courseBoardId}`);
+        }
+    };
+
     useEffect(() => {
         if (data) {
             setTitle(data.title);
@@ -51,23 +60,16 @@ function QnAEdit() {
             <h2>Q&A 게시물 수정</h2>
             <form className="qna-form" onSubmit={handleSubmit}>
                 <div className="title-box">
-                    <input
-                        type="text"
-                        defaultValue={data.title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        required
-                    />
+                    <input type="text" defaultValue={data.title} onChange={(e) => setTitle(e.target.value)} required />
                 </div>
-                <div className="content-container">
-                    <textarea
-                        className="content-box"
-                        defaultValue={data.content}
-                        onChange={(e) => setContent(e.target.value)}
-                        required
-                    />
+                <div className="qna-content-container">
+                    <textarea className="content-box" defaultValue={data.content} onChange={(e) => setContent(e.target.value)} required />
                 </div>
-                <button type="submit" className="submit-button">
+                <button type="submit" className="qna-submit-button">
                     작성완료
+                </button>
+                <button className="qna-back-button" onClick={handleList}>
+                    취소
                 </button>
             </form>
         </div>

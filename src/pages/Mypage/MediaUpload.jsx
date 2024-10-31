@@ -1,37 +1,36 @@
 import { useState } from "react";
 import { Axios } from "/src/authentication/axios/Axios";
-import { useParams } from "react-router-dom";
+import "../../styles/MediaUpload.css";
 
-function MediaUpload() {
-    const { courseId, curriculumId } = useParams();
+function MediaUpload({ courseId, curriculumId }) {
     const axiosInstance = Axios();
     const [formData, setFormData] = useState({
-        title: '',
-        type: '',
-        file: null
+        contents: [{ idx: 1, title: '', type: '', file: null }],
     });
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         if (!curriculumId) {
+            console.log(curriculumId);
             alert("커리큘럼 ID가 유효하지 않습니다.");
             return;
         }
 
         const multipartData = new FormData();
+        const content = formData.contents[0]; // 예시로 첫 번째 콘텐츠를 전송합니다.
 
-        if (formData.file) {
-            multipartData.append("file", formData.file);
+        if (content.file) {
+            multipartData.append("file", content.file);
         }
-        multipartData.append("type", formData.type);
-        multipartData.append("title", formData.title);
+        multipartData.append("type", content.type);
+        multipartData.append("title", content.title);
 
-        const endpoint = formData.type === "VIDEO" || formData.type === "MATERIAL"
+        const endpoint = content.type === "VIDEO" || content.type === "MATERIAL"
             ? `/course/${courseId}/curriculum/${curriculumId}/contents`
             : `/course/${courseId}/curriculum/${curriculumId}/contents/quiz`;
 
         try {
-            await axiosInstance.post(endpoint, multipartData, {
+            axiosInstance.post(endpoint, multipartData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
@@ -50,70 +49,96 @@ function MediaUpload() {
         }
     };
 
-    const handleUpload = (e) => {
+    const handleUpload = (e, contentIndex) => {
         const file = e.target.files[0];
         setFormData(prevState => ({
             ...prevState,
-            file: file
+            contents: prevState.contents.map((content, index) =>
+                index === contentIndex ? { ...content, file } : content
+            ),
         }));
     };
 
-    const handleSelectChange = (e) => {
+    const handleSelectChange = (e, contentIndex) => {
         const { value } = e.target;
         setFormData(prevState => ({
             ...prevState,
-            type: value
+            contents: prevState.contents.map((content, index) =>
+                index === contentIndex ? { ...content, type: value } : content
+            ),
         }));
     };
 
-    const handleTitleChange = (e) => {
+    const handleTitleChange = (e, contentIndex) => {
         const { value } = e.target;
         setFormData(prevState => ({
             ...prevState,
-            title: value
+            contents: prevState.contents.map((content, index) =>
+                index === contentIndex ? { ...content, title: value } : content
+            ),
+        }));
+    };
+
+    const handleAddContent = () => {
+        setFormData(prevState => ({
+            ...prevState,
+            contents: [
+                ...prevState.contents,
+                { idx: prevState.contents.length + 1, title: '', type: '', file: null },
+            ],
         }));
     };
 
     return (
-        <>
-            <form
-                name="contents"
-                encType="multipart/form-data"
-                onSubmit={handleSubmit}
-            >
-                <label htmlFor="type">콘텐츠 유형 선택: </label>
-                <select
-                    id="type"
-                    value={formData.type}
-                    onChange={handleSelectChange}
-                    required
-                >
-                    <option value="" disabled>
-                        옵션을 선택하세요
-                    </option>
-                    <option value="VIDEO">비디오</option>
-                    <option value="MATERIAL">자료</option>
-                    <option value="QUIZ">퀴즈</option>
-                </select>
+        <div className="content-container">
+            <button className="add-button" onClick={handleAddContent}>컨텐츠 추가 +</button>
+            {formData.contents.map((content, contentIndex) => (
+                <div key={content.idx} className="content-item">
+                    <form
+                        name="contents"
+                        encType="multipart/form-data"
+                        onSubmit={handleSubmit}
+                        className="content-form"
+                    >
+                        <label htmlFor={`type-${contentIndex}`}>콘텐츠 유형 선택: </label>
+                        <select
+                            id={`type-${contentIndex}`}
+                            value={content.type}
+                            className="input-select"
+                            onChange={(e) => handleSelectChange(e, contentIndex)}
+                            required
+                        >
+                            <option value="" disabled>
+                                옵션을 선택하세요
+                            </option>
+                            <option value="VIDEO">비디오</option>
+                            <option value="MATERIAL">자료</option>
+                            <option value="QUIZ">퀴즈</option>
+                        </select>
 
-                <input
-                    type="file"
-                    name="file"
-                    accept="video/mp4,video/x-m4v,application/pdf"
-                    onChange={handleUpload}
-                />
-                <input
-                    type="text"
-                    name="title"
-                    placeholder="제목 입력"
-                    value={formData.title}
-                    onChange={handleTitleChange}
-                    required
-                />
-
-                <button type="submit">업로드</button>
-            </form>
-        </>
+                        <input
+                            type="text"
+                            name="title"
+                            placeholder="제목 입력"
+                            value={content.title}
+                            onChange={(e) => handleTitleChange(e, contentIndex)}
+                            required
+                            className="input-title"
+                        />
+                        <div className="title-upload-container">
+                            <input
+                                type="file"
+                                name="file"
+                                accept="video/mp4,video/x-m4v,application/pdf"
+                                className="input-file"
+                                onChange={(e) => handleUpload(e, contentIndex)}
+                            />
+                            <button type="submit" className="submit-content-button">업로드</button>
+                        </div>
+                    </form>
+                </div>
+            ))}
+        </div>
     );
 }
 
