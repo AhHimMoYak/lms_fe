@@ -50,7 +50,13 @@ function CourseList() {
             <div className="mycourse-list">
                 <div className="mycourse-list-title-container">
                     <div className="mycourse-list-title">{decodeTokenTutor() ? "나의 강좌" : "수강 중인 코스"}</div>
-                    {decodeTokenTutor() ? <PlusSquare onClick={handleCreateClick} style={{ cursor: "pointer" }} /> : <div />}
+                    {decodeTokenTutor() ? (
+                        <button className="mycourse-create-button" onClick={handleCreateClick}>
+                            강좌 생성
+                        </button>
+                    ) : (
+                        <div />
+                    )}
                 </div>
                 <table className="mycourse-list-table">
                     <thead>
