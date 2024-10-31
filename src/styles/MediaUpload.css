@@ -51,6 +51,8 @@
     border: none;
     border-radius: 0.5em;
     cursor: pointer;
+    margin-left: 1vw;
+    font-size: 0.8em;
 }
 
 .submit-content-button:hover {
