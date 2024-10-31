@@ -1,34 +1,66 @@
-/* .sidebar {
-    width: 25%;
-    height: auto;
-    max-height: 100vh;
-    overflow-y: auto;
-    background-color: #ffffff; 
-    padding: 20px;
-    box-sizing: border-box;
-    border-right: 0.1em solid #dddddd; 
-} */
-
-.category-title {
-    margin-bottom: 20px;
-    font-size: 1.5em;
-    font-weight: bold;
-}
-
-.category-button {
-    display: block;
-    margin: 6px 0;
-    padding: 10px;
-    background-color: #f9f9f9; /* 버튼 배경 색상 */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.course-sidebar {
     width: 100%;
-    text-align: left;
-    font-size: 16px;
-    transition: background-color 0.2s; /* 호버 효과 */
+    background-color: #ffffff;
+    padding: 1vh 0;
+    box-sizing: border-box;
+    border-bottom: 0.1em solid #dddddd;
+    transition: max-height 0.3s ease-out;
+    overflow: hidden;
 }
 
-.category-button:hover {
-    background-color: #e0e0e0; /* 호버 시 색상 변화 */
+.course-expanded {
+    max-height: 40vh;
 }
+
+.course-collapsed {
+    max-height: 5vh;
+    width: 100%;
+}
+
+.course-toggle-button {
+    width: 3vw;
+    text-align: center;
+    cursor: pointer;
+    background-color: #e0e0e0;
+    padding: 0.5vh 0;
+    /*border-radius: 0 0 0.25em 0.25em;*/
+    font-size: 0.8em;
+    margin: 0 auto;
+    border-radius: 0.5em;
+}
+
+.course-category-title {
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: bold;
+    margin: 0 0 1.5vh 0;
+}
+
+.course-category-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1vw;
+    padding: 1vh 1.5vw;
+    justify-content: center;
+}
+
+.course-category-button {
+    padding: 0.5vh 1.5vw;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 1em;
+    cursor: pointer;
+    text-align: center;
+    font-size: 0.95em;
+    transition: background-color 0.3s, transform 0.2s;
+    white-space: nowrap;
+    flex: 0 1 15%;
+    min-width: 8vw;
+    max-width: 12vw;
+}
+
+.course-category-button:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.05);
+}
+

@@ -5,7 +5,7 @@ function Banner() {
     return (
         <div className="banner-container">
             <div className="banner-content">
-                <h1 className="banner-title">Ahhimmoyak</h1>
+                <h1 className="banner-title">Ahimmoyak</h1>
                 <p className="banner-subtitle">Explore a variety of courses to elevate your skills.</p>
             </div>
         </div>
