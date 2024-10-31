@@ -11,7 +11,7 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.6;
@@ -100,7 +100,7 @@ body {
     color: var(--primary-color);
 }
 
-.course-tabs {
+.video-course-tabs {
     display: flex;
     justify-content: center;
     margin-bottom: 1em;
@@ -123,12 +123,16 @@ body {
     transform: translateY(-2px);
 }
 
-.learning-goal, .chapter-info, .instructor-intro, .completion-criteria {
+.learning-goal,
+.chapter-info,
+.instructor-intro,
+.completion-criteria {
     margin: 1.5em 0;
     text-align: left;
 }
 
-.learning-goal h3, .completion-criteria h3 {
+.learning-goal h3,
+.completion-criteria h3 {
     font-size: 1.3em;
     color: var(--primary-color);
 }
@@ -219,7 +223,7 @@ table {
     border-collapse: collapse;
     margin-top: 1.5vh;
     text-align: left;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 0.95em;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     background-color: var(--white-color);
@@ -227,7 +231,8 @@ table {
     overflow: hidden;
 }
 
-table th, table td {
+table th,
+table td {
     padding: 0.8em;
     border-bottom: 0.1em solid #e0e0e0;
 }
@@ -257,7 +262,7 @@ tr:hover {
 
 /* General button styles */
 button {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 1em;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;

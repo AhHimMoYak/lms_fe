@@ -74,8 +74,6 @@ function VideoExplain() {
         return <div>데이터를 불러올 수 없습니다.</div>;
     }
 
-    const enrollmentPeriod = new Date(courseData.endDate).setHours(23, 59, 59, 999) >= new Date();
-
     return (
         <div className="container">
             <div className="lecture-info">
@@ -85,7 +83,7 @@ function VideoExplain() {
                         <p>{courseData.tutor} 강사</p>
                     </div>
                 </div>
-                {enrollmentPeriod ? (
+                {courseData.state === "NOT_STARTED" ? (
                     <button className="course-provide-button" onClick={handleEnrollmentToggle}>
                         {isEnrolled ? "수강 취소" : "수강 신청"}
                     </button>
