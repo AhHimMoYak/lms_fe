@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import useAxios from "../../hooks/api/useAxios.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import "../../styles/Mypage/CourseDetailed.css";
-import { Download, Play } from "react-feather";
+import { Download, Play, Edit } from "react-feather";
+import { decodeTokenTutor } from "../../authentication/decodeTokenTutor.jsx";
 
 function CourseDetailed() {
     const { data, fetchData } = useAxios();
@@ -13,6 +14,7 @@ function CourseDetailed() {
     const [contentType, setcontentType] = useState(null);
     const [activeCurriculum, setActiveCurriculum] = useState([]);
     const navigate = useNavigate();
+
     useEffect(() => {
         fetchData(`/course/${courseId}`, "get");
     }, [courseId]);
@@ -28,6 +30,10 @@ function CourseDetailed() {
         setContentId(contentId);
         setcontentType(contentType);
     };
+
+    const handletoMoveModify = () => {
+        navigate(`/education/course/${courseId}/modify`);
+    }
 
     useEffect(() => {
         console.log(curriculumId);
@@ -69,6 +75,7 @@ function CourseDetailed() {
             <div className="course-details">
                 <div className="course-detail-title">{data.title}</div>
                 <p>{data.tutor} 강사</p>
+                {decodeTokenTutor() && <Edit className="edit-icon" onClick={handletoMoveModify}/>}   
             </div>
             <div id="chapter-infomation" className="chapter-infomation">
                 {data.curriculumList && data.curriculumList.length > 0 ? (
