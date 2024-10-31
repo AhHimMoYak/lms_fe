@@ -1,7 +1,7 @@
 import {useState, useEffect, useCallback} from "react";
 import {useParams} from "react-router-dom";
 import useAxios from "../../hooks/api/useAxios.jsx";
-import "/src/styles/Main/VideoExplain.module.css";
+import "/src/styles/Main/VideoExplain.css";
 
 function VideoExplain() {
     const {data: courseData, error, fetchData: fetchCourseData, isLoading} = useAxios();
