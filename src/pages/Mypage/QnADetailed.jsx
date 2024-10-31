@@ -4,30 +4,28 @@ import {useNavigate, useParams} from "react-router-dom";
 import "../../styles/Mypage/QnADetailed.css";
 import {jwtDecode} from "jwt-decode";
 import {decodeTokenTutor} from "../../authentication/decodeTokenTutor.jsx";
+import { decodeToken } from "../../authentication/decodeToken.jsx";
 
 function QnADetailed() {
     const {courseId, courseBoardId} = useParams();
     const {data, fetchData} = useAxios();
     const {data: deleteData, fetchData: deleteFetchData} = useAxios();
     const {data: commentData, fetchData: commentFetchData} = useAxios();
-    const [username, setUsername] = useState('');
-    const [isTutor, setIsTutor] = useState(false);
+    const {data: commentDeleteData, fetchData: commentDeleteFetchData} = useAxios();
     const [newComment, setNewComment] = useState('');
     const navigate = useNavigate();
 
-    const accessToken = localStorage.getItem('access');
     useEffect(() => {
         fetchData(`/course/${courseId}/board/QNA/${courseBoardId}`, "GET");
-        if (accessToken) {
-            const user = jwtDecode(accessToken);
-            setUsername(user.sub);
-            const tutorStatus = decodeTokenTutor();
-            setIsTutor(tutorStatus);
-        }
     }, [courseBoardId]);
 
     const onClickEdit = () => {
-        navigate(`/mypage/course/${courseId}/qna/${courseBoardId}/edit`, {state: {courseBoardId: courseBoardId}});
+        if(decodeTokenTutor()){
+            navigate(`/education/course/${courseId}/qna/${courseBoardId}/edit`);
+        }
+        else{
+            navigate(`/mypage/course/${courseId}/qna/${courseBoardId}/edit`);
+        }
     }
 
     const onClickDelete = () => {
@@ -39,16 +37,27 @@ function QnADetailed() {
 
     useEffect(() => {
         if (deleteData) {
-            navigate(`/mypage/course/${courseId}/qna`);
+            if(decodeTokenTutor()){
+                navigate(`/education/course/${courseId}/qna`);
+            }
+            else {
+                navigate(`/mypage/course/${courseId}/qna`);
+            }
+            
         }
     }, [deleteData]);
 
     const handleList = () => {
-        navigate(`/mypage/course/${courseId}/qna`);
+        if(decodeTokenTutor()){
+            navigate(`/education/course/${courseId}/qna`);
+        }
+        else{
+            navigate(`/mypage/course/${courseId}/qna`);
+        }
+        
     }
     const handleCommentChange = (e) => {
         setNewComment(e.target.value);
-        console.log("여기여기", newComment);
     }
     const handleCommentSubmit = () => {
         commentFetchData(`/course/${courseId}/board/${courseBoardId}/comment`, "POST",
@@ -60,6 +69,22 @@ function QnADetailed() {
             });
     }
 
+    const handleCommentEdit = (commentId) => {
+        navigate(`/education/course/${courseId}/qna/${courseBoardId}/edit`)
+    }
+
+    const handleCommentDelete = (commentId) => {
+        commentDeleteFetchData(`/course/${courseId}/board/${courseBoardId}/comment/${commentId}`, "DELETE");
+    }
+
+    useEffect(() => {
+        if(commentDeleteData){
+            alert(commentDeleteData);
+            window.location.reload();
+        }
+    },[commentDeleteData]);
+   
+
     // 로딩 중일 때 처리
     if (!data) {
         return <div>로딩 중...</div>;
@@ -68,7 +93,7 @@ function QnADetailed() {
         <div className="qna-board-container">
             <div className="qna-board-header">
                 <h2>QnA 게시판</h2>
-                {data.user === username && (
+                {data.user === decodeToken() && (
                     <div className="qna-board-actions">
                         <button className="edit-button" onClick={() => onClickEdit(courseBoardId)}>수정</button>
                         <button className="delete-button" onClick={onClickDelete}>삭제</button>
@@ -84,14 +109,14 @@ function QnADetailed() {
                     <div className="qna-board-question">
                         <p>{data.content}</p>
                     </div>
-                    {data.comments.length === 0 && isTutor && (
+                    {data.comments.length === 0 && decodeTokenTutor() && (
                         <div className="qna-board-comment">
-                    <textarea
-                        className="qna-board-comment-input"
-                        value={newComment}
-                        onChange={handleCommentChange}
-                        placeholder="댓글을 입력하세요..."
-                    />
+                            <textarea
+                                className="qna-board-comment-input"
+                                value={newComment}
+                                onChange={handleCommentChange}
+                                placeholder="댓글을 입력하세요..."
+                            />
                             <div className="qna-board-comment-actions">
                                 <button className="qna-board-comment-submit" onClick={() => handleCommentSubmit()}>댓글
                                     작성
@@ -104,10 +129,11 @@ function QnADetailed() {
                     {data.comments.length > 0 && (
                         <>
                             <span>답변</span>
-                            <div className="qna-board-actions">
-                                <button className="edit-button">수정</button>
-                                <button className="delete-button">삭제</button>
+                            {decodeTokenTutor() && <div className="qna-board-actions">
+                                <button className="edit-button" onClick={() => handleCommentEdit(data.comments[0].id)}>수정</button>
+                                <button className="delete-button" onClick={() => handleCommentDelete(data.comments[0].id)}>삭제</button>
                             </div>
+                            }                            
                             <div className="qna-board-answer-content">
                                 {data.comments.map((comment, index) => (
                                     <p key={index}>{comment.content}</p>
