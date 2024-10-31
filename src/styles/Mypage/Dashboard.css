@@ -68,6 +68,7 @@
     transition: transform 0.2s;
     min-width: 11vw;
     max-width: 12vw;
+    cursor: pointer;
 }
 
 .course-card:hover {
