@@ -1,16 +1,19 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import Chatting from "../../components/Material/Chatting";
 import VideoPlayer from "../../components/Material/VideoPlayer";
 import HLSPlayer from "../../components/Material/HLSPlayer";
 import useAxios from "../../hooks/api/useAxios.jsx";
+import { Client } from "@stomp/stompjs";
 
 import "../../styles/Material/LiveStream.css";
+import {decodeToken} from "../../authentication/decodeToken.jsx";
 import Modal from "../../components/Modal.jsx";
 import { decodeTokenTutor } from "../../authentication/decodeTokenTutor.jsx";
 
 function LiveStream() {
     const liveUrl = "http://172.16.10.251:8085/hls/";
+    const websocketUrl = 'ws://172.16.11.71:8080/ws';
 
     const { fetchData: fetchLiveInfo, data: liveInfo } = useAxios();
 
@@ -28,7 +31,19 @@ function LiveStream() {
     const [chatOpen, setChatOpen] = useState(true);
     const [viewer, setViewer] = useState(0);
 
-    if (liveInfo) console.log(liveInfo);
+    const stompRef = useRef(null);
+    useEffect(() => {
+        stompRef.current = new Client({
+            brokerURL: websocketUrl,
+            onConnect: () => {console.log("websocket 연결됨")},
+            onStompError: (frame) => {console.error("websocket 연결실패" + frame)},
+            connectHeaders: {Authorization: localStorage.getItem("access")}
+        });
+        stompRef.current.activate();
+        return () => {
+            if (stompRef.current) stompRef.current.deactivate();
+        }
+    }, []);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalId, setModalId] = useState(null);
@@ -77,15 +92,14 @@ function LiveStream() {
                             )}
                         </div>
                     ) : (
-                        <div className="stream-info">
-                            <h2>페이지 로딩중...</h2>
-                            <p>Viewers: 123</p>
-                        </div>
+                      <div className="stream-info">
+                          <h2>페이지 로딩중...</h2>
+                          <p>Viewers: 123</p>
+                      </div>
                     )}
                 </div>
             </div>
-
-            <Chatting setViewer={setViewer} />
+            <Chatting setViewer={setViewer} liveId={streamKey} stompClient={stompRef.current}/>
         </div>
     );
 }
