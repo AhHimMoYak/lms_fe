@@ -28,7 +28,7 @@ const Sidebar = () => {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/education/courses" className={() => (checkIsActive("/education/courses") ? "sidebar_active" : "")}>
+                        <NavLink to="/education/course" className={() => (checkIsActive("/education/course") ? "sidebar_active" : "")}>
                             강좌 관리
                         </NavLink>
                     </li>
