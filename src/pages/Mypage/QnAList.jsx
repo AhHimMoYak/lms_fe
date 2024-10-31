@@ -21,12 +21,19 @@ function QnAList() {
     const handlePageChange = (newPage) => {
         navigate(`?page=${newPage}`);
     };
+
     const handleCreateQnA = () => {
         navigate(`/mypage/course/${courseId}/qna/post`);
     };
+
     const handleRowClick = (courseBoardId) => {
-        navigate(`/mypage/course/${courseId}/qna/${courseBoardId}`);
+        if (decodeTokenTutor()) {
+            navigate(`/education/course/${courseId}/qna/${courseBoardId}`);
+        } else {
+            navigate(`/mypage/course/${courseId}/qna/${courseBoardId}`);
+        }
     };
+
     useEffect(() => {
         if (!data) {
             console.log(data);

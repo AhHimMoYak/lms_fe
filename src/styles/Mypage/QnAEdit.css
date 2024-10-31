@@ -10,7 +10,6 @@
     height: 100%;
     margin: 0 auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
 }
 
 /* 제목 (h2) 스타일 */
@@ -36,11 +35,10 @@
     border: 0.08em solid #ccc;
     outline: #ccc;
     font-size: 1em;
-
 }
 
 /* 내용 입력 상자 */
-.content-container {
+.qna-content-container {
     margin-bottom: 1em;
 }
 
