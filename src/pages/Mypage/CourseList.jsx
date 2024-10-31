@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../../styles/Mypage/CourseList.css";
 import useAxios from "../../hooks/api/useAxios.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
+import { decodeTokenTutor } from "../../authentication/decodeTokenTutor.jsx";
 
 function CourseList() {
     const navigate = useNavigate();
@@ -38,7 +39,7 @@ function CourseList() {
     return (
         <div className="mycourse-list-container">
             <div className="mycourse-list">
-                <h3 className="mycourse-list-title">수강 중인 코스</h3>
+                <h3 className="mycourse-list-title">{decodeTokenTutor() ? "나의 강좌" : "수강 중인 코스"}</h3>
                 <table className="mycourse-list-table">
                     <thead>
                         <tr>
@@ -51,23 +52,15 @@ function CourseList() {
                     <tbody>
                         {currentCourses && currentCourses.length > 0 ? (
                             currentCourses.map((courseItem, index) => (
-                                <tr
-                                    key={index}
-                                    onClick={() =>
-                                        handleRowClick(currentCourses[index].id)
-                                    }
-                                    className="course-clickable-row"
-                                >
-                                    <td>
-                                        No.{(page - 1) * pageSize + index + 1}
-                                    </td>
+                                <tr key={index} onClick={() => handleRowClick(currentCourses[index].id)} className="course-clickable-row">
+                                    <td>No.{(page - 1) * pageSize + index + 1}</td>
                                     <td>{courseItem.title}</td>
                                     <td>{courseItem.tutor || "N/A"}</td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="5">수강 중인 코스가 없습니다.</td>
+                                <td colSpan="5">{decodeTokenTutor() ? "등록된 강좌가 없습니다" : "수강 중인 코스가 없습니다"}</td>
                             </tr>
                         )}
                     </tbody>
@@ -85,9 +78,7 @@ function CourseList() {
                         <button
                             key={index}
                             onClick={() => handlePageChange(index + 1)}
-                            className={`pagination-button ${
-                                page === index + 1 ? "active" : ""
-                            }`}
+                            className={`pagination-button ${page === index + 1 ? "active" : ""}`}
                         >
                             {index + 1}
                         </button>
