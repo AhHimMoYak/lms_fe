@@ -12,8 +12,8 @@ const Sidebar = () => {
 
     const checkisDashboard = () => {
         return (
-            location.pathname === "/mypage/dashboard" ||
-            location.pathname === "/mypage"
+            location.pathname === "/education/dashboard" ||
+            location.pathname === "/education"
         );
     };
 
@@ -27,7 +27,7 @@ const Sidebar = () => {
                 <ul>
                     <li>
                         <NavLink
-                            to="/mypage/dashboard"
+                            to="/education/dashboard"
                             className={() =>
                                 checkisDashboard() ? "sidebar_active" : ""
                             }
@@ -37,21 +37,21 @@ const Sidebar = () => {
                     </li>
                     <li>
                         <NavLink
-                            to="/mypage/course"
+                            to="/education/course"
                             className={() =>
-                                checkIsActive("/mypage/course")
+                                checkIsActive("/education/course")
                                     ? "sidebar_active"
                                     : ""
                             }
                         >
-                            나의 코스
+                            강좌 관리
                         </NavLink>
                     </li>
                     <li>
                         <NavLink
-                            to="/mypage/qna"
+                            to="/education/qna"
                             className={() =>
-                                checkIsActive("/mypage/qna")
+                                checkIsActive("/education/qna")
                                     ? "sidebar_active"
                                     : ""
                             }
@@ -61,9 +61,9 @@ const Sidebar = () => {
                     </li>
                     <li>
                         <NavLink
-                            to="/mypage/user/reconfirm"
+                            to="/education/user/reconfirm"
                             className={() =>
-                                checkIsActive("/mypage/user")
+                                checkIsActive("/education/user")
                                     ? "sidebar_active"
                                     : ""
                             }

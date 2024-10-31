@@ -1,4 +1,8 @@
 /* 전체 강의 정보 컨테이너 스타일 */
+.course-detail-container {
+    display: block; /* 기본적으로 block으로 높이 변화 반영 */
+    width: 100%;
+}
 .course-details {
     display: flex;
     align-items: center;
@@ -6,7 +10,7 @@
     margin-top: 3vh;
 }
 
-.course-details h2 {
+.course-detail-title {
     font-size: 1.5em;
     margin: 0 0 0 5vw;
 }
@@ -28,7 +32,8 @@
     background-color: #ffffff; /* 표의 배경색을 흰색으로 설정 */
 }
 
-.curriculum-detail th, .curriculum-detail td {
+.curriculum-detail th,
+.curriculum-detail td {
     padding: 1.3vh 1vw 1.3vh 2vw;
     text-align: left;
 }
@@ -67,13 +72,16 @@
 
 /* 커리큘럼 상세 내용 */
 .curriculum-content-show td {
-    padding: 0 1vw;
+    padding: 0;
     background-color: #fafafa;
 }
 
 .item-content {
     padding: 1.5vh 2vw 1.7vh 2vw;
     border-bottom: 0.1em solid #eee;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
 }
 
 .item-content:last-child {

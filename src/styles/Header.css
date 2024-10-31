@@ -1,6 +1,7 @@
 /* 기본 헤더 스타일 */
 .header {
     width: 89vw;
+    height: 10vh;
     padding: 0.5vh 5vw;
     display: flex;
     align-items: center;
@@ -19,7 +20,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #000;
+    background-color: #001529;
     color: #fff;
     transition: top 0.3s;
     top: 0;
@@ -42,7 +43,7 @@
     gap: 0.5em;
 }
 
-.header-buttons button {
+.go-course {
     border: none;
     cursor: pointer;
     font-weight: bold;
@@ -59,6 +60,7 @@
     padding: 0.7vh 1vw;
     border-radius: 3px;
     cursor: pointer;
+    margin-right: 2vw;
 }
 
 .auth-buttons button:last-child {

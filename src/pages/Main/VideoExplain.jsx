@@ -10,7 +10,7 @@ function VideoExplain() {
 
     // API 호출
     useEffect(() => {
-        fetchData(`/course/detail/${courseId}`, "get");
+        fetchData(`/course/${courseId}`, "get");
     }, [courseId]);
 
     // API 응답 데이터 로깅
@@ -49,16 +49,12 @@ function VideoExplain() {
         <div className="container">
             <div className="lecture-info">
                 <div className="lecture-card">
-                    <img
-                        className="lecture-img"
-                        src={data.imagePath}
-                        alt="이미지를 표시 할 수 없습니다."
-                    />
                     <div className="lecture-details">
                         <h2>{data.title}</h2>
-                        <p>{data.tutorName} 강사</p>
+                        <p>{data.tutor} 강사</p>
                     </div>
                 </div>
+                <button className="course-provide-button"> 수강신청 </button>
             </div>
 
             <div className="lecture-details-section">
@@ -92,15 +88,11 @@ function VideoExplain() {
                             </tr>
                             <tr>
                                 <th>강사명</th>
-                                <td>{data.tutorName}</td>
-                            </tr>
-                            <tr>
-                                <th>카테고리</th>
-                                <td>{data.category}</td>
+                                <td>{data.tutor}</td>
                             </tr>
                             <tr>
                                 <th>교육 소개</th>
-                                <td>{data.courseIntroduction}</td>
+                                <td>{data.introduction}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -144,22 +136,6 @@ function VideoExplain() {
                     ) : (
                         <p>커리큘럼 정보가 없습니다.</p>
                     )}
-                </div>
-
-                <div id="instructor-intro" className="instructor-intro">
-                    <h3>- 강사진 소개</h3>
-                    <table className="info-table">
-                        <tbody>
-                            <tr>
-                                <th>강사명</th>
-                                <td>{data.tutorName}</td>
-                            </tr>
-                            <tr>
-                                <th>강사 소개</th>
-                                <td>{data.tutorIntroduction}</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
 
                 <div id="completion-criteria" className="completion-criteria">

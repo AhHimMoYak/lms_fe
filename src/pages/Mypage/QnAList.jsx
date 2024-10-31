@@ -13,13 +13,9 @@ function QnAList() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchData(
-            `/course/${courseId}/board/QNA`,
-            "GET"
-        );
-        courseFetchData(`/course/${courseId}`,"GET")
+        fetchData(`/course/${courseId}/board/QNA`, "GET");
+        courseFetchData(`/course/${courseId}`, "GET");
     }, [courseId, page]);
-
 
     const handlePageChange = (newPage) => {
         navigate(`?page=${newPage}`);
@@ -35,13 +31,16 @@ function QnAList() {
             console.log(data);
         }
     }, [data]);
-    if (!data) {
+    if (!data || !courseData) {
         return <div>로딩 중...</div>;
     }
     const itemsPerPage = 10; // 한 페이지당 보여줄 게시물 수
     const totalPages = Math.ceil(data.length / itemsPerPage);
 
-    const currentPageData = data.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+    const currentPageData = data.slice(
+        (page - 1) * itemsPerPage,
+        page * itemsPerPage
+    );
 
     return (
         <div className="qna-list-container">
@@ -50,38 +49,40 @@ function QnAList() {
                     {courseData.title || "강좌 제목 없음"}
                 </div>
                 <button className="create-qna" onClick={handleCreateQnA}>
-                    글작성
+                    질문하기
                 </button>
             </div>
             <table className="qna-table">
                 <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>제목</th>
-                    <th>답변 여부</th>
-                </tr>
+                    <tr>
+                        <th>No.</th>
+                        <th>제목</th>
+                        <th>답변 여부</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {currentPageData.map((board, index) => (
-                    <tr
-                        key={board.id}
-                        onClick={() => handleRowClick(board.id)}
-                    >
-                        <td>{(page - 1) * itemsPerPage + index + 1}</td>
-                        <td>{board.title}</td>
-                        <td
-                            className={
-                                board.comment > 0 ? "answered" : "not-answered"
-                            }
+                    {currentPageData.map((board, index) => (
+                        <tr
+                            key={board.boardId}
+                            onClick={() => handleRowClick(board.boardId)}
                         >
-                            {board.comment > 0 ? "완료" : "미완료"}
-                        </td>
-                    </tr>
-                ))}
+                            <td>{(page - 1) * itemsPerPage + index + 1}</td>
+                            <td>{board.title}</td>
+                            <td
+                                className={
+                                    board.comment > 0
+                                        ? "answered"
+                                        : "not-answered"
+                                }
+                            >
+                                {board.comment > 0 ? "완료" : "미완료"}
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
 
-            <div className="pagination">
+            <div className="qna-pagination">
                 <button
                     onClick={() => handlePageChange(page - 1)}
                     disabled={page === 1}
@@ -93,7 +94,10 @@ function QnAList() {
                     const groupSize = 5; // 한 번에 보여줄 페이지 수
                     const currentGroup = Math.floor((page - 1) / groupSize);
                     const startPage = currentGroup * groupSize + 1;
-                    const endPage = Math.min(startPage + groupSize - 1, totalPages);
+                    const endPage = Math.min(
+                        startPage + groupSize - 1,
+                        totalPages
+                    );
 
                     const pages = [];
                     for (let i = startPage; i <= endPage; i++) {
@@ -120,7 +124,6 @@ function QnAList() {
             </div>
         </div>
     );
-
 }
 
 export default QnAList;
