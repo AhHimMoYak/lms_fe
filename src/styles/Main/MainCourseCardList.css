@@ -1,14 +1,13 @@
 .course-CourseCardContainer {
     display: grid;
-    /*margin-left: auto;*/
-    /*margin-right: auto;*/
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(6, minmax(220px, 300px));
     gap: 2vw;
     height: auto;
     margin-bottom: 4vh;
     max-width: 1650px;
-
+    justify-content: space-between;
 }
+
 
 .course-CourseCard {
     border-radius: 0.5vw;
