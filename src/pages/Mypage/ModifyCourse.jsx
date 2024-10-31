@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import useAxios from "/src/hooks/api/useAxios";
-import { useNavigate, useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import "/src/styles/ModifyCourse.css";
 
 function ModifyCourse() {
-    const { data, fetchData } = useAxios();
+    const {data, fetchData} = useAxios();
     const navigate = useNavigate();
-    const { courseId } = useParams();
+    const {courseId} = useParams();
     const [formData, setFormData] = useState({
         title: "",
         category: "",
@@ -49,7 +50,7 @@ function ModifyCourse() {
     };
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setFormData((prevState) => ({
             ...prevState,
             [name]: value,
