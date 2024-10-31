@@ -44,7 +44,7 @@ function ModifyCourse() {
             endDate: new Date(formData.endDate),
         }).then(() => {
             alert("코스가 성공적으로 수정되었습니다.");
-            navigate(`/mypage/courses`);
+            navigate(`/mypage/course`);
         });
     };
 
