@@ -39,6 +39,10 @@ const LiveDetail = () => {
         console.error("Error fetching live courses:", error);
     }
 
+    const handleCreateLiveClick = () => {
+        navigate(`/education/course/${courseId}/live/create`);
+    }
+
     const handleCourseClick = (key) => {
         navigate(`/live/${key}`);
     };
@@ -49,7 +53,7 @@ const LiveDetail = () => {
 
     return (
         <div className="live-detail-container">
-            {decodeTokenTutor() && <button className="go-create-live" onClick={handleCreateClick}>라이브 생성</button>} 
+            {decodeTokenTutor() && <button className="go-create-live" onClick={handleCreateLiveClick}>라이브 생성</button>} 
             <div className="live-detail-content">
                 <section className="liveSection">
                     <div className="sectionTitle">현재 라이브중인 강의</div>
