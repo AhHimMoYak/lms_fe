@@ -1,0 +1,107 @@
+/* QuizPost.css */
+
+.quiz-post {
+    width: 80%;
+    padding: 2vw;
+    background-color: #f9f9f9;
+    border-radius: 0.5em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-form {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group-inline {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5vh;
+}
+
+.form-label-inline {
+    font-weight: bold;
+    margin-right: 1vw;
+}
+
+.form-input-inline,
+.form-textarea-inline {
+    flex: 1;
+    padding: 1vw;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+}
+
+.form-textarea-inline {
+    height: 10vh;
+}
+
+.option-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5vh;
+}
+
+.option-container-inline {
+    display: flex;
+    align-items: center;
+    width: 95%;
+}
+
+.form-input,
+.option-input {
+    width: 85%;
+    /*flex: 5;*/
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.set-answer-button,
+.delete-option-button {
+    padding: 6px 12px;
+    border: none;
+    background-color: #6c757d;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 5px;
+    flex-shrink: 0;
+}
+
+.delete-option-button {
+    background-color: #dc3545;
+}
+
+.add-option-button,
+.submit-button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.add-option-button {
+    background-color: #28a745;
+    margin-right: 10px;
+}
+
+.submit-button {
+    background-color: #007bff;
+}
+
+.add-option-button:hover,
+.submit-button:hover,
+.set-answer-button:hover,
+.delete-option-button:hover {
+    opacity: 0.9;
+}
+.form-label{
+    width: 10vw;
+}

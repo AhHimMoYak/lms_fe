@@ -3,6 +3,7 @@ import "../../styles/Mypage/CourseList.css";
 import useAxios from "../../hooks/api/useAxios.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import { decodeTokenTutor } from "../../authentication/decodeTokenTutor.jsx";
+import { PlusSquare } from "react-feather";
 
 function CourseList() {
     const navigate = useNavigate();
@@ -29,6 +30,10 @@ function CourseList() {
         }
     };
 
+    const handleCreateClick = () => {
+        navigate("/education/manage/course/create");
+    };
+
     const course = courseData ?? [];
     const totalCourses = course.length;
     const totalPages = Math.ceil(totalCourses / pageSize);
@@ -43,7 +48,16 @@ function CourseList() {
     return (
         <div className="mycourse-list-container">
             <div className="mycourse-list">
-                <h3 className="mycourse-list-title">{decodeTokenTutor() ? "나의 강좌" : "수강 중인 코스"}</h3>
+                <div className="mycourse-list-title-container">
+                    <div className="mycourse-list-title">{decodeTokenTutor() ? "나의 강좌" : "수강 중인 코스"}</div>
+                    {decodeTokenTutor() ? (
+                        <button className="mycourse-create-button" onClick={handleCreateClick}>
+                            강좌 생성
+                        </button>
+                    ) : (
+                        <div />
+                    )}
+                </div>
                 <table className="mycourse-list-table">
                     <thead>
                         <tr>

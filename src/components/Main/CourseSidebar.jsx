@@ -7,7 +7,7 @@ const CourseSidebar = memo(({ onCategorySelect }) => {
         { id: 2, title: "사업관리", value: "BUSINESS_MANAGEMENT" },
         { id: 3, title: "경영·회계·사무", value: "MANAGEMENT_ACCOUNTING_ADMINISTRATIVE_AFFAIRS" },
         { id: 4, title: "금융·보험", value: "FINANCE_INSURANCE" },
-        { id: 5, title: "교육·자연·사회과학", value: "EDUCATION_NATURE_SOCIAL_SCIENCE" },
+        { id: 5, title: "교육·자연·사회과학", value: "EDUCATION_NATURE_EDUCATION_NATURE_SOCIAL_SCIENCE" },
         { id: 6, title: "법률·경찰·소방·교도·국방", value: "LAW_POLICE_FIRE_RELIGION_DEFENSE" },
         { id: 7, title: "보건·의료", value: "HEALTH_MEDICAL_CARE" },
         { id: 8, title: "사회복지·종교", value: "SOCIAL_WELFARE_RELIGION" },

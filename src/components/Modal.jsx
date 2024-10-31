@@ -1,6 +1,8 @@
 import Body from "../pages/Body";
 import "../styles/Modal.css";
+
 import QuizList from "./Main/QuizList.jsx";
+import QuizResult from "./QuizResult.jsx";
 
 const Modal = ({ closeModal, buttonId }) => {
     let modalContent;
@@ -13,7 +15,7 @@ const Modal = ({ closeModal, buttonId }) => {
             }
             break;
         case "participation":
-            modalContent = <Body />;
+            modalContent = <QuizResult />;
             {
                 /* 통신해서 서로 받는 기능에 대한 컴포넌트 넣기*/
             }

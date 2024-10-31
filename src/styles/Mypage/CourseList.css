@@ -22,13 +22,30 @@
     flex-direction: column;
 }
 
-.mycourse-list-title {
+.mycourse-list-title-container {
+    display: flex;
+    justify-content: space-between;
+
     text-align: left;
     font-size: 1.8em;
     font-weight: bold;
     margin-bottom: 5vh;
+    margin-top: 5vh;
     color: #333;
     border-bottom: 2px solid #e2e8f0;
+}
+
+.mycourse-create-button {
+    float: right;
+    margin-top: 0.5em;
+    margin-right: 2%;
+
+    height: 5vh;
+    font-size: 1vw;
+    background-color: #fff;
+    border: 2px #002c75 solid;
+    color: #002c75;
+    border-radius: 0.5em;
 }
 
 .mycourse-list-table {
