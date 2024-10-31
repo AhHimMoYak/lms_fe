@@ -41,6 +41,10 @@
     text-align: center;
 }
 
+.myQna-clickable-row {
+    cursor: pointer;
+}
+
 .myQna-list-table th {
     background-color: #f1f1f1;
     font-weight: bold;

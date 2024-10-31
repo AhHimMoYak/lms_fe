@@ -1,47 +1,60 @@
-import { useState, useEffect } from 'react';
-import useAxios from '/src/hooks/api/useAxios';
+import React, {useEffect, useState} from 'react';
 import '/src/styles/UpdateUser.css';
+import useAxios from "../../hooks/api/useAxios.jsx";
+import {useNavigate} from "react-router-dom";
 
 function UpdateUser() {
-    const { data, error, fetchData } = useAxios();
-    const [userInfo, setUserInfo] = useState({
+    const [formData, setFormData] = useState({
         id: '',
         password: '',
         email: '',
         phone: '',
         gender: '',
-        birth: '',
+        birthday: ''
     });
 
+    const navigate = useNavigate();
     const [errors, setErrors] = useState({});
+    const {data: userInfo, error, fetchData: fetchUserInfo} = useAxios();
+    const {data: updateUser, fetchData: updateUserData} = useAxios();
+
 
     useEffect(() => {
-        // 서버에서 사용자 정보를 가져와서 userInfo를 업데이트합니다.
-        fetchData('/user/info', 'GET');
+        fetchUserInfo(`/user/detail`, "GET");
     }, []);
 
-    useEffect(() => {
-        if (data) {
-            setUserInfo(data);
+    useEffect(()=>{
+        if (userInfo) {
+            setFormData({
+                id: userInfo.username || '',
+                password: '',
+                email: userInfo.email || '',
+                phone: userInfo.phone || '',
+                gender: userInfo.gender || '',
+                birthday: userInfo.birthday || ''
+            })
         }
-    }, [data]);
+    },[userInfo])
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setUserInfo((prev) => ({ ...prev, [name]: value }));
+        setFormData((prev) => ({ ...prev, [name]: value }));
         setErrors((prevErrors) => ({ ...prevErrors, [name]: '' })); // 입력 시 에러 초기화
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async(e) => {
+        e.preventDefault();
         const newErrors = {};
 
-        if (!userInfo.password) newErrors.password = '비밀번호를 입력해 주세요';
-        if (!userInfo.email) newErrors.email = '이메일을 입력해 주세요';
-        if (!userInfo.phone) newErrors.phone = '전화번호를 입력해 주세요';
+        if (!formData.password) newErrors.password = '비밀번호를 입력해 주세요';
+        if (!formData.email) newErrors.email = '이메일을 입력해 주세요';
+        if (!formData.phone) newErrors.phone = '전화번호를 입력해 주세요';
 
         if (Object.keys(newErrors).length === 0) {
-            // 서버와 통신하여 회원정보 업데이트 요청
-            alert('회원정보가 수정되었습니다.');
+            updateUserData(`/user/update`,"POST",formData);
+            alert("회원정보수정이 완료되었습니다.")
+            navigate(`/mypage/dashboard`)
         } else {
             setErrors(newErrors);
         }
@@ -54,22 +67,22 @@ function UpdateUser() {
                 <form className="update-form" onSubmit={(e) => e.preventDefault()}>
                     {/* 아이디 (수정 불가, 회색 처리) */}
                     <div className="update-field">
-                        <label className="update-label">아이디:</label>
+                        <label>아이디:</label>
                         <input
                             type="text"
-                            value={userInfo.id || '로딩 중...'}
+                            value={formData.id}
                             disabled
                             className="update-input disabled"
                         />
                     </div>
                     {/* 비밀번호 */}
                     <div className="update-field">
-                        <label className="update-label">비밀번호:</label>
+                        <label>비밀번호:</label>
                         <input
                             type="password"
                             name="password"
                             placeholder="비밀번호를 입력해 주세요"
-                            value={userInfo.password}
+                            value={formData.password}
                             onChange={handleChange}
                             className={`update-input ${errors.password ? 'error' : ''}`}
                         />
@@ -81,12 +94,12 @@ function UpdateUser() {
                     </div>
                     {/* 이메일 */}
                     <div className="update-field">
-                        <label className="update-label">이메일:</label>
+                        <label>이메일:</label>
                         <input
                             type="email"
                             name="email"
                             placeholder="example@domain.com"
-                            value={userInfo.email}
+                            value={formData.email}
                             onChange={handleChange}
                             className={`update-input ${errors.email ? 'error' : ''}`}
                         />
@@ -98,12 +111,12 @@ function UpdateUser() {
                     </div>
                     {/* 전화번호 */}
                     <div className="update-field">
-                        <label className="update-label">전화번호:</label>
+                        <label>전화번호:</label>
                         <input
                             type="tel"
                             name="phone"
                             placeholder="010-1234-5678"
-                            value={userInfo.phone}
+                            value={formData.phone}
                             onChange={handleChange}
                             className={`update-input ${errors.phone ? 'error' : ''}`}
                         />
@@ -115,20 +128,20 @@ function UpdateUser() {
                     </div>
                     {/* 성별 (수정 불가, 회색 처리) */}
                     <div className="update-field">
-                        <label className="update-label">성별:</label>
+                        <label>성별:</label>
                         <input
                             type="text"
-                            value={userInfo.gender}
+                            value={formData.gender}
                             disabled
                             className="update-input disabled"
                         />
                     </div>
                     {/* 생년월일 (수정 불가, 회색 처리) */}
                     <div className="update-field">
-                        <label className="update-label">생년월일:</label>
+                        <label>생년월일:</label>
                         <input
                             type="text"
-                            value={userInfo.birth}
+                            value={formData.birthday}
                             disabled
                             className="update-input disabled"
                         />
