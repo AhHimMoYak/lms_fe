@@ -2,6 +2,7 @@ import { useLocation, useParams, useNavigate } from "react-router-dom";
 import useAxios from "../../hooks/api/useAxios.jsx";
 import { useEffect } from "react";
 import "../../styles/Mypage/QnAList.css";
+import { decodeTokenTutor } from "../../authentication/decodeTokenTutor.jsx";
 
 function QnAList() {
     const query = new URLSearchParams(useLocation().search);
@@ -37,20 +38,19 @@ function QnAList() {
     const itemsPerPage = 10; // 한 페이지당 보여줄 게시물 수
     const totalPages = Math.ceil(data.length / itemsPerPage);
 
-    const currentPageData = data.slice(
-        (page - 1) * itemsPerPage,
-        page * itemsPerPage
-    );
+    const currentPageData = data.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
     return (
         <div className="qna-list-container">
             <div className="courselist-header">
-                <div className="courselist-name">
-                    {courseData.title || "강좌 제목 없음"}
-                </div>
-                <button className="create-qna" onClick={handleCreateQnA}>
-                    질문하기
-                </button>
+                <div className="courselist-name">{courseData.title || "강좌 제목 없음"}</div>
+                {decodeTokenTutor() ? (
+                    <></>
+                ) : (
+                    <button className="create-qna" onClick={handleCreateQnA}>
+                        질문하기
+                    </button>
+                )}
             </div>
             <table className="qna-table">
                 <thead>
@@ -62,31 +62,17 @@ function QnAList() {
                 </thead>
                 <tbody>
                     {currentPageData.map((board, index) => (
-                        <tr
-                            key={board.boardId}
-                            onClick={() => handleRowClick(board.boardId)}
-                        >
+                        <tr key={board.boardId} onClick={() => handleRowClick(board.boardId)}>
                             <td>{(page - 1) * itemsPerPage + index + 1}</td>
                             <td>{board.title}</td>
-                            <td
-                                className={
-                                    board.comment > 0
-                                        ? "answered"
-                                        : "not-answered"
-                                }
-                            >
-                                {board.comment > 0 ? "완료" : "미완료"}
-                            </td>
+                            <td className={board.comment > 0 ? "answered" : "not-answered"}>{board.comment > 0 ? "완료" : "미완료"}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
 
             <div className="qna-pagination">
-                <button
-                    onClick={() => handlePageChange(page - 1)}
-                    disabled={page === 1}
-                >
+                <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
                     {"<"}
                 </button>
 
@@ -94,19 +80,12 @@ function QnAList() {
                     const groupSize = 5; // 한 번에 보여줄 페이지 수
                     const currentGroup = Math.floor((page - 1) / groupSize);
                     const startPage = currentGroup * groupSize + 1;
-                    const endPage = Math.min(
-                        startPage + groupSize - 1,
-                        totalPages
-                    );
+                    const endPage = Math.min(startPage + groupSize - 1, totalPages);
 
                     const pages = [];
                     for (let i = startPage; i <= endPage; i++) {
                         pages.push(
-                            <button
-                                key={i}
-                                onClick={() => handlePageChange(i)}
-                                className={page === i ? "active" : ""}
-                            >
+                            <button key={i} onClick={() => handlePageChange(i)} className={page === i ? "active" : ""}>
                                 {i}
                             </button>
                         );
@@ -115,10 +94,7 @@ function QnAList() {
                     return pages;
                 })()}
 
-                <button
-                    onClick={() => handlePageChange(page + 1)}
-                    disabled={page === totalPages}
-                >
+                <button onClick={() => handlePageChange(page + 1)} disabled={page === totalPages}>
                     {">"}
                 </button>
             </div>
