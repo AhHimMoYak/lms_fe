@@ -79,6 +79,13 @@
     color: #888;
 }
 
+.course-pagination-button {
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    position: sticky;  /* 위치를 고정 */
+    bottom: 0;
+}
+
+
 .course-pagination-button:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
@@ -86,6 +93,7 @@
 
 .course-pagination-button:hover:not(:disabled) {
     background-color: #e0e0e0;
+
     transform: scale(1.05);
 }
 .course-pagination-button:focus {

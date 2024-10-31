@@ -77,15 +77,13 @@ function Render() {
                             <Route path="dashboard" element={<Dashboard />} />
                             <Route path="course" element={<CourseList />} />
                             <Route path="manage/*" element={<ManageFrame />}>
-                                <Route path="course/create" element={<CreateCourse />} /> # 코스 생성
-                                <Route path="course/:courseId/modify" element={<ModifyCourse />} /> # 코스 수정
-                                <Route path=":courseId/createCurriculum" element={<CreateCurriculum />} /> # 커리큘럼
-                                <Route path=":courseId/uploadMedia/:curriculumId" element={<MediaUpload />} /> # 컨텐츠 업로드
-                                <Route path="course/:courseId/:curriculumId/modify" element={<ModifyCurriculum />} /># 커리큘럼 수정
+                                <Route path="course/create" element={<CreateCourse />} /> {/*# 코스 생성*/}
+                                <Route path=":courseId/curriculum/create" element={<CreateCurriculum />} /> {/*# 커리큘럼 생성*/}
                             </Route>
                             <Route path="course/:courseId" element={<CourseFrame />}>
                                 <Route path="" element={<CourseDetailed />} />
                                 <Route path="contents" element={<CourseDetailed />} />
+                                <Route path="contents/modify" element={<ModifyCourse />} /> # 코스 수정
                                 <Route path="live" element={<LiveDetail />} />
                                 <Route path="live/create" element={<CreateLive />} />
                                 <Route path="qna" element={<QnAList />} />
@@ -96,9 +94,8 @@ function Render() {
                             <Route path="qna" element={<QnATotalList />} />
                             <Route path=":courseId/uploadMedia/:curriculumId" element={<MediaUpload />} /> # 컨텐츠 업로드
                             <Route path="createCourse" element={<CreateCourse />} /> # 코스 생성//
-                            <Route path=":courseId/createCurriculum" element={<CreateCurriculum />} /> # 커리큘럼
-                            <Route path="course/:courseId/modify" element={<ModifyCourse />} /> # 코스 수정//
-                            <Route path="course/:courseId/:curriculumId/modify" element={<ModifyCurriculum />} /># 커리큘럼 수정
+                            {/* <Route path="course/:courseId/modify" element={<ModifyCourse />} /> # 코스 수정(모달) */}
+                            {/* <Route path="course/:courseId/:curriculumId/modify" element={<ModifyCurriculum />} /># 커리큘럼 1개 수정 (모달) */}
                             <Route path="user/*" element={<UserInformFrame />}>
                                 <Route path="" element={<PasswordPrompt />} />
                                 <Route path="reconfirm" element={<PasswordPrompt />} />
