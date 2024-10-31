@@ -12,7 +12,7 @@
     border-radius: 1vw;
     box-shadow: 0 0.3vw 0.5vw rgba(0, 0, 0, 0.1);
     width: 80vw;
-    max-width: 28vw;
+    max-width: 35vw;
 }
 
 .update-title {
@@ -50,7 +50,7 @@
     flex: 1;
     border: none;
     outline: none;
-    font-size: 0.9vw;
+    font-size: 0.7em;
     background-color: transparent;
     padding-left: 0.8vw;
 }
@@ -68,14 +68,14 @@
 }
 
 .update-error-container {
-    margin-top: 0.5vh;
-    overflow: hidden;
+    margin-top: -1vh;
+    //overflow: hidden;
     height: 1.8vh;
 }
 
 .update-error {
     color: red;
-    font-size: 0.7em;
+    font-size: 0.4em;
     margin: 0;
 }
 
