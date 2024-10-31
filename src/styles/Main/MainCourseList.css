@@ -1,25 +1,27 @@
-
-.course-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 가로로 3개씩 */
-  gap: 2vw; /* 카드들 간의 간격 */
-  justify-items: center; /* 카드들을 가로로 가운데 정렬 */
-  padding: 2vw;
+.course-slider {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px; /* 좌우 패딩 추가 */
 }
 
+
 .course-main-card {
-  width:25vw;
+  width: 90%; /* 카드의 너비를 줄여 여유 공간 확보 */
   height: 30vh;
-  border-radius: 0.5em;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
-
+  margin: 0 10px; /* 좌우 간격을 확보하여 카드 간의 여백 추가 */
 }
+
+
+
 
 .course-main-card:hover {
   transform: scale(1.05);
@@ -28,15 +30,14 @@
 
 .course-main-card-header {
   height: 13vh;
-  border-top-left-radius: 0.5em;
-  border-top-right-radius: 0.5em;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .course-main-card-content {
-  padding: 0.5vw;
+  padding: 1vw;
   flex: 1;
   text-align: center;
-  height: 3vh;
 }
 
 .course-main-card-title {
