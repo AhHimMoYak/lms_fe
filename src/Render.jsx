@@ -31,6 +31,7 @@ import CreateLive from "./pages/Mypage/CreateLive.jsx";
 import ModifyCourse from "./pages/Mypage/ModifyCourse.jsx";
 import EducationFrame from "./components/Education/EducationFrame.jsx";
 import ManageFrame from "./components/Education/ManageFrame.jsx";
+import QuizPost from "./pages/QuizPost.jsx"
 
 function Render() {
     return (
@@ -54,6 +55,7 @@ function Render() {
                             <Route path="" element={<CourseDetailed />} />
                             <Route path="contents" element={<CourseDetailed />} />
                             <Route path="live" element={<LiveDetail />} />
+                            <Route  path="quiz/:liveId" element={<QuizPost />}/>
                             <Route path="create" element={<CreateLive />} />
                             <Route path="qna" element={<QnAList />} />
                             <Route path="qna/post" element={<QnAPost />} />
