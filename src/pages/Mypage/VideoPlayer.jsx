@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 
 import ReactPlayer from "react-player";
 import useAxios from "../../hooks/api/useAxios";
+import Header from "../../components/Header";
 
 export default function VideoPlayer() {
     const location = useLocation();
@@ -20,7 +21,8 @@ export default function VideoPlayer() {
 
     return (
         <div>
-            <ReactPlayer className="player" url={url} controls={true} playing={isPlaying} width="100vw" height="100vh" />
+            <Header/>
+            <ReactPlayer className="player" url={url} controls={true} playing={isPlaying} width="100%" height="87.6vh" />
         </div>
     );
 }
