@@ -38,8 +38,15 @@ body {
     margin-bottom: 6vh;
     font-size: 0.6em;
     padding: 1vw;
-    background-color: #007bff;
+    background-color: cornflowerblue;
     border-radius: 0.5em;
+}
+
+.course-provide-button-disabled{
+    font-size: 0.8em;
+    margin-bottom: 6vh;
+    font-weight: bold;
+    color: darkred;
 }
 
 .lecture-card {
