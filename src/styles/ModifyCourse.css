@@ -46,16 +46,39 @@ select.input-field:focus {
 .input-field,
 .input-date,
 select.input-field {
-    height: 6vh; /* 높이를 충분히 확보 */
+    height: 6vh;
 }
 
 .textarea-field {
-    height: 20vh; /* 텍스트 영역 높이 증가 */
+    height: 20vh;
     resize: none;
 }
 
-label {
+.date-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 2vw;
     margin-top: 1.5vh;
+}
+
+.date-field {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+}
+
+.input-date {
+    width: 100%;
+    padding: 1.2vh 1vw;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+    height: 6vh;
+}
+
+.date-field label {
+    margin-bottom: 0.5vh;
     font-size: 1em;
     font-weight: bold;
     color: #555;
