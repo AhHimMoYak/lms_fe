@@ -1,5 +1,7 @@
 import Body from "../pages/Body";
 import "../styles/Modal.css";
+
+import QuizList from "./Main/QuizList.jsx";
 import QuizResult from "./QuizResult.jsx";
 
 const Modal = ({ closeModal, buttonId }) => {
@@ -7,7 +9,7 @@ const Modal = ({ closeModal, buttonId }) => {
 
     switch (buttonId) {
         case "send":
-            modalContent = <Body />;
+            modalContent = <QuizList />;
             {
                 /* 통신해서 서로 받는 기능에 대한 컴포넌트 넣기*/
             }
