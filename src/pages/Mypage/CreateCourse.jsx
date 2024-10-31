@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import useAxios from "/src/hooks/api/useAxios";
 import { useNavigate } from "react-router-dom";
+import "../../styles/CoursePost.css"
 
 function CreateCourse() {
     const {data, fetchData } = useAxios();
@@ -48,8 +49,12 @@ function CreateCourse() {
 
     return (
         <div className="course-post-container">
-            <h2 className="title">코스 등록</h2>
+            <h2>
+                코스 등록
+            </h2>
+
             <form onSubmit={handleSubmit} className="course-post-form">
+                <div className="title-category-container">
                 <input
                     className="input-field"
                     type="text"
@@ -57,15 +62,6 @@ function CreateCourse() {
                     name="title"
                     placeholder="제목"
                     value={formData.title}
-                    onChange={handleChange}
-                    required
-                />
-                <textarea
-                    id="introduction"
-                    name="introduction"
-                    className="textarea-field"
-                    placeholder="소개"
-                    value={formData.introduction}
                     onChange={handleChange}
                     required
                 />
@@ -104,6 +100,16 @@ function CreateCourse() {
                     <option value="ENVIRONMENTAL_ENERGY_SAFETY">환경·에너지·안전</option>
                     <option value="AGRICULTURE_FORESTRY_FISHERIES">농림어업</option>
                 </select>
+                </div>
+                <textarea
+                    id="introduction"
+                    name="introduction"
+                    className="textarea-field"
+                    placeholder="소개"
+                    value={formData.introduction}
+                    onChange={handleChange}
+                    required
+                />
                 <label htmlFor="beginDate">시작 날짜: </label>
                 <input
                     type="date"
