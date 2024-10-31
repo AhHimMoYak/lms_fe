@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import useAxios from "../../hooks/api/useAxios.jsx";
 import "../../styles/Mypage/QnAEdit.css";
 import { decodeTokenTutor } from "../../authentication/decodeTokenTutor.jsx";
+import { decodeToken } from "../../authentication/decodeToken.jsx";
 
 function QnAEdit() {
     const { courseBoardId } = useParams();
@@ -20,13 +21,23 @@ function QnAEdit() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const requestDto = {
-            title: title,
-            content: content,
-        };
-        console.log(requestDto);
-
-        updateRetchData(`/course/${courseId}/board/${courseBoardId}`, "PATCH", requestDto);
+        if(decodeTokenTutor()){
+            const requestDto = {
+                comment: content
+            };
+            const commentId = data.comments[0].id;
+            updateRetchData(`/course/${courseId}/board/${courseBoardId}/comment/${commentId}`, "PATCH", requestDto);
+        }
+        else{
+            const requestDto = {
+                title: title,
+                content: content,
+            };
+            console.log(requestDto);
+    
+            updateRetchData(`/course/${courseId}/board/${courseBoardId}`, "PATCH", requestDto);
+        }
+       
     };
 
     const handleList = () => {
@@ -39,15 +50,28 @@ function QnAEdit() {
 
     useEffect(() => {
         if (data) {
-            setTitle(data.title);
-            setContent(data.content);
+            console.log(data);
+            if(decodeTokenTutor()){
+                setContent(data.comments[0].content);
+            }
+            else{
+                setTitle(data.title);
+                setContent(data.content);
+            }
+            
         }
     }, [data]);
 
     useEffect(() => {
         if (updateData) {
             alert(updateData);
-            navigate(`/mypage/course/${courseId}/qna`);
+            if(decodeTokenTutor()){
+                navigate(`/education/course/${courseId}/qna/${courseBoardId}`);
+            }
+            else{
+                navigate(`/mypage/course/${courseId}/qna/${courseBoardId}`);
+            }
+            
         }
     }, [updateData]);
 
@@ -57,13 +81,16 @@ function QnAEdit() {
 
     return (
         <div className="qna-container">
-            <h2>Q&A 게시물 수정</h2>
+            {decodeTokenTutor() ? (<h2>Q&A 답변 수정</h2>) : (<h2>Q&A 게시물 수정</h2>)}
             <form className="qna-form" onSubmit={handleSubmit}>
-                <div className="title-box">
+                {!decodeTokenTutor() && <div className="title-box">
                     <input type="text" defaultValue={data.title} onChange={(e) => setTitle(e.target.value)} required />
-                </div>
+                </div>}
+                
                 <div className="qna-content-container">
-                    <textarea className="content-box" defaultValue={data.content} onChange={(e) => setContent(e.target.value)} required />
+                    {decodeTokenTutor() ? 
+                        (<textarea className="content-box" defaultValue={data.comments[0].content} onChange={(e) => setContent(e.target.value)} required />) 
+                        : (<textarea className="content-box" defaultValue={data.content} onChange={(e) => setContent(e.target.value)} required />)} 
                 </div>
                 <button type="submit" className="qna-submit-button">
                     작성완료
