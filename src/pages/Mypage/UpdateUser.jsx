@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import '/src/styles/UpdateUser.css';
 import useAxios from "../../hooks/api/useAxios.jsx";
+import {useNavigate} from "react-router-dom";
 
 function UpdateUser() {
     const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ function UpdateUser() {
         birthday: ''
     });
 
+    const navigate = useNavigate();
     const [errors, setErrors] = useState({});
     const {data: userInfo, error, fetchData: fetchUserInfo} = useAxios();
     const {data: updateUser, fetchData: updateUserData} = useAxios();
@@ -51,6 +53,8 @@ function UpdateUser() {
 
         if (Object.keys(newErrors).length === 0) {
             updateUserData(`/user/update`,"POST",formData);
+            alert("회원정보수정이 완료되었습니다.")
+            navigate(`/mypage/dashboard`)
         } else {
             setErrors(newErrors);
         }
