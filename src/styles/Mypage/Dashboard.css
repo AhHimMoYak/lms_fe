@@ -1,6 +1,13 @@
 .dashboard-container {
-    padding: 0.5vw;
-    background-color: #ffffff;
+    justify-content: center;
+    min-height: 92vh;
+    background-color: #fff;
+    padding: 3vh;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    width: 75vw;
+    height: auto;
+    flex-direction: column;
 }
 
 .dashboard-header {
@@ -9,12 +16,25 @@
     align-items: center;
     margin-bottom: 1.5vh;
     padding: 0 7vw;
-    border-bottom: 0.1em solid #666666;
+    position: relative;
+}
+
+.dashboard-header::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 80%;
+    border-bottom: 2px solid #e2e8f0;
 }
 
 .dashboard-title {
     font-size: 1.3em;
     font-weight: bold;
+}
+
+.qna-list-container .dashboard-header {
+    margin-top: 8vh;
 }
 
 .more-button {
@@ -129,7 +149,7 @@
     text-align: left;
 }
 
-.que-idx{
+.que-idx {
     width: 1vw;
     padding: 0;
 }
