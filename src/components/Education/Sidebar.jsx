@@ -11,10 +11,7 @@ const Sidebar = () => {
     };
 
     const checkisDashboard = () => {
-        return (
-            location.pathname === "/education/dashboard" ||
-            location.pathname === "/education"
-        );
+        return location.pathname === "/education/dashboard" || location.pathname === "/education";
     };
 
     return (
@@ -26,48 +23,22 @@ const Sidebar = () => {
             <nav>
                 <ul>
                     <li>
-                        <NavLink
-                            to="/education/dashboard"
-                            className={() =>
-                                checkisDashboard() ? "sidebar_active" : ""
-                            }
-                        >
+                        <NavLink to="/education/dashboard" className={() => (checkisDashboard() ? "sidebar_active" : "")}>
                             대시보드
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink
-                            to="/education/course"
-                            className={() =>
-                                checkIsActive("/education/course")
-                                    ? "sidebar_active"
-                                    : ""
-                            }
-                        >
+                        <NavLink to="/education/courses" className={() => (checkIsActive("/education/courses") ? "sidebar_active" : "")}>
                             강좌 관리
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink
-                            to="/education/qna"
-                            className={() =>
-                                checkIsActive("/education/qna")
-                                    ? "sidebar_active"
-                                    : ""
-                            }
-                        >
+                        <NavLink to="/education/qna" className={() => (checkIsActive("/education/qna") ? "sidebar_active" : "")}>
                             QnA
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink
-                            to="/education/user/reconfirm"
-                            className={() =>
-                                checkIsActive("/education/user")
-                                    ? "sidebar_active"
-                                    : ""
-                            }
-                        >
+                        <NavLink to="/education/user/reconfirm" className={() => (checkIsActive("/education/user") ? "sidebar_active" : "")}>
                             회원정보
                         </NavLink>
                     </li>
