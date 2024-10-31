@@ -115,27 +115,33 @@ function ModifyCourse() {
                     <option value="ENVIRONMENTAL_ENERGY_SAFETY">환경·에너지·안전</option>
                     <option value="AGRICULTURE_FORESTRY_FISHERIES">농림어업</option>
                 </select>
-                <label htmlFor="beginDate">시작 날짜: </label>
-                <input
-                    type="date"
-                    id="beginDate"
-                    name="beginDate"
-                    className="input-date"
-                    value={formData.beginDate}
-                    onChange={handleChange}
-                    required
-                />
+                <div className="date-container">
+                    <div className="date-field">
+                        <label htmlFor="beginDate">시작 날짜:</label>
+                        <input
+                            type="date"
+                            id="beginDate"
+                            name="beginDate"
+                            className="input-date"
+                            value={formData.beginDate}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="date-field">
+                        <label htmlFor="endDate">종료 날짜:</label>
+                        <input
+                            type="date"
+                            id="endDate"
+                            name="endDate"
+                            className="input-date"
+                            value={formData.endDate}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                </div>
 
-                <label htmlFor="endDate">종료 날짜: </label>
-                <input
-                    type="date"
-                    id="endDate"
-                    name="endDate"
-                    className="input-date"
-                    value={formData.endDate}
-                    onChange={handleChange}
-                    required
-                />
                 <button type="submit" className="submit-total-button">
                     수정
                 </button>
