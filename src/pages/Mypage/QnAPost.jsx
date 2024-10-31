@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import useAxios from "../../hooks/api/useAxios.jsx";
-import "../../styles/Mypage/QnAContainer.css"
+import "../../styles/Mypage/QnAPost.css"
 
 function QnAPost() {
     const {courseId} = useParams();
@@ -28,10 +28,14 @@ function QnAPost() {
         }
     }, [data]);
 
+    const handleList = () => {
+        navigate(`/mypage/course/${courseId}/qna`);
+    }
+
 
     return (
         <div className="qna-container">
-            <h2>Q&A 게시물 작성</h2>
+            <div className='qna-post-title'>Q&A 게시물 작성</div>
             <form className="qna-form" onSubmit={handleSubmit}>
                 <div className="title-box">
                     <input
@@ -51,8 +55,11 @@ function QnAPost() {
                         required
                     />
                 </div>
-                <button type="submit" className="submit-button">
+                <button type="submit" className="qna-submit-button">
                     작성완료
+                </button>
+                <button className="qna-back-button" onClick={handleList}>
+                    목록
                 </button>
             </form>
         </div>

@@ -46,7 +46,7 @@ const LiveDetail = () => {
         <div className="live-detail-container">
             <div className="live-detail-content">
                 <section className="liveSection">
-                    <h2 className="sectionTitle">현재 라이브중인 강의</h2>
+                    <div className="sectionTitle">현재 라이브중인 강의</div>
                     <ul className="listContainer">
                         {liveCourses.on.map((course) => (
                             <li key={course.key} className="listItem" onClick={() => handleCourseClick(course.key)}>
@@ -60,7 +60,7 @@ const LiveDetail = () => {
                     </ul>
                 </section>
                 <section className="liveSection">
-                    <h2 className="sectionTitle">라이브 강의 예정</h2>
+                    <div className="sectionTitle">라이브 강의 예정</div>
                     <ul className="listContainer">
                         {liveCourses.canStart.map((course) => (
                             <li key={course.key} className="listItem">
@@ -72,7 +72,7 @@ const LiveDetail = () => {
                     </ul>
                 </section>
                 <section className="liveSection">
-                    <h2 className="sectionTitle">종료된 라이브</h2>
+                    <div className="sectionTitle">종료된 라이브</div>
                     <ul className="listContainer">
                         {liveCourses.end.map((course) => (
                             <li key={course.key} className="listItem">

@@ -1,6 +1,6 @@
 /* 전체 폼 컨테이너 */
 .qna-container {
-    background-color: white;
+    background-color: #f0f0f0;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -14,10 +14,10 @@
 }
 
 /* 제목 (h2) 스타일 */
-.qna-container h2 {
+.qna-post-title {
     font-size: 1.5em;
+    margin: 0.5em 0;
     font-weight: bold;
-    margin-bottom: 0.2em;
 }
 
 /* 폼 내부 구성 */
@@ -58,25 +58,31 @@
 }
 
 /* 제출 버튼 */
-.submit-button {
+.qna-submit-button{
     float: right;
     padding: 0.3em 1em;
-    margin-top: 0.005em;
-    margin-right: 1em;
+    margin-right: 2%;
     font-size: 0.8em;
-    background-color: #1976d2;
-    color: white;
-    border: none;
+
+    background-color: #fff;
+    border: 2px #002c75 solid;
+    color: #002c75;
     border-radius: 0.5em;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
 }
 
-.submit-button:hover {
-    background-color: #1565c0;
-    transform: scale(1.00);
-}
+.qna-back-button {
+    float: right;
+    padding: 0.25em 1em 0.2em 1em;
+    margin-top: 0.1em;
+    margin-right: 1%;
 
-.submit-button:active {
-    transform: scale(0.95);
+    width: 5vw;
+    font-size: 0.8em;
+    background-color: #fff;
+    border: 2px #002c75 solid;
+    color: #002c75;
+    border-radius: 0.5em;
+    cursor: pointer;
 }

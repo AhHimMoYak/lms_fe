@@ -25,7 +25,7 @@
     margin: 0 1vw;
 }
 
-button {
+.pagination-button {
     padding: 2vh 4vw;
     margin: 0 1vw;
     border: none;
@@ -34,11 +34,11 @@ button {
     transition: background-color 0.3s;
 }
 
-button:disabled {
+.pagination-button:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
 }
 
-button:hover:not(:disabled) {
+.pagination-button:hover:not(:disabled) {
     background-color: #e0e0e0;
 }

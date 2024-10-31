@@ -18,7 +18,7 @@ function Header() {
         LogOut();
     };
 
-    const isMypage = location.pathname.startsWith("/mypage");
+    const isMypage = location.pathname.startsWith("/mypage") || location.pathname.startsWith("/education");
 
     return (
         <header className={`header ${isMypage ? "header-mypage" : ""}`}>
