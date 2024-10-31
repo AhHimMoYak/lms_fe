@@ -1,33 +1,74 @@
 .CourseList {
-    padding: 30px;
-    max-width: 1300px;
+    padding: 2.5vh;
+    max-width: 80vw;
     margin: 0 auto;
 }
 
 .CourseCardContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2vw;
+}
+
+.CourseCard {
+    border-radius: 0.5vw;
+    overflow: hidden;
+    box-shadow: 0 0.5vh 0.75vh rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    min-width: 15vw;
+    min-height: 23vh;
+}
+
+.CourseCard:hover {
+    transform: translateY(-0.5vh);
+}
+
+.CourseCardHeader {
+    flex-grow: 1;
+    background-color: inherit;
+}
+
+.CourseCardContent {
+    padding: 1vh;
+    background-color: white;
+    height: 25%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.CourseCardTitle {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 0.5vh;
+}
+
+.CourseCardTutor {
+    font-size: 0.9em;
+    color: #555;
 }
 
 .LoadingContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 400px;
-    font-size: 1.5rem;
+    height: 60vh;
+    font-size: 1.5em;
     color: #666;
 }
 
 .NoCoursesText {
     text-align: center;
-    margin-top: 40px;
-    font-size: 1.2rem;
+    margin-top: 6vh;
+    font-size: 1.2em;
     color: #888;
 }
 
 .PaginationContainer {
     display: flex;
     justify-content: center;
-    margin-top: 40px;
+    margin-top: 6vh;
 }
