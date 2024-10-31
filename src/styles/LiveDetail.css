@@ -1,90 +1,90 @@
-body {
-  background-color: #f9fafb; /* 부드러운 배경색으로 변경 */
-  font-family: 'Arial, sans-serif';
-  color: #333; /* 텍스트 색상 통일 */
+.live-detail-container {
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 95%;
+    margin: 5vh auto;
+    gap: 1em;
 }
 
-.container {
-  display: flex;
-  height: 100vh; /* 화면 전체 높이 */
-}
-
-.content {
-  flex: 1;
-  padding: 4vh 5vw; /* 위아래 4vh, 좌우 5vw 패딩으로 조금 더 넉넉하게 */
-  margin-left: 5%;
-  margin-right: 5%;
-  box-sizing: border-box;
-  overflow-y: auto;
-  background-color: #ffffff;
-  border-radius: 1vw;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 컨텐츠 박스에 그림자 추가 */
+.live-detail-content {
+    flex: 1;
+    padding: 4vh 5vw; /* 위아래 4vh, 좌우 5vw 패딩으로 조금 더 넉넉하게 */
+    margin-left: 5%;
+    margin-right: 5%;
+    box-sizing: border-box;
+    overflow-y: auto;
+    background-color: #ffffff;
+    border-radius: 1vw;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 컨텐츠 박스에 그림자 추가 */
 }
 
 .liveSection {
-  margin-bottom: 6vh; /* 섹션 사이 여백을 화면 높이에 따라 */
-  min-height: 20vh; /* 각 섹션 최소 높이 */
+    margin-bottom: 10vh; /* 섹션 사이 여백을 화면 높이에 따라 */
+    min-height: 20vh; /* 각 섹션 최소 높이 */
 }
 
 .sectionTitle {
-  font-size: 1.8em; /* 폰트 크기 증가 */
-  color: #1a202c; /* 더 어두운 색상으로 가독성 증가 */
-  margin-bottom: 3vh;
-  border-bottom: 2px solid #e2e8f0; /* 더 두꺼운 경계선으로 명확하게 */
-  padding-bottom: 1vh;
-  text-align: left;
+    font-size: 1.2em;
+    color: #1a202c;
+    margin-bottom: 3vh;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 1vh;
+    text-align: left;
 }
 
 .listContainer {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 .listItem {
-  background-color: #ffffff;
-  padding: 2.5vh 3vw; /* 더 넉넉한 패딩 */
-  border: 1px solid #e2e8f0; /* 부드러운 경계선 색상 */
-  border-radius: 1vw; /* 둥근 모서리 */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* 부드러운 그림자 */
-  margin-bottom: 3vh;
-  cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-  text-align: left;
+    background-color: #ffffff;
+    padding: 2.5vh 3vw; /* 더 넉넉한 패딩 */
+    border: 1px solid #e2e8f0; /* 부드러운 경계선 색상 */
+    border-radius: 1vw; /* 둥근 모서리 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* 부드러운 그림자 */
+    margin-bottom: 3vh;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    text-align: left;
 }
 
 .listItem:hover {
-  background-color: #edf2f7; /* 호버 시 배경색 변경 */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* 호버 시 그림자 크기 증가 */
-  transform: translateY(-5px); /* 살짝 위로 올리는 효과 */
+    background-color: #edf2f7; /* 호버 시 배경색 변경 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* 호버 시 그림자 크기 증가 */
+    transform: translateY(-5px); /* 살짝 위로 올리는 효과 */
 }
 
 .listItemTitle {
-  margin: 0 0 1.5vh;
-  font-size: 1.4em; /* 폰트 크기 증가 */
-  color: #2d3748; /* 더 깊은 색상으로 가독성 증가 */
-  font-weight: bold;
+    margin: 0 0 1.5vh;
+    font-size: 1em; /* 폰트 크기 증가 */
+    color: #002c75; /* 더 깊은 색상으로 가독성 증가 */
+    font-weight: bold;
 }
 
 .listItemDetail {
-  margin: 1vh 0;
-  color: #4a5568; /* 부드러운 텍스트 색상 */
-  font-size: 1em; /* 폰트 크기 조정 */
+    margin: 1vh 0;
+    color: #4a5568; /* 부드러운 텍스트 색상 */
+    font-size: 1em; /* 폰트 크기 조정 */
 }
 
 /* 추가적인 스타일로 버튼 형태의 스타일 추가 */
 .actionButton {
-  display: inline-block;
-  background-color: #3182ce;
-  color: #ffffff;
-  padding: 1vh 2vw;
-  text-align: center;
-  border-radius: 5px;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-  margin-top: 2vh;
+    display: inline-block;
+    background-color: #3182ce;
+    color: #ffffff;
+    padding: 1vh 2vw;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-top: 2vh;
 }
 
 .actionButton:hover {
-  background-color: #2b6cb0; /* 버튼 호버 시 더 어두운 색상 */
+    background-color: #2b6cb0; /* 버튼 호버 시 더 어두운 색상 */
 }

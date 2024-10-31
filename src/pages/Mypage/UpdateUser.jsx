@@ -1,33 +1,60 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import '/src/styles/UpdateUser.css';
+import useAxios from "../../hooks/api/useAxios.jsx";
+import {useNavigate} from "react-router-dom";
 
 function UpdateUser() {
-    const [userInfo, setUserInfo] = useState({
-        id: 'user123',
+    const [formData, setFormData] = useState({
+        id: '',
         password: '',
-        email: 'user@example.com',
-        phone: '010-1234-5678',
-        gender: '남',
-        birthDate: '1990-01-01',
+        email: '',
+        phone: '',
+        gender: '',
+        birthday: ''
     });
 
+    const navigate = useNavigate();
     const [errors, setErrors] = useState({});
+    const {data: userInfo, error, fetchData: fetchUserInfo} = useAxios();
+    const {data: updateUser, fetchData: updateUserData} = useAxios();
+
+
+    useEffect(() => {
+        fetchUserInfo(`/user/detail`, "GET");
+    }, []);
+
+    useEffect(()=>{
+        if (userInfo) {
+            setFormData({
+                id: userInfo.username || '',
+                password: '',
+                email: userInfo.email || '',
+                phone: userInfo.phone || '',
+                gender: userInfo.gender || '',
+                birthday: userInfo.birthday || ''
+            })
+        }
+    },[userInfo])
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setUserInfo((prev) => ({ ...prev, [name]: value }));
+        setFormData((prev) => ({ ...prev, [name]: value }));
         setErrors((prevErrors) => ({ ...prevErrors, [name]: '' })); // 입력 시 에러 초기화
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async(e) => {
+        e.preventDefault();
         const newErrors = {};
 
-        if (!userInfo.password) newErrors.password = '비밀번호를 입력해 주세요';
-        if (!userInfo.email) newErrors.email = '이메일을 입력해 주세요';
-        if (!userInfo.phone) newErrors.phone = '전화번호를 입력해 주세요';
+        if (!formData.password) newErrors.password = '비밀번호를 입력해 주세요';
+        if (!formData.email) newErrors.email = '이메일을 입력해 주세요';
+        if (!formData.phone) newErrors.phone = '전화번호를 입력해 주세요';
 
         if (Object.keys(newErrors).length === 0) {
-            alert('회원정보가 수정되었습니다.');
+            updateUserData(`/user/update`,"POST",formData);
+            alert("회원정보수정이 완료되었습니다.")
+            navigate(`/mypage/dashboard`)
         } else {
             setErrors(newErrors);
         }
@@ -43,7 +70,7 @@ function UpdateUser() {
                         <label>아이디:</label>
                         <input
                             type="text"
-                            value={userInfo.id}
+                            value={formData.id}
                             disabled
                             className="update-input disabled"
                         />
@@ -55,7 +82,7 @@ function UpdateUser() {
                             type="password"
                             name="password"
                             placeholder="비밀번호를 입력해 주세요"
-                            value={userInfo.password}
+                            value={formData.password}
                             onChange={handleChange}
                             className={`update-input ${errors.password ? 'error' : ''}`}
                         />
@@ -72,7 +99,7 @@ function UpdateUser() {
                             type="email"
                             name="email"
                             placeholder="example@domain.com"
-                            value={userInfo.email}
+                            value={formData.email}
                             onChange={handleChange}
                             className={`update-input ${errors.email ? 'error' : ''}`}
                         />
@@ -89,7 +116,7 @@ function UpdateUser() {
                             type="tel"
                             name="phone"
                             placeholder="010-1234-5678"
-                            value={userInfo.phone}
+                            value={formData.phone}
                             onChange={handleChange}
                             className={`update-input ${errors.phone ? 'error' : ''}`}
                         />
@@ -104,7 +131,7 @@ function UpdateUser() {
                         <label>성별:</label>
                         <input
                             type="text"
-                            value={userInfo.gender}
+                            value={formData.gender}
                             disabled
                             className="update-input disabled"
                         />
@@ -114,7 +141,7 @@ function UpdateUser() {
                         <label>생년월일:</label>
                         <input
                             type="text"
-                            value={userInfo.birthDate}
+                            value={formData.birthday}
                             disabled
                             className="update-input disabled"
                         />

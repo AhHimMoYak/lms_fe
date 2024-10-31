@@ -10,7 +10,7 @@ function NoneUserMenu() {
 
     return (
         <div className="header-buttons">
-            <button onClick={handleCoursesClick}>강의</button>
+            <button className="go-course" onClick={handleCoursesClick}>강의</button>
             <div className="auth-buttons">
                 <button onClick={handleSignInClick}>Sign In</button>
                 <button onClick={handleSignUpClick}>Sign Up</button>

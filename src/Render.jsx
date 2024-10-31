@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { AuthChecker } from "./authentication/AuthChecker";
+import { UserChecker } from "./authentication/UserChecker.jsx";
 import BasicFrame from "./components/BasicFrame.jsx";
 
 import CourseFrame from "./components/Mypage/CourseFrame.jsx";
@@ -26,13 +27,17 @@ import QnADetailed from "./pages/Mypage/QnADetailed.jsx";
 import QnAEdit from "./pages/Mypage/QnAEdit.jsx";
 import QnAPost from "./pages/Mypage/QnAPost.jsx";
 import VideoPlayer from "./pages/Mypage/VideoPlayer.jsx";
+import CreateLive from "./pages/Mypage/CreateLive.jsx";
+import ModifyCourse from "./pages/Mypage/ModifyCourse.jsx";
+import ModifyCurriculum from "./pages/Mypage/ModifyCurriculum.jsx";
+import EducationFrame from "./components/Education/EducationFrame.jsx";
 
 function Render() {
     return (
         <Routes>
             <Route path="/signin" element={<Login />} />
             <Route path="/signup" element={<Register />} />
-            <Route path="/testVideo" element={<VideoPlayer />} />
+            <Route path="/stream/video" element={<VideoPlayer />} />
 
             <Route element={<BasicFrame />}>
                 <Route path="/" element={<Main />} />
@@ -40,46 +45,58 @@ function Render() {
                 <Route path="/course/:courseId" element={<VideoExplain />} />
                 <Route path="/live/:streamKey" element={<LiveStream />} />
 
-                {/* <Route element={<AuthChecker />}> */}
-                <Route path="mypage/*" element={<MypageFrame />}>
-                    <Route path="" element={<Dashboard />} />
-                    <Route path="dashboard" element={<Dashboard />} />
-                    <Route path="course" element={<CourseList />} />
-                    <Route path="course/:courseId" element={<CourseFrame />}>
-                        <Route path="" element={<CourseDetailed />} />
-                        <Route path="contents" element={<CourseDetailed />} />
-                        <Route path="live" element={<LiveDetail />} />
-                        <Route path="qna" element={<QnAList />} />
-                        <Route path="qna/post" element={<QnAPost />} />
-                        <Route
-                            path="qna/:courseBoardId"
-                            element={<QnADetailed />}
-                        />
-                        <Route
-                            path="qna/edit/:courseBoardId"
-                            element={<QnAEdit />}
-                        />
+                <Route element={<AuthChecker />}>
+                    <Route path="mypage/*" element={<MypageFrame />}>
+                        <Route path="" element={<Dashboard />} />
+                        <Route path="dashboard" element={<Dashboard />} />
+                        <Route path="course" element={<CourseList />} />
+                        <Route path="course/:courseId" element={<CourseFrame />}>
+                            <Route path="" element={<CourseDetailed />} />
+                            <Route path="contents" element={<CourseDetailed />} />
+                            <Route path="live" element={<LiveDetail />} />
+                            <Route path="create" element={<CreateLive />} />
+                            <Route path="qna" element={<QnAList />} />
+                            <Route path="qna/post" element={<QnAPost />} />
+                            <Route path="qna/:courseBoardId" element={<QnADetailed />} />
+                            <Route path="qna/:courseBoardId/edit" element={<QnAEdit />} />
+                        </Route>
+                        <Route path="qna" element={<QnATotalList />} />
+
+                        <Route path="user/*" element={<UserInformFrame />}>
+                            <Route path="" element={<PasswordPrompt />} />
+                            <Route path="reconfirm" element={<PasswordPrompt />} />
+                            <Route path="update" element={<UpdateUser />} />
+                        </Route>
                     </Route>
 
-                    <Route path="qna" element={<QnATotalList />} />
-                    <Route
-                        path=":courseId/uploadMedia/:curriculumId"
-                        element={<MediaUpload />}
-                    />
-                    <Route path="createCourse" element={<CreateCourse />} />
-                    <Route
-                        path=":courseId/createCurriculum"
-                        element={<CreateCurriculum />}
-                    />
-                    <Route path="qna" element={<QnATotalList />} />
-
-                    <Route path="user/*" element={<UserInformFrame />}>
-                        <Route path="" element={<PasswordPrompt />} />
-                        <Route path="reconfirm" element={<PasswordPrompt />} />
-                        <Route path="update" element={<UpdateUser />} />
+                    {/* -----------------------------------------강사 페이지 라우팅 ------------------------------------- */}
+                    <Route element={<UserChecker />}>
+                        <Route path="education/*" element={<EducationFrame />}>
+                            <Route path="" element={<Dashboard />} />
+                            <Route path="dashboard" element={<Dashboard />} />
+                            <Route path="course" element={<CourseList />} />
+                            <Route path="course/:courseId" element={<CourseFrame />}>
+                                <Route path="" element={<CourseDetailed />} />
+                                <Route path="contents" element={<CourseDetailed />} />
+                                <Route path="live" element={<LiveDetail />} />
+                                <Route path="live/create" element={<CreateLive />} />
+                                <Route path="qna" element={<QnAList />} />
+                                <Route path="qna/:courseBoardId" element={<QnADetailed />} />
+                            </Route>
+                            <Route path="qna" element={<QnATotalList />} />
+                            <Route path=":courseId/uploadMedia/:curriculumId" element={<MediaUpload />} /> # 컨텐츠 업로드
+                            <Route path="createCourse" element={<CreateCourse />} /> # 코스 생성
+                            <Route path=":courseId/createCurriculum" element={<CreateCurriculum />} /> # 커리큘럼
+                            <Route path="course/:courseId/modify" element={<ModifyCourse />} /> # 코스 수정
+                            <Route path="course/:courseId/:curriculumId/modify" element={<ModifyCurriculum />} /># 커리큘럼 수정
+                            <Route path="user/*" element={<UserInformFrame />}>
+                                <Route path="" element={<PasswordPrompt />} />
+                                <Route path="reconfirm" element={<PasswordPrompt />} />
+                                <Route path="update" element={<UpdateUser />} />
+                            </Route>
+                        </Route>
                     </Route>
                 </Route>
-                {/* </Route> */}
             </Route>
         </Routes>
     );
