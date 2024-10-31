@@ -1,6 +1,13 @@
 .dashboard-container {
-    padding: 0.5vw;
-    background-color: #ffffff;
+    justify-content: center;
+    min-height: 92vh;
+    background-color: #fff;
+    padding: 3vh;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    width: 75vw;
+    height: auto;
+    flex-direction: column;
 }
 
 .dashboard-header {
@@ -9,7 +16,16 @@
     align-items: center;
     margin-bottom: 1.5vh;
     padding: 0 7vw;
-    border-bottom: 0.1em solid #666666;
+    position: relative;
+}
+
+.dashboard-header::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 80%;
+    border-bottom: 2px solid #e2e8f0;
 }
 
 .dashboard-title {
@@ -17,19 +33,22 @@
     font-weight: bold;
 }
 
-.more-button {
-    margin-top: 1vh;
-    background-color: lightgrey;
-    border: none;
-    font-size: 0.3em;
-    padding: 0.3vw 0.6vw;
-    border-radius: 0.5em;
-    cursor: pointer;
-    transition: background-color 0.3s;
+.qna-list-container .dashboard-header {
+    margin-top: 8vh;
 }
 
-.more-button:hover {
-    background-color: #0056b3;
+.more-button {
+    padding: 0.25em 1em 0.2em 1em;
+    margin-top: 0.1em;
+    margin-right: 1%;
+
+    width: 5vw;
+    font-size: 0.8em;
+    background-color: #fff;
+    border: 2px #002c75 solid;
+    color: #002c75;
+    border-radius: 0.5em;
+    cursor: pointer;
 }
 
 .course-cards-container {
@@ -129,7 +148,7 @@
     text-align: left;
 }
 
-.que-idx{
+.que-idx {
     width: 1vw;
     padding: 0;
 }

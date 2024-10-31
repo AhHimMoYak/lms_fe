@@ -3,36 +3,36 @@ import "../../styles/Main/CourseSidebar.css";
 
 const CourseSidebar = memo(({ onCategorySelect }) => {
     const [categories] = useState([
-        { id: 1, title: "전체" },
-        { id: 2, title: "사업관리" },
-        { id: 3, title: "경영·회계·사무" },
-        { id: 4, title: "금융·보험" },
-        { id: 5, title: "교육·자연·사회과학" },
-        { id: 6, title: "법률·경찰·소방·교도·국방" },
-        { id: 7, title: "보건·의료" },
-        { id: 8, title: "사회복지·종교" },
-        { id: 9, title: "문화·예술·디자인·방송" },
-        { id: 10, title: "운전·운송" },
-        { id: 11, title: "영업판매" },
-        { id: 12, title: "경비·청소" },
-        { id: 13, title: "이용·숙박·여행·오락·스포츠" },
-        { id: 14, title: "음식서비스" },
-        { id: 15, title: "건설" },
-        { id: 16, title: "기계" },
-        { id: 17, title: "재료" },
-        { id: 18, title: "화학·바이오" },
-        { id: 19, title: "섬유·의복" },
-        { id: 20, title: "전기·전자" },
-        { id: 21, title: "정보통신" },
-        { id: 22, title: "식품가공" },
-        { id: 23, title: "인쇄·목재·가구·공예" },
-        { id: 24, title: "환경·에너지·안전" },
-        { id: 25, title: "농림어업" },
+        { id: 1, title: "전체", value: "ALL" },
+        { id: 2, title: "사업관리", value: "BUSINESS_MANAGEMENT" },
+        { id: 3, title: "경영·회계·사무", value: "MANAGEMENT_ACCOUNTING_ADMINISTRATIVE_AFFAIRS" },
+        { id: 4, title: "금융·보험", value: "FINANCE_INSURANCE" },
+        { id: 5, title: "교육·자연·사회과학", value: "EDUCATION_NATURE_EDUCATION_NATURE_SOCIAL_SCIENCE" },
+        { id: 6, title: "법률·경찰·소방·교도·국방", value: "LAW_POLICE_FIRE_RELIGION_DEFENSE" },
+        { id: 7, title: "보건·의료", value: "HEALTH_MEDICAL_CARE" },
+        { id: 8, title: "사회복지·종교", value: "SOCIAL_WELFARE_RELIGION" },
+        { id: 9, title: "문화·예술·디자인·방송", value: "CULTURE_ART_DESIGN_BROADCASTING" },
+        { id: 10, title: "운전·운송", value: "DRIVING_TRANSPORTATION" },
+        { id: 11, title: "영업판매", value: "BUSINESS_SALES" },
+        { id: 12, title: "경비·청소", value: "SECURITY_CLEANING" },
+        { id: 13, title: "이용·숙박·여행·오락·스포츠", value: "UTILIZING_ACCOMMODATION_TRAVEL_ENTERTAINMENT_SPORTS" },
+        { id: 14, title: "음식서비스", value: "FOOD_SERVICE" },
+        { id: 15, title: "건설", value: "CONSTRUCTION" },
+        { id: 16, title: "기계", value: "MACHINERY" },
+        { id: 17, title: "재료", value: "MATERIALS" },
+        { id: 18, title: "화학·바이오", value: "CHEMICAL_BIO" },
+        { id: 19, title: "섬유·의복", value: "TEXTILE_CLOTHING" },
+        { id: 20, title: "전기·전자", value: "ELECTRICAL_ELECTRONIC" },
+        { id: 21, title: "정보통신", value: "INFORMATION_COMMUNICATION" },
+        { id: 22, title: "식품가공", value: "FOOD_PROCESSING" },
+        { id: 23, title: "인쇄·목재·가구·공예", value: "PRINTING_WOOD_FURNITURE_CRAFTS" },
+        { id: 24, title: "환경·에너지·안전", value: "ENVIRONMENT_ENERGY_SAFETY" },
+        { id: 25, title: "농림어업", value: "AGRICULTURE_FORESTRY_FISHERY" },
     ]);
 
     const handleCategoryClick = useCallback(
-        (id, title) => {
-            onCategorySelect(id, title); // 카테고리 선택 이벤트 호출 (제목도 함께 전달)
+        (value, title) => {
+            onCategorySelect(value, title); // 카테고리 value와 title 전달
             window.scrollTo({ top: 0, behavior: "smooth" }); // 화면을 맨 위로 스크롤
         },
         [onCategorySelect]
@@ -44,9 +44,7 @@ const CourseSidebar = memo(({ onCategorySelect }) => {
             {categories.map((category) => (
                 <button
                     key={category.id}
-                    onClick={() =>
-                        handleCategoryClick(category.id, category.title)
-                    } // 카테고리 클릭 이벤트
+                    onClick={() => handleCategoryClick(category.value, category.title)} // value 전달
                     className="category-button"
                 >
                     {category.title}

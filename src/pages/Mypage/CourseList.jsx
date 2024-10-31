@@ -22,7 +22,11 @@ function CourseList() {
     }, [courseData]);
 
     const handleRowClick = (courseid) => {
-        navigate(`/mypage/course/${courseid}`);
+        if (decodeTokenTutor()) {
+            navigate(`/education/course/${courseid}`);
+        } else {
+            navigate(`/mypage/course/${courseid}`);
+        }
     };
 
     const course = courseData ?? [];

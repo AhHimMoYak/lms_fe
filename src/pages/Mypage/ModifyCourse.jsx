@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import useAxios from "/src/hooks/api/useAxios";
-import { useNavigate, useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import "/src/styles/ModifyCourse.css";
 
 function ModifyCourse() {
-    const { data, fetchData } = useAxios();
+    const {data, fetchData} = useAxios();
     const navigate = useNavigate();
-    const { courseId } = useParams();
+    const {courseId} = useParams();
     const [formData, setFormData] = useState({
         title: "",
         category: "",
@@ -44,12 +45,12 @@ function ModifyCourse() {
             endDate: new Date(formData.endDate),
         }).then(() => {
             alert("코스가 성공적으로 수정되었습니다.");
-            navigate(`/mypage/courses`);
+            navigate(`/mypage/course`);
         });
     };
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setFormData((prevState) => ({
             ...prevState,
             [name]: value,
@@ -114,27 +115,33 @@ function ModifyCourse() {
                     <option value="ENVIRONMENTAL_ENERGY_SAFETY">환경·에너지·안전</option>
                     <option value="AGRICULTURE_FORESTRY_FISHERIES">농림어업</option>
                 </select>
-                <label htmlFor="beginDate">시작 날짜: </label>
-                <input
-                    type="date"
-                    id="beginDate"
-                    name="beginDate"
-                    className="input-date"
-                    value={formData.beginDate}
-                    onChange={handleChange}
-                    required
-                />
+                <div className="date-container">
+                    <div className="date-field">
+                        <label htmlFor="beginDate">시작 날짜:</label>
+                        <input
+                            type="date"
+                            id="beginDate"
+                            name="beginDate"
+                            className="input-date"
+                            value={formData.beginDate}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="date-field">
+                        <label htmlFor="endDate">종료 날짜:</label>
+                        <input
+                            type="date"
+                            id="endDate"
+                            name="endDate"
+                            className="input-date"
+                            value={formData.endDate}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                </div>
 
-                <label htmlFor="endDate">종료 날짜: </label>
-                <input
-                    type="date"
-                    id="endDate"
-                    name="endDate"
-                    className="input-date"
-                    value={formData.endDate}
-                    onChange={handleChange}
-                    required
-                />
                 <button type="submit" className="submit-total-button">
                     수정
                 </button>
