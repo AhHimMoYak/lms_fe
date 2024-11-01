@@ -53,10 +53,10 @@ function QnATotalList() {
                     <tbody>
                         {currentPageData.map((board, index) => (
                             <tr key={board.boardId} onClick={() => handleRowClick(board.courseId, board.boardId)} className="myQna-clickable-row">
-                                <td>{(page - 1) * 10 + index + 1}</td>
+                                <td>{(page - 1) * 10 + index + 1} </td>
                                 <td>{board.courseTitle}</td>
                                 <td>{board.title}</td>
-                                <td className={board.commitCount > 0 ? "answered" : "not-answered"}>{board.commitCount > 0 ? "완료" : "미완료"}</td>
+                                <td className={board.comment > 0 ? "answered" : "not-answered"}>{board.comment > 0 ? "완료" : "미완료"}</td>
                             </tr>
                         ))}
                     </tbody>
