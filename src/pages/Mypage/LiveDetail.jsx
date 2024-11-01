@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useAxios from "../../hooks/api/useAxios.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import "../../styles/LiveDetail.css";
+import {decodeTokenTutor} from "../../authentication/decodeTokenTutor.jsx";
 
 const LiveDetail = () => {
     const [liveCourses, setLiveCourses] = useState({ on: [], canStart: [], end: [] });
@@ -20,7 +21,9 @@ const LiveDetail = () => {
     };
 
     useEffect(() => {
-        fetchData(`/live?courseProvideId=${courseId}`, "GET");
+        decodeTokenTutor()
+            ? fetchData(`/live/instructor`, "GET")
+            : fetchData(`/live?courseProvideId=${courseId}`, "GET");
     }, []);
 
     useEffect(() => {
@@ -40,6 +43,15 @@ const LiveDetail = () => {
 
     const handleCourseClick = (key) => {
         navigate(`/live/${key}`);
+    };
+
+    const handleStartClick = (streamKey) => {
+        try {
+            navigator.clipboard.writeText(streamKey);
+            alert("스트림키가 클립보드에 복사되었습니다.\nOBS Studio 와 같은 방송프로그램에 붙여넣어 시작해주세요.");
+        } catch (error){
+            alert("스트림키 복사 실패")
+        }
     };
 
     return (
@@ -67,6 +79,7 @@ const LiveDetail = () => {
                                 <h3 className="listItemTitle">{course.title}</h3>
                                 <p className="listItemDetail">강사: {course.instructor}</p>
                                 <p className="listItemDetail">예정된 날짜: {formatDateTime(course.startTime)}</p>
+                                {decodeTokenTutor() && <button onClick={() => handleStartClick(course.streamKey)}>시작하기</button>}
                             </li>
                         ))}
                     </ul>

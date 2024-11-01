@@ -24,7 +24,7 @@ function Chatting({liveId, stompClient}) {
 
         if (stompClient && stompClient.connected) {
             stompClient.publish({
-                destination: `/pub/join`,
+                destination: `/pub/join/${liveId}`,
                 body: JSON.stringify({
                     username: decodeToken(),
                 }),

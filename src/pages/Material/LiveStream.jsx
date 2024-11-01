@@ -10,10 +10,13 @@ import "../../styles/Material/LiveStream.css";
 import {decodeToken} from "../../authentication/decodeToken.jsx";
 import Modal from "../../components/Modal.jsx";
 import { decodeTokenTutor } from "../../authentication/decodeTokenTutor.jsx";
+import ModalContainer from "../../components/ModalContainer.jsx";
+import Quiz from "../../components/Main/Quiz.jsx";
+import UserModalContainer from "../../components/UserModalContainer.jsx";
 
 function LiveStream() {
     const liveUrl = "http://172.16.10.251:8085/hls/";
-    const websocketUrl = 'ws://172.16.11.71:8080/ws';
+    const websocketUrl = 'ws://localhost:8080/ws';
 
     const { fetchData: fetchLiveInfo, data: liveInfo } = useAxios();
 
@@ -53,6 +56,10 @@ function LiveStream() {
         setIsModalOpen(true);
     };
 
+    const openUserModal = () => {
+        setIsModalOpen(true)
+    }
+
     const closeModal = () => {
         setIsModalOpen(false);
     };
@@ -79,16 +86,24 @@ function LiveStream() {
                             {decodeTokenTutor() ? (
                                 <div>
                                     <button className="open-modal-button" id="send" onClick={openModal}>
-                                        퀴즈 목록 및 전송 모달
+                                        퀴즈 조회 및 전송
                                     </button>
                                     {/* {isModalOpen && <Modal closeModal={closeModal} buttonId={modalId} />} */}
                                     <button className="open-modal-button" id="participation" onClick={openModal}>
-                                        정답률 보는 모달
+                                        학생들 정답현황 조회
                                     </button>
-                                    {isModalOpen && <Modal closeModal={closeModal} buttonId={modalId} />}
+                                    <ModalContainer isModalOpen={isModalOpen} closeModal={closeModal} buttonId={modalId} liveId={streamKey} stompClient={stompRef.current}/>
+                                    {/*{isModalOpen && <Modal closeModal={closeModal} buttonId={modalId} liveId={streamKey} stompClient={stompRef.current}/>}*/}
                                 </div>
                             ) : (
-                                <></>
+                              <div>
+                                  <button className="open-modal-button" id="history" onClick={openModal}>
+                                      퀴즈 응답 기록
+                                  </button>
+                                  <UserModalContainer isModalOpen={isModalOpen} openModal={openUserModal} buttonId={modalId}
+                                                      closeModal={closeModal} liveId={streamKey} setModalId={setModalId}
+                                                      stompClient={stompRef.current}/>
+                              </div>
                             )}
                         </div>
                     ) : (
