@@ -18,7 +18,26 @@
 .course-details p {
     font-size: 0.9em;
     margin-left: 1em;
+    margin-right: 1em;
     margin-bottom: 1vh;
+}
+
+.edit-icon {
+    cursor: pointer;
+}
+
+.create-curriculum-button {
+    padding: 0.25em 1em 0.2em 1em;
+    margin-top: 0.1em;
+    margin-right: 1%;
+
+    width: auto;
+    font-size: 0.8em;
+    background-color: #fff;
+    border: 2px #002c75 solid;
+    color: #002c75;
+    border-radius: 0.5em;
+    cursor: pointer;
 }
 
 /* 커리큘럼 표 스타일 */

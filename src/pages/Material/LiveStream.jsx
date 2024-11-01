@@ -21,12 +21,12 @@ function LiveStream() {
     const { fetchData: fetchLiveInfo, data: liveInfo } = useAxios();
 
     useEffect(() => {
-        fetchLiveInfo(`/live/${streamKey}`, "get");
+        fetchLiveInfo(`/live/${streamkey}`, "get");
     }, []);
 
     // const query = new URLSearchParams(useLocation().search);
     // const content = query.get(content);
-    const { streamKey } = useParams();
+    const { streamkey } = useParams();
 
     const navigate = useNavigate();
     const handleNavigateToCourse = () => navigate(`/mypage/course/${liveInfo.courseId}`);
@@ -69,7 +69,7 @@ function LiveStream() {
             <div className="stream-container">
                 <div className="video-container">
                     {/*<VideoPlayer url={liveUrl} streamKey={streamKey} type="m3u8" />*/}
-                    <HLSPlayer src={`${liveUrl}${streamKey}.m3u8`} />
+                    <HLSPlayer src={`${liveUrl}${streamkey}.m3u8`} />
                 </div>
                 <div className="info-container">
                     {liveInfo ? (

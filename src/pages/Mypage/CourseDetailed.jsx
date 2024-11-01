@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import useAxios from "../../hooks/api/useAxios.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import "../../styles/Mypage/CourseDetailed.css";
-import { Download, Play } from "react-feather";
+import { Download, Play, Edit, Edit2 } from "react-feather";
+import { decodeTokenTutor } from "../../authentication/decodeTokenTutor.jsx";
+import Modal from "../../components/Modal.jsx";
+import ModalCurriculum from "../../components/ModalCurriculum.jsx";
 
 function CourseDetailed() {
     const { data, fetchData } = useAxios();
@@ -12,7 +15,11 @@ function CourseDetailed() {
     const [contentId, setContentId] = useState(null);
     const [contentType, setcontentType] = useState(null);
     const [activeCurriculum, setActiveCurriculum] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [buttonId, setButtonId] = useState();
+  
     const navigate = useNavigate();
+
     useEffect(() => {
         fetchData(`/course/${courseId}`, "get");
     }, [courseId]);
@@ -28,6 +35,25 @@ function CourseDetailed() {
         setContentId(contentId);
         setcontentType(contentType);
     };
+
+    const handletoMoveModify = () => {
+        navigate(`/education/course/${courseId}/modify`);
+    }
+
+    const clickToMoveCreateCurriculum = () => {
+        navigate(`/education/manage/${courseId}/curriculum/create`);
+    }
+
+    const openModal = (evnet, curriculumId) => {
+        setButtonId(event.target.id);
+        setCurriculumId(curriculumId);
+        setIsModalOpen(true);
+    }
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    }
+
 
     useEffect(() => {
         console.log(curriculumId);
@@ -69,6 +95,7 @@ function CourseDetailed() {
             <div className="course-details">
                 <div className="course-detail-title">{data.title}</div>
                 <p>{data.tutor} 강사</p>
+                {decodeTokenTutor() && <Edit className="edit-icon" onClick={handletoMoveModify}/>}   
             </div>
             <div id="chapter-infomation" className="chapter-infomation">
                 {data.curriculumList && data.curriculumList.length > 0 ? (
@@ -84,6 +111,8 @@ function CourseDetailed() {
                                     <tr key={curriculum.id} onClick={() => toggleCurriculum(index)} className="curriculum-title">
                                         <td>
                                             <div className="curriculum-title-wrapper">
+                                                {decodeTokenTutor() && <Edit2 size={18} onClick={(event) => openModal(event, curriculum.id)} id="modifyCurriculum"/>}
+                                                {isModalOpen && <ModalCurriculum closeModal={closeModal} buttonId={buttonId} curriculumId={curriculumId} />}
                                                 <span>{curriculum.title}</span>
                                                 <span className="curriculum-show">{activeCurriculum.includes(index) ? " ▼" : " ▶"}</span>
                                             </div>
@@ -132,6 +161,7 @@ function CourseDetailed() {
                 ) : (
                     <p>커리큘럼 정보가 없습니다.</p>
                 )}
+                {decodeTokenTutor() && <button className="create-curriculum-button" onClick={clickToMoveCreateCurriculum}>커리큘럼 및 컨텐츠 생성</button>}
             </div>
         </div>
     );

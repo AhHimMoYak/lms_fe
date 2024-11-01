@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import '/src/styles/UpdateUser.css';
 import useAxios from "../../hooks/api/useAxios.jsx";
 import {useNavigate} from "react-router-dom";
+import { decodeTokenTutor } from '../../authentication/decodeTokenTutor.jsx';
 
 function UpdateUser() {
     const [formData, setFormData] = useState({
@@ -54,7 +55,13 @@ function UpdateUser() {
         if (Object.keys(newErrors).length === 0) {
             updateUserData(`/user/update`,"POST",formData);
             alert("회원정보수정이 완료되었습니다.")
-            navigate(`/mypage/dashboard`)
+            if(decodeTokenTutor()){
+                navigate(`/education/dashboard`);
+            }
+            else{
+                navigate(`/mypage/dashboard`);    
+            }
+            
         } else {
             setErrors(newErrors);
             alert("필수정보를 입력해주세요.")

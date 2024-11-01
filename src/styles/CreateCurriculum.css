@@ -99,3 +99,18 @@
 .input-container .add-button {
     margin-left: 1vw;
 }
+
+.exit-create-course {
+    float: right;
+    padding: 0.25em 1em 0.2em 1em;
+    margin-top: 0.1em;
+    margin-right: 1%;
+
+    width: 5vw;
+    font-size: 0.8em;
+    background-color: #fff;
+    border: 2px #002c75 solid;
+    color: #002c75;
+    border-radius: 0.5em;
+    cursor: pointer;
+}

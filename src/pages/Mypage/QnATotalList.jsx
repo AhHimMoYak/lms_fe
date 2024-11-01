@@ -3,6 +3,7 @@ import useAxios from "../../hooks/api/useAxios.jsx";
 import { useEffect } from "react";
 
 import "../../styles/Mypage/QnATotalList.css";
+import { decodeTokenTutor } from "../../authentication/decodeTokenTutor.jsx";
 
 function QnATotalList() {
     const query = new URLSearchParams(useLocation().search);
@@ -21,7 +22,12 @@ function QnATotalList() {
     }
 
     const handleRowClick = (courseId, courseBoardId) => {
-        navigate(`/mypage/course/${courseId}/qna/${courseBoardId}`);
+        if(decodeTokenTutor()){
+            navigate(`/education/course/${courseId}/qna/${courseBoardId}`);
+        }
+        else{
+            navigate(`/mypage/course/${courseId}/qna/${courseBoardId}`);       
+        }
     };
 
     const handlePageChange = (newPage) => {

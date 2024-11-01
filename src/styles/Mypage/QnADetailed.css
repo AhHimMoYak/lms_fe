@@ -91,3 +91,24 @@
 .qna-board-container .qna-back-button {
     margin-top: 2vh;
 }
+
+.qna-board-comment-input{
+    padding: 1em;
+    background-color: #d3d3d3;
+    border-radius: 0.5em;
+    margin-top: 0.1em;
+    width: 95%;
+    text-align: left;
+    font-size: 0.9em;
+}
+.qna-board-comment {
+    display: flex;
+    flex-direction: column;
+}
+
+.qna-board-comment-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.8vh;
+}
+

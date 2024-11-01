@@ -41,9 +41,17 @@ const LiveDetail = () => {
         console.error("Error fetching live courses:", error);
     }
 
+    const handleCreateLiveClick = () => {
+        navigate(`/education/course/${courseId}/live/create`);
+    }
+
     const handleCourseClick = (key) => {
         navigate(`/live/${key}`);
     };
+
+    const handleCreateClick = (key) => {
+        navigate(`/education/course/${courseId}/live/${key}/quiz`);
+    }
 
     const handleStartClick = (streamKey) => {
         try {
@@ -56,17 +64,24 @@ const LiveDetail = () => {
 
     return (
         <div className="live-detail-container">
+            {decodeTokenTutor() && <button className="go-create-live" onClick={handleCreateLiveClick}>라이브 생성</button>}
             <div className="live-detail-content">
                 <section className="liveSection">
                     <div className="sectionTitle">현재 라이브중인 강의</div>
                     <ul className="listContainer">
-                        {liveCourses.on.map((course) => (
+                        {liveCourses.canStart.map((course) => (
                             <li key={course.key} className="listItem" onClick={() => handleCourseClick(course.key)}>
-                                <h3 className="listItemTitle">{course.title}</h3>
+                                <div className="listItemHeader">
+                                    <h3 className="listItemTitle">{course.title}</h3>
+                                    {decodeTokenTutor() && <button className="navigateButton" onClick={(event) => {
+                                                event.stopPropagation(); // 이벤트 버블링 방지
+                                                handleCreateClick(course.key);
+                                            }}>
+                                        라이브 퀴즈 생성
+                                    </button>}
+                                </div>
                                 <p className="listItemDetail">강사: {course.instructor}</p>
-                                <p className="listItemDetail">
-                                    강의 시간: {formatDateTime(course.startTime)} - {formatDateTime(course.endTime)}
-                                </p>
+                                <p className="listItemDetail">예정된 날짜: {formatDateTime(course.startTime)}</p>
                             </li>
                         ))}
                     </ul>
@@ -75,14 +90,23 @@ const LiveDetail = () => {
                     <div className="sectionTitle">라이브 강의 예정</div>
                     <ul className="listContainer">
                         {liveCourses.canStart.map((course) => (
-                            <li key={course.key} className="listItem">
-                                <h3 className="listItemTitle">{course.title}</h3>
+                            <li key={course.key} className="listItem" onClick={() => handleCourseClick(course.key)}>
+                                <div className="listItemHeader">
+                                    <h3 className="listItemTitle">{course.title}</h3>
+                                    {decodeTokenTutor() && <button className="navigateButton" onClick={(event) => {
+                                                event.stopPropagation(); // 이벤트 버블링 방지
+                                                handleCreateClick(course.key);
+                                            }}>
+                                        라이브 퀴즈 생성
+                                    </button>}
+                                </div>
                                 <p className="listItemDetail">강사: {course.instructor}</p>
                                 <p className="listItemDetail">예정된 날짜: {formatDateTime(course.startTime)}</p>
                                 {decodeTokenTutor() && <button onClick={() => handleStartClick(course.streamKey)}>시작하기</button>}
                             </li>
                         ))}
                     </ul>
+
                 </section>
                 <section className="liveSection">
                     <div className="sectionTitle">종료된 라이브</div>

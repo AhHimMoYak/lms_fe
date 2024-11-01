@@ -3,17 +3,13 @@ import useAxios from "/src/hooks/api/useAxios";
 import {useNavigate, useParams} from "react-router-dom";
 import "/src/styles/ModifyCurriculum.css";
 
-function ModifyCurriculum() {
+function ModifyCurriculum({curriculumId}) {
     const {data, fetchData} = useAxios();
     const navigate = useNavigate();
-    const {courseId, curriculumId} = useParams();
+    const {courseId} = useParams();
     const [formData, setFormData] = useState({
         title: "",
     });
-
-    useEffect(() => {
-        fetchData(`/course/${courseId}/curriculum/${curriculumId}`, "GET");
-    }, [courseId, curriculumId]);
 
     useEffect(() => {
         if (data && data.title) {
@@ -31,7 +27,8 @@ function ModifyCurriculum() {
             title: formData.title,
         }).then(() => {
             alert("커리큘럼이 성공적으로 수정되었습니다.");
-            navigate(`/mypage/course/${courseId}`);
+            window.location.href = `/education/course/${courseId}`;
+            
         });
     };
 
