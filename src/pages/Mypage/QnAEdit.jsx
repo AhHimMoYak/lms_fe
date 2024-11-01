@@ -25,7 +25,7 @@ function QnAEdit() {
             const requestDto = {
                 comment: content
             };
-            const commentId = data.comments[0].id;
+            const commentId = data.comments[0].commentId;
             updateRetchData(`/course/${courseId}/board/${courseBoardId}/comment/${commentId}`, "PATCH", requestDto);
         }
         else{

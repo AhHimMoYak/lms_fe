@@ -25,7 +25,7 @@ function CreateCurriculum() {
     }
 
     const clickToMove = () => {
-        navigate("/education/course");
+        navigate(`/education/course/${courseId}`);
     }
 
     useEffect(() => {
