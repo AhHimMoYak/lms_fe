@@ -68,7 +68,7 @@ function LiveStream() {
         <div className="stream-page">
             <div className="stream-container">
                 <div className="video-container">
-                    {/*<VideoPlayer url={liveUrl} streamKey={streamKey} type="m3u8" />*/}
+                    {/*<VideoPlayer url={liveUrl} streamkey={streamkey} type="m3u8" />*/}
                     <HLSPlayer src={`${liveUrl}${streamkey}.m3u8`} />
                 </div>
                 <div className="info-container">
@@ -92,8 +92,8 @@ function LiveStream() {
                                     <button className="open-modal-button" id="participation" onClick={openModal}>
                                         학생들 정답현황 조회
                                     </button>
-                                    <ModalContainer isModalOpen={isModalOpen} closeModal={closeModal} buttonId={modalId} liveId={streamKey} stompClient={stompRef.current}/>
-                                    {/*{isModalOpen && <Modal closeModal={closeModal} buttonId={modalId} liveId={streamKey} stompClient={stompRef.current}/>}*/}
+                                    <ModalContainer isModalOpen={isModalOpen} closeModal={closeModal} buttonId={modalId} liveId={streamkey} stompClient={stompRef.current}/>
+                                    {/*{isModalOpen && <Modal closeModal={closeModal} buttonId={modalId} liveId={streamkey} stompClient={stompRef.current}/>}*/}
                                 </div>
                             ) : (
                               <div>
@@ -101,7 +101,7 @@ function LiveStream() {
                                       퀴즈 응답 기록
                                   </button>
                                   <UserModalContainer isModalOpen={isModalOpen} openModal={openUserModal} buttonId={modalId}
-                                                      closeModal={closeModal} liveId={streamKey} setModalId={setModalId}
+                                                      closeModal={closeModal} liveId={streamkey} setModalId={setModalId}
                                                       stompClient={stompRef.current}/>
                               </div>
                             )}
@@ -114,7 +114,7 @@ function LiveStream() {
                     )}
                 </div>
             </div>
-            <Chatting setViewer={setViewer} liveId={streamKey} stompClient={stompRef.current}/>
+            <Chatting setViewer={setViewer} liveId={streamkey} stompClient={stompRef.current}/>
         </div>
     );
 }
