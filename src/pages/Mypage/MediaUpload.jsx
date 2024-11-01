@@ -3,12 +3,13 @@ import { Axios } from "/src/authentication/axios/Axios";
 import "../../styles/MediaUpload.css";
 
 function MediaUpload({ courseId, curriculumId }) {
+    const [idx, setIdx] = useState(0);
     const axiosInstance = Axios();
     const [formData, setFormData] = useState({
-        contents: [{ idx: 1, title: '', type: '', file: null }],
+        contents: [],
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e, contentIndex) => {
         e.preventDefault();
         if (!curriculumId) {
             console.log(curriculumId);
@@ -16,9 +17,8 @@ function MediaUpload({ courseId, curriculumId }) {
             return;
         }
 
+        const content = formData.contents[contentIndex];
         const multipartData = new FormData();
-        const content = formData.contents[0]; // 예시로 첫 번째 콘텐츠를 전송합니다.
-
         if (content.file) {
             multipartData.append("file", content.file);
         }
@@ -30,7 +30,7 @@ function MediaUpload({ courseId, curriculumId }) {
             : `/course/${courseId}/curriculum/${curriculumId}/contents/quiz`;
 
         try {
-            axiosInstance.post(endpoint, multipartData, {
+            await axiosInstance.post(endpoint, multipartData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
@@ -84,9 +84,10 @@ function MediaUpload({ courseId, curriculumId }) {
             ...prevState,
             contents: [
                 ...prevState.contents,
-                { idx: prevState.contents.length + 1, title: '', type: '', file: null },
+                { idx: idx, title: '', type: '', file: null },
             ],
         }));
+        setIdx(prevIdx => prevIdx + 1); // Increment idx for unique values
     };
 
     return (
@@ -97,7 +98,7 @@ function MediaUpload({ courseId, curriculumId }) {
                     <form
                         name="contents"
                         encType="multipart/form-data"
-                        onSubmit={handleSubmit}
+                        onSubmit={(e) => handleSubmit(e, contentIndex)}
                         className="content-form"
                     >
                         <label htmlFor={`type-${contentIndex}`}>콘텐츠 유형 선택: </label>
