@@ -39,7 +39,7 @@ function QuizResult({liveId, quizData, quizState}) {
                             onClick={() => toggleQuiz(quiz.id)}
                         >
                             <span className="quiz-question">{quiz.question}</span>
-                            <span className="quiz-answer-rate"><strong>정답률:</strong> </span>
+                            {/*<span className="quiz-answer-rate"><strong>정답률:</strong> </span>*/}
                         </div>
                         {openQuizId === quiz.id && ( // Show content if this quiz is open
                             <div className="quiz-options">
