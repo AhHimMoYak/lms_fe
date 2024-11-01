@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useAxios from "../../hooks/api/useAxios.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import "../../styles/LiveDetail.css";
-import { decodeTokenTutor } from "../../authentication/decodeTokenTutor.jsx";
+import {decodeTokenTutor} from "../../authentication/decodeTokenTutor.jsx";
 
 const LiveDetail = () => {
     const [liveCourses, setLiveCourses] = useState({ on: [], canStart: [], end: [] });
@@ -21,7 +21,9 @@ const LiveDetail = () => {
     };
 
     useEffect(() => {
-        fetchData(`/live?courseProvideId=${courseId}`, "GET");
+        decodeTokenTutor()
+            ? fetchData(`/live/instructor`, "GET")
+            : fetchData(`/live?courseProvideId=${courseId}`, "GET");
     }, []);
 
     useEffect(() => {
@@ -51,9 +53,18 @@ const LiveDetail = () => {
         navigate(`/education/course/${courseId}/live/${key}/quiz`);
     }
 
+    const handleStartClick = (streamKey) => {
+        try {
+            navigator.clipboard.writeText(streamKey);
+            alert("스트림키가 클립보드에 복사되었습니다.\nOBS Studio 와 같은 방송프로그램에 붙여넣어 시작해주세요.");
+        } catch (error){
+            alert("스트림키 복사 실패")
+        }
+    };
+
     return (
         <div className="live-detail-container">
-            {decodeTokenTutor() && <button className="go-create-live" onClick={handleCreateLiveClick}>라이브 생성</button>} 
+            {decodeTokenTutor() && <button className="go-create-live" onClick={handleCreateLiveClick}>라이브 생성</button>}
             <div className="live-detail-content">
                 <section className="liveSection">
                     <div className="sectionTitle">현재 라이브중인 강의</div>
@@ -91,6 +102,7 @@ const LiveDetail = () => {
                                 </div>
                                 <p className="listItemDetail">강사: {course.instructor}</p>
                                 <p className="listItemDetail">예정된 날짜: {formatDateTime(course.startTime)}</p>
+                                {decodeTokenTutor() && <button onClick={() => handleStartClick(course.streamKey)}>시작하기</button>}
                             </li>
                         ))}
                     </ul>

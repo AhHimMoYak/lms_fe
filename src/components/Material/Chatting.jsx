@@ -5,82 +5,57 @@ import "../../styles/Material/Chatting.css";
 
 import { Client } from "@stomp/stompjs";
 import { Button, Divider, Grid, Stack, TextField } from "@mui/material";
+import {decodeToken} from "../../authentication/decodeToken.jsx";
 
-function Chatting() {
-    const {
-        fetchData: fetchChatData,
-        data: chatData,
-        error: chatError,
-    } = useAxios();
-    const { Register } = AuthManger();
+function Chatting({liveId, stompClient}) {
+
+    const {fetchData: fetchChatData, data: chatData, error: chatError,} = useAxios();
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
     const messagesEndRef = useRef(null);
-    const stompClientRef = useRef(null);
 
     useEffect(() => {
-        fetchChatData("/chat/room/1111/chats", "get");
+        fetchChatData(`/live/${liveId}/chat`, "get");
     }, []);
 
     useEffect(() => {
-        console.log("실행됨" + chatData);
-        if (!chatData) return;
-        console.log("실행후" + chatData);
-        setMessages([...messages, ...chatData]);
+        //console.log("실행됨" + chatData);
+        if (chatData) setMessages([...messages, ...chatData]);
 
-        // STOMP 클라이언트 설정
-        const client = new Client({
-            brokerURL: "ws://localhost:8080/ws", // STOMP 서버의 WebSocket URL로 변경
-            // brokerURL: 'ws://192.168.50.8:8080/ws', // STOMP 서버의 WebSocket URL로 변경
-            onConnect: () => {
-                console.log("Connected");
-                client.subscribe("/sub/chat/room/1111", (message) => {
-                    const receivedMessage = JSON.parse(message.body);
-                    setMessages((prevMessages) => [
-                        ...prevMessages,
-                        receivedMessage,
-                    ]);
-                });
-            },
-            onStompError: (frame) => {
-                console.error(
-                    "Broker reported error: " + frame.headers["message"]
-                );
-                console.error("Additional details: " + frame.body);
-            },
-            connectHeaders: {
-                Authorization: localStorage.getItem("access"),
-            },
-        });
+        if (stompClient && stompClient.connected) {
+            stompClient.publish({
+                destination: `/pub/join/${liveId}`,
+                body: JSON.stringify({
+                    username: decodeToken(),
+                }),
+            });
+            const subscribe = stompClient.subscribe(`/sub/chat/${liveId}`, (message) => {
+                const receivedMessage = JSON.parse(message.body);
+                setMessages((prevMessages) => [...prevMessages, receivedMessage]);
+            });
+            return () => subscribe.unsubscribe();
+        }
 
-        // 클라이언트 활성화
-        client.activate();
-        stompClientRef.current = client;
-
-        return () => {
-            if (client) client.deactivate();
-        };
     }, [chatData]);
 
+
     const handleSend = () => {
-        if (input.trim() && stompClientRef.current) {
+        if (input.trim() && stompClient) {
             const message = {
+                username:decodeToken(),
                 message: input,
-                sender: "1",
-                roomId: 1111,
-                type: "TALK",
             };
-            stompClientRef.current.publish({
-                destination: "/pub/chat/send", // 서버에서 구독하는 경로로 변경
+            stompClient.publish({
+                destination: `/pub/chat/${liveId}`, // 서버에서 구독하는 경로로 변경
                 body: JSON.stringify(message),
             });
-            //setMessages([...messages, message]);
             setInput("");
         }
     };
 
     useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "instant" });
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+        //messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
     }, [messages]);
 
     return (
@@ -91,9 +66,9 @@ function Chatting() {
                     {messages.map((message, index) => (
                         <div
                             key={index}
-                            className={`chat-message ${message.sender}`}
+                            className={`chat-message ${message.username}`}
                         >
-                            <span>{message.sender} </span>
+                            <span>{message.username} </span>
                             <span>{message.message}</span>
                         </div>
                     ))}

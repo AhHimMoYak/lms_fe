@@ -1,16 +1,22 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import Chatting from "../../components/Material/Chatting";
 import VideoPlayer from "../../components/Material/VideoPlayer";
 import HLSPlayer from "../../components/Material/HLSPlayer";
 import useAxios from "../../hooks/api/useAxios.jsx";
+import { Client } from "@stomp/stompjs";
 
 import "../../styles/Material/LiveStream.css";
+import {decodeToken} from "../../authentication/decodeToken.jsx";
 import Modal from "../../components/Modal.jsx";
 import { decodeTokenTutor } from "../../authentication/decodeTokenTutor.jsx";
+import ModalContainer from "../../components/ModalContainer.jsx";
+import Quiz from "../../components/Main/Quiz.jsx";
+import UserModalContainer from "../../components/UserModalContainer.jsx";
 
 function LiveStream() {
     const liveUrl = "http://172.16.10.251:8085/hls/";
+    const websocketUrl = 'ws://localhost:8080/ws';
 
     const { fetchData: fetchLiveInfo, data: liveInfo } = useAxios();
 
@@ -28,7 +34,19 @@ function LiveStream() {
     const [chatOpen, setChatOpen] = useState(true);
     const [viewer, setViewer] = useState(0);
 
-    if (liveInfo) console.log(liveInfo);
+    const stompRef = useRef(null);
+    useEffect(() => {
+        stompRef.current = new Client({
+            brokerURL: websocketUrl,
+            onConnect: () => {console.log("websocket 연결됨")},
+            onStompError: (frame) => {console.error("websocket 연결실패" + frame)},
+            connectHeaders: {Authorization: localStorage.getItem("access")}
+        });
+        stompRef.current.activate();
+        return () => {
+            if (stompRef.current) stompRef.current.deactivate();
+        }
+    }, []);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalId, setModalId] = useState(null);
@@ -38,6 +56,10 @@ function LiveStream() {
         setIsModalOpen(true);
     };
 
+    const openUserModal = () => {
+        setIsModalOpen(true)
+    }
+
     const closeModal = () => {
         setIsModalOpen(false);
     };
@@ -46,7 +68,7 @@ function LiveStream() {
         <div className="stream-page">
             <div className="stream-container">
                 <div className="video-container">
-                    {/*<VideoPlayer url={liveUrl} streamKey={streamKey} type="m3u8" />*/}
+                    {/*<VideoPlayer url={liveUrl} streamkey={streamkey} type="m3u8" />*/}
                     <HLSPlayer src={`${liveUrl}${streamkey}.m3u8`} />
                 </div>
                 <div className="info-container">
@@ -64,28 +86,35 @@ function LiveStream() {
                             {decodeTokenTutor() ? (
                                 <div>
                                     <button className="open-modal-button" id="send" onClick={openModal}>
-                                        퀴즈 목록 및 전송 모달
+                                        퀴즈 조회 및 전송
                                     </button>
                                     {/* {isModalOpen && <Modal closeModal={closeModal} buttonId={modalId} />} */}
                                     <button className="open-modal-button" id="participation" onClick={openModal}>
-                                        정답률 보는 모달
+                                        학생들 정답현황 조회
                                     </button>
-                                    {isModalOpen && <Modal closeModal={closeModal} buttonId={modalId} />}
+                                    <ModalContainer isModalOpen={isModalOpen} closeModal={closeModal} buttonId={modalId} liveId={streamkey} stompClient={stompRef.current}/>
+                                    {/*{isModalOpen && <Modal closeModal={closeModal} buttonId={modalId} liveId={streamkey} stompClient={stompRef.current}/>}*/}
                                 </div>
                             ) : (
-                                <></>
+                              <div>
+                                  <button className="open-modal-button" id="history" onClick={openModal}>
+                                      퀴즈 응답 기록
+                                  </button>
+                                  <UserModalContainer isModalOpen={isModalOpen} openModal={openUserModal} buttonId={modalId}
+                                                      closeModal={closeModal} liveId={streamkey} setModalId={setModalId}
+                                                      stompClient={stompRef.current}/>
+                              </div>
                             )}
                         </div>
                     ) : (
-                        <div className="stream-info">
-                            <h2>페이지 로딩중...</h2>
-                            <p>Viewers: 123</p>
-                        </div>
+                      <div className="stream-info">
+                          <h2>페이지 로딩중...</h2>
+                          <p>Viewers: 123</p>
+                      </div>
                     )}
                 </div>
             </div>
-
-            <Chatting setViewer={setViewer} />
+            <Chatting setViewer={setViewer} liveId={streamkey} stompClient={stompRef.current}/>
         </div>
     );
 }
