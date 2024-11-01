@@ -40,7 +40,7 @@ function Register() {
 
         try {
             await Register(username, password, name, gender, birth, email);
-            navigate("/RegistrationCompletion");
+            navigate("/signin");
         } catch (error) {
             console.log("Caught error:", error);
             setErrors(error);
