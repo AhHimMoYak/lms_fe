@@ -10,7 +10,7 @@
 
 /* 회원가입 컨테이너 설정 */
 .register-container {
-    height: 65vh;
+    height: 65%;
     background-color: #ffffff;
     padding: 2rem;
     border-radius: 1rem;
