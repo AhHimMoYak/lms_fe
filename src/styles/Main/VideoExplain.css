@@ -1,0 +1,274 @@
+:root {
+    --primary-color: #4a90e2;
+    --primary-color-hover: #3a78c3;
+    --bg-color: #f9fafc;
+    --white-color: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --border-color: #e6e9ef;
+    --header-bg-color: #f0f4f8;
+    --text-color: #34495e;
+    --highlight-color: #f39c12;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 80%;
+    margin: 5vh auto;
+    gap: 2em;
+}
+
+.lecture-info {
+    flex: 0 1 25%;
+    background-color: var(--white-color);
+    padding: 1.5em;
+    border-radius: 1em;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    position: sticky;
+    z-index: 10;
+    top: 5vh;
+}
+
+.course-provide-button {
+    margin-bottom: 4vh;
+    font-size: 1em;
+    padding: 0.8em;
+    background-color: var(--highlight-color);
+    color: var(--white-color);
+    border-radius: 0.5em;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.course-provide-button:hover {
+    background-color: #e68a00;
+    transform: translateY(-2px);
+}
+
+.course-provide-button-disabled {
+    font-size: 1em;
+    margin-bottom: 4vh;
+    font-weight: bold;
+    color: #c0392b;
+}
+
+.lecture-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.lecture-details {
+    margin: 1.5em 0;
+}
+
+.lecture-details h2 {
+    font-size: 1.8em;
+    margin-bottom: 0.5vh;
+    color: var(--primary-color);
+}
+
+.lecture-details p {
+    font-size: 1.1em;
+    color: var(--text-color);
+}
+
+.lecture-details-section {
+    flex: 1 1 70%;
+    background-color: var(--white-color);
+    padding: 2em;
+    border-radius: 1em;
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.section-header h2 {
+    font-size: 1.6em;
+    margin-bottom: 0.5em;
+    color: var(--primary-color);
+}
+
+.video-course-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1em;
+}
+
+.course-tabs button {
+    margin-right: 0.5em;
+    padding: 0.7em 1.2em;
+    font-size: 0.9em;
+    border: none;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    cursor: pointer;
+    border-radius: 0.5em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.course-tabs button:hover {
+    background-color: var(--primary-color-hover);
+    transform: translateY(-2px);
+}
+
+.learning-goal,
+.chapter-info,
+.instructor-intro,
+.completion-criteria {
+    margin: 1.5em 0;
+    text-align: left;
+}
+
+.learning-goal h3,
+.completion-criteria h3 {
+    font-size: 1.3em;
+    color: var(--primary-color);
+}
+
+.curriculum-detail-toggle {
+    font-size: 1em;
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin: 0.5vh 1vw;
+    transition: color 0.3s ease;
+    color: var(--primary-color);
+}
+
+.chapter-info h3 {
+    margin-bottom: 1em;
+    font-size: 1.3em;
+    color: var(--primary-color);
+}
+
+.curriculum-section {
+    padding: 0.5em;
+    margin-bottom: 0.8em;
+    background-color: var(--header-bg-color);
+    border-radius: 0.5em;
+}
+
+.curriculum-section .section-header {
+    padding: 0.7em;
+    background-color: var(--header-bg-color);
+    border-radius: 0.5em;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.curriculum-section .section-header:hover {
+    background-color: var(--primary-color-hover);
+    color: var(--white-color);
+}
+
+.curriculum-section .section-header h4 {
+    margin-left: 0.3vw;
+    font-size: 1.1em;
+}
+
+.section-content {
+    padding: 1em;
+    font-size: 1em;
+    background-color: var(--white-color);
+    border-radius: 0.5em;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    margin-top: 0.5em;
+}
+
+.section-content div {
+    padding: 0.4em;
+    font-size: 1em;
+}
+
+.instructor-intro h3 {
+    margin-bottom: 1.5vh;
+    font-size: 1.3em;
+    color: var(--primary-color);
+}
+
+.info-table {
+    font-size: 0.95em;
+    margin-top: 1.5vh;
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px var(--shadow-color);
+    border-radius: 0.5em;
+    overflow: hidden;
+}
+
+.instructor-table {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5vh;
+    text-align: left;
+    font-family: "Roboto", sans-serif;
+    font-size: 0.95em;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: var(--white-color);
+    border-radius: 0.5em;
+    overflow: hidden;
+}
+
+table th,
+table td {
+    padding: 0.8em;
+    border-bottom: 0.1em solid #e0e0e0;
+}
+
+th {
+    background-color: #f7f9fc;
+    font-weight: bold;
+    color: var(--text-color);
+    text-align: left;
+}
+
+td {
+    color: #34495e;
+}
+
+tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+tr:hover {
+    background-color: #f1f5f9;
+}
+
+.curriculum-section.open .section-content {
+    display: block;
+}
+
+/* General button styles */
+button {
+    font-family: "Roboto", sans-serif;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}

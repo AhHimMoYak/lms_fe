@@ -1,0 +1,108 @@
+.course-video-page-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 120vh;
+    box-sizing: border-box;
+}
+
+.course-list-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 2vh 2vw;
+    box-sizing: border-box;
+    margin-top: 2vh; /* 사이드바와의 간격 확보 */
+    min-height: 0.25vh;
+    max-height: 0.25vh;
+}
+
+.course-card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* 작은 화면에서도 카드를 조정 */
+    gap: 2vw;
+}
+
+.course-CourseCard {
+    border-radius: 0.5vw;
+    overflow: hidden;
+    box-shadow: 0 0.5vh 0.75vh rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    min-height: 23vh;
+    background-color: #fff;
+}
+
+.course-CourseCard:hover {
+    transform: translateY(-0.5vh);
+}
+
+.course-CourseCardHeader {
+    flex-grow: 1;
+    background-color: inherit;
+}
+
+.course-CourseCardContent {
+    padding: 1vh;
+    background-color: white;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.course-CourseCardTitle {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 0.5vh;
+}
+
+.course-CourseCardTutor {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.course-LoadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    font-size: 1.5em;
+    color: #666;
+}
+
+.course-NoCoursesText {
+    text-align: center;
+    margin-top: 6vh;
+    font-size: 1.2em;
+    color: #888;
+}
+
+.course-pagination-button {
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    position: sticky;  /* 위치를 고정 */
+    bottom: 0;
+}
+
+
+.course-pagination-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.course-pagination-button:hover:not(:disabled) {
+    background-color: #e0e0e0;
+
+    transform: scale(1.05);
+}
+.course-pagination-button:focus {
+    outline: none; /* 기본 outline 제거 */
+    box-shadow: none; /* 포커스 시 생기는 그림자 제거 */
+}
+
+.course-pagination-info {
+    margin: 0 1vw;
+    font-size: 1em; /* 폰트 크기 추가 */
+}
+

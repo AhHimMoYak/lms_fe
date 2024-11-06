@@ -1,0 +1,131 @@
+.live-detail-container {
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 95%;
+    margin: 1vh auto;
+    gap: 1em;
+
+
+    flex-direction: column; 
+}
+
+.go-create-live {
+    display: flex;
+    padding: 0.25em 1em 0.2em 1em;
+    margin-left: 5%;
+    width: 10%;
+    font-size: 0.8em;
+    background-color: #fff;
+    border: none; /* 다른 경계선 제거 */
+    border-bottom: 2px solid #002c75; /* 바닥에만 밑줄 */
+    color: #002c75;
+    cursor: pointer;
+}
+
+
+.live-detail-content {
+    flex: 1;
+    padding: 4vh 5vw; /* 위아래 4vh, 좌우 5vw 패딩으로 조금 더 넉넉하게 */
+    margin-left: 5%;
+    margin-right: 5%;
+    box-sizing: border-box;
+    overflow-y: auto;
+    background-color: #ffffff;
+    border-radius: 1vw;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 컨텐츠 박스에 그림자 추가 */
+
+    width: 85%;;
+}
+
+.liveSection {
+    margin-bottom: 10vh; /* 섹션 사이 여백을 화면 높이에 따라 */
+    min-height: 20vh; /* 각 섹션 최소 높이 */
+}
+
+.sectionTitle {
+    font-size: 1.2em;
+    color: #1a202c;
+    margin-bottom: 3vh;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 1vh;
+    text-align: left;
+}
+
+.listContainer {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.listItem {
+    background-color: #ffffff;
+    padding: 2.5vh 3vw;
+    border: 1px solid #e2e8f0;
+    border-radius: 1vw;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 3vh;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    text-align: left;
+}
+
+.listItem:hover {
+    background-color: #edf2f7;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+.listItemHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5vh;
+}
+
+.listItemTitle {
+    font-size: 1em;
+    color: #002c75;
+    font-weight: bold;
+    margin: 0;
+}
+
+.listItemDetail {
+    margin: 1vh 0;
+    color: #4a5568;
+    font-size: 1em;
+}
+
+.navigateButton {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 0.7vh 1.5vw;
+    cursor: pointer;
+    border-radius: 0.5em;
+    transition: background-color 0.3s ease;
+}
+
+.navigateButton:hover {
+    background-color: #218838;
+}
+
+
+/* 추가적인 스타일로 버튼 형태의 스타일 추가 */
+.actionButton {
+    display: inline-block;
+    background-color: #3182ce;
+    color: #ffffff;
+    padding: 1vh 2vw;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-top: 2vh;
+}
+
+.actionButton:hover {
+    background-color: #2b6cb0; /* 버튼 호버 시 더 어두운 색상 */
+}

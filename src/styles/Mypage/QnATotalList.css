@@ -1,0 +1,90 @@
+/* QnA 리스트 컨테이너 */
+.myQna-list-container {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    align-items: center;
+    min-height: 92vh;
+    background-color: #fff;
+    padding: 3vh;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    width: 75vw;
+    height: auto;
+}
+
+.myQna-list-header {
+    width: 95%;
+    margin-top: 3%;
+    margin-left: 2%;
+}
+
+/* 헤더 제목 */
+.myQna-list-title {
+    text-align: left;
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 5vh;
+    color: #333;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+/* QnA 테이블 스타일 */
+.myQna-list-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.myQna-list-table th,
+.myQna-list-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.myQna-clickable-row {
+    cursor: pointer;
+}
+
+.myQna-list-table th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+}
+
+/* 답변 상태 스타일링 */
+.answered {
+    color: green;
+    font-weight: bold;
+}
+
+.not-answered {
+    color: red;
+    font-weight: bold;
+}
+
+/* 페이지네이션 스타일 */
+.myQna-list-pagination {
+    display: flex;
+    justify-content: center;
+    margin: 1em 0;
+    gap: 0.5em;
+}
+
+.myQna-list-pagination-button {
+    padding: 0.2em 0.4em;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    font-size: 0.5em;
+    border-radius: 0.5em;
+    transition: background-color 0.3s;
+}
+
+.myQna-list-pagination-button.active {
+    background-color: transparent;
+    color: #f4f4f4;
+}
+
+.myQna-list-pagination-button:disabled {
+    background-color: lightgray;
+    cursor: not-allowed;
+}
