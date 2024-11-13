@@ -1,6 +1,6 @@
 import "../styles/Modal.css";
 
-import ModifyCurriculum from "../pages/Mypage/ModifyCurriculum.jsx"
+import ModifyCurriculum from "./Mypage/ModifyCurriculum.jsx"
 
 const ModalCurriculum = ({ closeModal, buttonId, curriculumId }) => {
     let modalContent;
