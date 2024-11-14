@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import "../../styles/Mypage/QnAList.css";
 import useAxios from "../../hooks/api/useAxios.jsx";
+import {useNavigate} from "react-router-dom";
 
-function QnAList() {
+function BoardList() {
     const [boards, setBoards] = useState([]); // 전체 게시글 리스트
     const [lastEvaluatedKeys, setLastEvaluatedKeys] = useState([]); // 각 페이지의 키들을 저장
     const [loading, setLoading] = useState(false); // 로딩 상태 관리
     const [page, setPage] = useState(0); // 현재 페이지 인덱스
     const limit = 10; // 페이지당 항목 수
+    const navigate = useNavigate();
     const { data, fetchData } = useAxios();
 
     // 데이터 불러오는 함수
@@ -15,7 +17,7 @@ function QnAList() {
         setLoading(true);
         try {
             const keyParam = lastKey ? `&lastEvaluatedKey=${encodeURIComponent(JSON.stringify(lastKey))}` : '';
-            await fetchData(`https://2lm7qjgb98.execute-api.ap-northeast-2.amazonaws.com/v1/api/courseProvide/1/QnA/boards?limit=${limit}${keyParam}`, "GET");
+            await fetchData(`https://api.ahimmoyak.click/v1/board/courseProvide/1/QnA?limit=${limit}${keyParam}`, "GET");
 
             if (data && data.items) {
                 setBoards((prevBoards) => reset ? data.items : [
@@ -63,6 +65,9 @@ function QnAList() {
         }
     };
 
+    const handleBoardDetail = (boardId,createdAt) =>{
+        navigate(`/test/${boardId}`,{state:{createdAt: createdAt}})
+    }
     return (
         <div className="qna-list-container">
             <h1>Q&A 게시판</h1>
@@ -76,7 +81,7 @@ function QnAList() {
                 </thead>
                 <tbody>
                 {boards.map((board, index) => (
-                    <tr key={board.id}>
+                    <tr key={board.id} onClick={()=>handleBoardDetail(board.id,board.createdAt)}>
                         <td>{page * limit + index + 1}</td> {/* 페이지 번호를 조정 */}
                         <td>{board.title}</td>
                         <td className={board.commentCount > 0 ? "answered" : "not-answered"}>
@@ -101,4 +106,4 @@ function QnAList() {
     );
 }
 
-export default QnAList;
+export default BoardList;
