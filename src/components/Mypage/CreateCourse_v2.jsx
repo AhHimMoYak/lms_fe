@@ -1,8 +1,11 @@
+import { FaPlus } from "react-icons/fa6";
+import '../../styles/Mypage/CreateCourse_v2/CreateCourse_v2.css';
+
 function CreateCourse_v2() {
   return (
-    <>
-      <h1>CreateCourse</h1>
-    </>
+      <div className="create-course-card">
+          <FaPlus />
+      </div>    
   );
 }
 
