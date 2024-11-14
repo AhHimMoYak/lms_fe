@@ -4,7 +4,7 @@ import '../../styles/Mypage/CreateCourse_v2/CreateCourse_v2.css';
 function CreateCourse_v2() {
   return (
       <div className="create-course-card">
-          <FaPlus />
+          <FaPlus className="plus-icon" />
       </div>    
   );
 }
