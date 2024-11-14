@@ -1,5 +1,5 @@
-import {Routes, Route} from "react-router-dom";
-import {AuthChecker} from "./authentication/AuthChecker";
+import { Routes, Route } from "react-router-dom";
+import { AuthChecker } from "./authentication/AuthChecker";
 import BasicFrame from "./components/BasicFrame.jsx";
 
 import CourseFrame from "./components/Mypage/CourseFrame.jsx";
@@ -28,104 +28,106 @@ import CreateLive from "./pages/Mypage/CreateLive.jsx";
 import ModifyCourse from "./pages/Mypage/ModifyCourse.jsx";
 import EducationFrame from "./components/Education/EducationFrame.jsx";
 import ManageFrame from "./components/Education/ManageFrame.jsx";
-import QuizPost from "./pages/QuizPost.jsx"
-import CompanyFrame from "./components/Company/CompanyFrame.jsx"
+import QuizPost from "./pages/QuizPost.jsx";
+import CompanyFrame from "./components/Company/CompanyFrame.jsx";
 import EmployeeList from "./components/Company/EmployeeList.jsx";
 import CourseProvideList from "./components/Company/CourseProvideList.jsx";
 import CompanyDetailed from "./components/Company/CompanyDetailed.jsx";
-import VideoPlayer from "./pages/Mypage/VideoPlayer.jsx"
+import VideoPlayer from "./pages/Mypage/VideoPlayer.jsx";
+import CreateCoursePage_v2 from "./pages/Mypage/CreateCoursePage_v2.jsx";
 
 function Render() {
-    return (
-        <Routes>
-            <Route path="/signin" element={<Login/>}/>
-            <Route path="/signup" element={<Register/>}/>
-            <Route path="/stream/video" element={<VideoPlayer/>}/>
+  return (
+    <Routes>
+      <Route path="/signin" element={<Login />} />
+      <Route path="/signup" element={<Register />} />
+      <Route path="/stream/video" element={<VideoPlayer />} />
 
-            <Route element={<BasicFrame/>}>
-                <Route path="/" element={<Main/>}/>
-                <Route path="course" element={<Video/>}/>
-                <Route path="/course/:courseId" element={<VideoExplain/>}/>
-                <Route path="/live/:streamkey" element={<LiveStream/>}/>
+      <Route element={<BasicFrame />}>
+        <Route path="/" element={<Main />} />
+        <Route path="/test" element={<CreateCoursePage_v2 />} />
+        <Route path="course" element={<Video />} />
+        <Route path="/course/:courseId" element={<VideoExplain />} />
+        <Route path="/live/:streamkey" element={<LiveStream />} />
 
-                <Route element={<AuthChecker/>}>
-                    <Route path="mypage/*" element={<MypageFrame/>}>
-                        <Route path="" element={<Dashboard/>}/>
-                        <Route path="dashboard" element={<Dashboard/>}/>
-                        <Route path="course" element={<CourseList/>}/>
+        <Route element={<AuthChecker />}>
+          <Route path="mypage/*" element={<MypageFrame />}>
+            <Route path="" element={<Dashboard />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="course" element={<CourseList />} />
 
-                        <Route path="course/:courseId" element={<CourseFrame/>}>
-                            <Route path="" element={<CourseDetailed/>}/>
-                            <Route path="contents" element={<CourseDetailed/>}/>
-                            <Route path="live" element={<LiveDetail/>}/>
+            <Route path="course/:courseId" element={<CourseFrame />}>
+              <Route path="" element={<CourseDetailed />} />
+              <Route path="contents" element={<CourseDetailed />} />
+              <Route path="live" element={<LiveDetail />} />
 
-                            <Route path="qna" element={<QnAList/>}/>
-                            <Route path="qna/post" element={<QnAPost/>}/>
-                            <Route path="qna/:courseBoardId" element={<QnADetailed/>}/>
-                            <Route path="qna/:courseBoardId/edit" element={<QnAEdit/>}/>
-                        </Route>
-                        <Route path="qna" element={<QnATotalList/>}/>
-
-                        <Route path="user/*" element={<UserInformFrame/>}>
-                            <Route path="" element={<PasswordPrompt/>}/>
-                            <Route path="reconfirm" element={<PasswordPrompt/>}/>
-                            <Route path="update" element={<UpdateUser/>}/>
-                        </Route>
-                    </Route>
-
-                    {/* -----------------------------------------교육기관 페이지 라우팅 ------------------------------------- */}
-
-                    <Route path="education/*" element={<EducationFrame/>}>
-                        <Route path="" element={<Dashboard/>}/>
-                        <Route path="dashboard" element={<Dashboard/>}/>
-                        <Route path="course" element={<CourseList/>}/>
-                        <Route path="manage/*" element={<ManageFrame/>}>
-                            <Route path="course/create" element={<CreateCourse/>}/>
-                            <Route path=":courseId/curriculum/create" element={<CreateCurriculum/>}/>
-                        </Route>
-
-                        <Route path="course/:courseId" element={<CourseFrame/>}>
-                            <Route path="" element={<CourseDetailed/>}/>
-                            <Route path="contents" element={<CourseDetailed/>}/>
-                            <Route path="modify" element={<ModifyCourse/>}/>
-
-                            <Route path="live" element={<LiveDetail/>}/>
-                            <Route path="live/create" element={<CreateLive/>}/>
-                            <Route path="live/:liveId/quiz" element={<QuizPost/>}/>
-
-                            <Route path="qna" element={<QnAList/>}/>
-                            <Route path="qna/:courseBoardId" element={<QnADetailed/>}/>
-                            <Route path="qna/:courseBoardId/edit" element={<QnAEdit/>}/>
-                        </Route>
-                        <Route path="qna" element={<QnATotalList/>}/>
-
-                        <Route path="user/*" element={<UserInformFrame/>}>
-                            <Route path="" element={<PasswordPrompt/>}/>
-                            <Route path="reconfirm" element={<PasswordPrompt/>}/>
-                            <Route path="update" element={<UpdateUser/>}/>
-                        </Route>
-                    </Route>
-
-
-                    {/* -----------------------------------------회사 페이지 라우팅 ------------------------------------- */}
-
-                    <Route path="company/*" element={<CompanyFrame/>}>
-                        <Route path="" element={<Dashboard/>}/>
-                        <Route path="employees" element={<EmployeeList/>}/>
-                        <Route path="courseProvide/list" element={<CourseProvideList/>}/>
-                        <Route path="info" element={<CompanyDetailed/>}/>
-                        <Route path="user/*" element={<UserInformFrame/>}>
-                            <Route path="" element={<PasswordPrompt/>}/>
-                            <Route path="reconfirm" element={<PasswordPrompt/>}/>
-                            <Route path="update" element={<UpdateUser/>}/>
-                        </Route>
-                    </Route>
-                </Route>
-
-
+              <Route path="qna" element={<QnAList />} />
+              <Route path="qna/post" element={<QnAPost />} />
+              <Route path="qna/:courseBoardId" element={<QnADetailed />} />
+              <Route path="qna/:courseBoardId/edit" element={<QnAEdit />} />
             </Route>
-        </Routes>
-    );
+            <Route path="qna" element={<QnATotalList />} />
+
+            <Route path="user/*" element={<UserInformFrame />}>
+              <Route path="" element={<PasswordPrompt />} />
+              <Route path="reconfirm" element={<PasswordPrompt />} />
+              <Route path="update" element={<UpdateUser />} />
+            </Route>
+          </Route>
+
+          {/* -----------------------------------------교육기관 페이지 라우팅 ------------------------------------- */}
+
+          <Route path="education/*" element={<EducationFrame />}>
+            <Route path="" element={<Dashboard />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="course" element={<CourseList />} />
+            <Route path="manage/*" element={<ManageFrame />}>
+              <Route path="course/create" element={<CreateCourse />} />
+              <Route
+                path=":courseId/curriculum/create"
+                element={<CreateCurriculum />}
+              />
+            </Route>
+
+            <Route path="course/:courseId" element={<CourseFrame />}>
+              <Route path="" element={<CourseDetailed />} />
+              <Route path="contents" element={<CourseDetailed />} />
+              <Route path="modify" element={<ModifyCourse />} />
+
+              <Route path="live" element={<LiveDetail />} />
+              <Route path="live/create" element={<CreateLive />} />
+              <Route path="live/:liveId/quiz" element={<QuizPost />} />
+
+              <Route path="qna" element={<QnAList />} />
+              <Route path="qna/:courseBoardId" element={<QnADetailed />} />
+              <Route path="qna/:courseBoardId/edit" element={<QnAEdit />} />
+            </Route>
+            <Route path="qna" element={<QnATotalList />} />
+
+            <Route path="user/*" element={<UserInformFrame />}>
+              <Route path="" element={<PasswordPrompt />} />
+              <Route path="reconfirm" element={<PasswordPrompt />} />
+              <Route path="update" element={<UpdateUser />} />
+            </Route>
+          </Route>
+
+          {/* -----------------------------------------회사 페이지 라우팅 ------------------------------------- */}
+
+          <Route path="company/*" element={<CompanyFrame />}>
+            <Route path="" element={<Dashboard />} />
+            <Route path="employees" element={<EmployeeList />} />
+            <Route path="courseProvide/list" element={<CourseProvideList />} />
+            <Route path="info" element={<CompanyDetailed />} />
+            <Route path="user/*" element={<UserInformFrame />}>
+              <Route path="" element={<PasswordPrompt />} />
+              <Route path="reconfirm" element={<PasswordPrompt />} />
+              <Route path="update" element={<UpdateUser />} />
+            </Route>
+          </Route>
+        </Route>
+      </Route>
+    </Routes>
+  );
 }
 
 export default Render;
