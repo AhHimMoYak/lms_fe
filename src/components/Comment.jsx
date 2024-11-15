@@ -7,7 +7,7 @@ import {Button} from "@mui/material";
 
 function Comment() {
     const { data, fetchData } = useAxios();
-    const { data: commentData, fetchData: commentFetchData} = useAxios();
+    const { fetchData: commentFetchData} = useAxios();
     const { data: commentDeleteData, fetchData: commentDeleteFetchData } = useAxios();
     const { data: commentEditData, fetchData: commentEditFetchData } = useAxios();
     const [comment, setComment] = useState("");
@@ -56,7 +56,10 @@ function Comment() {
     }, [commentEditData]);
 
     const handleCommentDelete = (commentId) => {
-        commentDeleteFetchData(`https://api.ahimmoyak.click/board/v1/comment/${commentId}`, "DELETE");
+        const requestDTO = {
+            boardId: boardId,
+        };
+        commentDeleteFetchData(`https://api.ahimmoyak.click/board/v1/comment/${commentId}`, "DELETE",requestDTO);
     };
 
     const handleCommentEdit = (commentId, content) => {
@@ -71,10 +74,9 @@ function Comment() {
     };
 
     return (
-        <div className="qna-board-answer">
+        <div className="comment">
             <span>답변</span>
-
-            <div className="qna-board-answer-content">
+            <div className="comment-content">
                 {Array.isArray(data?.items) && data.items.length > 0 ? (
                     data.items.map((comment, index) => (
                         <div key={index}>
@@ -96,11 +98,11 @@ function Comment() {
                                         <p className="comment-date">{format(new Date(comment.updatedAt), "yy/MM/dd HH:mm")}</p>
                                     </div>
                                     <p>{comment.content}</p>
-                                    <div className="qna-board-actions">
-                                        <button className="edit-button"
+                                    <div className="comment-actions">
+                                        <button className="comment-edit-button"
                                                 onClick={() => handleCommentEdit(comment.id, comment.content)}>수정
                                         </button>
-                                        <button className="delete-button"
+                                        <button className="comment-delete-button"
                                                 onClick={() => handleCommentDelete(comment.id)}>삭제
                                         </button>
                                     </div>
