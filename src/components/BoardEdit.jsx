@@ -63,7 +63,7 @@ function BoardEdit() {
     return (
         <div className="qna-container">
           <h2>Q&A 게시물 수정</h2>
-            <form className="qna-form" onSubmit={handleSubmit}>
+            <form className="board-form" onSubmit={handleSubmit}>
                 <div className="title-box">
                 <input type="text" defaultValue={title} onChange={(e) => setTitle(e.target.value)} required/>
                 </div>
