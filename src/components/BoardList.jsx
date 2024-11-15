@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import "../styles/Mypage/QnAList.css";
+import "../styles/Mypage/BoardList.css";
 import useAxios from "../hooks/api/useAxios.jsx";
-import {useLocation, useNavigate} from "react-router-dom";
-import {format} from "date-fns";
+import {useNavigate, useParams} from "react-router-dom";
 
 function BoardList() {
     const [boards, setBoards] = useState([]); // 전체 게시글 리스트
@@ -12,14 +11,14 @@ function BoardList() {
     const limit = 10; // 페이지당 항목 수
     const navigate = useNavigate();
     const {data, fetchData } = useAxios();
-    const {state} = useLocation();
+    const {courseProvideId, type} = useParams();
 
-    // 데이터 불러오는 함수
+
     const fetchBoards = async (lastKey = null, reset = false) => {
         setLoading(true);
         try {
             const keyParam = lastKey ? `&lastEvaluatedKey=${encodeURIComponent(JSON.stringify(lastKey))}` : '';
-            await fetchData(`https://api.ahimmoyak.click/board/v1/courseProvide/${state.courseProvideId}/${state.type}?limit=${limit}${keyParam}`, "GET");
+            await fetchData(`https://api.ahimmoyak.click/board/v1/courseProvide/${courseProvideId}/${type}?limit=${limit}${keyParam}`, "GET");
 
             if (data && data.items) {
                 setBoards((prevBoards) => reset ? data.items : [
@@ -41,7 +40,7 @@ function BoardList() {
     // 컴포넌트가 처음 렌더링될 때 첫 페이지 데이터를 불러옵니다.
     useEffect(() => {
         fetchBoards(null, true);
-    }, []);
+    }, [type]);
 
     useEffect(() => {
         if (data) {
@@ -68,31 +67,31 @@ function BoardList() {
     };
 
     const handleWriteBoard = () => {
-        navigate(`/test/post`,{state:{courseProvideId: state.courseProvideId, type: state.type}});
+        navigate(`/mypage/course/${courseProvideId}/board/${type}/post`);
     }
 
     const handleBoardDetail = (boardId) =>{
-        navigate(`/test/${boardId}`);
+        navigate(`/mypage/course/${courseProvideId}/board/${type}/${boardId}`);
     }
     return (
-        <div className="qna-list-container">
-            <h1>Q&A 게시판</h1>
+        <div className="board-list-container">
+            <h1>{type} 게시판</h1>
             <button onClick={handleWriteBoard}>글쓰기</button>
-            <table className="qna-table">
+            <table className="board-table">
                 <thead>
                 <tr>
                     <th>No.</th>
                     <th>제목</th>
-                    <th>날짜</th>
+                    <th>작성자</th>
                     <th>답변 여부</th>
                 </tr>
                 </thead>
                 <tbody>
                 {boards.map((board, index) => (
-                    <tr key={board.id} onClick={()=>handleBoardDetail(board.id,board.createdAt)}>
+                    <tr key={board.id} onClick={()=>handleBoardDetail(board.id)}>
                         <td>{page * limit + index + 1}</td>
                         <td>{board.title}</td>
-                        <td>{}</td>
+                        <td>{board.userName}</td>
                         <td className={board.commentCount > 0 ? "answered" : "not-answered"}>
                             {board.commentCount > 0 ? "완료" : "미완료"}
                         </td>
@@ -103,7 +102,7 @@ function BoardList() {
 
             {loading && <p>로딩 중...</p>}
 
-            <div className="qna-pagination">
+            <div className="board-pagination">
                 <button onClick={handlePreviousPage} disabled={page === 0 || loading}>
                     이전 페이지
                 </button>
