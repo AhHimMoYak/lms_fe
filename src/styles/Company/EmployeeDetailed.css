@@ -9,7 +9,7 @@
 
 .employeeDetailed-container {
     min-height: 60vh;
-    width: 120vh;
+    width: 80%;
     max-width: 120vh;
     background-color: white;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -30,7 +30,7 @@
 }
 
 .employeeDetailed-info-table {
-    width: 120vh;
+    width: 100%;
     border-collapse: collapse;
     margin-bottom: 2vh;
 }
@@ -73,7 +73,7 @@
 }
 
 .employeeDetailed-course-table {
-    width: 120vh;
+    width: 100%;
     border-collapse: collapse;
     margin-bottom: 2vh;
 }
