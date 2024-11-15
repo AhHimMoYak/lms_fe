@@ -1,8 +1,8 @@
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import { useEffect, useState } from "react";
-import useAxios from "../../hooks/api/useAxios.jsx";
-import "../../styles/Mypage/QnAEdit.css";
-import { decodeTokenTutor } from "../../authentication/decodeTokenTutor.jsx";
+import useAxios from "../hooks/api/useAxios.jsx";
+import "../styles/Mypage/QnAEdit.css";
+import { decodeTokenTutor } from "../authentication/decodeTokenTutor.jsx";
 
 function BoardEdit() {
     const { boardId } = useParams();
@@ -11,10 +11,10 @@ function BoardEdit() {
     const { data, fetchData } = useAxios();
     const { data: updateData, fetchData: updateFetchData } = useAxios();
     const navigate = useNavigate();
-    const {state} = useLocation();
+
 
     useEffect(() => {
-        fetchData(`https://api.ahimmoyak.click/v1/board/${boardId}/${state.createdAt}`, "GET");
+        fetchData(`https://api.ahimmoyak.click/board/v1/${boardId}`, "GET");
         console.log(data);
     }, [boardId]);
 
@@ -24,7 +24,7 @@ function BoardEdit() {
             title: title,
             content: content,
         };
-        updateFetchData(`https://api.ahimmoyak.click/v1/board/courseProvide/${boardId}/${state.createdAt}`, "PATCH", requestDto);
+        updateFetchData(`https://api.ahimmoyak.click/board/v1/courseProvide/${boardId}`, "PATCH", requestDto);
     };
 
     const handleList = () => {
