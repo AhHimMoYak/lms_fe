@@ -37,12 +37,12 @@
     outline: #ccc;
     min-height: 50vh;
 }
+
 .board-submit-button{
     float: right;
     padding: 0.3em 1em;
     margin-right: 2%;
     font-size: 0.8em;
-
     background-color: #fff;
     border: 2px #002c75 solid;
     color: #002c75;
@@ -50,12 +50,90 @@
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
 }
+
 .board-back-button {
     float: right;
     padding: 0.25em 1em 0.2em 1em;
     margin-top: 0.1em;
     margin-right: 1%;
+    width: 5vw;
+    font-size: 0.8em;
+    background-color: #fff;
+    border: 2px #002c75 solid;
+    color: #002c75;
+    border-radius: 0.5em;
+    cursor: pointer;
+}
 
+.board-form {
+    width: 100%;
+}
+
+.board-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 1em;
+}
+
+.board-content {
+    background-color: #ffffff;
+    width: 90%;
+    margin: 0 auto;
+    padding: 1.5em;
+    border-radius: 0.5em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.board-header-info {
+    padding: 1vw;
+    display: flex;
+    gap: 2em;
+    font-size: 0.9em;
+}
+
+.board-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.7em;
+    font-weight: bold;
+}
+
+.board-author {
+    font-style: italic;
+    margin-top: 0.5em;
+    text-align: right;
+    font-size: 0.8em;
+}
+
+.board-question {
+    text-align: left;
+    font-size: 0.8em;
+    padding-left: 1em;
+    min-height: 20vh;
+    border-top: 0.1em #cccccc solid;
+}
+
+.board-comment-input {
+    padding: 1em;
+    background-color: #d3d3d3;
+    border-radius: 0.5em;
+    margin-top: 0.1em;
+    width: 95%;
+    text-align: left;
+    font-size: 0.9em;
+}
+
+.back-button {
+    padding: 0.25em 1em 0.2em 1em;
+    margin-top: 2vh;
+    margin-left: auto;
     width: 5vw;
     font-size: 0.8em;
     background-color: #fff;
