@@ -1,16 +1,16 @@
 import { FaPlus } from "react-icons/fa6";
 import "../../../styles/Mypage/CreateCourse_v2/AddContents.css";
 
-async function uploadFile() {
-  const fileInput = document.getElementById("fileInput");
-  const file = fileInput.files[0];
+async function uploadFile(curriculumId, courseId, idx) {
+  const fileInput = document.getElementById(`fileInput-${idx}`);
+  const file = fileInput?.files[0];
 
   if (!file) {
     alert("파일을 선택해 주세요.");
     return;
   }
 
-  const progressBar = document.getElementById("uploadProgress");
+  const progressBar = document.getElementById(`uploadProgress-${idx}`);
   progressBar.style.display = "block";
 
   try {
@@ -18,10 +18,13 @@ async function uploadFile() {
     const requestBody = {
       fileName: encodedFileName,
       contentType: file.type,
+      courseId: courseId,
+      curriculumId: curriculumId,
+      idx: idx,
     };
 
     const urlResponse = await fetch(
-      "https://l7usz5nnr9.execute-api.ap-south-1.amazonaws.com/dev/api/files/upload",
+      "https://2kpwnoi3ff.execute-api.ap-south-1.amazonaws.com/dev/api/files/upload",
       {
         method: "POST",
         headers: {
@@ -49,17 +52,17 @@ async function uploadFile() {
       throw new Error("파일 업로드 실패");
     }
 
-    document.getElementById("uploadResult").innerText = "업로드 완료!";
+    document.getElementById(`uploadResult-${idx}`).innerText = "업로드 완료!";
   } catch (error) {
     document.getElementById(
-      "uploadResult"
+      `uploadResult-${idx}`
     ).innerText = `업로드 실패: ${error.message}`;
   } finally {
     progressBar.style.display = "none";
   }
 }
 
-function AddContents({ idx, onAdd }) {
+function AddContents({ idx, curriculumId, courseId, onAdd }) {
   return (
     <div className="create-course-card">
       {idx === null ? (
@@ -67,19 +70,23 @@ function AddContents({ idx, onAdd }) {
       ) : (
         <div className="AddContentsContainer">
           <div className="upload-area">
-            <input type="file" id="fileInput" />
-            <button onClick={uploadFile} id="uploadButton">
+            <input type="file" id={`fileInput-${idx}`} /> {/* id에 idx 포함 */}
+            <button
+              onClick={() => uploadFile(curriculumId, courseId, idx)} // 콜백 함수로 수정
+              id="uploadButton"
+            >
               업로드
             </button>
           </div>
           <div
-            id="uploadProgress"
+            id={`uploadProgress-${idx}`} // id에 idx 포함
             className="progress-bar"
             style={{ display: "none" }}
           >
             <div className="progress">업로드 중...</div>
           </div>
-          <div id="uploadResult" className="result"></div>
+          <div id={`uploadResult-${idx}`} className="result"></div>{" "}
+          {/* id에 idx 포함 */}
         </div>
       )}
     </div>
