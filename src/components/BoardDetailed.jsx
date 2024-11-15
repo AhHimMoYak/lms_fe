@@ -51,34 +51,34 @@ function BoardDetailed() {
         return <div>로딩 중...</div>;
     }
     return (
-        <div className="qna-board-container">
-            <div className="qna-board-actions">
+        <div className="board-container">
+            <div className="board-actions">
                 <button className="edit-button" onClick={() => onClickEdit()}>수정</button>
                 <button className="delete-button" onClick={onClickDelete}>삭제</button>
             </div>
-            <div className="qna-board-header">
+            <div className="board-header">
                 <h2>QnA 게시판</h2>
-                <div className="qna-board-header-info">
+                <div className="board-header-info">
                     <p>{data.userName}</p>
                     <p>{format(new Date(data.updatedAt), "yy/MM/dd HH:mm")}</p>
                 </div>
             </div>
-            <div className="qna-board-content">
-                <div className="qna-board-item">
-                    <div className="qna-board-title">
+            <div className="board-content">
+                <div className="board-item">
+                    <div className="board-title">
                         <span>{data.title}</span>
-                        <span className="qna-board-author">{data.user}</span>
+                        <span className="board-author">{data.user}</span>
                     </div>
-                    <div className="qna-board-question">
+                    <div className="board-question">
                         <p>{data.content}</p>
                     </div>
-                    <div className="qna-board-comment-input">
+                    <div className="board-comment-input">
                         <Comment boardId={boardId}/>
                     </div>
                 </div>
             </div>
 
-            <button className="qna-back-button" onClick={handleList}>
+            <button className="back-button" onClick={handleList}>
                 목록
             </button>
         </div>
