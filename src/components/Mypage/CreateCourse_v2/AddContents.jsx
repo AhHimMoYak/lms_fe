@@ -5,13 +5,13 @@ async function uploadFile() {
   alert("업로드 버튼 클릭");
 }
 
-function AddContents({ idx }) {
+function AddContents({ idx, onAdd }) {
   return (
     <div className="create-course-card">
-      {idx == null ? (
-        <FaPlus className="plus-icon" />
+      {idx === null ? (
+        <FaPlus className="plus-icon" onClick={onAdd} />
       ) : (
-        <div>
+        <div className="AddContentsContainer">
           <div className="upload-area">
             <input type="file" id="fileInput" />
             <button onClick={uploadFile} id="uploadButton">
