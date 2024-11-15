@@ -1,4 +1,4 @@
-.companyDetailed-page {
+.company-edit-page {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,7 +8,7 @@
     flex-direction: column;
 }
 
-.companyDetailed-container {
+.company-edit-container {
     min-height: 60vh;
     width: 80%;
     max-width: 120vh;
@@ -16,9 +16,10 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border-radius: 1em;
     padding: 4vh;
+    margin: 0 auto;
 }
 
-.companyDetailed-title {
+.company-edit-title {
     text-align: center;
     font-size: 1.5em;
     font-weight: bold;
@@ -26,44 +27,39 @@
     color: #333;
 }
 
-.companyDetailed-info {
-    margin: 4vw;
-    margin-bottom: 2vh;
-}
-
-.companyDetailed-info-table {
+.company-edit-form {
     width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 5vh;
+    display: flex;
+    flex-direction: column;
 }
 
-.companyDetailed-info-table th,
-.companyDetailed-info-table td {
-    padding: 2vh 1.5vh;
-    font-size: 1em;
-    text-align: left;
-    border: 0.1em solid #ddd;
+.company-edit-form-group {
+    display: flex;
+    align-items: center;
+    margin: 0 10vw 2vh ;
 }
 
-.companyDetailed-info-table th {
-    background-color: #f0f0f0;
+.company-edit-form-group label {
+    width: 25%;
     font-weight: bold;
-    width: 40%;
-}
-
-.companyDetailed-info-table td {
-    background-color: #fff;
     color: #333;
 }
 
-.companyDetailed-edit {
+.company-edit-form-group input {
+    width: 20vw;
+    padding: 2vh 1.5vw;
+    border: 0.1em solid #ddd;
+    border-radius: 0.5em;
+    background-color: #fff;
+}
+
+.company-edit-form-actions {
     display: flex;
     justify-content: center;
     margin-top: 3vh;
-    margin-right: 0.1vw;
 }
 
-.companyDetailed-edit-button {
+.company-edit-form-actions-button {
     padding: 1.5vh 2vw;
     background-color: #cccccc;
     color: white;
@@ -73,6 +69,6 @@
     transition: background-color 0.3s ease;
 }
 
-.companyDetailed-edit-button:hover {
+.company-edit-form-actions-button:hover {
     background-color: #0056b3;
 }
