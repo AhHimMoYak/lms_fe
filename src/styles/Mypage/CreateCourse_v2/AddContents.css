@@ -1,23 +1,24 @@
-.create-course-card{
+.create-course-card {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   background-color: white;
-  box-shadow: 0 5px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
   width: 80vw;
   height: 5rem;
   margin: 2rem auto;
-  padding: 2rem
+  padding: 2rem;
 }
 
-.plus-icon{
+.plus-icon {
   width: 30px;
   height: 30px;
-  color:rgb(0, 0, 0);
+  color: rgb(0, 0, 0);
 }
 
-.plus-icon:hover{
-  color:rgb(41, 175, 228);
+.plus-icon:hover {
+  color: rgb(41, 175, 228);
+  cursor: pointer;
 }
