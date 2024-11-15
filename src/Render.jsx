@@ -35,8 +35,6 @@ import CompanyDetailed from "./components/Company/CompanyDetailed.jsx";
 import VideoPlayer from "./pages/Mypage/VideoPlayer.jsx"
 import AnswerQuiz from "./pages/Quiz/AnswerQuiz.jsx";
 import CreateQuiz from "./pages/Quiz/CreateQuiz.jsx";
-import DeleteQuiz from "./pages/Quiz/DeleteQuiz.jsx";
-import GetQuiz from "./pages/Quiz/QuizDetail.jsx";
 import QuizList from "./pages/Quiz/QuizList.jsx";
 import UpdateQuiz from "./pages/Quiz/UpdateQuiz.jsx";
 import EmployeeList from "./components/Company/EmployeeList.jsx";
@@ -78,12 +76,11 @@ function Render() {
                             <Route path="reconfirm" element={<PasswordPrompt/>}/>
                             <Route path="update" element={<UpdateUser/>}/>
                         </Route>
-                        <Route path="quiz" element={<MypageFrame />}>
+                        <Route path=":courseId/quiz" element={<MypageFrame />}>
                             <Route index element={<QuizList />} /> {/* /quiz - 퀴즈 목록 */}
                             <Route path="create" element={<CreateQuiz />} /> {/* /quiz/create - 퀴즈 생성 */}
                             <Route path=":quizId" element={<QuizDetail />} /> {/* /quiz/:quizId - 퀴즈 조회 */}
                             <Route path=":quizId/update" element={<UpdateQuiz />} /> {/* /quiz/:quizId/update - 퀴즈 수정 */}
-                            <Route path=":quizId/delete" element={<DeleteQuiz />} /> {/* /quiz/:quizId/delete - 퀴즈 삭제 */}
                             <Route path=":quizId/answer" element={<AnswerQuiz />} /> {/* /quiz/:quizId/answer - 퀴즈 문제 풀기 */}
                         </Route>
 
