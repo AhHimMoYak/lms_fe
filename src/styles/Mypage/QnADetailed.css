@@ -32,7 +32,7 @@
     border-radius: 0.3em;
     cursor: pointer;
     margin-right: 0.9em;
-    font-size: 0.5em;
+    font-size: 0.8em;
     text-align: right;
 }
 
@@ -41,7 +41,7 @@
     border: none;
     border-radius: 0.3em;
     cursor: pointer;
-    font-size: 0.5em;
+    font-size: 0.8em;
     text-align: right;
 }
 
@@ -81,10 +81,10 @@
 }
 
 .qna-board-answer-content {
-    padding: 1em;
+    padding: 0.5em;
     background-color: #d3d3d3;
     border-radius: 0.5em;
-    font-size: 0.7em;
+    font-size: 0.9em;
     margin-top: 0.1em;
 }
 
