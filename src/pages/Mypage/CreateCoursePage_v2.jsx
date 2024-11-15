@@ -1,9 +1,9 @@
-import CreateCourseComponent from "../../components/Mypage/CreateCourse_v2.jsx";
+import AddContents from "../../components/Mypage/AddContents.jsx";
 
 function CreateCoursePage_v2() {
   return (
     <>
-      <CreateCourseComponent />
+      <AddContents />
     </>
   );
 }
