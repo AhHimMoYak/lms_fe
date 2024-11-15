@@ -1,30 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import useAxios from '/src/hooks/api/useAxios.jsx';
+import axios from 'axios';
 
-const EditQuizPage = () => {
+const UpdateQuiz = () => {
     const { courseId, quizId } = useParams();
     const [quizData, setQuizData] = useState(null);
-    const axiosInstance = useAxios();
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchQuiz = async () => {
             try {
-                const response = await axiosInstance.get(`/quiz/${quizId}`);
+                const response = await axios.get(`https://api.ahimmoyak.click/quiz/v1/${courseId}/${quizId}`);
                 setQuizData(response.data);
             } catch (error) {
                 console.error(error);
             }
         };
         fetchQuiz();
-    }, [quizId, axiosInstance]);
+    }, [courseId, quizId]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axiosInstance.put(`/quiz/${quizId}`, quizData);
-            navigate(`/course/${courseId}/quizzes`);
+            await axios.put(`https://api.ahimmoyak.click/quiz/v1/${courseId}/${quizId}`, quizData);
+            navigate(`/mypage/${courseId}/quiz`);
         } catch (error) {
             console.error(error);
         }
@@ -63,4 +62,4 @@ const EditQuizPage = () => {
     );
 };
 
-export default EditQuizPage;
+export default UpdateQuiz;

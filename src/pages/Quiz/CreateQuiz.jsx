@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 
-const url = import.meta.env.VITE_API_URL;
-
 const CreateQuizPage = () => {
     const { courseId } = useParams();
     const [quizData, setQuizData] = useState({
+        courseId: courseId,
         question: '',
         choices: ['', '', '', ''],
         correctAnswer: null,
@@ -17,8 +16,8 @@ const CreateQuizPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`${url}/course/v1/${courseId}/quiz`, quizData);
-            navigate(`/course/${courseId}/quizzes`);
+            await axios.post(`https://api.ahimmoyak.click/quiz/v1/create`, quizData);
+            navigate(`/mypage/${courseId}/quiz`);
         } catch (error) {
             console.error(error);
         }
