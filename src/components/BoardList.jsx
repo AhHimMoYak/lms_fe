@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import "../../styles/Mypage/QnAList.css";
-import useAxios from "../../hooks/api/useAxios.jsx";
-import {useNavigate} from "react-router-dom";
+import "../styles/Mypage/QnAList.css";
+import useAxios from "../hooks/api/useAxios.jsx";
+import {useLocation, useNavigate} from "react-router-dom";
+import {format} from "date-fns";
 
 function BoardList() {
     const [boards, setBoards] = useState([]); // 전체 게시글 리스트
@@ -10,14 +11,15 @@ function BoardList() {
     const [page, setPage] = useState(0); // 현재 페이지 인덱스
     const limit = 10; // 페이지당 항목 수
     const navigate = useNavigate();
-    const { data, fetchData } = useAxios();
+    const {data, fetchData } = useAxios();
+    const {state} = useLocation();
 
     // 데이터 불러오는 함수
     const fetchBoards = async (lastKey = null, reset = false) => {
         setLoading(true);
         try {
             const keyParam = lastKey ? `&lastEvaluatedKey=${encodeURIComponent(JSON.stringify(lastKey))}` : '';
-            await fetchData(`https://api.ahimmoyak.click/v1/board/courseProvide/1/QnA?limit=${limit}${keyParam}`, "GET");
+            await fetchData(`https://api.ahimmoyak.click/board/v1/courseProvide/${state.courseProvideId}/${state.type}?limit=${limit}${keyParam}`, "GET");
 
             if (data && data.items) {
                 setBoards((prevBoards) => reset ? data.items : [
@@ -65,25 +67,32 @@ function BoardList() {
         }
     };
 
-    const handleBoardDetail = (boardId,createdAt) =>{
-        navigate(`/test/${boardId}`,{state:{createdAt: createdAt}})
+    const handleWriteBoard = () => {
+        navigate(`/test/post`,{state:{courseProvideId: state.courseProvideId, type: state.type}});
+    }
+
+    const handleBoardDetail = (boardId) =>{
+        navigate(`/test/${boardId}`);
     }
     return (
         <div className="qna-list-container">
             <h1>Q&A 게시판</h1>
+            <button onClick={handleWriteBoard}>글쓰기</button>
             <table className="qna-table">
                 <thead>
                 <tr>
                     <th>No.</th>
                     <th>제목</th>
+                    <th>날짜</th>
                     <th>답변 여부</th>
                 </tr>
                 </thead>
                 <tbody>
                 {boards.map((board, index) => (
                     <tr key={board.id} onClick={()=>handleBoardDetail(board.id,board.createdAt)}>
-                        <td>{page * limit + index + 1}</td> {/* 페이지 번호를 조정 */}
+                        <td>{page * limit + index + 1}</td>
                         <td>{board.title}</td>
+                        <td>{}</td>
                         <td className={board.commentCount > 0 ? "answered" : "not-answered"}>
                             {board.commentCount > 0 ? "완료" : "미완료"}
                         </td>
