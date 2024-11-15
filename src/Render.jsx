@@ -34,6 +34,11 @@ import EmployeeList from "./components/Company/EmployeeList.jsx";
 import CourseProvideList from "./components/Company/CourseProvideList.jsx";
 import CompanyDetailed from "./components/Company/CompanyDetailed.jsx";
 import VideoPlayer from "./pages/Mypage/VideoPlayer.jsx"
+import BoardList from "./components/BoardList.jsx";
+import BoardPost from "./components/BoardPost.jsx";
+import BoardDetailed from "./components/BoardDetailed.jsx";
+import BoardEdit from "./components/BoardEdit.jsx";
+import BoardTotalList from "./components/BoardTotalList.jsx";
 
 function Render() {
     return (
@@ -54,17 +59,17 @@ function Render() {
                         <Route path="dashboard" element={<Dashboard/>}/>
                         <Route path="course" element={<CourseList/>}/>
 
-                        <Route path="course/:courseId" element={<CourseFrame/>}>
+                        <Route path="course/:courseProvideId" element={<CourseFrame/>}>
                             <Route path="" element={<CourseDetailed/>}/>
                             <Route path="contents" element={<CourseDetailed/>}/>
                             <Route path="live" element={<LiveDetail/>}/>
 
-                            <Route path="qna" element={<QnAList/>}/>
-                            <Route path="qna/post" element={<QnAPost/>}/>
-                            <Route path="qna/:courseBoardId" element={<QnADetailed/>}/>
-                            <Route path="qna/:courseBoardId/edit" element={<QnAEdit/>}/>
+                            <Route path="board/:type" element={<BoardList/>}/>
+                            <Route path="board/:type/post" element={<BoardPost/>}/>
+                            <Route path="board/:type/:boardId" element={<BoardDetailed/>}/>
+                            <Route path="board/:boardId/edit" element={<BoardEdit/>}/>
                         </Route>
-                        <Route path="qna" element={<QnATotalList/>}/>
+                        <Route path="qna" element={<BoardTotalList/>}/>
 
                         <Route path="user/*" element={<UserInformFrame/>}>
                             <Route path="" element={<PasswordPrompt/>}/>
