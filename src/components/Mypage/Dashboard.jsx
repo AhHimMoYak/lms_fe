@@ -7,7 +7,9 @@ import { decodeTokenTutor } from "../../authentication/decodeTokenTutor.jsx";
 function Dashboard() {
     const { data, fetchData } = useAxios();
     const navigate = useNavigate();
-    const { data: qnaBoardData, fetchData: fetchBoardData } = useAxios();
+    const { data: boardData, fetchData: fetchBoardData } = useAxios();
+    const limit = 5;
+    const userName = "난중에고치기";
 
     const clickDetailCourse = (courseId) => {
         if (decodeTokenTutor()) {
@@ -16,11 +18,11 @@ function Dashboard() {
             navigate(`/mypage/course/${courseId}`);
         }
     };
-    const clickDetailBoard = (courseId, courseBoardId) => {
+    const clickDetailBoard = (courseProvideId,type,boardId) => {
         if (decodeTokenTutor()) {
-            navigate(`/education/course/${courseId}/qna/${courseBoardId}`);
+            navigate(`/mypage/course/${courseProvideId}/board/${type}/${boardId}`);
         } else {
-            navigate(`/mypage/course/${courseId}/qna/${courseBoardId}`);
+            navigate(`/mypage/course/${courseProvideId}/board/${type}/${boardId}`);
         }
     };
     const clickListCourse = () => {
@@ -43,9 +45,9 @@ function Dashboard() {
     }, []);
 
     useEffect(() => {
-        fetchBoardData("/board/qna", "GET");
+        fetchBoardData(`https://api.ahimmoyak.click/board/v1/userName/${userName}?limit=${limit}`, "GET");
     }, []);
-
+    console.log(boardData);
     return (
         <div className="dashboard-container">
             <div className="dashboard-header">
@@ -81,13 +83,13 @@ function Dashboard() {
                         </tr>
                     </thead>
                     <tbody>
-                        {qnaBoardData?.slice(0, 5).map((qna, index) => (
-                            <tr key={qna.boardId} className="qna-table-row" onClick={() => clickDetailBoard(qna.courseId, qna.boardId)}>
+                        {boardData?.items?.map((board, index) => (
+                            <tr key={board.boardId} className="qna-table-row" onClick={() => clickDetailBoard(board.courseProvideId,board.type,board.id)}>
                                 <td className="que-idx">{index + 1}</td>
-                                <td className="qna-course">{qna.courseTitle}</td>
-                                <td className="qna-title">{qna.title}</td>
-                                <td className={qna.commitCount > 0 ? "qna-answered" : "qna-not-answered"}>
-                                    {qna.commitCount > 0 ? "완료" : "미답변"}
+                                <td className="qna-course">{board.courseTitle}</td>
+                                <td className="qna-title">{board.title}</td>
+                                <td className={board.commitCount > 0 ? "qna-answered" : "qna-not-answered"}>
+                                    {board.commitCount > 0 ? "완료" : "미답변"}
                                 </td>
                             </tr>
                         ))}
