@@ -1,3 +1,7 @@
+.comment {
+    text-align: left;
+    font-size: 0.9em;
+}
 
 .save-button,
 .cancel-button {
@@ -48,4 +52,25 @@
     color: #757575;
     font-size: 0.9em;
     text-align: right;
+}
+.comment-edit-button, .comment-delete-button {
+    padding: 0.3em 0.5em;
+    border: none;
+    border-radius: 0.3em;
+    cursor: pointer;
+    font-size: 0.8em;
+    text-align: right;
+}
+.comment-actions{
+    margin-left: auto;
+    display: flex;
+    gap: 1em;
+}
+
+.comment-content {
+    padding: 0.5em;
+    background-color: #d3d3d3;
+    border-radius: 0.5em;
+    font-size: 0.9em;
+    margin-top: 0.1em;
 }
