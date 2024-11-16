@@ -1,7 +1,8 @@
 import { FaPlus } from "react-icons/fa6";
 import "../../../styles/Mypage/CreateCourse_v2/AddContents.css";
+import { useState } from "react";
 
-async function uploadFile( curriculumId, courseId, institutionId, idx ) {
+async function uploadFile(curriculumId, courseId, institutionId, idx, setIsUploaded) {
   console.log(institutionId);
   const fileInput = document.getElementById(`fileInput-${idx}`);
   const file = fileInput?.files[0];
@@ -26,7 +27,7 @@ async function uploadFile( curriculumId, courseId, institutionId, idx ) {
     };
 
     const urlResponse = await fetch(
-      "https://38r524s3r0.execute-api.ap-south-1.amazonaws.com/dev/api/files/upload",
+      "https://v965yapvx7.execute-api.ap-south-1.amazonaws.com/dev/api/files/upload",
       {
         method: "POST",
         headers: {
@@ -55,6 +56,7 @@ async function uploadFile( curriculumId, courseId, institutionId, idx ) {
     }
 
     document.getElementById(`uploadResult-${idx}`).innerText = "업로드 완료!";
+    setIsUploaded(true);
   } catch (error) {
     document.getElementById(
       `uploadResult-${idx}`
@@ -65,6 +67,8 @@ async function uploadFile( curriculumId, courseId, institutionId, idx ) {
 }
 
 function AddContents({ idx, curriculumId, courseId, institutionId, onAdd }) {
+  const [isUploaded, setIsUploaded] = useState(false);
+
   return (
     <div className="create-course-card">
       {idx === null ? (
@@ -72,23 +76,26 @@ function AddContents({ idx, curriculumId, courseId, institutionId, onAdd }) {
       ) : (
         <div className="AddContentsContainer">
           <div className="upload-area">
-            <input type="file" id={`fileInput-${idx}`} /> {/* id에 idx 포함 */}
-            <button
-              onClick={() => uploadFile(curriculumId, courseId, institutionId, idx)} // 콜백 함수로 수정
-              id="uploadButton"
-            >
-              업로드
-            </button>
+            {!isUploaded && (
+              <>
+                <input type="file" id={`fileInput-${idx}`} />
+                <button
+                  onClick={() => uploadFile(curriculumId, courseId, institutionId, idx, setIsUploaded)}
+                  id="uploadButton"
+                >
+                  업로드
+                </button>
+              </>
+            )}
           </div>
           <div
-            id={`uploadProgress-${idx}`} // id에 idx 포함
+            id={`uploadProgress-${idx}`}
             className="progress-bar"
             style={{ display: "none" }}
           >
             <div className="progress">업로드 중...</div>
           </div>
-          <div id={`uploadResult-${idx}`} className="result"></div>{" "}
-          {/* id에 idx 포함 */}
+          <div id={`uploadResult-${idx}`} className="result"></div>
         </div>
       )}
     </div>
