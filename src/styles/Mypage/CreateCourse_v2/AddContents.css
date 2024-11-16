@@ -3,7 +3,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  position: relative; /* X 버튼을 절대 위치로 배치하기 위해 필요 */
+  
   background-color: white;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
   width: 80vw;
@@ -21,4 +22,16 @@
 .plus-icon:hover {
   color: rgb(41, 175, 228);
   cursor: pointer;
+}
+
+.x-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.x-icon:hover {
+  color: rgb(41, 175, 228);
 }

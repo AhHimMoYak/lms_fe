@@ -1,4 +1,5 @@
 import { FaPlus } from "react-icons/fa6";
+import { MdOutlineClose } from "react-icons/md";
 import "../../../styles/Mypage/CreateCourse_v2/AddContents.css";
 import { useState } from "react";
 
@@ -71,6 +72,9 @@ function AddContents({ idx, curriculumId, courseId, institutionId, onAdd }) {
 
   return (
     <div className="create-course-card">
+      <div className="x-icon">
+        <MdOutlineClose />
+      </div>
       {idx === null ? (
         <FaPlus className="plus-icon" onClick={onAdd} />
       ) : (
