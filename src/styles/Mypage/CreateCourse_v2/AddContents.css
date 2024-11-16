@@ -3,25 +3,23 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative; /* X 버튼을 절대 위치로 배치하기 위해 필요 */
+  position: relative;
   
   background-color: white;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
   width: 80vw;
-  height: 5rem;
+  height: 9rem;
   margin: 2rem auto;
   padding: 2rem;
 }
 
-.plus-icon {
-  width: 30px;
-  height: 30px;
-  color: rgb(0, 0, 0);
-}
-
-.plus-icon:hover {
-  color: rgb(41, 175, 228);
-  cursor: pointer;
+.AddContentsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100%;
 }
 
 .x-icon {
@@ -36,10 +34,39 @@
   color: rgb(41, 175, 228);
 }
 
+.plus-icon {
+  width: 30px;
+  height: 30px;
+  color: rgb(0, 0, 0);
+}
+
+.plus-icon:hover {
+  color: rgb(41, 175, 228);
+  cursor: pointer;
+}
+
+.upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 왼쪽 정렬 */
+}
+
+.progress-bar-container {
+  width: 100%; /* 전체 바의 너비 */
+  height: 20px;
+  background-color: #e0e0e0; /* 배경 색상 (진행하지 않은 부분) */
+  border-radius: 10px;
+  position: relative; /* 진행 바를 이 안에 위치시키기 위함 */
+}
+
 .progress-bar {
-  width: 0;
-  height: 10px;
-  background-color: #4caf50;
+  width: 0%; /* 초기 상태에서는 0% */
+  height: 100%;
+  background-color: #4caf50; /* 진행 상태 바의 색상 */
+  border-radius: 10px;
+  position: absolute; /* 위치는 컨테이너의 왼쪽부터 시작 */
+  left: 0;
+  top: 0;
   transition: width 0.3s ease;
 }
 
@@ -47,4 +74,11 @@
   text-align: center;
   color: white;
   font-size: 14px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }

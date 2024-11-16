@@ -111,6 +111,14 @@ function AddContents({ idx, curriculumId, courseId, institutionId, onAdd }) {
                 </button>
               </>
             )}
+            <div className="progress-bar-container">
+              <div
+                id={`uploadProgress-${idx}`}
+                className="progress-bar"
+                style={{ width: "0%" }}
+              ></div>
+              <div id={`uploadProgressText-${idx}`} className="progress-text">업로드 중...</div>
+            </div>
           </div>
           <div
             id={`uploadProgress-${idx}`}
