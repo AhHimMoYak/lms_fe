@@ -3,8 +3,7 @@ import { MdOutlineClose } from "react-icons/md";
 import "../../../styles/Mypage/CreateCourse_v2/AddContents.css";
 import { useState } from "react";
 
-async function uploadFile(curriculumId, courseId, institutionId, idx, setIsUploaded) {
-  console.log(institutionId);
+async function uploadFile(curriculumId, courseId, institutionId, idx, setIsUploaded, setUploadedFileName) {
   const fileInput = document.getElementById(`fileInput-${idx}`);
   const file = fileInput?.files[0];
 
@@ -14,19 +13,52 @@ async function uploadFile(curriculumId, courseId, institutionId, idx, setIsUploa
   }
 
   const progressBar = document.getElementById(`uploadProgress-${idx}`);
+  const progressText = document.getElementById(`uploadProgressText-${idx}`);
   progressBar.style.display = "block";
 
-  try {
-    const encodedFileName = btoa(unescape(encodeURIComponent(file.name)));
-    const requestBody = {
-      curriculumId,
-      courseId,
-      institutionId,
-      idx,
-      fileName: encodedFileName,
-      contentType: file.type,
-    };
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "https://v965yapvx7.execute-api.ap-south-1.amazonaws.com/dev/api/files/upload", true);
 
+  // 업로드 상태 변경
+  xhr.upload.onprogress = function(event) {
+    if (event.lengthComputable) {
+      const percent = (event.loaded / event.total) * 100;
+      progressBar.style.width = `${percent}%`;
+      progressText.innerText = `업로드 중... ${Math.round(percent)}%`;
+    }
+  };
+
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      setUploadedFileName(file.name);
+      document.getElementById(`uploadResult-${idx}`).innerText = `${file.name}\n업로드 완료!`;
+      setIsUploaded(true);
+    } else {
+      document.getElementById(
+        `uploadResult-${idx}`
+      ).innerText = `업로드 실패: ${xhr.responseText}`;
+    }
+    progressBar.style.display = "none";
+  };
+
+  xhr.onerror = function () {
+    document.getElementById(
+      `uploadResult-${idx}`
+    ).innerText = `업로드 실패: 네트워크 오류`;
+    progressBar.style.display = "none";
+  };
+
+  const encodedFileName = btoa(unescape(encodeURIComponent(file.name)));
+  const requestBody = {
+    curriculumId,
+    courseId,
+    institutionId,
+    idx,
+    fileName: encodedFileName,
+    contentType: file.type,
+  };
+
+  try {
     const urlResponse = await fetch(
       "https://v965yapvx7.execute-api.ap-south-1.amazonaws.com/dev/api/files/upload",
       {
@@ -39,36 +71,24 @@ async function uploadFile(curriculumId, courseId, institutionId, idx, setIsUploa
     );
 
     const urlData = await urlResponse.json();
-
     if (!urlResponse.ok) {
       throw new Error(urlData.error || "Pre-signed URL 생성 실패");
     }
 
-    const uploadResponse = await fetch(urlData.uploadUrl, {
-      method: "PUT",
-      headers: {
-        "Content-Type": file.type,
-      },
-      body: file,
-    });
-
-    if (!uploadResponse.ok) {
-      throw new Error("파일 업로드 실패");
-    }
-
-    document.getElementById(`uploadResult-${idx}`).innerText = "업로드 완료!";
-    setIsUploaded(true);
+    xhr.open("PUT", urlData.uploadUrl, true);
+    xhr.setRequestHeader("Content-Type", file.type);
+    xhr.send(file);
   } catch (error) {
     document.getElementById(
       `uploadResult-${idx}`
     ).innerText = `업로드 실패: ${error.message}`;
-  } finally {
     progressBar.style.display = "none";
   }
 }
 
 function AddContents({ idx, curriculumId, courseId, institutionId, onAdd }) {
   const [isUploaded, setIsUploaded] = useState(false);
+  const [uploadedFileName, setUploadedFileName] = useState("");
 
   return (
     <div className="create-course-card">
@@ -84,7 +104,7 @@ function AddContents({ idx, curriculumId, courseId, institutionId, onAdd }) {
               <>
                 <input type="file" id={`fileInput-${idx}`} />
                 <button
-                  onClick={() => uploadFile(curriculumId, courseId, institutionId, idx, setIsUploaded)}
+                  onClick={() => uploadFile(curriculumId, courseId, institutionId, idx, setIsUploaded, setUploadedFileName)}
                   id="uploadButton"
                 >
                   업로드
@@ -95,11 +115,15 @@ function AddContents({ idx, curriculumId, courseId, institutionId, onAdd }) {
           <div
             id={`uploadProgress-${idx}`}
             className="progress-bar"
-            style={{ display: "none" }}
+            style={{ width: "0%", display: "none" }}
           >
-            <div className="progress">업로드 중...</div>
+            <div id={`uploadProgressText-${idx}`} className="progress-text">업로드 중...</div>
           </div>
-          <div id={`uploadResult-${idx}`} className="result"></div>
+          <div id={`uploadResult-${idx}`} className="result">
+            {uploadedFileName && !isUploaded ? (
+              `업로드 진행 중: ${uploadedFileName}`
+            ) : null}
+          </div>
         </div>
       )}
     </div>

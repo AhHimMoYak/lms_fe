@@ -35,3 +35,16 @@
 .x-icon:hover {
   color: rgb(41, 175, 228);
 }
+
+.progress-bar {
+  width: 0;
+  height: 10px;
+  background-color: #4caf50;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  text-align: center;
+  color: white;
+  font-size: 14px;
+}
