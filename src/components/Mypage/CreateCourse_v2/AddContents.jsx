@@ -2,6 +2,7 @@ import { FaPlus } from "react-icons/fa6";
 import "../../../styles/Mypage/CreateCourse_v2/AddContents.css";
 
 async function uploadFile( curriculumId, courseId, institutionId, idx ) {
+  console.log(institutionId);
   const fileInput = document.getElementById(`fileInput-${idx}`);
   const file = fileInput?.files[0];
 
