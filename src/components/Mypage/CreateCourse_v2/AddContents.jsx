@@ -1,7 +1,7 @@
 import { FaPlus } from "react-icons/fa6";
 import "../../../styles/Mypage/CreateCourse_v2/AddContents.css";
 
-async function uploadFile(curriculumId, courseId, idx) {
+async function uploadFile( curriculumId, courseId, institutionId, idx ) {
   const fileInput = document.getElementById(`fileInput-${idx}`);
   const file = fileInput?.files[0];
 
@@ -16,15 +16,16 @@ async function uploadFile(curriculumId, courseId, idx) {
   try {
     const encodedFileName = btoa(unescape(encodeURIComponent(file.name)));
     const requestBody = {
+      curriculumId,
+      courseId,
+      institutionId,
+      idx,
       fileName: encodedFileName,
       contentType: file.type,
-      courseId: courseId,
-      curriculumId: curriculumId,
-      idx: idx,
     };
 
     const urlResponse = await fetch(
-      "https://2kpwnoi3ff.execute-api.ap-south-1.amazonaws.com/dev/api/files/upload",
+      "https://38r524s3r0.execute-api.ap-south-1.amazonaws.com/dev/api/files/upload",
       {
         method: "POST",
         headers: {
@@ -62,7 +63,7 @@ async function uploadFile(curriculumId, courseId, idx) {
   }
 }
 
-function AddContents({ idx, curriculumId, courseId, onAdd }) {
+function AddContents({ idx, curriculumId, courseId, institutionId, onAdd }) {
   return (
     <div className="create-course-card">
       {idx === null ? (
@@ -72,7 +73,7 @@ function AddContents({ idx, curriculumId, courseId, onAdd }) {
           <div className="upload-area">
             <input type="file" id={`fileInput-${idx}`} /> {/* id에 idx 포함 */}
             <button
-              onClick={() => uploadFile(curriculumId, courseId, idx)} // 콜백 함수로 수정
+              onClick={() => uploadFile(curriculumId, courseId, institutionId, idx)} // 콜백 함수로 수정
               id="uploadButton"
             >
               업로드
