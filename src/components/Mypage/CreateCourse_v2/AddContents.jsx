@@ -3,6 +3,8 @@ import { MdOutlineClose } from "react-icons/md";
 import "../../../styles/Mypage/CreateCourse_v2/AddContents.css";
 import { useState } from "react";
 
+const BASE_URL = "https://6tg2ehnjv9.execute-api.ap-south-1.amazonaws.com/dev/api/files/upload"
+
 async function uploadFile(curriculumId, courseId, institutionId, idx, setIsUploaded, setUploadedFileName) {
   const fileInput = document.getElementById(`fileInput-${idx}`);
   const file = fileInput?.files[0];
@@ -17,7 +19,7 @@ async function uploadFile(curriculumId, courseId, institutionId, idx, setIsUploa
   progressBar.style.display = "block";
 
   const xhr = new XMLHttpRequest();
-  xhr.open("POST", "https://v965yapvx7.execute-api.ap-south-1.amazonaws.com/dev/api/files/upload", true);
+  xhr.open("POST", BASE_URL, true);
 
   // 업로드 상태 변경
   xhr.upload.onprogress = function(event) {
@@ -60,7 +62,7 @@ async function uploadFile(curriculumId, courseId, institutionId, idx, setIsUploa
 
   try {
     const urlResponse = await fetch(
-      "https://v965yapvx7.execute-api.ap-south-1.amazonaws.com/dev/api/files/upload",
+      BASE_URL,
       {
         method: "POST",
         headers: {
