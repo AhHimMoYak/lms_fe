@@ -3,7 +3,7 @@ import { MdOutlineClose } from "react-icons/md";
 import "../../../styles/Mypage/CreateCourse_v2/AddContents.css";
 import { useState } from "react";
 
-const BASE_URL = "https://6tg2ehnjv9.execute-api.ap-south-1.amazonaws.com/dev/api/files/upload"
+const BASE_URL = "https://294ur0sw4h.execute-api.ap-south-1.amazonaws.com/dev/api/files/upload"
 
 async function uploadFile(curriculumId, courseId, institutionId, idx, setIsUploaded, setUploadedFileName) {
   const fileInput = document.getElementById(`fileInput-${idx}`);
