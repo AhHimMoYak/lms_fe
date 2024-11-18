@@ -25,6 +25,12 @@
     color: #333;
 }
 
+.employee-submit-attendeeCount {
+    text-align: right;
+    font-size: 1.2em;
+    margin-right: 2vw;
+}
+
 .employee-submit-header {
     display: flex;
     justify-content: space-between;
