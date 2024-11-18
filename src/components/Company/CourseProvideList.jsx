@@ -9,7 +9,7 @@ const CourseProvideList = () => {
     const [companyName, setCompanyName] = useState("");
     const [filterEmployees, setFilterEmployees] = useState([]);
     const [filteredByStatus, setFilteredByStatus] = useState([]);
-    const [selectedStatus, setSelectedStatus] = useState("ALL"); // Default to show all
+    const [selectedStatus, setSelectedStatus] = useState("ALL");
     const [currentPage, setCurrentPage] = useState(1);
     const courseProvideListPage = 10;
     const [totalPage, setTotalPage] = useState(1);
@@ -55,7 +55,7 @@ const CourseProvideList = () => {
             setFilteredByStatus(filtered);
             setTotalPage(Math.ceil(filtered.length / courseProvideListPage));
         }
-        setCurrentPage(1); // 필터 변경 시 항상 첫 페이지로 이동
+        setCurrentPage(1);
     }, [selectedStatus, filterEmployees]);
 
     const indexOfLastEmployee = currentPage * courseProvideListPage;
