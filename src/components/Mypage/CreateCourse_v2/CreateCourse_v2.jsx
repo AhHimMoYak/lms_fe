@@ -29,13 +29,15 @@ function CreateCourse_v2() {
     fetchContents();
   }, [curriculumId, courseId]);
 
+  // 콘텐츠를 추가하는 함수
   const handleAddContent = () => {
     setContents((prevContents) => [
       ...prevContents,
-      { id: prevContents.length, idx: null },
+      { id: prevContents.length, idx: prevContents.length + 1 },
     ]);
   };
 
+  // idx를 할당하는 함수
   const handleAssignIdx = (id) => {
     setContents((prevContents) =>
       prevContents.map((content) =>
@@ -53,7 +55,7 @@ function CreateCourse_v2() {
     <>
       <h1>CreateCourse_v2</h1>
 
-      {/* Render AddContents components for each content */}
+      {/* 콘텐츠 항목을 렌더링 */}
       {contents.map((content, index) => (
         <div key={content.id}>
           <AddContents
@@ -61,13 +63,14 @@ function CreateCourse_v2() {
             curriculumId={curriculumId}
             courseId={courseId}
             institutionId={institutionId}
+            content={content}
             onAdd={() => {
               handleAssignIdx(content.id);
               handleAddContent();
             }}
           />
 
-          {/* Add + button at the last content item */}
+          {/* 마지막 콘텐츠 항목에 + 버튼 추가 */}
           {index === contents.length - 1 && content.idx !== null && (
             <AddContents
               key="add-button"
@@ -82,7 +85,7 @@ function CreateCourse_v2() {
         </div>
       ))}
 
-      {/* If contents is empty, show AddContents for adding more */}
+      {/* 콘텐츠가 없으면 AddContents를 추가 */}
       {contents.length === 0 && (
         <AddContents
           key="add-button"
