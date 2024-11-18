@@ -2,7 +2,7 @@ import { MdOutlineClose } from "react-icons/md";
 import { useState, useRef } from "react";
 import "../../../styles/Mypage/CreateCourse_v2/AddContents.css";
 
-const BASE_URL = "https://i0j27qlso0.execute-api.ap-south-1.amazonaws.com/dev";
+const BASE_URL = "https://g67hkkjw1l.execute-api.ap-south-1.amazonaws.com/dev";
 
 function UploadContents({
   idx,

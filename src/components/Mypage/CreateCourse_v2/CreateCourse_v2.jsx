@@ -4,13 +4,14 @@ import AddContents from "./AddContents";
 import UploadContents from "./UploadContents";
 import GetContents from "./GetContents";
 
-const BASE_URL = "https://i0j27qlso0.execute-api.ap-south-1.amazonaws.com/dev";
+const BASE_URL = "https://g67hkkjw1l.execute-api.ap-south-1.amazonaws.com/dev";
 
 function CreateCourse_v2() {
   const { curriculumId, courseId } = useParams();
   const institutionId = 1;
   const [contents, setContents] = useState([]);
   const [isUploadVisible, setIsUploadVisible] = useState(false);
+  const [curIdx, setCurIdx] = useState(1);
 
   useEffect(() => {
     const fetchContents = async () => {
@@ -19,13 +20,14 @@ function CreateCourse_v2() {
           BASE_URL + `/courses/${courseId}/curriculums/${curriculumId}/contents`
         );
         if (!response.ok) {
-          throw new Error("Failed to fetch contents");
+          throw new Error("콘텐츠를 가져오는 데 실패했습니다.");
         }
         const data = await response.json();
         setContents(data.result || []);
+        setCurIdx(data.nextIdx || 1);
         console.log(data.result);
       } catch (error) {
-        console.error("Error fetching contents:", error);
+        console.error("콘텐츠를 가져오는 중 오류 발생:", error);
       }
     };
 
@@ -33,20 +35,12 @@ function CreateCourse_v2() {
   }, [curriculumId, courseId]);
 
   const handleAddContent = (newContent) => {
-    setContents((prevContents) => [...prevContents, newContent]);
-  };
-
-  const handleAssignIdx = (id) => {
-    setContents((prevContents) =>
-      prevContents.map((content) =>
-        content.id === id
-          ? {
-              ...content,
-              idx: prevContents.filter((c) => c.idx !== null).length + 1,
-            }
-          : content
-      )
-    );
+    const newIdx = contents.length + 1;
+    setContents((prevContents) => [
+      ...prevContents,
+      { ...newContent, idx: newIdx },
+    ]);
+    setCurIdx(curIdx + 1);
   };
 
   const handleShowUpload = () => {
@@ -62,10 +56,10 @@ function CreateCourse_v2() {
   return (
     <>
       <h1>CreateCourse_v2</h1>
-      {contents.map((content) => (
+      {contents.map((content, index) => (
         <div key={content.id}>
           <GetContents
-            idx={content.idx}
+            idx={index + 1}
             curriculumId={curriculumId}
             courseId={courseId}
             institutionId={institutionId}
@@ -73,7 +67,6 @@ function CreateCourse_v2() {
             uploadedAt={content.createdAt}
             content={content}
             onAdd={() => {
-              handleAssignIdx(content.id);
               handleAddContent();
             }}
           />
@@ -81,7 +74,7 @@ function CreateCourse_v2() {
       ))}
       {isUploadVisible && (
         <UploadContents
-          idx={contents.length + 1}
+          idx={curIdx}
           curriculumId={curriculumId}
           courseId={courseId}
           institutionId={institutionId}
