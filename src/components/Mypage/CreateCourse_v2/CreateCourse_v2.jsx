@@ -59,6 +59,10 @@ function CreateCourse_v2() {
     setIsUploadVisible(true);
   };
 
+  const handleUploadComplete = () => {
+    console.log("업로드가 완료되었습니다.");
+  };
+
   return (
     <>
       <h1>CreateCourse_v2</h1>
@@ -89,7 +93,7 @@ function CreateCourse_v2() {
           curriculumId={curriculumId}
           courseId={courseId}
           institutionId={institutionId}
-          onAdd={handleAddContent}
+          onUploadComplete={handleUploadComplete}
         />
       )}
 
