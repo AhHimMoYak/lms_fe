@@ -8,9 +8,9 @@ const BASE_URL = "https://i0j27qlso0.execute-api.ap-south-1.amazonaws.com/dev";
 
 function CreateCourse_v2() {
   const { curriculumId, courseId } = useParams();
-  const institutionId = 1; // 나중에 받아오는 방법 수정 필요
+  const institutionId = 1;
   const [contents, setContents] = useState([]);
-  const [isUploadVisible, setIsUploadVisible] = useState(false); // Upload visibility
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
 
   useEffect(() => {
     const fetchContents = async () => {
@@ -32,15 +32,10 @@ function CreateCourse_v2() {
     fetchContents();
   }, [curriculumId, courseId]);
 
-  // 콘텐츠를 추가하는 함수
-  const handleAddContent = () => {
-    setContents((prevContents) => [
-      ...prevContents,
-      { id: prevContents.length, idx: prevContents.length + 1 },
-    ]);
+  const handleAddContent = (newContent) => {
+    setContents((prevContents) => [...prevContents, newContent]);
   };
 
-  // idx를 할당하는 함수
   const handleAssignIdx = (id) => {
     setContents((prevContents) =>
       prevContents.map((content) =>
@@ -54,20 +49,19 @@ function CreateCourse_v2() {
     );
   };
 
-  // + 버튼을 눌렀을 때 UploadContents를 표시
   const handleShowUpload = () => {
     setIsUploadVisible(true);
   };
 
-  const handleUploadComplete = () => {
+  const handleUploadComplete = (newContent) => {
     console.log("업로드가 완료되었습니다.");
+    handleAddContent(newContent);
+    setIsUploadVisible(false);
   };
 
   return (
     <>
       <h1>CreateCourse_v2</h1>
-
-      {/* 콘텐츠 항목을 렌더링 */}
       {contents.map((content) => (
         <div key={content.id}>
           <GetContents
@@ -85,25 +79,21 @@ function CreateCourse_v2() {
           />
         </div>
       ))}
-
-      {/* UploadContents와 AddContents를 동시에 표시 */}
       {isUploadVisible && (
         <UploadContents
-          idx={contents.length + 1} // 배열 길이 + 1로 idx 동적 설정
+          idx={contents.length + 1}
           curriculumId={curriculumId}
           courseId={courseId}
           institutionId={institutionId}
           onUploadComplete={handleUploadComplete}
         />
       )}
-
-      {/* 항상 AddContents 버튼 표시 */}
       <AddContents
         idx={null}
         curriculumId={curriculumId}
         courseId={courseId}
         institutionId={institutionId}
-        onAdd={handleShowUpload} // + 버튼을 눌렀을 때 handleShowUpload 호출
+        onAdd={handleShowUpload}
       />
     </>
   );

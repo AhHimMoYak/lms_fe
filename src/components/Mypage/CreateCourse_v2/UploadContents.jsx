@@ -13,8 +13,8 @@ function UploadContents({
 }) {
   const [isUploaded, setIsUploaded] = useState(false);
   const [uploadedFileName, setUploadedFileName] = useState("");
-  const progressBarRef = useRef(null); // useRef로 참조
-  const progressTextRef = useRef(null); // 진행 상태 텍스트를 관리할 ref
+  const progressBarRef = useRef(null);
+  const progressTextRef = useRef(null);
 
   const uploadFile = async () => {
     const fileInput = document.getElementById(`fileInput-${idx}`);
@@ -25,7 +25,6 @@ function UploadContents({
       return;
     }
 
-    // 진행 상태 초기화
     if (progressBarRef.current) {
       progressBarRef.current.style.width = "0%";
     }
@@ -36,11 +35,9 @@ function UploadContents({
     const xhr = new XMLHttpRequest();
     xhr.open("POST", BASE_URL + "/api/files/upload", true);
 
-    // 업로드 진행 상태 업데이트
     xhr.upload.onprogress = function (event) {
       if (event.lengthComputable) {
         const percent = (event.loaded / event.total) * 100;
-        // ref를 사용하여 DOM 업데이트
         if (progressBarRef.current) {
           progressBarRef.current.style.width = `${percent}%`;
         }
@@ -58,7 +55,13 @@ function UploadContents({
         setIsUploaded(true);
 
         if (onUploadComplete) {
-          onUploadComplete();
+          const newContent = {
+            id: Date.now(),
+            idx: idx,
+            originalFileName: file.name,
+            createdAt: new Date().toISOString(),
+          };
+          onUploadComplete(newContent);
         }
       } else {
         alert(`업로드 실패: ${xhr.responseText}`);
@@ -69,7 +72,6 @@ function UploadContents({
       alert("업로드 실패: 네트워크 오류");
     };
 
-    // API 호출을 위한 요청 데이터
     const encodedFileName = btoa(unescape(encodeURIComponent(file.name)));
     const requestBody = {
       curriculumId,
