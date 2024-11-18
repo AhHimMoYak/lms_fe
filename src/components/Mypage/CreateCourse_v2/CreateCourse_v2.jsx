@@ -4,7 +4,7 @@ import AddContents from "./AddContents";
 import UploadContents from "./UploadContents";
 import GetContents from "./GetContents";
 
-const BASE_URL = "https://g67hkkjw1l.execute-api.ap-south-1.amazonaws.com/dev";
+const BASE_URL = "https://w2iivp5uoi.execute-api.ap-south-1.amazonaws.com/dev/api";
 
 function CreateCourse_v2() {
   const { curriculumId, courseId } = useParams();
@@ -17,7 +17,7 @@ function CreateCourse_v2() {
     const fetchContents = async () => {
       try {
         const response = await fetch(
-          BASE_URL + `/courses/${courseId}/curriculums/${curriculumId}/contents`
+          BASE_URL + `/v1/courses/${courseId}/curriculums/${curriculumId}/contents`
         );
         if (!response.ok) {
           throw new Error("콘텐츠를 가져오는 데 실패했습니다.");

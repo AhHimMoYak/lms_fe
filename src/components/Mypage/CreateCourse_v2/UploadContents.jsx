@@ -2,7 +2,7 @@ import { MdOutlineClose } from "react-icons/md";
 import { useState, useRef } from "react";
 import "../../../styles/Mypage/CreateCourse_v2/AddContents.css";
 
-const BASE_URL = "https://g67hkkjw1l.execute-api.ap-south-1.amazonaws.com/dev";
+const BASE_URL = "https://w2iivp5uoi.execute-api.ap-south-1.amazonaws.com/dev";
 
 function UploadContents({
   idx,
@@ -33,7 +33,7 @@ function UploadContents({
     }
 
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", BASE_URL + "/api/files/upload", true);
+    xhr.open("POST", BASE_URL + "/api/v1/files/upload", true);
 
     xhr.upload.onprogress = function (event) {
       if (event.lengthComputable) {
@@ -86,7 +86,7 @@ function UploadContents({
     };
 
     try {
-      const urlResponse = await fetch(BASE_URL + "/api/files/upload", {
+      const urlResponse = await fetch(BASE_URL + "/api/v1/files/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody),
