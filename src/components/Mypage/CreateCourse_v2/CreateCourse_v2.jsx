@@ -4,14 +4,14 @@ import AddContents from "./AddContents";
 
 function CreateCourse_v2() {
   const curriculumId = useParams().curriculumId;
-  const courseId = "1"; // 나중에 받아오는 방법 수정 필요
-  const institutionId = "1";  // 나중에 받아오는 방법 수정 필요
+  const courseId = useParams().courseId;
+  const institutionId = 1; // 나중에 받아오는 방법 수정 필요
   const [contents, setContents] = useState([{ id: 0, idx: null }]);
 
   const handleAddContent = () => {
     setContents((prevContents) => [
       ...prevContents,
-      { id: prevContents.length, idx: null }, 
+      { id: prevContents.length, idx: null },
     ]);
   };
 
