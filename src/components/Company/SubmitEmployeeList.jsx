@@ -97,7 +97,7 @@ const SubmitEmployeeList = ({courseProvideId, attendeeCount }) => {
         }
 
         if (selectedEmployees.length > attendeeCount) {
-            alert(`수강 신청 가능한 인원 ${attendeeCount}명을 초과했습니다.`);
+            alert(`수강 신청 가능한 인원을 초과했습니다.`);
             return;
         }
 
@@ -123,6 +123,10 @@ const SubmitEmployeeList = ({courseProvideId, attendeeCount }) => {
         <div className="employee-submit-page">
             <div className="employee-submit-container">
                 <h2 className="employee-submit-title">수강 신청할 사원</h2>
+                <div className="employee-submit-attendeeCount">
+                    수강 가능 인원: {attendeeCount}
+                </div>
+
                 <div className="employee-submit-header">
                     <div className="employee-submit-filter">
                         <input
@@ -140,7 +144,7 @@ const SubmitEmployeeList = ({courseProvideId, attendeeCount }) => {
                 <table className="employee-submit-table">
                     <thead>
                     <tr>
-                    <th>
+                        <th>
                             <input
                                 type="checkbox"
                                 checked={isAllSelected}
@@ -153,7 +157,7 @@ const SubmitEmployeeList = ({courseProvideId, attendeeCount }) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {displayedEmployees.map((employee,index) => (
+                    {displayedEmployees.map((employee, index) => (
                         <tr
                             key={employee.name}
                             className="clickable-row"
@@ -181,7 +185,8 @@ const SubmitEmployeeList = ({courseProvideId, attendeeCount }) => {
                     <button
                         id="submitButton"
                         name="submitButton"
-                        onClick={()=>handleSubmit(employee.username,courseProvideId)}>수강신청하기</button>
+                        onClick={() => handleSubmit(employee.username, courseProvideId)}>수강신청하기
+                    </button>
                 </div>
             </div>
         </div>
