@@ -3,8 +3,7 @@ import { useParams } from "react-router-dom";
 import AddContents from "./AddContents";
 
 function CreateCourse_v2() {
-  const curriculumId = useParams().curriculumId;
-  const courseId = useParams().courseId;
+  const { curriculumId, courseId } = useParams();
   const institutionId = 1; // 나중에 받아오는 방법 수정 필요
   const [contents, setContents] = useState([{ id: 0, idx: null }]);
 
