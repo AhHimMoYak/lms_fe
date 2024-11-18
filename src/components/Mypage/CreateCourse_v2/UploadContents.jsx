@@ -55,11 +55,14 @@ function UploadContents({
         setIsUploaded(true);
 
         if (onUploadComplete) {
+          const date = new Date();
+          const formattedDate = date.toISOString().split("T")[0];
+
           const newContent = {
             id: Date.now(),
             idx: idx,
             originalFileName: file.name,
-            createdAt: new Date().toISOString(),
+            createdAt: formattedDate,
           };
           onUploadComplete(newContent);
         }
