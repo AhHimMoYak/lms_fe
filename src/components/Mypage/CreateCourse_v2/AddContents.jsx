@@ -3,9 +3,16 @@ import { MdOutlineClose } from "react-icons/md";
 import "../../../styles/Mypage/CreateCourse_v2/AddContents.css";
 import { useState } from "react";
 
-const BASE_URL = "https://294ur0sw4h.execute-api.ap-south-1.amazonaws.com/dev/api/files/upload"
+const BASE_URL = "https://i0j27qlso0.execute-api.ap-south-1.amazonaws.com/dev";
 
-async function uploadFile(curriculumId, courseId, institutionId, idx, setIsUploaded, setUploadedFileName) {
+async function uploadFile(
+  curriculumId,
+  courseId,
+  institutionId,
+  idx,
+  setIsUploaded,
+  setUploadedFileName
+) {
   const fileInput = document.getElementById(`fileInput-${idx}`);
   const file = fileInput?.files[0];
 
@@ -19,10 +26,10 @@ async function uploadFile(curriculumId, courseId, institutionId, idx, setIsUploa
   progressBar.style.display = "block";
 
   const xhr = new XMLHttpRequest();
-  xhr.open("POST", BASE_URL, true);
+  xhr.open("POST", BASE_URL + "/api/files/upload", true);
 
   // 업로드 상태 변경
-  xhr.upload.onprogress = function(event) {
+  xhr.upload.onprogress = function (event) {
     if (event.lengthComputable) {
       const percent = (event.loaded / event.total) * 100;
       progressBar.style.width = `${percent}%`;
@@ -33,7 +40,9 @@ async function uploadFile(curriculumId, courseId, institutionId, idx, setIsUploa
   xhr.onload = function () {
     if (xhr.status === 200) {
       setUploadedFileName(file.name);
-      document.getElementById(`uploadResult-${idx}`).innerText = `${file.name}\n업로드 완료!`;
+      document.getElementById(
+        `uploadResult-${idx}`
+      ).innerText = `${file.name}\n업로드 완료!`;
       setIsUploaded(true);
     } else {
       document.getElementById(
@@ -61,16 +70,13 @@ async function uploadFile(curriculumId, courseId, institutionId, idx, setIsUploa
   };
 
   try {
-    const urlResponse = await fetch(
-      BASE_URL,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      }
-    );
+    const urlResponse = await fetch(BASE_URL + "/api/files/upload", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
 
     const urlData = await urlResponse.json();
     if (!urlResponse.ok) {
@@ -106,7 +112,16 @@ function AddContents({ idx, curriculumId, courseId, institutionId, onAdd }) {
               <>
                 <input type="file" id={`fileInput-${idx}`} />
                 <button
-                  onClick={() => uploadFile(curriculumId, courseId, institutionId, idx, setIsUploaded, setUploadedFileName)}
+                  onClick={() =>
+                    uploadFile(
+                      curriculumId,
+                      courseId,
+                      institutionId,
+                      idx,
+                      setIsUploaded,
+                      setUploadedFileName
+                    )
+                  }
                   id="uploadButton"
                 >
                   업로드
@@ -119,7 +134,9 @@ function AddContents({ idx, curriculumId, courseId, institutionId, onAdd }) {
                 className="progress-bar"
                 style={{ width: "0%" }}
               ></div>
-              <div id={`uploadProgressText-${idx}`} className="progress-text">업로드 중...</div>
+              <div id={`uploadProgressText-${idx}`} className="progress-text">
+                업로드 중...
+              </div>
             </div>
           </div>
           <div
@@ -127,12 +144,14 @@ function AddContents({ idx, curriculumId, courseId, institutionId, onAdd }) {
             className="progress-bar"
             style={{ width: "0%", display: "none" }}
           >
-            <div id={`uploadProgressText-${idx}`} className="progress-text">업로드 중...</div>
+            <div id={`uploadProgressText-${idx}`} className="progress-text">
+              업로드 중…
+            </div>
           </div>
           <div id={`uploadResult-${idx}`} className="result">
-            {uploadedFileName && !isUploaded ? (
-              `업로드 진행 중: ${uploadedFileName}`
-            ) : null}
+            {uploadedFileName && !isUploaded
+              ? `업로드 진행 중: ${uploadedFileName}`
+              : null}
           </div>
         </div>
       )}
