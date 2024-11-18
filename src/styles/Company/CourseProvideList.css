@@ -61,3 +61,39 @@
 .pagination button:hover {
     background-color: #5a6268;
 }
+
+.enroll-button {
+    background-color: transparent;
+    color: #5a6268;
+    border-radius: 0.5em;
+    padding: 0.7vh 1.5vh;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: 1px solid #a0a0a0;
+
+}
+
+.enroll-button:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.enroll-button:active {
+    background-color: #003f7f;
+    transform: scale(0.95);
+}
+
+.enroll-button[disabled] {
+    background-color: transparent;
+    color: #a0a0a0;
+    cursor: not-allowed;
+    border: none;
+}
+
+@media (max-width: 768px) {
+    .enroll-button {
+        font-size: 0.8em;
+        padding: 0.5vh 1vh;
+    }
+}

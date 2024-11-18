@@ -1,0 +1,129 @@
+.employee-submit-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    background-color: #f5f5f5;
+    padding: 3vh;
+}
+
+.employee-submit-container {
+    min-height: 60vh;
+    width: 80%;
+    max-width: 120vh;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 1em;
+    padding: 4vh;
+}
+
+.employee-submit-title {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 5vh;
+    color: #333;
+}
+
+.employee-submit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2vh;
+}
+
+.selected-count {
+    font-size: 1.2em;
+    font-weight: normal;
+    color: #555;
+    margin-right: 2vw;
+}
+
+.employee-submit-filter input {
+    width: 120%;
+    padding: 1vh 1.5vh;
+    border: 1px solid #ddd;
+    border-radius: 0.5em;
+    font-size: 1em;
+}
+
+.employee-submit-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2vh;
+}
+
+.employee-submit-table th,
+.employee-submit-table td {
+    padding: 1.5vh 1.5vh;
+    text-align: center;
+    border: 0.1em solid #ddd;
+}
+
+.employee-submit-table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+.employee-submit-table tbody tr:hover {
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+.loader {
+    text-align: center;
+    font-size: 1em;
+    color: #777;
+    margin-top: 2vh;
+}
+
+.employee-submit-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 3vh;
+}
+
+.employee-submit-button button {
+    background-color: #cccccc;
+    color: white;
+    border-radius: 0.5em;
+    padding: 1vh 2vh;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+}
+
+.employee-submit-button button:hover {
+    background-color: #0056b3;
+}
+
+.employee-submit-button button:active {
+    background-color: #003f7f;
+    transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+    .employee-submit-container {
+        width: 90%;
+        padding: 3vh;
+    }
+
+    .employee-submit-title {
+        font-size: 1.2em;
+    }
+
+    .selected-count {
+        font-size: 1em;
+    }
+
+    .employee-submit-filter input {
+        font-size: 0.9em;
+        padding: 0.8vh 1.2vh;
+    }
+
+    .employee-submit-button button {
+        font-size: 0.9em;
+        padding: 0.8vh 1.5vh;
+    }
+}
