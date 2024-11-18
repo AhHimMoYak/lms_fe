@@ -45,7 +45,10 @@ function Render() {
 
       <Route element={<BasicFrame />}>
         <Route path="/" element={<Main />} />
-        <Route path="/test/:curriculumId" element={<CreateCoursePage_v2 />} />
+        <Route
+          path="/courses/:courseId/curriculums/:curriculumId/contents"
+          element={<CreateCoursePage_v2 />}
+        />
         <Route path="course" element={<Video />} />
         <Route path="/course/:courseId" element={<VideoExplain />} />
         <Route path="/live/:streamkey" element={<LiveStream />} />
