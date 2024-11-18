@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  
+
   background-color: white;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
   width: 80vw;
@@ -13,7 +13,7 @@
   padding: 2rem;
 }
 
-.AddContentsContainer {
+.addContentsContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -81,4 +81,47 @@
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.getContentsContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+.idxContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 20%;
+  font-size: 4rem;
+}
+
+.fileInfoContainer {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+.fileNameContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 2rem;
+  height: 70%;
+}
+
+.dateContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: right;
+  text-align: right;
+  height: 30%;
+  color: #909090;
 }

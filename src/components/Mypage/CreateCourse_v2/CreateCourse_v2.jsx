@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import AddContents from "./AddContents";
+import UploadContents from "./UploadContents";
+import GetContents from "./GetContents";
 
 const BASE_URL = "https://i0j27qlso0.execute-api.ap-south-1.amazonaws.com/dev";
 
@@ -8,6 +10,7 @@ function CreateCourse_v2() {
   const { curriculumId, courseId } = useParams();
   const institutionId = 1; // 나중에 받아오는 방법 수정 필요
   const [contents, setContents] = useState([]);
+  const [isUploadVisible, setIsUploadVisible] = useState(false); // Upload visibility
 
   useEffect(() => {
     const fetchContents = async () => {
@@ -51,51 +54,53 @@ function CreateCourse_v2() {
     );
   };
 
+  // + 버튼을 눌렀을 때 UploadContents를 표시
+  const handleShowUpload = () => {
+    setIsUploadVisible(true);
+  };
+
   return (
     <>
       <h1>CreateCourse_v2</h1>
 
       {/* 콘텐츠 항목을 렌더링 */}
-      {contents.map((content, index) => (
+      {contents.map((content) => (
         <div key={content.id}>
-          <AddContents
+          <GetContents
             idx={content.idx}
             curriculumId={curriculumId}
             courseId={courseId}
             institutionId={institutionId}
+            originalFileName={content.originalFileName}
+            uploadedAt={content.createdAt}
             content={content}
             onAdd={() => {
               handleAssignIdx(content.id);
               handleAddContent();
             }}
           />
-
-          {/* 마지막 콘텐츠 항목에 + 버튼 추가 */}
-          {index === contents.length - 1 && content.idx !== null && (
-            <AddContents
-              key="add-button"
-              idx={null}
-              curriculumId={curriculumId}
-              courseId={courseId}
-              institutionId={institutionId}
-              content={content}
-              onAdd={handleAddContent}
-            />
-          )}
         </div>
       ))}
 
-      {/* 콘텐츠가 없으면 AddContents를 추가 */}
-      {contents.length === 0 && (
-        <AddContents
-          key="add-button"
-          idx={null}
+      {/* UploadContents와 AddContents를 동시에 표시 */}
+      {isUploadVisible && (
+        <UploadContents
+          idx={contents.length + 1} // 배열 길이 + 1로 idx 동적 설정
           curriculumId={curriculumId}
           courseId={courseId}
           institutionId={institutionId}
           onAdd={handleAddContent}
         />
       )}
+
+      {/* 항상 AddContents 버튼 표시 */}
+      <AddContents
+        idx={null}
+        curriculumId={curriculumId}
+        courseId={courseId}
+        institutionId={institutionId}
+        onAdd={handleShowUpload} // + 버튼을 눌렀을 때 handleShowUpload 호출
+      />
     </>
   );
 }
