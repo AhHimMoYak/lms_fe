@@ -13,7 +13,7 @@ function CreateCourse_v2() {
     const fetchContents = async () => {
       try {
         const response = await fetch(
-          BASE_URL + `courses/${courseId}/curriculums/${curriculumId}/contents`
+          BASE_URL + `/courses/${courseId}/curriculums/${curriculumId}/contents`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch contents");
