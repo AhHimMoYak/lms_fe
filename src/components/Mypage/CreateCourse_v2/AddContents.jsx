@@ -1,7 +1,7 @@
 import { FaPlus } from "react-icons/fa6";
 import { MdOutlineClose } from "react-icons/md";
 import "../../../styles/Mypage/CreateCourse_v2/AddContents.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const BASE_URL = "https://i0j27qlso0.execute-api.ap-south-1.amazonaws.com/dev";
 
@@ -94,9 +94,39 @@ async function uploadFile(
   }
 }
 
-function AddContents({ idx, curriculumId, courseId, institutionId, onAdd }) {
-  const [isUploaded, setIsUploaded] = useState(false);
-  const [uploadedFileName, setUploadedFileName] = useState("");
+function AddContents({
+  idx,
+  curriculumId,
+  courseId,
+  institutionId,
+  onAdd,
+  content,
+}) {
+  console.log(
+    "idx :",
+    idx,
+    "curriculumId : ",
+    curriculumId,
+    "courseId : ",
+    courseId,
+    "institutionId : ",
+    institutionId,
+    "onAdd : ",
+    onAdd,
+    "content : ",
+    content
+  );
+  const [isUploaded, setIsUploaded] = useState(content?.isUploaded || false);
+  const [uploadedFileName, setUploadedFileName] = useState(
+    content?.fileName || ""
+  );
+
+  useEffect(() => {
+    if (content?.isUploaded) {
+      setIsUploaded(true);
+      setUploadedFileName(content.fileName);
+    }
+  }, [content]);
 
   return (
     <div className="create-course-card">
@@ -128,6 +158,12 @@ function AddContents({ idx, curriculumId, courseId, institutionId, onAdd }) {
                 </button>
               </>
             )}
+            {isUploaded && (
+              <div className="upload-complete">
+                <p>{uploadedFileName}</p>
+                <p>업로드 완료!</p>
+              </div>
+            )}
             <div className="progress-bar-container">
               <div
                 id={`uploadProgress-${idx}`}
@@ -138,20 +174,6 @@ function AddContents({ idx, curriculumId, courseId, institutionId, onAdd }) {
                 업로드 중...
               </div>
             </div>
-          </div>
-          <div
-            id={`uploadProgress-${idx}`}
-            className="progress-bar"
-            style={{ width: "0%", display: "none" }}
-          >
-            <div id={`uploadProgressText-${idx}`} className="progress-text">
-              업로드 중…
-            </div>
-          </div>
-          <div id={`uploadResult-${idx}`} className="result">
-            {uploadedFileName && !isUploaded
-              ? `업로드 진행 중: ${uploadedFileName}`
-              : null}
           </div>
         </div>
       )}

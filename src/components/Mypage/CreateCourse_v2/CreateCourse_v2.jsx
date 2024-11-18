@@ -7,7 +7,7 @@ const BASE_URL = "https://i0j27qlso0.execute-api.ap-south-1.amazonaws.com/dev";
 function CreateCourse_v2() {
   const { curriculumId, courseId } = useParams();
   const institutionId = 1; // 나중에 받아오는 방법 수정 필요
-  const [contents, setContents] = useState([{ id: 0, idx: null }]);
+  const [contents, setContents] = useState([]);
 
   useEffect(() => {
     const fetchContents = async () => {
@@ -19,7 +19,8 @@ function CreateCourse_v2() {
           throw new Error("Failed to fetch contents");
         }
         const data = await response.json();
-        console.log(data);
+        setContents(data.result || []);
+        console.log(data.result);
       } catch (error) {
         console.error("Error fetching contents:", error);
       }
@@ -51,19 +52,47 @@ function CreateCourse_v2() {
   return (
     <>
       <h1>CreateCourse_v2</h1>
-      {contents.map((content) => (
+
+      {/* Render AddContents components for each content */}
+      {contents.map((content, index) => (
+        <div key={content.id}>
+          <AddContents
+            idx={content.idx}
+            curriculumId={curriculumId}
+            courseId={courseId}
+            institutionId={institutionId}
+            onAdd={() => {
+              handleAssignIdx(content.id);
+              handleAddContent();
+            }}
+          />
+
+          {/* Add + button at the last content item */}
+          {index === contents.length - 1 && content.idx !== null && (
+            <AddContents
+              key="add-button"
+              idx={null}
+              curriculumId={curriculumId}
+              courseId={courseId}
+              institutionId={institutionId}
+              content={content}
+              onAdd={handleAddContent}
+            />
+          )}
+        </div>
+      ))}
+
+      {/* If contents is empty, show AddContents for adding more */}
+      {contents.length === 0 && (
         <AddContents
-          key={content.id}
-          idx={content.idx}
+          key="add-button"
+          idx={null}
           curriculumId={curriculumId}
           courseId={courseId}
           institutionId={institutionId}
-          onAdd={() => {
-            handleAssignIdx(content.id);
-            handleAddContent();
-          }}
+          onAdd={handleAddContent}
         />
-      ))}
+      )}
     </>
   );
 }
