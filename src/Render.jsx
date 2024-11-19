@@ -34,6 +34,7 @@ import EmployeeList from "./components/Company/EmployeeList.jsx";
 import CourseProvideList from "./components/Company/CourseProvideList.jsx";
 import CompanyDetailed from "./components/Company/CompanyDetailed.jsx";
 import VideoPlayer from "./pages/Mypage/VideoPlayer.jsx"
+import ManagementPage from "./pages/Mypage/ManagementPage.jsx";
 
 function Render() {
     return (
@@ -76,9 +77,10 @@ function Render() {
                     {/* -----------------------------------------교육기관 페이지 라우팅 ------------------------------------- */}
 
                     <Route path="education/*" element={<EducationFrame/>}>
-                        <Route path="" element={<Dashboard/>}/>
+                        <Route path="" element={<Dashboard/>}/>4
                         <Route path="dashboard" element={<Dashboard/>}/>
                         <Route path="course" element={<CourseList/>}/>
+                        <Route path="management" element={<ManagementPage/>}/>
                         <Route path="manage/*" element={<ManageFrame/>}>
                             <Route path="course/create" element={<CreateCourse/>}/>
                             <Route path=":courseId/curriculum/create" element={<CreateCurriculum/>}/>
