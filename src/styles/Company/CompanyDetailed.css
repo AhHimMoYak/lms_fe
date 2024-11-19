@@ -56,14 +56,16 @@
     color: #333;
 }
 
-.companyDetailed-edit {
+.companyDetailed-edit,
+.company-post {
     display: flex;
     justify-content: center;
     margin-top: 3vh;
     margin-right: 0.1vw;
 }
 
-.companyDetailed-edit-button {
+.companyDetailed-edit-button,
+.company-post-button {
     padding: 1.5vh 2vw;
     background-color: #cccccc;
     color: white;
@@ -73,7 +75,8 @@
     transition: background-color 0.3s ease;
 }
 
-.companyDetailed-edit-button:hover {
+.companyDetailed-edit-button:hover,
+.company-post-button:hover{
     background-color: #0056b3;
 }
 
