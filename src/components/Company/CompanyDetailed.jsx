@@ -17,6 +17,12 @@ const CompanyDetailed = () => {
         navigate('/company/edit', {state: {companyName: name}});
     }
 
+    const handleCreate = () => {
+        if (window.confirm("회사를 등록하시겠습니까?")) {
+            navigate('/company/create');
+        }
+    }
+
     return (
         <div className="companyDetailed-page">
             <div className="companyDetailed-container">
@@ -53,12 +59,22 @@ const CompanyDetailed = () => {
                     <p>Loading...</p>
                 )}
 
-                <div className="companyDetailed-edit">
-                    <button className="companyDetailed-edit-button"
-                            onClick={() => handleUpdate(data.companyName)}>
-                        수정
-                    </button>
-                </div>
+                {data ? (
+                    <div className="companyDetailed-edit">
+                        <button className="companyDetailed-edit-button"
+                                onClick={() => handleUpdate(data.companyName)}>
+                            수정
+                        </button>
+                    </div>
+                ) : (
+                    <div className="company-post">
+                        <button className="company-post-button"
+                        onClick={handleCreate}>
+                            회사 등록
+                        </button>
+                    </div>
+                )}
+
             </div>
         </div>
     )
