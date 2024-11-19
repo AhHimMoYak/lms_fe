@@ -3,10 +3,12 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 import "/src/styles/Company/CompanyEdit.css"
+import CompanyDetach from "./CompanyDetach.jsx";
 
 const CompanyEdit = (companyName) => {
 
     const navigate = useNavigate();
+    const [detachComponent, setDetachComponent] = useState(null);
     const {data: company, err, fetchData: fetchCompany} = useAxios();
     const {data: updateCompany, fetchData: fetchUpdateCompany} = useAxios();
     const [formData, setFormData] = useState({
@@ -58,6 +60,12 @@ const CompanyEdit = (companyName) => {
                 ...prevState,
                 [name]: value
             }));
+        }
+    }
+
+    const handleDetachCompany = () => {
+        if (window.confirm("정말 삭제하시겠습니까?")) {
+            setDetachComponent(<CompanyDetach/>);
         }
     }
 
@@ -140,6 +148,13 @@ const CompanyEdit = (companyName) => {
                         <button className="company-edit-form-actions-button" type="submit">수정하기</button>
                     </div>
                 </form>
+                <div>
+                    <button className="company-delete-actions-button"
+                            onClick={()=>handleDetachCompany()}>
+                        {detachComponent}
+                        회사 탈퇴</button>
+
+                </div>
             </div>
         </div>
     )
