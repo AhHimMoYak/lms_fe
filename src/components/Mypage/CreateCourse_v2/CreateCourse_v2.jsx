@@ -4,7 +4,8 @@ import AddContents from "./AddContents";
 import UploadContents from "./UploadContents";
 import GetContents from "./GetContents";
 
-const BASE_URL = "https://w2iivp5uoi.execute-api.ap-south-1.amazonaws.com/dev/api";
+const BASE_URL =
+  "https://xo43ftp84m.execute-api.ap-south-1.amazonaws.com/dev/api";
 
 function CreateCourse_v2() {
   const { curriculumId, courseId } = useParams();
@@ -12,12 +13,14 @@ function CreateCourse_v2() {
   const [contents, setContents] = useState([]);
   const [isUploadVisible, setIsUploadVisible] = useState(false);
   const [curIdx, setCurIdx] = useState(1);
+  const [draggedIdx, setDraggedIdx] = useState(null);
 
   useEffect(() => {
     const fetchContents = async () => {
       try {
         const response = await fetch(
-          BASE_URL + `/v1/courses/${courseId}/curriculums/${curriculumId}/contents`
+          BASE_URL +
+            `/v1/courses/${courseId}/curriculums/${curriculumId}/contents`
         );
         if (!response.ok) {
           throw new Error("콘텐츠를 가져오는 데 실패했습니다.");
@@ -53,13 +56,34 @@ function CreateCourse_v2() {
     setIsUploadVisible(false);
   };
 
+  const handleDragStart = (idx) => {
+    setDraggedIdx(idx);
+  };
+
+  const handleDrop = (targetIdx) => {
+    if (draggedIdx === null || draggedIdx === targetIdx) return;
+
+    const updatedContents = [...contents];
+    const [movedItem] = updatedContents.splice(draggedIdx, 1);
+    updatedContents.splice(targetIdx, 0, movedItem);
+
+    setContents(updatedContents);
+    setDraggedIdx(null);
+  };
+
   return (
     <>
       <h1>CreateCourse_v2</h1>
-      {contents.map((content, index) => (
-        <div key={content.id}>
+      {contents.map((content, idx) => (
+        <div
+          key={content.id}
+          draggable
+          onDragStart={() => handleDragStart(idx)}
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={() => handleDrop(idx)}
+        >
           <GetContents
-            idx={index + 1}
+            idx={idx + 1}
             curriculumId={curriculumId}
             courseId={courseId}
             institutionId={institutionId}
