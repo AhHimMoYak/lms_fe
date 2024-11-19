@@ -15,7 +15,7 @@
     background-color: white;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border-radius: 1em;
-    padding: 4vh;
+    padding: 4vh 4vh 2vh;
     margin: 0 auto;
 }
 
@@ -71,4 +71,18 @@
 
 .company-edit-form-actions-button:hover {
     background-color: #0056b3;
+}
+
+.company-delete-actions-button {
+    padding: 1vh 1vw;
+    font-size: 0.3em;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    margin-top: 1vh;
+    border-radius: 0.2em;
+}
+
+.company-delete-actions-button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
 }
