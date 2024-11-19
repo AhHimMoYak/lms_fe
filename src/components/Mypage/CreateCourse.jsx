@@ -97,19 +97,6 @@ function CreateCourse() {
                     onChange={handleChange}
                     required
                 />
-                <label htmlFor="beginDate">시작 날짜: </label>
-                <input
-                    type="date"
-                    id="beginDate"
-                    name="beginDate"
-                    className="input-date"
-                    value={formData.beginDate}
-                    onChange={handleChange}
-                    required
-                />
-
-                <label htmlFor="endDate">종료 날짜: </label>
-                <input type="date" id="endDate" name="endDate" className="input-date" value={formData.endDate} onChange={handleChange} required />
                 <button type="submit" className="submit-total-button">
                     등록
                 </button>
