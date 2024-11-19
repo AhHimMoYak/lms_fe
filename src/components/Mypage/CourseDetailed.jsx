@@ -21,7 +21,7 @@ function CourseDetailed() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchData(`/course/${courseId}`, "get");
+        fetchData(`/course/${courseId}/detail`, "get");
     }, [courseId]);
 
     const toggleCurriculum = (index) => {
