@@ -16,6 +16,19 @@ const CompanyEdit = (companyName) => {
         phone: ''
     })
 
+    const handlePhoneNumberSave = (phone) => {
+        const cleanNumber = phone.replace (/[^0-9]/g, '');
+
+        if (cleanNumber.length === 10) {
+            return cleanNumber.replace(/(\d{2})(\d{4})(\d{4})/, "$1-$2-$3");
+        } else if (cleanNumber.length === 11) {
+            return cleanNumber.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+        } else if (cleanNumber.length === 9) {
+            return cleanNumber.replace(/(\d{2})(\d{3})(\d{4})/, "$1-$2-$3");
+        }
+        return cleanNumber;
+    }
+
     useEffect(() => {
         fetchCompany('/company/info',"GET")
     }, []);
@@ -33,10 +46,19 @@ const CompanyEdit = (companyName) => {
 
     const handleInputChange = (e) => {
         const {name, value} = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }))
+
+        if (name === "phone") {
+            const formattedPhone = handlePhoneNumberSave(value);
+            setFormData((prevState) => ({
+                ...prevState,
+                [name]: formattedPhone,
+            }));
+        } else {
+            setFormData(prevState => ({
+                ...prevState,
+                [name]: value
+            }));
+        }
     }
 
     const handleSubmit = async (e) => {
