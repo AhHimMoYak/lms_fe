@@ -5,7 +5,7 @@ import UploadContents from "./UploadContents";
 import GetContents from "./GetContents";
 
 const BASE_URL =
-  "https://xo43ftp84m.execute-api.ap-south-1.amazonaws.com/dev/api";
+  "https://9gqul5gtk1.execute-api.ap-south-1.amazonaws.com/dev/api";
 
 function CreateCourse_v2() {
   const { curriculumId, courseId } = useParams();
@@ -60,15 +60,43 @@ function CreateCourse_v2() {
     setDraggedIdx(idx);
   };
 
-  const handleDrop = (targetIdx) => {
+  const handleDrop = async (targetIdx) => {
     if (draggedIdx === null || draggedIdx === targetIdx) return;
 
-    const updatedContents = [...contents];
-    const [movedItem] = updatedContents.splice(draggedIdx, 1);
-    updatedContents.splice(targetIdx, 0, movedItem);
+    try {
+      const draggedContent = contents[draggedIdx];
+      const droppedContent = contents[targetIdx];
 
-    setContents(updatedContents);
-    setDraggedIdx(null);
+      // 서버로 요청 보내기
+      const response = await fetch(
+        BASE_URL +
+          `/v1/courses/${courseId}/curriculums/${curriculumId}/contents/swap`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            draggedIdx: draggedContent.idx,
+            droppedIdx: droppedContent.idx,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("순서 업데이트 요청 실패");
+      }
+
+      // 클라이언트 측 순서 업데이트
+      const updatedContents = [...contents];
+      const [movedItem] = updatedContents.splice(draggedIdx, 1);
+      updatedContents.splice(targetIdx, 0, movedItem);
+
+      setContents(updatedContents);
+      setDraggedIdx(null);
+
+      console.log("순서가 성공적으로 교환되었습니다.");
+    } catch (error) {
+      console.error("순서 교환 중 오류:", error);
+    }
   };
 
   return (
