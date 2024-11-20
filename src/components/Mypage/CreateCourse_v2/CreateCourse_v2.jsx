@@ -5,7 +5,7 @@ import UploadContents from "./UploadContents";
 import GetContents from "./GetContents";
 
 const BASE_URL =
-  "https://9gqul5gtk1.execute-api.ap-south-1.amazonaws.com/dev/api";
+  "https://ubqfzli89b.execute-api.ap-south-1.amazonaws.com/dev/api";
 
 function CreateCourse_v2() {
   const { curriculumId, courseId } = useParams();
@@ -57,17 +57,18 @@ function CreateCourse_v2() {
   };
 
   const handleDragStart = (idx) => {
+    console.log("handleDragStart Idex : " , idx);
     setDraggedIdx(idx);
   };
 
   const handleDrop = async (targetIdx) => {
+    console.log("handleDrop Index : ", targetIdx);
     if (draggedIdx === null || draggedIdx === targetIdx) return;
 
     try {
-      const draggedContent = contents[draggedIdx];
-      const droppedContent = contents[targetIdx];
+      const draggedContent = contents[draggedIdx].idx;
+      const droppedContent = contents[targetIdx].idx;
 
-      // 서버로 요청 보내기
       const response = await fetch(
         BASE_URL +
           `/v1/courses/${courseId}/curriculums/${curriculumId}/contents/swap`,
@@ -75,8 +76,8 @@ function CreateCourse_v2() {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            draggedIdx: draggedContent.idx,
-            droppedIdx: droppedContent.idx,
+            draggedIdx: draggedContent,
+            droppedIdx: droppedContent,
           }),
         }
       );
@@ -88,7 +89,9 @@ function CreateCourse_v2() {
       // 클라이언트 측 순서 업데이트
       const updatedContents = [...contents];
       const [movedItem] = updatedContents.splice(draggedIdx, 1);
+      const [targetItem] = updatedContents.splice(targetIdx, 1);
       updatedContents.splice(targetIdx, 0, movedItem);
+      updatedContents.splice(draggedIdx, 0, targetItem);
 
       setContents(updatedContents);
       setDraggedIdx(null);
