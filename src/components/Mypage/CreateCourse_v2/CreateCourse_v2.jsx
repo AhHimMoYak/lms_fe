@@ -19,8 +19,7 @@ function CreateCourse_v2() {
     const fetchContents = async () => {
       try {
         const response = await fetch(
-          BASE_URL +
-            `/v1/courses/${courseId}/curriculums/${curriculumId}/contents`
+          `${BASE_URL}/v1/courses/${courseId}/curriculums/${curriculumId}/contents`
         );
         if (!response.ok) {
           throw new Error("콘텐츠를 가져오는 데 실패했습니다.");
@@ -28,7 +27,6 @@ function CreateCourse_v2() {
         const data = await response.json();
         setContents(data.result || []);
         setCurIdx(data.nextIdx || 1);
-        console.log(data.result);
       } catch (error) {
         console.error("콘텐츠를 가져오는 중 오류 발생:", error);
       }
@@ -37,29 +35,29 @@ function CreateCourse_v2() {
     fetchContents();
   }, [curriculumId, courseId]);
 
-  const handleAddContent = (newContent) => {
-    const newIdx = Math.max(...contents.map((content) => content.idx), 0) + 1;
-
-    setContents((prevContents) => [
-      ...prevContents,
-      { ...newContent, idx: newIdx },
-    ]);
-
-    setCurIdx(newIdx + 1);
-  };
-
   const handleShowUpload = () => {
     setIsUploadVisible(true);
   };
 
-  const handleUploadComplete = (newContent) => {
-    console.log("업로드가 완료되었습니다.");
-    handleAddContent(newContent);
+  const handleUploadComplete = async () => {
     setIsUploadVisible(false);
+
+    try {
+      const response = await fetch(
+        `${BASE_URL}/v1/courses/${courseId}/curriculums/${curriculumId}/contents`
+      );
+      if (!response.ok) {
+        throw new Error("콘텐츠를 가져오는 데 실패했습니다.");
+      }
+      const data = await response.json();
+      setContents(data.result || []);
+      setCurIdx(data.nextIdx || 1);
+    } catch (error) {
+      console.error("업로드 후 콘텐츠 가져오는 중 오류 발생:", error);
+    }
   };
 
   const handleDragStart = (idx) => {
-    console.log("handleDragStart Idex : ", idx);
     setDraggedIdx(idx);
   };
 
@@ -71,8 +69,7 @@ function CreateCourse_v2() {
       const droppedContent = contents[targetIdx];
 
       const response = await fetch(
-        BASE_URL +
-          `/v1/courses/${courseId}/curriculums/${curriculumId}/contents/swap`,
+        `${BASE_URL}/v1/courses/${courseId}/curriculums/${curriculumId}/contents/swap`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -100,19 +97,15 @@ function CreateCourse_v2() {
       updatedContents.sort((a, b) => a.idx - b.idx);
       setContents(updatedContents);
       setDraggedIdx(null);
-
-      console.log("순서가 성공적으로 교환되었습니다.");
     } catch (error) {
       console.error("순서 교환 중 오류:", error);
     }
   };
 
-  const handleDeleteContent = async (contentId, idx) => {
-    console.log("handleDeleteContent 에서의 contentId : ", contentId);
+  const handleDeleteContent = async (contentId) => {
     try {
       const response = await fetch(
-        BASE_URL +
-          `/v1/courses/${courseId}/curriculums/${curriculumId}/contents/${contentId}`,
+        `${BASE_URL}/v1/courses/${courseId}/curriculums/${curriculumId}/contents/${contentId}`,
         {
           method: "DELETE",
         }
@@ -122,10 +115,14 @@ function CreateCourse_v2() {
         throw new Error("콘텐츠를 삭제하는 데 실패했습니다.");
       }
 
-      const updatedContents = contents.filter((content) => content.idx !== idx);
-      setContents(updatedContents);
-
-      console.log("콘텐츠가 성공적으로 삭제되었습니다.");
+      const responseAfterDelete = await fetch(
+        `${BASE_URL}/v1/courses/${courseId}/curriculums/${curriculumId}/contents`
+      );
+      if (!responseAfterDelete.ok) {
+        throw new Error("삭제 후 콘텐츠를 가져오는 데 실패했습니다.");
+      }
+      const data = await responseAfterDelete.json();
+      setContents(data.result || []);
     } catch (error) {
       console.error("콘텐츠 삭제 중 오류 발생:", error);
     }
@@ -151,10 +148,7 @@ function CreateCourse_v2() {
             originalFileName={content.originalFileName}
             uploadedAt={content.createdAt}
             content={content}
-            onAdd={() => {
-              handleAddContent();
-            }}
-            onDelete={() => handleDeleteContent(content.contentId, content.idx)}
+            onDelete={() => handleDeleteContent(content.contentId)}
           />
         </div>
       ))}
@@ -168,7 +162,6 @@ function CreateCourse_v2() {
         />
       )}
       <AddContents
-        idx={null}
         curriculumId={curriculumId}
         courseId={courseId}
         institutionId={institutionId}

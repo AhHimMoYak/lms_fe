@@ -3,7 +3,6 @@ import "../../../styles/Mypage/CreateCourse_v2/AddContents.css";
 
 function GetContents({ idx, originalFileName, uploadedAt, content, onDelete }) {
   const handleDeleteClick = () => {
-    console.log("contentId : ", content.contentId);
     if (window.confirm(`${originalFileName}을 삭제하시겠습니까?`)) {
       onDelete(content.idx, idx);
     }

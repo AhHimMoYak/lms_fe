@@ -34,7 +34,6 @@ function UploadContents({
     }
 
     try {
-      // Step 1: 서버에서 presigned URL과 contentId 받아오기
       const encodedFileName = btoa(unescape(encodeURIComponent(file.name)));
       const requestBody = {
         curriculumId,
@@ -58,7 +57,6 @@ function UploadContents({
 
       const { uploadUrl, contentId } = await urlResponse.json();
 
-      // Step 2: 파일 업로드 진행
       const xhr = new XMLHttpRequest();
       xhr.open("PUT", uploadUrl, true);
       xhr.setRequestHeader("Content-Type", file.type);
@@ -86,7 +84,6 @@ function UploadContents({
             const date = new Date();
             const formattedDate = date.toISOString().split("T")[0];
 
-            // contentId와 함께 newContent 생성
             const newContent = {
               id: Date.now(),
               idx: idx,
