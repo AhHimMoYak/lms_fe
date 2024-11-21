@@ -11,6 +11,7 @@ function UploadContents({
   courseId,
   institutionId,
   onUploadComplete,
+  onClose, // 닫기 버튼 동작을 위한 props 추가
 }) {
   const [isUploaded, setIsUploaded] = useState(false);
   const [uploadedFileName, setUploadedFileName] = useState("");
@@ -111,7 +112,9 @@ function UploadContents({
 
   return (
     <div className="create-course-card">
-      <div className="x-icon">
+      <div className="x-icon" onClick={onClose}>
+        {" "}
+        {/* 닫기 버튼 동작 */}
         <MdOutlineClose />
       </div>
       <div className="AddContentsContainer">

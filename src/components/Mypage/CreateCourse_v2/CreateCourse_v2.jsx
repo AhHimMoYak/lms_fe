@@ -159,6 +159,7 @@ function CreateCourse_v2() {
           courseId={courseId}
           institutionId={institutionId}
           onUploadComplete={handleUploadComplete}
+          onClose={() => setIsUploadVisible(false)}
         />
       )}
       <AddContents
