@@ -1,33 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import {useState, useEffect} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
 
 const QuizDetail = () => {
-    const { courseId, quizId } = useParams();
-    const [quiz, setQuiz] = useState(null);
+    const {courseId, examId} = useParams();
+    const [exam, setExam] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchQuiz = async () => {
+        const fetchExam = async () => {
             try {
-                const response = await axios.get(`https://api.ahimmoyak.click/quiz/v1/${courseId}/${quizId}`);
-                setQuiz(response.data);
+                const response = await axios.get(`https://api.ahimmoyak.click/exam/v1/${courseId}/${examId}`);
+                setExam(response.data);
             } catch (error) {
-                console.error(error);
+                console.error("시험 데이터를 불러오는 중 오류 발생:", error);
             }
         };
-        fetchQuiz();
-    }, [courseId, quizId]);
+        fetchExam();
+    }, [courseId, examId]);
 
     return (
         <div>
-            {quiz && (
+            {exam ? (
                 <>
-                    <h2>{quiz.question}</h2>
-                    <ul>{quiz.choices.map((choice, index) => <li key={index}>{choice}</li>)}</ul>
-                    <p>정답 해설: {quiz.explanation}</p>
-                    <button onClick={() => navigate(`/mypage/${courseId}/quiz`)}>확인</button>
+                    <h2>{exam.title}</h2>
+                    <p>{exam.description}</p>
+                    <p><strong>시험 상태:</strong> {exam.status}</p>
+
+                    <h3>문제 목록:</h3>
+                    {exam.quizzes.map((quiz, quizIndex) => (
+                        <div key={quizIndex}>
+                            <h4>문제 {quizIndex + 1}: {quiz.question}</h4>
+                            <ul>
+                                {quiz.choices.map((choice, choiceIndex) => (
+                                    <li key={choiceIndex}>{choice}</li>
+                                ))}
+                            </ul>
+                            <p>정답 해설: {quiz.explanation}</p>
+                        </div>
+                    ))}
+
+                    <button onClick={() => navigate(`/mypage/${courseId}/exam`)}>확인</button>
                 </>
+            ) : (
+                <p>시험 데이터를 불러오는 중입니다...</p>
             )}
         </div>
     );
