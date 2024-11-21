@@ -5,7 +5,7 @@ import UploadContents from "./UploadContents";
 import GetContents from "./GetContents";
 
 const BASE_URL =
-  "https://ubqfzli89b.execute-api.ap-south-1.amazonaws.com/dev/api";
+  "https://82go6sdgrc.execute-api.ap-south-1.amazonaws.com/dev/api";
 
 function CreateCourse_v2() {
   const { curriculumId, courseId } = useParams();
@@ -57,7 +57,7 @@ function CreateCourse_v2() {
   };
 
   const handleDragStart = (idx) => {
-    console.log("handleDragStart Idex : " , idx);
+    console.log("handleDragStart Idex : ", idx);
     setDraggedIdx(idx);
   };
 
@@ -86,12 +86,13 @@ function CreateCourse_v2() {
         throw new Error("순서 업데이트 요청 실패");
       }
 
-      // 클라이언트 측 순서 업데이트
       const updatedContents = [...contents];
-      const [movedItem] = updatedContents.splice(draggedIdx, 1);
-      const [targetItem] = updatedContents.splice(targetIdx, 1);
-      updatedContents.splice(targetIdx, 0, movedItem);
-      updatedContents.splice(draggedIdx, 0, targetItem);
+
+      const tempItem = updatedContents[draggedIdx];
+      const targetItem = updatedContents[targetIdx];
+
+      updatedContents[draggedIdx] = targetItem;
+      updatedContents[targetIdx] = tempItem;
 
       setContents(updatedContents);
       setDraggedIdx(null);
