@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
 
-const QuizDetail = () => {
+const ExamDetail = () => {
     const {courseId, examId} = useParams();
     const [exam, setExam] = useState(null);
     const navigate = useNavigate();
@@ -49,4 +49,4 @@ const QuizDetail = () => {
     );
 };
 
-export default QuizDetail;
+export default ExamDetail;
