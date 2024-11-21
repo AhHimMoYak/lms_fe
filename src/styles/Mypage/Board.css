@@ -142,3 +142,8 @@
     border-radius: 0.5em;
     cursor: pointer;
 }
+.board-images img{
+    text-align: center;
+    margin-top: 1vh;
+    max-width: 100%;
+}
