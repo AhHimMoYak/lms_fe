@@ -38,12 +38,14 @@ function CreateCourse_v2() {
   }, [curriculumId, courseId]);
 
   const handleAddContent = (newContent) => {
-    const newIdx = contents.length + 1;
+    const newIdx = Math.max(...contents.map((content) => content.idx), 0) + 1;
+
     setContents((prevContents) => [
       ...prevContents,
       { ...newContent, idx: newIdx },
     ]);
-    setCurIdx(curIdx + 1);
+
+    setCurIdx(newIdx + 1);
   };
 
   const handleShowUpload = () => {
@@ -65,8 +67,8 @@ function CreateCourse_v2() {
     if (draggedIdx === null || draggedIdx === targetIdx) return;
 
     try {
-      const draggedContent = contents[draggedIdx].idx;
-      const droppedContent = contents[targetIdx].idx;
+      const draggedContent = contents[draggedIdx];
+      const droppedContent = contents[targetIdx];
 
       const response = await fetch(
         BASE_URL +
@@ -75,8 +77,8 @@ function CreateCourse_v2() {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            draggedIdx: draggedContent,
-            droppedIdx: droppedContent,
+            draggedIdx: draggedContent.idx,
+            droppedIdx: droppedContent.idx,
           }),
         }
       );
@@ -86,11 +88,11 @@ function CreateCourse_v2() {
       }
 
       const updatedContents = contents.map((content) => {
-        if (content.idx === draggedContent) {
-          return { ...content, idx: droppedContent };
+        if (content.idx === draggedContent.idx) {
+          return { ...content, idx: droppedContent.idx };
         }
-        if (content.idx === droppedContent) {
-          return { ...content, idx: draggedContent };
+        if (content.idx === droppedContent.idx) {
+          return { ...content, idx: draggedContent.idx };
         }
         return content;
       });
@@ -120,7 +122,6 @@ function CreateCourse_v2() {
         throw new Error("콘텐츠를 삭제하는 데 실패했습니다.");
       }
 
-      // 상태에서 콘텐츠 제거 (뷰에서 삭제)
       const updatedContents = contents.filter((content) => content.idx !== idx);
       setContents(updatedContents);
 
