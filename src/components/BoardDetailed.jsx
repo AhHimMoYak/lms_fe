@@ -70,6 +70,13 @@ function BoardDetailed() {
                         <span className="board-author">{data.user}</span>
                     </div>
                     <div className="board-question">
+                        {data.s3Urls && data.s3Urls.length > 0 && (
+                            <div className="board-images">
+                                {data.s3Urls.map((url, index) => (
+                                    <img key={index} src={url} alt={`Uploaded file ${index + 1}`} className="board-image" />
+                                ))}
+                            </div>
+                        )}
                         <p>{data.content}</p>
                     </div>
                     <div className="board-comment-input">
