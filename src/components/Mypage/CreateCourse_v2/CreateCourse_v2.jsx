@@ -5,7 +5,7 @@ import UploadContents from "./UploadContents";
 import GetContents from "./GetContents";
 
 const BASE_URL =
-  "https://82go6sdgrc.execute-api.ap-south-1.amazonaws.com/dev/api";
+  "https://ybgtg9e2mj.execute-api.ap-south-1.amazonaws.com/dev/api";
 
 function CreateCourse_v2() {
   const { curriculumId, courseId } = useParams();
@@ -85,7 +85,6 @@ function CreateCourse_v2() {
         throw new Error("순서 업데이트 요청 실패");
       }
 
-      // idx 기반으로 로컬 상태 업데이트
       const updatedContents = contents.map((content) => {
         if (content.idx === draggedContent) {
           return { ...content, idx: droppedContent };
@@ -96,7 +95,6 @@ function CreateCourse_v2() {
         return content;
       });
 
-      // idx로 정렬하여 로컬 상태 반영
       updatedContents.sort((a, b) => a.idx - b.idx);
       setContents(updatedContents);
       setDraggedIdx(null);
@@ -104,6 +102,31 @@ function CreateCourse_v2() {
       console.log("순서가 성공적으로 교환되었습니다.");
     } catch (error) {
       console.error("순서 교환 중 오류:", error);
+    }
+  };
+
+  const handleDeleteContent = async (contentId, idx) => {
+    console.log("handleDeleteContent 에서의 contentId : ", contentId);
+    try {
+      const response = await fetch(
+        BASE_URL +
+          `/v1/courses/${courseId}/curriculums/${curriculumId}/contents/${contentId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("콘텐츠를 삭제하는 데 실패했습니다.");
+      }
+
+      // 상태에서 콘텐츠 제거 (뷰에서 삭제)
+      const updatedContents = contents.filter((content) => content.idx !== idx);
+      setContents(updatedContents);
+
+      console.log("콘텐츠가 성공적으로 삭제되었습니다.");
+    } catch (error) {
+      console.error("콘텐츠 삭제 중 오류 발생:", error);
     }
   };
 
@@ -123,12 +146,14 @@ function CreateCourse_v2() {
             curriculumId={curriculumId}
             courseId={courseId}
             institutionId={institutionId}
+            contentId={content.contentId}
             originalFileName={content.originalFileName}
             uploadedAt={content.createdAt}
             content={content}
             onAdd={() => {
               handleAddContent();
             }}
+            onDelete={() => handleDeleteContent(content.contentId, content.idx)}
           />
         </div>
       ))}
