@@ -33,73 +33,79 @@ function UploadContents({
       progressTextRef.current.innerText = "업로드 중... 0%";
     }
 
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", BASE_URL + "/v1/files/upload", true);
-
-    xhr.upload.onprogress = function (event) {
-      if (event.lengthComputable) {
-        const percent = (event.loaded / event.total) * 100;
-        if (progressBarRef.current) {
-          progressBarRef.current.style.width = `${percent}%`;
-        }
-        if (progressTextRef.current) {
-          progressTextRef.current.innerText = `업로드 중... ${Math.round(
-            percent
-          )}%`;
-        }
-      }
-    };
-
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        setUploadedFileName(file.name);
-        setIsUploaded(true);
-
-        if (onUploadComplete) {
-          const date = new Date();
-          const formattedDate = date.toISOString().split("T")[0];
-
-          const newContent = {
-            id: Date.now(),
-            idx: idx,
-            originalFileName: file.name,
-            createdAt: formattedDate,
-          };
-          onUploadComplete(newContent);
-        }
-      } else {
-        alert(`업로드 실패: ${xhr.responseText}`);
-      }
-    };
-
-    xhr.onerror = function () {
-      alert("업로드 실패: 네트워크 오류");
-    };
-
-    const encodedFileName = btoa(unescape(encodeURIComponent(file.name)));
-    const requestBody = {
-      curriculumId,
-      courseId,
-      institutionId,
-      idx,
-      fileName: encodedFileName,
-      contentType: file.type,
-    };
-
     try {
+      // Step 1: 서버에서 presigned URL과 contentId 받아오기
+      const encodedFileName = btoa(unescape(encodeURIComponent(file.name)));
+      const requestBody = {
+        curriculumId,
+        courseId,
+        institutionId,
+        idx,
+        fileName: encodedFileName,
+        contentType: file.type,
+      };
+
       const urlResponse = await fetch(BASE_URL + "/v1/files/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody),
       });
 
-      const urlData = await urlResponse.json();
       if (!urlResponse.ok) {
-        throw new Error(urlData.error || "Pre-signed URL 생성 실패");
+        const errorData = await urlResponse.json();
+        throw new Error(errorData.error || "Pre-signed URL 생성 실패");
       }
 
-      xhr.open("PUT", urlData.uploadUrl, true);
+      const { uploadUrl, contentId } = await urlResponse.json();
+
+      // Step 2: 파일 업로드 진행
+      const xhr = new XMLHttpRequest();
+      xhr.open("PUT", uploadUrl, true);
       xhr.setRequestHeader("Content-Type", file.type);
+
+      xhr.upload.onprogress = function (event) {
+        if (event.lengthComputable) {
+          const percent = (event.loaded / event.total) * 100;
+          if (progressBarRef.current) {
+            progressBarRef.current.style.width = `${percent}%`;
+          }
+          if (progressTextRef.current) {
+            progressTextRef.current.innerText = `업로드 중... ${Math.round(
+              percent
+            )}%`;
+          }
+        }
+      };
+
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          setUploadedFileName(file.name);
+          setIsUploaded(true);
+
+          if (onUploadComplete) {
+            const date = new Date();
+            const formattedDate = date.toISOString().split("T")[0];
+
+            // contentId와 함께 newContent 생성
+            const newContent = {
+              id: Date.now(),
+              idx: idx,
+              contentId,
+              originalFileName: file.name,
+              createdAt: formattedDate,
+            };
+
+            onUploadComplete(newContent);
+          }
+        } else {
+          alert(`업로드 실패: ${xhr.responseText}`);
+        }
+      };
+
+      xhr.onerror = function () {
+        alert("업로드 실패: 네트워크 오류");
+      };
+
       xhr.send(file);
     } catch (error) {
       alert(`업로드 실패: ${error.message}`);
