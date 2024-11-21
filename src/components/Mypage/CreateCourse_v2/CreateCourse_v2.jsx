@@ -62,7 +62,6 @@ function CreateCourse_v2() {
   };
 
   const handleDrop = async (targetIdx) => {
-    console.log("handleDrop Index : ", targetIdx);
     if (draggedIdx === null || draggedIdx === targetIdx) return;
 
     try {
@@ -86,14 +85,19 @@ function CreateCourse_v2() {
         throw new Error("순서 업데이트 요청 실패");
       }
 
-      const updatedContents = [...contents];
+      // idx 기반으로 로컬 상태 업데이트
+      const updatedContents = contents.map((content) => {
+        if (content.idx === draggedContent) {
+          return { ...content, idx: droppedContent };
+        }
+        if (content.idx === droppedContent) {
+          return { ...content, idx: draggedContent };
+        }
+        return content;
+      });
 
-      const tempItem = updatedContents[draggedIdx];
-      const targetItem = updatedContents[targetIdx];
-
-      updatedContents[draggedIdx] = targetItem;
-      updatedContents[targetIdx] = tempItem;
-
+      // idx로 정렬하여 로컬 상태 반영
+      updatedContents.sort((a, b) => a.idx - b.idx);
       setContents(updatedContents);
       setDraggedIdx(null);
 
