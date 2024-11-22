@@ -1,0 +1,110 @@
+.employeeList-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    background-color: #f5f5f5;
+    padding: 3vh;
+}
+
+.employeeList-container {
+    min-height: 60vh;
+    width: 80%;
+    max-width: 120vh;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 1em;
+    padding: 4vh;
+}
+
+.employeeList-title {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 5vh;
+    color: #333;
+}
+
+.employeeList-filter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5vh;
+    margin-bottom: 3vh;
+}
+
+.employeeList-filter input {
+    padding: 1vh;
+    width: 25vh;
+    border: 1px solid #ddd;
+    border-radius: 0.3em;
+}
+
+.employeeList-filter button {
+    padding: 1vh 1.5vh;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0.3em;
+    cursor: pointer;
+}
+
+.employeeList-filter button:hover {
+    background-color: #0056b3;
+}
+
+.employeeList-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2vh;
+}
+
+.employeeList-table th,
+.employeeList-table td {
+    padding: 1.5vh 1.5vh;
+    text-align: center;
+    border: 0.1em solid #ddd;
+}
+
+.employeeList-table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+.employeeList-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.clickable-row {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.clickable-row:hover {
+    background-color: #f1f1f1;
+}
+
+.sortable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.sortable:hover {
+    text-decoration: underline;
+    color: gray;
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5vh;
+}
+
+.pagination button {
+    padding: 0.7vh 1.3vh;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #5a6268;
+}

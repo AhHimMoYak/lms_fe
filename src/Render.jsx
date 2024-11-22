@@ -31,6 +31,8 @@ import ManageFrame from "./components/Education/ManageFrame.jsx";
 import QuizPost from "./pages/QuizPost.jsx"
 import CompanyFrame from "./components/Company/CompanyFrame.jsx"
 import CourseProvideList from "./components/Company/CourseProvideList.jsx";
+import EmployeeList from "./pages/Company/EmployeeList.jsx";
+import CourseProvideList from "./pages/Company/CourseProvideList.jsx";
 import CompanyDetailed from "./components/Company/CompanyDetailed.jsx";
 import VideoPlayer from "./pages/Mypage/VideoPlayer.jsx"
 import AnswerQuiz from "./pages/Quiz/AnswerQuiz.jsx";
@@ -39,6 +41,7 @@ import QuizList from "./pages/Quiz/QuizList.jsx";
 import UpdateQuiz from "./pages/Quiz/UpdateQuiz.jsx";
 import EmployeeList from "./components/Company/EmployeeList.jsx";
 import QuizDetail from "./pages/Quiz/QuizDetail.jsx";
+import EmployeeDetailed from "./pages/Company/EmployeeDetailed.jsx";
 
 function Render() {
     return (
@@ -124,7 +127,8 @@ function Render() {
 
                     <Route path="company/*" element={<CompanyFrame/>}>
                         <Route path="" element={<Dashboard/>}/>
-                        <Route path="employees" element={<EmployeeList/>}/>
+                        <Route path="employees/*" element={<EmployeeList/>}/>
+                        <Route path="employees/info" element={<EmployeeDetailed/>}/>
                         <Route path="courseProvide/list" element={<CourseProvideList/>}/>
                         <Route path="info" element={<CompanyDetailed/>}/>
                         <Route path="user/*" element={<UserInformFrame/>}>
