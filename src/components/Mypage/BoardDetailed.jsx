@@ -1,9 +1,9 @@
-import useAxios from "../hooks/api/useAxios.jsx";
+import useAxios from "../../hooks/api/useAxios.jsx";
 import {useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import "../styles/Mypage/Board.css";
-import {decodeTokenTutor} from "../authentication/decodeTokenTutor.jsx";
-import Comment from "./Comment.jsx";
+import "../../styles/Mypage/Board.css";
+import {decodeTokenTutor} from "../../authentication/decodeTokenTutor.jsx";
+import Comment from "../Comment.jsx";
 import {format} from "date-fns";
 
 function BoardDetailed() {
@@ -18,6 +18,7 @@ function BoardDetailed() {
 
     const onClickEdit = () => {
         navigate(`/mypage/course/${courseProvideId}/board/${boardId}/edit`);
+        // navigate(`/education/course/${courseProvideId}/board/${boardId}/edit`);  // TODO 교육기관일때 이동해야하는 곳
     }
 
     const onClickDelete = () => {
@@ -30,7 +31,7 @@ function BoardDetailed() {
     useEffect(() => {
         if (deleteData==='') {
             if(decodeTokenTutor()){
-                navigate(`/mypage/course/${courseProvideId}/board/${data.type}`);
+                navigate(`/education/course/${courseProvideId}/board/${data.type}`);
             }
             else {
                 navigate(`/mypage/course/${courseProvideId}/board/${data.type}`);
@@ -40,7 +41,7 @@ function BoardDetailed() {
 
     const handleList = () => {
         if(decodeTokenTutor()){
-            navigate(`/mypage/course/${courseProvideId}/board/${data.type}`);
+            navigate(`/education/course/${courseProvideId}/board/${data.type}`);
         }
         else{
             navigate(`/mypage/course/${courseProvideId}/board/${data.type}`);

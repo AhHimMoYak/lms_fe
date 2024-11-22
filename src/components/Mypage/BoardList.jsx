@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import "../styles/Mypage/BoardList.css";
-import useAxios from "../hooks/api/useAxios.jsx";
+import "../../styles/Mypage/BoardList.css";
+import useAxios from "../../hooks/api/useAxios.jsx";
 import {useNavigate, useParams} from "react-router-dom";
 
 function BoardList() {
@@ -13,7 +13,7 @@ function BoardList() {
     const {data, fetchData } = useAxios();
     const {courseProvideId, type} = useParams();
 
-
+    console.log(courseProvideId);
     const fetchBoards = async (lastKey = null, reset = false) => {
         setLoading(true);
         try {
@@ -68,10 +68,13 @@ function BoardList() {
 
     const handleWriteBoard = () => {
         navigate(`/mypage/course/${courseProvideId}/board/${type}/post`);
+        // TODO
+       // navigate(`/education/course/${courseProvideId}/board/${type}/post`);   //교육기관일때 이동해야하는 곳
     }
 
     const handleBoardDetail = (boardId) =>{
         navigate(`/mypage/course/${courseProvideId}/board/${type}/${boardId}`);
+       // navigate(`/education/course/${courseProvideId}/board/${type}/${boardId}`); // 교육기관일때 이동해야한느 곳
     }
     return (
         <div className="board-list-container">
