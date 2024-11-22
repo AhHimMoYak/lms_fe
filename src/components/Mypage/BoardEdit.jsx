@@ -23,7 +23,7 @@ function BoardEdit() {
             title: title,
             content: content,
         };
-        updateFetchData(`https://api.ahimmoyak.click/board/v1/courseProvide/${boardId}`, "PATCH", requestDto);
+        updateFetchData(`https://api.ahimmoyak.click/board/v1/${boardId}`, "PATCH", requestDto);
     };
 
     const handleList = () => {
