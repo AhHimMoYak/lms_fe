@@ -1,0 +1,115 @@
+
+.affiliation-post-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    padding: 3vh;
+}
+
+.affiliation-post-container {
+    background-color: white;
+    width: 80%;
+    max-width: 120vh;
+    border-radius: 1em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 4vh;
+}
+
+
+.affiliation-post-title {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 5vh;
+    color: #333;
+}
+
+.affiliation-post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.affiliation-post-form-group {
+    display: flex;
+    gap: 1vh;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.affiliation-post-form-group label {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    flex-shrink: 0;
+}
+
+.affiliation-post-form-group input {
+    flex: 1;
+    padding: 1vh;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 0.3em;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.affiliation-post-form-group input:focus {
+    border-color: #007bff;
+}
+
+.affiliation-post-form-group-button {
+    padding: 1vh 1.5vh;
+    font-size: 1em;
+    font-weight: bold;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 0.3em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.affiliation-post-form-group-button:hover {
+    background-color: #0056b3;
+}
+
+/* Search Results Styles */
+.affiliation-post-search-results {
+    margin-top: 2vh;
+    background-color: #ffffff;
+    border-radius: 0.5em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 2vh;
+}
+
+.affiliation-post-search-results ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.affiliation-post-search-result-item {
+    padding: 1.5vh;
+    border-bottom: 0.1em solid #ddd;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.affiliation-post-search-result-item:last-child {
+    border-bottom: none;
+}
+
+.affiliation-post-search-result-item:hover {
+    background-color: #f9f9f9;
+}
+
+.affiliation-post-no-results {
+    text-align: center;
+    font-size: 1em;
+    font-style: italic;
+    color: #666;
+    margin-top: 2vh;
+}
