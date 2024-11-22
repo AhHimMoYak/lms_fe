@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import "../styles/Mypage/BoardList.css";
-import useAxios from "../hooks/api/useAxios.jsx";
+import "../../styles/Mypage/BoardList.css";
+import useAxios from "../../hooks/api/useAxios.jsx";
 import {useNavigate} from "react-router-dom";
 
-function BoardList() {
+function BoardTotalList() {
     const [boards, setBoards] = useState([]); // 전체 게시글 리스트
     const [lastEvaluatedKeys, setLastEvaluatedKeys] = useState([]); // 각 페이지의 키들을 저장
     const [loading, setLoading] = useState(false); // 로딩 상태 관리
@@ -107,4 +107,4 @@ function BoardList() {
     );
 }
 
-export default BoardList;
+export default BoardTotalList;
