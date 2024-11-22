@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 import "../../../styles/Mypage/CreateCourse_v2/AddContents.css";
 
 const BASE_URL =
-  "https://ybgtg9e2mj.execute-api.ap-south-1.amazonaws.com/dev/api";
+  "https://lkxyziuwrk.execute-api.ap-south-1.amazonaws.com/dev/api";
 
 function UploadContents({
   idx,

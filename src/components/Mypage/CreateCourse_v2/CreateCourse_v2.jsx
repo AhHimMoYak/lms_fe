@@ -5,7 +5,7 @@ import UploadContents from "./UploadContents";
 import GetContents from "./GetContents";
 
 const BASE_URL =
-  "https://ybgtg9e2mj.execute-api.ap-south-1.amazonaws.com/dev/api";
+  "https://lkxyziuwrk.execute-api.ap-south-1.amazonaws.com/dev/api";
 
 function CreateCourse_v2() {
   const { curriculumId, courseId } = useParams();
@@ -25,6 +25,7 @@ function CreateCourse_v2() {
           throw new Error("콘텐츠를 가져오는 데 실패했습니다.");
         }
         const data = await response.json();
+        console.log("Fetched contents:", data);
         setContents(data.result || []);
         setCurIdx(data.nextIdx || 1);
       } catch (error) {
@@ -105,7 +106,8 @@ function CreateCourse_v2() {
   const handleDeleteContent = async (contentId) => {
     try {
       const response = await fetch(
-        `${BASE_URL}/v1/courses/${courseId}/curriculums/${curriculumId}/contents/${contentId}`,
+        BASE_URL +
+          `/v1/courses/${courseId}/curriculums/${curriculumId}/contents/${contentId}`,
         {
           method: "DELETE",
         }
@@ -116,7 +118,8 @@ function CreateCourse_v2() {
       }
 
       const responseAfterDelete = await fetch(
-        `${BASE_URL}/v1/courses/${courseId}/curriculums/${curriculumId}/contents`
+        BASE_URL +
+          `/v1/courses/${courseId}/curriculums/${curriculumId}/contents`
       );
       if (!responseAfterDelete.ok) {
         throw new Error("삭제 후 콘텐츠를 가져오는 데 실패했습니다.");
