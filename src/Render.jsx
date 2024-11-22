@@ -30,18 +30,20 @@ import EducationFrame from "./components/Education/EducationFrame.jsx";
 import ManageFrame from "./components/Education/ManageFrame.jsx";
 import QuizPost from "./pages/QuizPost.jsx"
 import CompanyFrame from "./components/Company/CompanyFrame.jsx"
-import CourseProvideList from "./components/Company/CourseProvideList.jsx";
 import EmployeeList from "./pages/Company/EmployeeList.jsx";
 import CourseProvideList from "./pages/Company/CourseProvideList.jsx";
 import CompanyDetailed from "./components/Company/CompanyDetailed.jsx";
 import VideoPlayer from "./pages/Mypage/VideoPlayer.jsx"
 import AnswerQuiz from "./pages/Quiz/AnswerQuiz.jsx";
-import CreateQuiz from "./pages/Quiz/CreateQuiz.jsx";
-import QuizList from "./pages/Quiz/QuizList.jsx";
-import UpdateQuiz from "./pages/Quiz/UpdateQuiz.jsx";
-import EmployeeList from "./components/Company/EmployeeList.jsx";
-import QuizDetail from "./pages/Quiz/QuizDetail.jsx";
 import EmployeeDetailed from "./pages/Company/EmployeeDetailed.jsx";
+import CreateExam from "./pages/Quiz/CreateExam.jsx";
+import ExamDetail from "./pages/Quiz/ExamDetail.jsx";
+import UpdateExam from "./pages/Quiz/UpdateExam.jsx";
+import ExamList from "./pages/Quiz/ExamList.jsx";
+import CreateCompany from "./pages/Mypage/CreateCompany.jsx";
+import SubmitEmployeeList from "./pages/Company/SubmitEmployeeList.jsx";
+import CompanyEdit from "./pages/Company/CompanyEdit.jsx";
+import EmployeeAffiliation from "./pages/Company/EmployeeAffiliation.jsx";
 
 function Render() {
     return (
@@ -79,12 +81,12 @@ function Render() {
                             <Route path="reconfirm" element={<PasswordPrompt/>}/>
                             <Route path="update" element={<UpdateUser/>}/>
                         </Route>
-                        <Route path=":courseId/quiz" element={<MypageFrame />}>
-                            <Route index element={<QuizList />} /> {/* /quiz - 퀴즈 목록 */}
-                            <Route path="create" element={<CreateQuiz />} /> {/* /quiz/create - 퀴즈 생성 */}
-                            <Route path=":quizId" element={<QuizDetail />} /> {/* /quiz/:quizId - 퀴즈 조회 */}
-                            <Route path=":quizId/update" element={<UpdateQuiz />} /> {/* /quiz/:quizId/update - 퀴즈 수정 */}
-                            <Route path=":quizId/answer" element={<AnswerQuiz />} /> {/* /quiz/:quizId/answer - 퀴즈 문제 풀기 */}
+                        <Route path=":courseId/exam" element={<MypageFrame />}>
+                            <Route index element={<ExamList />} />
+                            <Route path="create" element={<CreateExam />} />
+                            <Route path=":quizId" element={<ExamDetail />} />
+                            <Route path=":quizId/update" element={<UpdateExam />} />
+                            <Route path=":quizId/answer" element={<AnswerQuiz />} />
                         </Route>
 
                     </Route>
@@ -126,11 +128,15 @@ function Render() {
                     {/* -----------------------------------------회사 페이지 라우팅 ------------------------------------- */}
 
                     <Route path="company/*" element={<CompanyFrame/>}>
-                        <Route path="" element={<Dashboard/>}/>
+                        <Route path="" element={<CompanyDetailed/>}/>
+                        <Route path="create" element={<CreateCompany/>}/>
                         <Route path="employees/*" element={<EmployeeList/>}/>
                         <Route path="employees/info" element={<EmployeeDetailed/>}/>
+                        <Route path="employee/affiliation" element={<EmployeeAffiliation/>}/>
                         <Route path="courseProvide/list" element={<CourseProvideList/>}/>
+                        <Route path="courseProvide/submit" element={<SubmitEmployeeList/>}/>
                         <Route path="info" element={<CompanyDetailed/>}/>
+                        <Route path="edit" element={<CompanyEdit/>}/>
                         <Route path="user/*" element={<UserInformFrame/>}>
                             <Route path="" element={<PasswordPrompt/>}/>
                             <Route path="reconfirm" element={<PasswordPrompt/>}/>
