@@ -35,6 +35,7 @@ import CourseProvideList from "./components/Company/CourseProvideList.jsx";
 import CompanyDetailed from "./components/Company/CompanyDetailed.jsx";
 import VideoPlayer from "./pages/Mypage/VideoPlayer.jsx"
 import ManagementPage from "./pages/Mypage/ManagementPage.jsx";
+import InstitutionPage from "./pages/Mypage/InstitutionPage.jsx";
 
 function Render() {
     return (
@@ -54,7 +55,7 @@ function Render() {
                         <Route path="" element={<Dashboard/>}/>
                         <Route path="dashboard" element={<Dashboard/>}/>
                         <Route path="course" element={<CourseList/>}/>
-
+                        <Route path="institution" element={<InstitutionPage/>}/>
                         <Route path="course/:courseId" element={<CourseFrame/>}>
                             <Route path="" element={<CourseDetailed/>}/>
                             <Route path="contents" element={<CourseDetailed/>}/>
