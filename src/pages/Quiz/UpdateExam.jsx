@@ -3,26 +3,26 @@ import {useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
 
 const UpdateExam = () => {
-    const {courseId, quizId} = useParams();
+    const {courseId, examId} = useParams();
     const [examData, setExamData] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchExam = async () => {
             try {
-                const response = await axios.get(`https://api.ahimmoyak.click/exam/v1/${quizId}`);
+                const response = await axios.get(`https://api.ahimmoyak.click/exam/v1/${examId}`);
                 setExamData(response.data);
             } catch (error) {
                 console.error("시험 데이터를 불러오는 중 오류 발생:", error);
             }
         };
         fetchExam();
-    }, [courseId, quizId]);
+    }, [courseId, examId]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`https://api.ahimmoyak.click/exam/v1/${quizId}`, examData);
+            await axios.put(`https://api.ahimmoyak.click/exam/v1/${examId}`, examData);
             navigate(`/mypage/${courseId}/exam`);
         } catch (error) {
             console.error("시험 수정 중 오류 발생:", error);

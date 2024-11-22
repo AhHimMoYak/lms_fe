@@ -8,7 +8,7 @@ const ExamCreate = () => {
     const [examData, setExamData] = useState({
         title: '',
         description: '',
-        status: 'NOT_STARTED',
+        examStatus: 'NOT_STARTED',
         courseId: courseId,
         quizzes: [],
     });
@@ -94,8 +94,8 @@ const ExamCreate = () => {
                 <div>
                     <label>시험 상태:</label>
                     <select
-                        name="status"
-                        value={examData.status}
+                        name="examStatus"
+                        value={examData.examStatus}
                         onChange={handleExamChange}
                         required
                     >

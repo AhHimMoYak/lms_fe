@@ -48,6 +48,7 @@ import CreateCompany from "./pages/Mypage/CreateCompany.jsx";
 import SubmitEmployeeList from "./pages/Company/SubmitEmployeeList.jsx";
 import CompanyEdit from "./pages/Company/CompanyEdit.jsx";
 import EmployeeAffiliation from "./pages/Company/EmployeeAffiliation.jsx";
+import QuizFormFrame from "./pages/Quiz/QuizFormFrame.jsx";
 
 function Render() {
     return (
@@ -86,12 +87,13 @@ function Render() {
                             <Route path="reconfirm" element={<PasswordPrompt/>}/>
                             <Route path="update" element={<UpdateUser/>}/>
                         </Route>
-                        <Route path=":courseId/exam" element={<MypageFrame />}>
-                            <Route index element={<ExamList />} />
+
+                        <Route path=":courseId/exam" element={<QuizFormFrame />}>
+                            <Route path="" element={<ExamList />} />
                             <Route path="create" element={<CreateExam />} />
-                            <Route path=":quizId" element={<ExamDetail />} />
-                            <Route path=":quizId/update" element={<UpdateExam />} />
-                            <Route path=":quizId/answer" element={<AnswerQuiz />} />
+                            <Route path=":examId" element={<ExamDetail />} />
+                            <Route path=":examId/update" element={<UpdateExam />} />
+                            <Route path=":examId/answer" element={<AnswerQuiz />} />
                         </Route>
 
                     </Route>
