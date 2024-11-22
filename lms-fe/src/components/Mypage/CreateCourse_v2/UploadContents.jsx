@@ -14,6 +14,7 @@ function UploadContents({
 }) {
   const [isUploaded, setIsUploaded] = useState(false);
   const [uploadedFileName, setUploadedFileName] = useState("");
+  const [contentTitle, setContentTitle] = useState("");
   const progressBarRef = useRef(null);
   const progressTextRef = useRef(null);
 
@@ -23,6 +24,11 @@ function UploadContents({
 
     if (!file) {
       alert("파일을 선택해 주세요.");
+      return;
+    }
+
+    if (!contentTitle.trim()) {
+      alert("콘텐츠 제목을 입력해 주세요.");
       return;
     }
 
@@ -42,6 +48,7 @@ function UploadContents({
         idx,
         fileName: encodedFileName,
         contentType: file.type,
+        contentTitle,
       };
 
       const urlResponse = await fetch(BASE_URL + "/v1/files/upload", {
@@ -55,7 +62,8 @@ function UploadContents({
         throw new Error(errorData.error || "Pre-signed URL 생성 실패");
       }
 
-      const { uploadUrl, contentId } = await urlResponse.json();
+      const { uploadUrl, contentId, s3Url, contentType } =
+        await urlResponse.json();
 
       const xhr = new XMLHttpRequest();
       xhr.open("PUT", uploadUrl, true);
@@ -90,6 +98,9 @@ function UploadContents({
               contentId,
               originalFileName: file.name,
               createdAt: formattedDate,
+              contentTitle,
+              s3Url,
+              contentType,
             };
 
             onUploadComplete(newContent);
@@ -120,13 +131,21 @@ function UploadContents({
         <div className="upload-area">
           {!isUploaded && (
             <>
+              <input
+                type="text"
+                id={`contentTitleInput-${idx}`}
+                placeholder="콘텐츠 제목을 입력하세요"
+                value={contentTitle}
+                onChange={(e) => setContentTitle(e.target.value)}
+              />
               <input type="file" id={`fileInput-${idx}`} />
               <button onClick={uploadFile}>업로드</button>
             </>
           )}
           {isUploaded && (
             <div className="upload-complete">
-              <p>{uploadedFileName}</p>
+              <p>파일명: {uploadedFileName}</p>
+              <p>제목: {contentTitle}</p>
               <p>업로드 완료!</p>
             </div>
           )}
