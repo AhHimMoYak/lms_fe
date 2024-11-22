@@ -35,7 +35,7 @@ const Management = () => {
     const handleConfirmEnrollments = async (courseProvideId) => {
         try {
             await patchData(`/institution/${courseProvideId}/registration`, "PATCH");
-            alert("참여자 확인 후 계약이 완료되었습니다. 이제 강의를 볼 수 있습니다.");
+            alert("참여자 확인 후 수강신청이 완료되었습니다. 이제 강의를 볼 수 있습니다.");
             // 등록 완료 후 데이터를 다시 가져와서 업데이트
             await fetchData("/institution", "GET");
         } catch (error) {
@@ -68,7 +68,7 @@ const Management = () => {
     return (
         <div className="mypage-container">
             <div className="main-container">
-                <h2 className="contract-title">계약 목록</h2>
+                <h2 className="contract-title">수강 신청 목록</h2>
                 <ul className="contract-list">
                     {data.courseDetailResponseDtoList.map((course, index) => (
                         <li key={index} className="contract-item" onClick={() => handleDetail(course.courseProvideId)}>
@@ -100,7 +100,7 @@ const Management = () => {
                                             handleConfirmEnrollments(course.courseProvideId);
                                         }}
                                     >
-                                        참여자 확인 및 계약 완료
+                                        참여자 확인 및 수강 접수 완료
                                     </button>
                                 )}
                                 {course.state === "NOT_STARTED" && (
