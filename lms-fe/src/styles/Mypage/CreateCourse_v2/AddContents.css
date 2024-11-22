@@ -148,6 +148,12 @@
   border: none;
   background-color: rgb(139, 240, 243);
   border-radius: 10px;
+  padding: 0 1rem;
+}
+
+.upload-area > input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 1rem;
 }
 
 .progress-bar-container {
