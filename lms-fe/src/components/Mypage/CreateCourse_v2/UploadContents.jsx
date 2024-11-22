@@ -138,8 +138,10 @@ function UploadContents({
                 value={contentTitle}
                 onChange={(e) => setContentTitle(e.target.value)}
               />
-              <input type="file" id={`fileInput-${idx}`} />
-              <button onClick={uploadFile}>업로드</button>
+              <div className="file-upload-area">
+                <input type="file" id={`fileInput-${idx}`} />
+                <button onClick={uploadFile}>업로드</button>
+              </div>
             </>
           )}
           {isUploaded && (
