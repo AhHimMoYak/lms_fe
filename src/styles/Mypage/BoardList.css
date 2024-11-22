@@ -12,7 +12,30 @@
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
+.board-total-table {
+    width: 80%;
+    border-collapse: collapse; /* 테두리와 셀 사이의 간격 제거 */
+    border-radius: 0.5em;
+    margin-left: 8%;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.board-total-table th {
+    background-color: #cce1ff;
+    padding: 1em 0.8em;
+    border-bottom: 0.1em solid #ddd;
+    text-align: center;
+    font-size: 0.8em;
+    width: 20%;
+}
+.board-total-table tr {
+    background-color: #f9f9f9; /* 기본 배경색 */
+    transition: background-color 0.3s; /* 배경색 전환 애니메이션 */
+    padding: 0.01em;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    font-size: 1em;
+}
 .board-table th {
     background-color: #cce1ff;
     padding: 1em 0.8em;
