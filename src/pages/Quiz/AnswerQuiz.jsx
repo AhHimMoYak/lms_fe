@@ -9,10 +9,11 @@ const AnswerExam = () => {
     const [feedback, setFeedback] = useState('');
     const navigate = useNavigate();
 
+
     useEffect(() => {
         const fetchExam = async () => {
             try {
-                const response = await axios.get(`https://api.ahimmoyak.click/exam/v1/${courseId}/${examId}`);
+                const response = await axios.get(`https://api.ahimmoyak.click/exam/v1/${examId}`);
                 setExam(response.data);
                 setAnswers(new Array(response.data.quizzes.length).fill(null)); // 초기 답안 배열 설정
             } catch (error) {
@@ -29,24 +30,18 @@ const AnswerExam = () => {
     };
 
     const handleSubmitExam = async () => {
-        try {
+
             // 시험 답안 제출
-            const response = await axios.post(`https://api.ahimmoyak.click/exam/v1/${courseId}/${examId}/submit`, {
+            const response = await axios.post(`https://api.ahimmoyak.click/exam/v1/${examId}/submit`, {
                 answers,
             });
 
-            // 성공 메시지와 해설 표시
-            setFeedback(response.data.message);
-
             // 시험 상태를 '완료됨'으로 업데이트
-            await axios.patch(`https://api.ahimmoyak.click/exam/v1/${courseId}/${examId}/complete`);
+            await axios.patch(`https://api.ahimmoyak.click/exam/v1/${examId}/status`);
 
             alert("시험이 제출되었습니다. 상태가 업데이트되었습니다.");
             navigate(`/mypage/${courseId}/exam`);
-        } catch (error) {
-            setFeedback('시험 제출 중 오류가 발생했습니다.');
-            console.error("시험 제출 오류:", error);
-        }
+
     };
 
     return (
@@ -55,9 +50,9 @@ const AnswerExam = () => {
                 <>
                     <h2>{exam.title}</h2>
                     <p>{exam.description}</p>
-                    <p><strong>현재 상태:</strong> {exam.status}</p>
+                    <p><strong>현재 상태:</strong> {exam.examStatus}</p>
 
-                    {exam.status === "NOT_TAKEN" && (
+                    {exam.examStatus === "NOT_STARTED" && (
                         <>
                             {/* 퀴즈 목록 */}
                             {exam.quizzes.map((quiz, quizIndex) => (

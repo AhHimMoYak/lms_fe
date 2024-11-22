@@ -40,11 +40,11 @@ const ExamList = () => {
                     <div key={exam.id} className="exam-card">
                         <h3>{exam.title}</h3>
                         <p>{exam.description}</p>
-                        <p><strong>상태:</strong> {exam.status}</p>
+                        <p><strong>상태:</strong> {exam.examStatus}</p>
                         <button onClick={() => navigate(`/mypage/${courseId}/exam/${exam.id}`)}>조회</button>
                         <button onClick={() => navigate(`/mypage/${courseId}/exam/${exam.id}/update`)}>수정</button>
                         <button onClick={() => deleteExam(exam.id)}>삭제</button>
-                        {exam.status === "NOT_TAKEN" && (
+                        {exam.examStatus === "NOT_TAKEN" && (
                             <button onClick={() => navigate(`/mypage/${courseId}/exam/${exam.id}/take`)}>시험 보기</button>
                         )}
                     </div>
