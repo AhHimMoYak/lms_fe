@@ -13,7 +13,12 @@ function BoardDetailed() {
     const {courseProvideId, boardId}= useParams();
 
     useEffect(() => {
-        fetchData(`https://api.ahimmoyak.click/board/v1/${boardId}`, "GET");
+        if (boardId) {
+            console.log(`Fetching data for boardId: ${boardId}`);
+            fetchData(`https://api.ahimmoyak.click/board/v1/${boardId}`, "GET");
+        } else {
+            console.error("Invalid boardId: ", boardId);
+        }
     }, [boardId]);
 
     const onClickEdit = () => {
@@ -24,10 +29,10 @@ function BoardDetailed() {
     const onClickDelete = () => {
         const isConfirmed = window.confirm("정말로 삭제하시겠습니까?");
         if (isConfirmed) {
-            deleteFetchData(`https://api.ahimmoyak.click/board/v1/courseProvide/${boardId}`, "DELETE");
+            deleteFetchData(`https://api.ahimmoyak.click/board/v1/${boardId}`, "DELETE");
         }
     };
-    console.log(deleteData);
+
     useEffect(() => {
         if (deleteData==='') {
             if(decodeTokenTutor()){

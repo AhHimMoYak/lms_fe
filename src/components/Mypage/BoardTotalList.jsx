@@ -13,6 +13,7 @@ function BoardTotalList() {
     const {data, fetchData } = useAxios();
 
     const userName = "난중에고치기";
+    console.log(userName);
     const fetchBoards = async (lastKey = null, reset = false) => {
         setLoading(true);
         try {
@@ -42,7 +43,8 @@ function BoardTotalList() {
     }, []);
 
     useEffect(() => {
-        if (data) {
+        console.log("Fetched Data:", data); // 데이터 검증
+        if (data && data.items) {
             setBoards(data.items);
             setLastEvaluatedKeys([data.lastEvaluatedKey || null]);
         }
