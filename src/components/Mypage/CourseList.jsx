@@ -1,25 +1,22 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import "../../styles/Mypage/CourseList.css";
 import useAxios from "../../hooks/api/useAxios.jsx";
-import { useLocation, useNavigate } from "react-router-dom";
-import { decodeTokenTutor } from "../../authentication/decodeTokenTutor.jsx";
-import { PlusSquare } from "react-feather";
+import {useLocation, useNavigate} from "react-router-dom";
+import {decodeTokenTutor} from "../../authentication/decodeTokenTutor.jsx";
 
 function CourseList() {
     const navigate = useNavigate();
     const [pageSize, setPageSize] = useState(8); // 페이지 크기 설정
     const query = new URLSearchParams(useLocation().search);
     const page = parseInt(query.get("page")) || 1;
-    const { data: courseData, error, fetchData: fetchUserCourse } = useAxios();
+    const {data: courseData, error, fetchData: fetchUserCourse} = useAxios();
 
     useEffect(() => {
         fetchUserCourse(`/course`, "GET");
     }, []);
 
     useEffect(() => {
-        if (courseData) {
-            console.log(courseData);
-        }
+
     }, [courseData]);
 
     const handleRowClick = (courseid) => {
@@ -55,32 +52,33 @@ function CourseList() {
                             강좌 생성
                         </button>
                     ) : (
-                        <div />
+                        <div/>
                     )}
                 </div>
                 <table className="mycourse-list-table">
                     <thead>
-                        <tr>
-                            <td>No.</td>
-                            <th>코스 제목</th>
-                            <th>강사</th>
-                        </tr>
+                    <tr>
+                        <td>No.</td>
+                        <th>코스 제목</th>
+                        <th>강사</th>
+                    </tr>
                     </thead>
 
                     <tbody>
-                        {currentCourses && currentCourses.length > 0 ? (
-                            currentCourses.map((courseItem, index) => (
-                                <tr key={index} onClick={() => handleRowClick(currentCourses[index].id)} className="course-clickable-row">
-                                    <td>No.{(page - 1) * pageSize + index + 1}</td>
-                                    <td>{courseItem.title}</td>
-                                    <td>{courseItem.tutor || "N/A"}</td>
-                                </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="5">{decodeTokenTutor() ? "등록된 강좌가 없습니다" : "수강 중인 코스가 없습니다"}</td>
+                    {currentCourses && currentCourses.length > 0 ? (
+                        currentCourses.map((courseItem, index) => (
+                            <tr key={index} onClick={() => handleRowClick(currentCourses[index].id)}
+                                className="course-clickable-row">
+                                <td>No.{(page - 1) * pageSize + index + 1}</td>
+                                <td>{courseItem.title}</td>
+                                <td>{courseItem.tutor || "N/A"}</td>
                             </tr>
-                        )}
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="5">{decodeTokenTutor() ? "등록된 강좌가 없습니다" : "수강 중인 코스가 없습니다"}</td>
+                        </tr>
+                    )}
                     </tbody>
                 </table>
 
@@ -92,7 +90,7 @@ function CourseList() {
                 ></div>
 
                 <div className="courselist-pagination">
-                    {Array.from({ length: totalPages }, (_, index) => (
+                    {Array.from({length: totalPages}, (_, index) => (
                         <button
                             key={index}
                             onClick={() => handlePageChange(index + 1)}

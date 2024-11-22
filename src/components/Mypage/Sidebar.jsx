@@ -41,6 +41,10 @@ const Sidebar = () => {
                         <NavLink to="/mypage/user/reconfirm" className={() => (checkIsActive("/mypage/user") ? "sidebar_active" : "")}>
                             회원정보
                         </NavLink>
+                        <NavLink to="/mypage/institution"
+                                 className={() => (checkIsActive("/mypage/institution") ? "sidebar_active" : "")}>
+                            교육기관 관리
+                        </NavLink>
                     </li>
                 </ul>
             </nav>
