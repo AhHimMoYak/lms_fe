@@ -1,0 +1,76 @@
+.comment {
+    text-align: left;
+    font-size: 0.9em;
+}
+
+.save-button,
+.cancel-button {
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-left: 5px;
+}
+
+.save-button:hover {
+    background-color: #e8f5e9;
+    border-color: #66bb6a;
+}
+
+.cancel-button:hover {
+    background-color: #ffebee;
+    border-color: #e57373;
+}
+
+.comment-input {
+    flex-grow: 1;
+    margin-right: 10px;
+    width: 93%;
+    height: 5vh;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #dcdcdc;
+}
+.comment-userName{
+    border-bottom: 0.1vw solid silver;
+}
+.comment-item {
+    padding: 10px;
+    border-bottom: 0.1vw solid #e0e0e0;
+    margin-bottom: 8px;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.comment-date {
+    color: #757575;
+    font-size: 0.9em;
+    text-align: right;
+}
+.comment-edit-button, .comment-delete-button {
+    padding: 0.3em 0.5em;
+    border: none;
+    border-radius: 0.3em;
+    cursor: pointer;
+    font-size: 0.8em;
+    text-align: right;
+}
+.comment-actions{
+    margin-left: auto;
+    display: flex;
+    gap: 1em;
+}
+
+.comment-content {
+    padding: 0.5em;
+    background-color: #d3d3d3;
+    border-radius: 0.5em;
+    font-size: 0.9em;
+    margin-top: 0.1em;
+}

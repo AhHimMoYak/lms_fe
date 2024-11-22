@@ -27,7 +27,10 @@ function CourseFrame() {
                     <NavLink to="live" className={() => (checkIsActive("live") ? "course_tab_active" : "")}>
                         라이브
                     </NavLink>
-                    <NavLink to="qna" className={() => (checkIsActive("qna") ? "course_tab_active" : "")}>
+                    <NavLink to="board/Notice" className={() => (checkIsActive("board/Notice") ? "course_tab_active" : "")}>
+                        Notice
+                    </NavLink>
+                    <NavLink to="board/QnA" className={() => (checkIsActive("board/QnA") ? "course_tab_active" : "")}>
                         QnA
                     </NavLink>
                 </div>
