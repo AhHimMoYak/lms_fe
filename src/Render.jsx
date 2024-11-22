@@ -16,25 +16,40 @@ import Dashboard from "./pages/Mypage/Dashboard.jsx";
 import CourseList from "./pages/Mypage/CourseList.jsx";
 import CourseDetailed from "./pages/Mypage/CourseDetailed.jsx";
 import LiveDetail from "./pages/Mypage/LiveDetail.jsx";
-import QnAList from "./pages/Mypage/QnAList.jsx";
-import QnATotalList from "./pages/Mypage/QnATotalList.jsx";
 import CreateCourse from "./pages/Mypage/CreateCourse.jsx";
 import CreateCurriculum from "./pages/Mypage/CreateCurriculum.jsx";
 import UserInformFrame from "./components/Mypage/UserInformFrame.jsx";
-import QnADetailed from "./pages/Mypage/QnADetailed.jsx";
-import QnAEdit from "./pages/Mypage/QnAEdit.jsx";
-import QnAPost from "./pages/Mypage/QnAPost.jsx";
 import CreateLive from "./pages/Mypage/CreateLive.jsx";
 import ModifyCourse from "./pages/Mypage/ModifyCourse.jsx";
 import EducationFrame from "./components/Education/EducationFrame.jsx";
 import ManageFrame from "./components/Education/ManageFrame.jsx";
 import QuizPost from "./pages/QuizPost.jsx";
 import CompanyFrame from "./components/Company/CompanyFrame.jsx";
-import EmployeeList from "./components/Company/EmployeeList.jsx";
-import CourseProvideList from "./components/Company/CourseProvideList.jsx";
+import EmployeeList from "./pages/Company/EmployeeList.jsx";
+import CourseProvideList from "./pages/Company/CourseProvideList.jsx";
 import CompanyDetailed from "./components/Company/CompanyDetailed.jsx";
 import VideoPlayer from "./pages/Mypage/VideoPlayer.jsx";
-import CreateCoursePage_v2 from "./pages/Mypage/CreateCoursePage_v2.jsx";
+import BoardList from "./pages/Mypage/BoardList.jsx";
+import BoardPost from "./pages/Mypage/BoardPost.jsx";
+import BoardDetailed from "./pages/Mypage/BoardDetailed.jsx";
+import BoardEdit from "./pages/Mypage/BoardEdit.jsx";
+import BoardTotalList from "./pages/Mypage/BoardTotalList.jsx";
+import BoardTotalFrame from "./components/Education/BoardTotalFrame.jsx";
+import BoardListTotal from "./pages/Mypage/BoardListTotal.jsx";
+import ManagementPage from "./pages/Mypage/ManagementPage.jsx";
+import InstitutionPage from "./pages/Mypage/InstitutionPage.jsx";
+import AnswerQuiz from "./pages/Quiz/AnswerQuiz.jsx";
+import EmployeeDetailed from "./pages/Company/EmployeeDetailed.jsx";
+import CreateExam from "./pages/Quiz/CreateExam.jsx";
+import ExamDetail from "./pages/Quiz/ExamDetail.jsx";
+import UpdateExam from "./pages/Quiz/UpdateExam.jsx";
+import ExamList from "./pages/Quiz/ExamList.jsx";
+import CreateCompany from "./pages/Mypage/CreateCompany.jsx";
+import SubmitEmployeeList from "./pages/Company/SubmitEmployeeList.jsx";
+import CompanyEdit from "./pages/Company/CompanyEdit.jsx";
+import EmployeeAffiliation from "./pages/Company/EmployeeAffiliation.jsx";
+import QuizFormFrame from "./pages/Quiz/QuizFormFrame.jsx";
+import CreateCourse_v2 from "./components/Mypage/CreateCourse_v2/CreateCourse_v2.jsx";
 
 function Render() {
   return (
@@ -47,7 +62,7 @@ function Render() {
         <Route path="/" element={<Main />} />
         <Route
           path="/courses/:courseId/curriculums/:curriculumId/contents"
-          element={<CreateCoursePage_v2 />}
+          element={<CreateCourse_v2 />}
         />
         <Route path="course" element={<Video />} />
         <Route path="/course/:courseId" element={<VideoExplain />} />
@@ -58,23 +73,32 @@ function Render() {
             <Route path="" element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="course" element={<CourseList />} />
+            <Route path="institution" element={<InstitutionPage />} />
 
-            <Route path="course/:courseId" element={<CourseFrame />}>
+            <Route path="course/:courseProvideId" element={<CourseFrame />}>
               <Route path="" element={<CourseDetailed />} />
               <Route path="contents" element={<CourseDetailed />} />
               <Route path="live" element={<LiveDetail />} />
 
-              <Route path="qna" element={<QnAList />} />
-              <Route path="qna/post" element={<QnAPost />} />
-              <Route path="qna/:courseBoardId" element={<QnADetailed />} />
-              <Route path="qna/:courseBoardId/edit" element={<QnAEdit />} />
+              <Route path="board/:type" element={<BoardList />} />
+              <Route path="board/:type/post" element={<BoardPost />} />
+              <Route path="board/:type/:boardId" element={<BoardDetailed />} />
+              <Route path="board/:boardId/edit" element={<BoardEdit />} />
             </Route>
-            <Route path="qna" element={<QnATotalList />} />
+            <Route path="qna" element={<BoardTotalList />} />
 
             <Route path="user/*" element={<UserInformFrame />}>
               <Route path="" element={<PasswordPrompt />} />
               <Route path="reconfirm" element={<PasswordPrompt />} />
               <Route path="update" element={<UpdateUser />} />
+            </Route>
+
+            <Route path=":courseId/exam" element={<QuizFormFrame />}>
+              <Route path="" element={<ExamList />} />
+              <Route path="create" element={<CreateExam />} />
+              <Route path=":examId" element={<ExamDetail />} />
+              <Route path=":examId/update" element={<UpdateExam />} />
+              <Route path=":examId/answer" element={<AnswerQuiz />} />
             </Route>
           </Route>
 
@@ -84,6 +108,7 @@ function Render() {
             <Route path="" element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="course" element={<CourseList />} />
+            <Route path="management" element={<ManagementPage />} />
             <Route path="manage/*" element={<ManageFrame />}>
               <Route path="course/create" element={<CreateCourse />} />
               <Route
@@ -92,7 +117,7 @@ function Render() {
               />
             </Route>
 
-            <Route path="course/:courseId" element={<CourseFrame />}>
+            <Route path="course/:courseProvideId" element={<CourseFrame />}>
               <Route path="" element={<CourseDetailed />} />
               <Route path="contents" element={<CourseDetailed />} />
               <Route path="modify" element={<ModifyCourse />} />
@@ -101,11 +126,14 @@ function Render() {
               <Route path="live/create" element={<CreateLive />} />
               <Route path="live/:liveId/quiz" element={<QuizPost />} />
 
-              <Route path="qna" element={<QnAList />} />
-              <Route path="qna/:courseBoardId" element={<QnADetailed />} />
-              <Route path="qna/:courseBoardId/edit" element={<QnAEdit />} />
+              <Route path="board/:type" element={<BoardList />} />
+              <Route path="board/:type/post" element={<BoardPost />} />
+              <Route path="board/:type/:boardId" element={<BoardDetailed />} />
+              <Route path="board/:boardId/edit" element={<BoardEdit />} />
             </Route>
-            <Route path="qna" element={<QnATotalList />} />
+            <Route path="board/*" element={<BoardTotalFrame />}>
+              <Route path=":type" element={<BoardListTotal />} />
+            </Route>
 
             <Route path="user/*" element={<UserInformFrame />}>
               <Route path="" element={<PasswordPrompt />} />
@@ -117,10 +145,21 @@ function Render() {
           {/* -----------------------------------------회사 페이지 라우팅 ------------------------------------- */}
 
           <Route path="company/*" element={<CompanyFrame />}>
-            <Route path="" element={<Dashboard />} />
-            <Route path="employees" element={<EmployeeList />} />
+            <Route path="" element={<CompanyDetailed />} />
+            <Route path="create" element={<CreateCompany />} />
+            <Route path="employees/*" element={<EmployeeList />} />
+            <Route path="employees/info" element={<EmployeeDetailed />} />
+            <Route
+              path="employee/affiliation"
+              element={<EmployeeAffiliation />}
+            />
             <Route path="courseProvide/list" element={<CourseProvideList />} />
+            <Route
+              path="courseProvide/submit"
+              element={<SubmitEmployeeList />}
+            />
             <Route path="info" element={<CompanyDetailed />} />
+            <Route path="edit" element={<CompanyEdit />} />
             <Route path="user/*" element={<UserInformFrame />}>
               <Route path="" element={<PasswordPrompt />} />
               <Route path="reconfirm" element={<PasswordPrompt />} />
