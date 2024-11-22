@@ -4,8 +4,7 @@ import AddContents from "./AddContents";
 import UploadContents from "./UploadContents";
 import GetContents from "./GetContents";
 
-const BASE_URL =
-  "https://lkxyziuwrk.execute-api.ap-south-1.amazonaws.com/dev/api";
+const BASE_URL = "https://api.ahimmoyak.click/builder";
 
 function CreateCourse_v2() {
   const { curriculumId, courseId } = useParams();
@@ -106,8 +105,7 @@ function CreateCourse_v2() {
   const handleDeleteContent = async (contentId) => {
     try {
       const response = await fetch(
-        BASE_URL +
-          `/v1/courses/${courseId}/curriculums/${curriculumId}/contents/${contentId}`,
+        `${BASE_URL}/v1/courses/${courseId}/curriculums/${curriculumId}/contents/${contentId}`,
         {
           method: "DELETE",
         }
