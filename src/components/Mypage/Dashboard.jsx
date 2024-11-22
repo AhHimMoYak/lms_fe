@@ -86,7 +86,7 @@ function Dashboard() {
                         {boardData?.items?.map((board, index) => (
                             <tr key={board.boardId} className="qna-table-row" onClick={() => clickDetailBoard(board.courseProvideId,board.type,board.id)}>
                                 <td className="que-idx">{index + 1}</td>
-                                <td className="qna-course">{board.courseTitle}</td>
+                                <td className="qna-course">{board.course}</td>
                                 <td className="qna-title">{board.title}</td>
                                 <td className={board.commitCount > 0 ? "qna-answered" : "qna-not-answered"}>
                                     {board.commitCount > 0 ? "완료" : "미답변"}
