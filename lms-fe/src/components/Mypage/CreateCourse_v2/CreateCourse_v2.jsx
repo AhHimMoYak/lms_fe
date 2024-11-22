@@ -102,12 +102,14 @@ function CreateCourse_v2() {
     }
   };
 
-  const handleDeleteContent = async (contentId) => {
+  const handleDeleteContent = async (contentId, contentType) => {
     try {
       const response = await fetch(
         `${BASE_URL}/v1/courses/${courseId}/curriculums/${curriculumId}/contents/${contentId}`,
         {
           method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ contentType }),
         }
       );
 
@@ -116,8 +118,7 @@ function CreateCourse_v2() {
       }
 
       const responseAfterDelete = await fetch(
-        BASE_URL +
-          `/v1/courses/${courseId}/curriculums/${curriculumId}/contents`
+        `${BASE_URL}/v1/courses/${courseId}/curriculums/${curriculumId}/contents`
       );
       if (!responseAfterDelete.ok) {
         throw new Error("삭제 후 콘텐츠를 가져오는 데 실패했습니다.");
@@ -149,7 +150,9 @@ function CreateCourse_v2() {
             originalFileName={content.originalFileName}
             uploadedAt={content.createdAt}
             content={content}
-            onDelete={() => handleDeleteContent(content.contentId)}
+            onDelete={() =>
+              handleDeleteContent(content.contentId, content.contentType)
+            }
           />
         </div>
       ))}
