@@ -9,7 +9,7 @@ const ExamList = () => {
 
     const fetchExamList = async () => {
         try {
-            const response = await axios.get(`https://api.ahimmoyak.click/exam/v1/${courseId}`);
+            const response = await axios.get(`https://api.ahimmoyak.click/exam/v1/course/${courseId}`);
             setExamList(response.data.items || response.data);
         } catch (error) {
             console.error("시험 목록을 불러오는 중 오류 발생:", error);
@@ -18,7 +18,7 @@ const ExamList = () => {
 
     const deleteExam = async (examId) => {
         try {
-            await axios.delete(`https://api.ahimmoyak.click/exam/v1/${courseId}/${examId}`);
+            await axios.delete(`https://api.ahimmoyak.click/exam/v1/${examId}`);
             setExamList(examList.filter(exam => exam.id !== examId));
         } catch (error) {
             console.error("시험 삭제 실패:", error);
