@@ -16,14 +16,9 @@ import Dashboard from "./pages/Mypage/Dashboard.jsx";
 import CourseList from "./pages/Mypage/CourseList.jsx";
 import CourseDetailed from "./pages/Mypage/CourseDetailed.jsx";
 import LiveDetail from "./pages/Mypage/LiveDetail.jsx";
-import QnAList from "./pages/Mypage/QnAList.jsx";
-import QnATotalList from "./pages/Mypage/QnATotalList.jsx";
 import CreateCourse from "./pages/Mypage/CreateCourse.jsx";
 import CreateCurriculum from "./pages/Mypage/CreateCurriculum.jsx";
 import UserInformFrame from "./components/Mypage/UserInformFrame.jsx";
-import QnADetailed from "./pages/Mypage/QnADetailed.jsx";
-import QnAEdit from "./pages/Mypage/QnAEdit.jsx";
-import QnAPost from "./pages/Mypage/QnAPost.jsx";
 import CreateLive from "./pages/Mypage/CreateLive.jsx";
 import ModifyCourse from "./pages/Mypage/ModifyCourse.jsx";
 import EducationFrame from "./components/Education/EducationFrame.jsx";
@@ -34,11 +29,13 @@ import EmployeeList from "./components/Company/EmployeeList.jsx";
 import CourseProvideList from "./components/Company/CourseProvideList.jsx";
 import CompanyDetailed from "./components/Company/CompanyDetailed.jsx";
 import VideoPlayer from "./pages/Mypage/VideoPlayer.jsx"
-import BoardList from "./components/BoardList.jsx";
-import BoardPost from "./components/BoardPost.jsx";
-import BoardDetailed from "./components/BoardDetailed.jsx";
-import BoardEdit from "./components/BoardEdit.jsx";
-import BoardTotalList from "./components/BoardTotalList.jsx";
+import BoardList from "./pages/Mypage/BoardList.jsx";
+import BoardPost from "./pages/Mypage/BoardPost.jsx";
+import BoardDetailed from "./pages/Mypage/BoardDetailed.jsx";
+import BoardEdit from "./pages/Mypage/BoardEdit.jsx";
+import BoardTotalList from "./pages/Mypage/BoardTotalList.jsx";
+import BoardTotalFrame from "./components/Education/BoardTotalFrame.jsx";
+import BoardListTotal from "./pages/Mypage/BoardListTotal.jsx";
 
 function Render() {
     return (
@@ -89,7 +86,7 @@ function Render() {
                             <Route path=":courseId/curriculum/create" element={<CreateCurriculum/>}/>
                         </Route>
 
-                        <Route path="course/:courseId" element={<CourseFrame/>}>
+                        <Route path="course/:courseProvideId" element={<CourseFrame/>}>
                             <Route path="" element={<CourseDetailed/>}/>
                             <Route path="contents" element={<CourseDetailed/>}/>
                             <Route path="modify" element={<ModifyCourse/>}/>
@@ -98,11 +95,14 @@ function Render() {
                             <Route path="live/create" element={<CreateLive/>}/>
                             <Route path="live/:liveId/quiz" element={<QuizPost/>}/>
 
-                            <Route path="qna" element={<QnAList/>}/>
-                            <Route path="qna/:courseBoardId" element={<QnADetailed/>}/>
-                            <Route path="qna/:courseBoardId/edit" element={<QnAEdit/>}/>
+                            <Route path="board/:type" element={<BoardList/>}/>
+                            <Route path="board/:type/post" element={<BoardPost/>}/>
+                            <Route path="board/:type/:boardId" element={<BoardDetailed/>}/>
+                            <Route path="board/:boardId/edit" element={<BoardEdit/>}/>
                         </Route>
-                        <Route path="qna" element={<QnATotalList/>}/>
+                        <Route path="board/*" element={<BoardTotalFrame />}>
+                            <Route path=":type" element={<BoardListTotal />} />
+                        </Route>
 
                         <Route path="user/*" element={<UserInformFrame/>}>
                             <Route path="" element={<PasswordPrompt/>}/>
