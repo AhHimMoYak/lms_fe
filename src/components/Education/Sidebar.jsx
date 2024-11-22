@@ -33,8 +33,8 @@ const Sidebar = () => {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/education/qna" className={() => (checkIsActive("/education/qna") ? "sidebar_active" : "")}>
-                            QnA
+                        <NavLink to="/education/board/Notice" className={() => (checkIsActive("/education/board/Notice") ? "sidebar_active" : "")}>
+                            게시글
                         </NavLink>
                     </li>
                     <li>
