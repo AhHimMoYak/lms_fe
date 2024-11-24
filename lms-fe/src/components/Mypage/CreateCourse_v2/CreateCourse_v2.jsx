@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import AddContents from "./AddContents";
 import UploadContents from "./UploadContents";
 import GetContents from "./GetContents";
+import { FcSynchronize } from "react-icons/fc";
 
 const BASE_URL = "https://api.ahimmoyak.click/builder";
 
@@ -13,6 +14,7 @@ function CreateCourse_v2() {
   const [isUploadVisible, setIsUploadVisible] = useState(false);
   const [curIdx, setCurIdx] = useState(1);
   const [draggedIdx, setDraggedIdx] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchContents = async () => {
@@ -133,7 +135,6 @@ function CreateCourse_v2() {
   };
 
   const saveContents = async () => {
-    // 콘텐츠 데이터를 GetContentsRequestDto 형식으로 매핑
     const contentList = contents.map(content => ({
       contentId: content.contentId,
       idx: content.idx,
@@ -141,16 +142,18 @@ function CreateCourse_v2() {
       contentType: content.contentType.toUpperCase(),
       s3Url: content.s3Url
     }));
+
+    setLoading(true);
   
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/course/${courseId}/curriculums/${curriculumId}/save`, // 저장할 URL
+        `http://localhost:8080/api/v1/course/${courseId}/curriculums/${curriculumId}/save`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(contentList), // 콘텐츠 리스트를 JSON 형식으로 전송
+          body: JSON.stringify(contentList),
         }
       );
   
@@ -158,10 +161,12 @@ function CreateCourse_v2() {
         throw new Error("콘텐츠를 저장하는 데 실패했습니다.");
       }
   
-      const data = await response.json();
-      console.log("콘텐츠 저장 성공:", data);
+      await response.json();
+      alert("콘텐츠가 저장되었습니다!");
+      setLoading(false);
     } catch (error) {
       console.error("콘텐츠 저장 중 오류 발생:", error);
+      setLoading(false);
     }
   };
 
@@ -209,7 +214,14 @@ function CreateCourse_v2() {
         onAdd={handleShowUpload}
       />
 
-      <button onClick={saveContents}>저장</button>
+      <div className="save-contents-button-container">
+        <div className="save-contents-button" onClick={saveContents}>
+          <FcSynchronize className="save-contents-icon"/>
+        </div>
+      </div>
+
+      {loading && <div className="loading-overlay">저장 중...</div>}
+
     </>
     
   );
