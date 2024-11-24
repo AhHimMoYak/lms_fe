@@ -10,7 +10,7 @@ function UploadContents({
   courseId,
   institutionId,
   onUploadComplete,
-  onClose, // 닫기 버튼 동작을 위한 props 추가
+  onClose,
 }) {
   const [isUploaded, setIsUploaded] = useState(false);
   const [uploadedFileName, setUploadedFileName] = useState("");
@@ -26,6 +26,8 @@ function UploadContents({
       alert("파일을 선택해 주세요.");
       return;
     }
+
+    const fileSize = file.size;
 
     if (!contentTitle.trim()) {
       alert("콘텐츠 제목을 입력해 주세요.");
@@ -49,6 +51,7 @@ function UploadContents({
         fileName: encodedFileName,
         contentType: file.type,
         contentTitle,
+        fileSize,
       };
 
       const urlResponse = await fetch(BASE_URL + "/v1/files/upload", {
@@ -99,6 +102,7 @@ function UploadContents({
               originalFileName: file.name,
               createdAt: formattedDate,
               contentTitle,
+              fileSize,
               s3Url,
               contentType,
             };

@@ -1,7 +1,7 @@
 import { MdOutlineClose } from "react-icons/md";
 import "../../../styles/Mypage/CreateCourse_v2/AddContents.css";
 
-function GetContents({ idx, originalFileName, uploadedAt, content, onDelete }) {
+function GetContents({ idx, originalFileName, fileSize, uploadedAt, content, onDelete }) {
   const handleDeleteClick = () => {
     if (window.confirm(`${originalFileName}을 삭제하시겠습니까?`)) {
       onDelete(content.contentId, idx);
@@ -18,6 +18,7 @@ function GetContents({ idx, originalFileName, uploadedAt, content, onDelete }) {
         <div className="fileInfoContainer">
           <div className="contentTitleContainer">{content.contentTitle}</div>
           <div className="fileNameContainer">파일명 : {originalFileName}</div>
+          <div className="fileSizeContainer">파일 사이즈 : {fileSize}</div>
           <div className="contentTypeContainer">
             <a href={content.s3Url} target="_blank" rel="noopener noreferrer">
               {content.contentType}

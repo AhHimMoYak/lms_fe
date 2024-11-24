@@ -24,12 +24,14 @@ function CreateCourse_v2() {
           throw new Error("콘텐츠를 가져오는 데 실패했습니다.");
         }
         const data = await response.json();
+        console.log(data);
         console.log("Fetched contents:", data);
         setContents(data.result || []);
         setCurIdx(data.nextIdx || 1);
       } catch (error) {
         console.error("콘텐츠를 가져오는 중 오류 발생:", error);
       }
+
     };
 
     fetchContents();
@@ -130,9 +132,42 @@ function CreateCourse_v2() {
     }
   };
 
+  const saveContents = async () => {
+    // 콘텐츠 데이터를 GetContentsRequestDto 형식으로 매핑
+    const contentList = contents.map(content => ({
+      contentId: content.contentId,
+      idx: content.idx,
+      contentTitle: content.contentTitle,
+      contentType: content.contentType.toUpperCase(),
+      s3Url: content.s3Url
+    }));
+  
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/course/${courseId}/curriculums/${curriculumId}/save`, // 저장할 URL
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(contentList), // 콘텐츠 리스트를 JSON 형식으로 전송
+        }
+      );
+  
+      if (!response.ok) {
+        throw new Error("콘텐츠를 저장하는 데 실패했습니다.");
+      }
+  
+      const data = await response.json();
+      console.log("콘텐츠 저장 성공:", data);
+    } catch (error) {
+      console.error("콘텐츠 저장 중 오류 발생:", error);
+    }
+  };
+
   return (
     <>
-      <h1>CreateCourse_v2</h1>
+      <h1>컨텐츠 구성</h1>
       {contents.map((content, idx) => (
         <div
           key={content.id}
@@ -149,6 +184,7 @@ function CreateCourse_v2() {
             contentId={content.contentId}
             originalFileName={content.originalFileName}
             uploadedAt={content.createdAt}
+            fileSize={content.fileSize}
             content={content}
             onDelete={() =>
               handleDeleteContent(content.contentId, content.contentType)
@@ -172,7 +208,10 @@ function CreateCourse_v2() {
         institutionId={institutionId}
         onAdd={handleShowUpload}
       />
+
+      <button onClick={saveContents}>저장</button>
     </>
+    
   );
 }
 
