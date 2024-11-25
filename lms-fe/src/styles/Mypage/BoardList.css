@@ -144,35 +144,33 @@
     background-color: #b2c7ff;
     color: #212121;
 }
-/* 글쓰기 버튼과 필터 버튼 컨테이너 스타일 */
+
 .action-buttons-container {
     width: 80%;
     margin : auto;
     display: flex;
-    justify-content: space-between; /* 양쪽 끝으로 배치 */
+    justify-content: space-between;
     align-items: center;
-
 }
 
-/* 필터 버튼 스타일 */
+
 .filter-buttons {
     display: flex;
     gap: 0.5em;
 }
 
-
-/* 글쓰기 버튼 스타일 */
 .write-button {
     padding: 0.5em 1.5em;
     border: none;
-    border-radius: 20px; /* 둥글게 설정 */
-    background-color: #007bff; /* 파란색 */
+    border-radius: 2em;
+    background-color: #007bff;
     color: white;
     font-size: 0.9em;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
+    margin-bottom: 1vh;
 }
 
 .write-button:hover {
-    background-color: #0056b3; /* 호버 시 어두운 파란색 */
+    background-color: #0056b3;
 }
