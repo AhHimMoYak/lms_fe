@@ -84,7 +84,7 @@ function Dashboard() {
                     </thead>
                     <tbody>
                         {boardData?.items?.map((board, index) => (
-                            <tr key={board.boardId} className="qna-table-row" onClick={() => clickDetailBoard(board.courseProvideId,board.type,board.id)}>
+                            <tr key={board.boardId} className="qna-table-row" onClick={() => clickDetailBoard(board.courseId,board.type,board.id)}>
                                 <td className="que-idx">{index + 1}</td>
                                 <td className="qna-course">{board.course}</td>
                                 <td className="qna-title">{board.title}</td>
