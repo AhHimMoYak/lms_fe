@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../../styles/Mypage/BoardList.css";
 import useAxios from "../../hooks/api/useAxios.jsx";
 import {useNavigate} from "react-router-dom";
+import {format} from "date-fns";
 
 function BoardTotalList() {
     const [boards, setBoards] = useState([]); // 전체 게시글 리스트
@@ -78,15 +79,17 @@ function BoardTotalList() {
                     <th>No.</th>
                     <th>제목</th>
                     <th>작성자</th>
+                    <th>날짜</th>
                     <th>답변 여부</th>
                 </tr>
                 </thead>
                 <tbody>
                 {boards.map((board, index) => (
-                    <tr key={board.id} onClick={()=>handleBoardDetail(board.courseProvideId,board.type,board.id)}>
+                    <tr key={board.id} onClick={() => handleBoardDetail(board.courseProvideId, board.type, board.id)}>
                         <td>{page * limit + index + 1}</td>
                         <td>{board.title}</td>
                         <td>{board.userName}</td>
+                        <td>{format(new Date(board.createdAt), "yy/MM/dd HH:mm")}</td>
                         <td className={board.commentCount > 0 ? "answered" : "not-answered"}>
                             {board.commentCount > 0 ? "완료" : "미완료"}
                         </td>

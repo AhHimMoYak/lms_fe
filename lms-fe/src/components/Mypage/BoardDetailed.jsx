@@ -66,7 +66,7 @@ function BoardDetailed() {
                 <h2>QnA 게시판</h2>
                 <div className="board-header-info">
                     <p>{data.userName}</p>
-                    <p>{format(new Date(data.updatedAt), "yy/MM/dd HH:mm")}</p>
+                    <p>{format(new Date(data.updatedAt), "yy/MM/dd HH:mm")}  {data.updatedAt !== data.createdAt && " (수정됨)"}</p>
                 </div>
             </div>
             <div className="board-content">

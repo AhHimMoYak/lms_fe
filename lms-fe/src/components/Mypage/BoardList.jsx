@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../../styles/Mypage/BoardList.css";
 import useAxios from "../../hooks/api/useAxios.jsx";
 import {useNavigate, useParams} from "react-router-dom";
+import {format} from "date-fns";
 
 function BoardList() {
     const [boards, setBoards] = useState([]); // 전체 게시글 리스트
@@ -87,6 +88,7 @@ function BoardList() {
                     <th>제목</th>
                     <th>작성자</th>
                     <th>답변 여부</th>
+                    <th>날짜</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -98,6 +100,7 @@ function BoardList() {
                         <td className={board.commentCount > 0 ? "answered" : "not-answered"}>
                             {board.commentCount > 0 ? "완료" : "미완료"}
                         </td>
+                        <td>{format(new Date(board.createdAt), "yy/MM/dd HH:mm") }</td>
                     </tr>
                 ))}
                 </tbody>

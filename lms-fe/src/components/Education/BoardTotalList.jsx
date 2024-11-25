@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../../styles/Mypage/BoardList.css";
 import useAxios from "../../hooks/api/useAxios.jsx";
 import { useNavigate, useParams } from "react-router-dom";
+import {format} from "date-fns";
 
 function BoardTotalList() {
     const [boards, setBoards] = useState([]); // 전체 게시글 리스트
@@ -103,6 +104,7 @@ function BoardTotalList() {
                     <th>코스명</th>
                     <th>제목</th>
                     <th>작성자</th>
+                    <th>날짜</th>
                     {type !== "Notice" && <th>답변 여부</th>}
                 </tr>
                 </thead>
@@ -113,6 +115,7 @@ function BoardTotalList() {
                         <td>{board.course}</td>
                         <td>{board.title.length > 13 ? `${board.title.substring(0, 13)}...` : board.title}</td>
                         <td>{board.userName}</td>
+                        <td>{format(new Date(board.createdAt), "yy/MM/dd HH:mm")}</td>
                         {type !== "Notice" && (
                             <td className={board.commentCount > 0 ? "answered" : "not-answered"}>
                                 {board.commentCount > 0 ? "완료" : "미완료"}
