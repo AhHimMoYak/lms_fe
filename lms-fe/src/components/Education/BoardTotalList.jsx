@@ -15,7 +15,7 @@ function BoardTotalList() {
     const navigate = useNavigate();
     const { data, fetchData } = useAxios();
 
-    const institutionId = "2";
+    const institutionId = 1;
 
     const fetchBoards = async (lastKey = null, reset = false) => {
         setLoading(true);
@@ -72,8 +72,8 @@ function BoardTotalList() {
         }
     };
 
-    const handleBoardDetail = (courseProvideId, type, boardId) => {
-        navigate(`/education/course/${courseProvideId}/board/${type}/${boardId}`);
+    const handleBoardDetail = (courseId, type, boardId) => {
+        navigate(`/education/course/${courseId}/board/${type}/${boardId}`);
     };
 
     const filteredBoards = boards.filter((board) => {
@@ -112,7 +112,7 @@ function BoardTotalList() {
                 </thead>
                 <tbody>
                 {filteredBoards.map((board, index) => (
-                    <tr key={board.id} onClick={() => handleBoardDetail(board.courseProvideId, board.type, board.id)}>
+                    <tr key={board.id} onClick={() => handleBoardDetail(board.courseId, board.type, board.id)}>
                         <td>{page * limit + index + 1}</td>
                         <td>{board.course}</td>
                         <td>{board.title.length > 13 ? `${board.title.substring(0, 13)}...` : board.title}</td>

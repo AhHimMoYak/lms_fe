@@ -13,21 +13,21 @@ function BoardList() {
     const limit = 10; // 페이지당 항목 수
     const navigate = useNavigate();
     const { data, fetchData } = useAxios();
-    const { courseProvideId, type } = useParams();
+    const { courseId, type } = useParams();
 
     const fetchBoards = async (lastKey = null, reset = false) => {
         setLoading(true);
         try {
             const keyParam = lastKey ? `&lastEvaluatedKey=${encodeURIComponent(JSON.stringify(lastKey))}` : '';
-            await fetchData(`https://api.ahimmoyak.click/board/v1/course-provide/${courseProvideId}/${type}?limit=${limit}${keyParam}`, "GET");
+            const response = await fetchData(`https://api.ahimmoyak.click/board/v1/course/${courseId}/${type}?limit=${limit}${keyParam}`, "GET");
 
-            if (data && data.items) {
-                setBoards((prevBoards) => reset ? data.items : [
+            if (response && response.items) {
+                setBoards((prevBoards) => reset ? response.items : [
                     ...prevBoards,
-                    ...data.items.filter((item) => !prevBoards.some((board) => board.id === item.id))
+                    ...response.items.filter((item) => !prevBoards.some((board) => board.id === item.id))
                 ]);
 
-                const newLastEvaluatedKey = data.lastEvaluatedKey || null;
+                const newLastEvaluatedKey = response.lastEvaluatedKey || null;
                 if (newLastEvaluatedKey && !reset) {
                     setLastEvaluatedKeys((prevKeys) => [...prevKeys, newLastEvaluatedKey]);
                 }
@@ -40,7 +40,7 @@ function BoardList() {
 
     useEffect(() => {
         fetchBoards(null, true);
-    }, [type]);
+    }, [type,courseId]);
 
     useEffect(() => {
         if (data) {
@@ -65,11 +65,11 @@ function BoardList() {
     };
 
     const handleWriteBoard = () => {
-        navigate(`/mypage/course/${courseProvideId}/board/${type}/post`);
+        navigate(`/mypage/course/${courseId}/board/${type}/post`);
     }
 
     const handleBoardDetail = (boardId) => {
-        navigate(`/mypage/course/${courseProvideId}/board/${type}/${boardId}`);
+        navigate(`/mypage/course/${courseId}/board/${type}/${boardId}`);
     }
 
     // 필터에 따른 게시글 목록 필터링
