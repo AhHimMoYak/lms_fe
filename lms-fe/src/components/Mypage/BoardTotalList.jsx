@@ -18,7 +18,7 @@ function BoardTotalList() {
         setLoading(true);
         try {
             const keyParam = lastKey ? `&lastEvaluatedKey=${encodeURIComponent(JSON.stringify(lastKey))}` : '';
-            await fetchData(`https://api.ahimmoyak.click/board/v1/userName/${userName}?limit=${limit}${keyParam}`, "GET");
+            await fetchData(`https://api.ahimmoyak.click/board/v1/user-name/${userName}?limit=${limit}${keyParam}`, "GET");
 
             if (data && data.items) {
                 setBoards((prevBoards) => reset ? data.items : [

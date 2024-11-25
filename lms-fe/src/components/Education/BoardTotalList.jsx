@@ -8,6 +8,7 @@ function BoardTotalList() {
     const [lastEvaluatedKeys, setLastEvaluatedKeys] = useState([]); // 각 페이지의 키들을 저장
     const [loading, setLoading] = useState(false); // 로딩 상태 관리
     const [page, setPage] = useState(0); // 현재 페이지 인덱스
+    const [commentFilter, setCommentFilter] = useState(null); // 답변 여부 필터 (null: 전체, 0: 미완료, 1: 완료)
     const { type } = useParams();
     const limit = 10; // 페이지당 항목 수
     const navigate = useNavigate();
@@ -19,15 +20,15 @@ function BoardTotalList() {
         setLoading(true);
         try {
             const keyParam = lastKey ? `&lastEvaluatedKey=${encodeURIComponent(JSON.stringify(lastKey))}` : '';
-            await fetchData(`https://api.ahimmoyak.click/board/v1/institution/${institutionId}/${type}?limit=${limit}${keyParam}`, "GET");
-
-            if (data && data.items) {
-                setBoards((prevBoards) => reset ? data.items : [
+            const commentParam = commentFilter !== null ? `&commentCount=${commentFilter}` : '';
+            const response = await fetchData(`https://api.ahimmoyak.click/board/v1/institutions/${institutionId}/${type}?limit=${limit}${keyParam}${commentParam}`, "GET");
+            if (response && response.items) {
+                setBoards((prevBoards) => reset ? response.items : [
                     ...prevBoards,
-                    ...data.items.filter((item) => !prevBoards.some((board) => board.id === item.id))
+                    ...response.items.filter((item) => !prevBoards.some((board) => board.id === item.id))
                 ]);
 
-                const newLastEvaluatedKey = data.lastEvaluatedKey || null;
+                const newLastEvaluatedKey = response.lastEvaluatedKey || null;
                 if (newLastEvaluatedKey && !reset) {
                     setLastEvaluatedKeys((prevKeys) => [...prevKeys, newLastEvaluatedKey]);
                 }
@@ -38,13 +39,14 @@ function BoardTotalList() {
         setLoading(false);
     };
 
-    // 컴포넌트가 처음 렌더링될 때 또는 type이 변경될 때 데이터를 불러옵니다.
+
     useEffect(() => {
-        setPage(0); // type이 변경될 때 페이지 번호를 초기화합니다.
-        setBoards([]); // 기존 데이터를 초기화합니다.
-        setLastEvaluatedKeys([]); // 기존 키 데이터를 초기화합니다.
-        fetchBoards(null, true); // 새 데이터를 불러옵니다.
-    }, [type]);
+        setPage(0);
+        setBoards([]);
+        setLastEvaluatedKeys([]);
+        fetchBoards(null, true);
+    }, [type, commentFilter]);
+
 
     useEffect(() => {
         if (data) {
@@ -74,9 +76,26 @@ function BoardTotalList() {
         navigate(`/education/course/${courseProvideId}/board/${type}/${boardId}`);
     };
 
+    const handleFilterChange = (filterValue) => {
+        setCommentFilter(filterValue);
+    };
+
     return (
         <div className="board-list-container">
             <h2>{type} 게시판</h2>
+            {type !== "Notice" && (
+                <div className="board-filter-buttons">
+                    <button onClick={() => handleFilterChange(null)} disabled={commentFilter === null}>
+                        전체
+                    </button>
+                    <button onClick={() => handleFilterChange(0)} disabled={commentFilter === 0}>
+                        비답변
+                    </button>
+                    <button onClick={() => handleFilterChange(1)} disabled={commentFilter === 1}>
+                        답변
+                    </button>
+                </div>
+            )}
             <table className="board-total-table">
                 <thead>
                 <tr>
@@ -84,7 +103,7 @@ function BoardTotalList() {
                     <th>코스명</th>
                     <th>제목</th>
                     <th>작성자</th>
-                    <th>답변 여부</th>
+                    {type !== "Notice" && <th>답변 여부</th>}
                 </tr>
                 </thead>
                 <tbody>
@@ -94,9 +113,11 @@ function BoardTotalList() {
                         <td>{board.course}</td>
                         <td>{board.title.length > 13 ? `${board.title.substring(0, 13)}...` : board.title}</td>
                         <td>{board.userName}</td>
-                        <td className={board.commentCount > 0 ? "answered" : "not-answered"}>
-                            {board.commentCount > 0 ? "완료" : "미완료"}
-                        </td>
+                        {type !== "Notice" && (
+                            <td className={board.commentCount > 0 ? "answered" : "not-answered"}>
+                                {board.commentCount > 0 ? "완료" : "미완료"}
+                            </td>
+                        )}
                     </tr>
                 ))}
                 </tbody>
