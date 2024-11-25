@@ -20,7 +20,7 @@ function BoardPost() {
             title: title,
             content: content
         };
-        fetchData(`https://api.ahimmoyak.click/board/v1/courseProvide`, "POST", requestDTO);
+        fetchData(`https://api.ahimmoyak.click/board/v1/course-provide`, "POST", requestDTO);
     };
 
     useEffect(() => {
