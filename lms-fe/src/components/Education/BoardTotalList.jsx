@@ -9,7 +9,7 @@ function BoardTotalList() {
     const [lastEvaluatedKeys, setLastEvaluatedKeys] = useState([]); // 각 페이지의 키들을 저장
     const [loading, setLoading] = useState(false); // 로딩 상태 관리
     const [page, setPage] = useState(0); // 현재 페이지 인덱스
-    const [commentFilter, setCommentFilter] = useState(null); // 답변 여부 필터 (null: 전체, 0: 미완료, 1: 완료)
+    const [filter, setFilter] = useState("all");
     const { type } = useParams();
     const limit = 10; // 페이지당 항목 수
     const navigate = useNavigate();
@@ -21,8 +21,7 @@ function BoardTotalList() {
         setLoading(true);
         try {
             const keyParam = lastKey ? `&lastEvaluatedKey=${encodeURIComponent(JSON.stringify(lastKey))}` : '';
-            const commentParam = commentFilter !== null ? `&commentCount=${commentFilter}` : '';
-            const response = await fetchData(`https://api.ahimmoyak.click/board/v1/institutions/${institutionId}/${type}?limit=${limit}${keyParam}${commentParam}`, "GET");
+            const response = await fetchData(`https://api.ahimmoyak.click/board/v1/institutions/${institutionId}/${type}?limit=${limit}${keyParam}`, "GET");
             if (response && response.items) {
                 setBoards((prevBoards) => reset ? response.items : [
                     ...prevBoards,
@@ -46,7 +45,7 @@ function BoardTotalList() {
         setBoards([]);
         setLastEvaluatedKeys([]);
         fetchBoards(null, true);
-    }, [type, commentFilter]);
+    }, [type]);
 
 
     useEffect(() => {
@@ -77,23 +76,26 @@ function BoardTotalList() {
         navigate(`/education/course/${courseProvideId}/board/${type}/${boardId}`);
     };
 
-    const handleFilterChange = (filterValue) => {
-        setCommentFilter(filterValue);
-    };
+    const filteredBoards = boards.filter((board) => {
+        if (filter === "answered") return board.commentCount > 0;
+        if (filter === "notAnswered") return board.commentCount === 0;
+        return true; // 'all'인 경우
+    });
 
     return (
         <div className="board-list-container">
             <h2>{type} 게시판</h2>
             {type !== "Notice" && (
-                <div className="board-filter-buttons">
-                    <button onClick={() => handleFilterChange(null)} disabled={commentFilter === null}>
+                <div className="filter-buttons">
+                    <button onClick={() => setFilter("all")} className={filter === "all" ? "active" : ""}>
                         전체
                     </button>
-                    <button onClick={() => handleFilterChange(0)} disabled={commentFilter === 0}>
-                        비답변
+                    <button onClick={() => setFilter("answered")} className={filter === "answered" ? "active" : ""}>
+                        답변 완료
                     </button>
-                    <button onClick={() => handleFilterChange(1)} disabled={commentFilter === 1}>
-                        답변
+                    <button onClick={() => setFilter("notAnswered")}
+                            className={filter === "notAnswered" ? "active" : ""}>
+                        미답변
                     </button>
                 </div>
             )}
@@ -102,14 +104,14 @@ function BoardTotalList() {
                 <tr>
                     <th>No.</th>
                     <th>코스명</th>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>날짜</th>
+                    <th className="title">제목</th>
+                    <th className="author">작성자</th>
+                    <th className="date">날짜</th>
                     {type !== "Notice" && <th>답변 여부</th>}
                 </tr>
                 </thead>
                 <tbody>
-                {boards.map((board, index) => (
+                {filteredBoards.map((board, index) => (
                     <tr key={board.id} onClick={() => handleBoardDetail(board.courseProvideId, board.type, board.id)}>
                         <td>{page * limit + index + 1}</td>
                         <td>{board.course}</td>
