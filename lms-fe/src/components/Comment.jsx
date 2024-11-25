@@ -34,7 +34,7 @@ function Comment() {
             boardId: boardId,
             content: comment
         };
-        await commentFetchData(`https://api.ahimmoyak.click/board/v1/${boardId}/comment`,"POST",requestDTO);
+        await commentFetchData(`https://api.ahimmoyak.click/board/v1/${boardId}/comments`,"POST",requestDTO);
         setComment("");
         fetchData(`https://api.ahimmoyak.click/board/v1/${boardId}/comments`, "GET");
     }
@@ -59,7 +59,7 @@ function Comment() {
         const requestDTO = {
             boardId: boardId,
         };
-        commentDeleteFetchData(`https://api.ahimmoyak.click/board/v1/comment/${commentId}`, "DELETE",requestDTO);
+        commentDeleteFetchData(`https://api.ahimmoyak.click/board/v1/comments/${commentId}`, "DELETE",requestDTO);
     };
 
     const handleCommentEdit = (commentId, content) => {
@@ -68,7 +68,7 @@ function Comment() {
     };
 
     const submitCommentEdit = (id) => {
-        commentEditFetchData(`https://api.ahimmoyak.click/board/v1/comment/${id}`, "PATCH", {
+        commentEditFetchData(`https://api.ahimmoyak.click/board/v1/comments/${id}`, "PATCH", {
             content: editedComment
         });
     };

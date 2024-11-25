@@ -18,7 +18,7 @@ function BoardList() {
         setLoading(true);
         try {
             const keyParam = lastKey ? `&lastEvaluatedKey=${encodeURIComponent(JSON.stringify(lastKey))}` : '';
-            await fetchData(`https://api.ahimmoyak.click/board/v1/courseProvide/${courseProvideId}/${type}?limit=${limit}${keyParam}`, "GET");
+            await fetchData(`https://api.ahimmoyak.click/board/v1/course-provide/${courseProvideId}/${type}?limit=${limit}${keyParam}`, "GET");
 
             if (data && data.items) {
                 setBoards((prevBoards) => reset ? data.items : [

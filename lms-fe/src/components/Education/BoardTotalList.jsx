@@ -84,7 +84,7 @@ function BoardTotalList() {
                     <th>코스명</th>
                     <th>제목</th>
                     <th>작성자</th>
-                    <th>답변 여부</th>
+                    {type !== "Notice" && <th>답변 여부</th>}
                 </tr>
                 </thead>
                 <tbody>
@@ -94,9 +94,11 @@ function BoardTotalList() {
                         <td>{board.course}</td>
                         <td>{board.title.length > 13 ? `${board.title.substring(0, 13)}...` : board.title}</td>
                         <td>{board.userName}</td>
-                        <td className={board.commentCount > 0 ? "answered" : "not-answered"}>
-                            {board.commentCount > 0 ? "완료" : "미완료"}
-                        </td>
+                        {type !== "Notice" && (
+                            <td className={board.commentCount > 0 ? "answered" : "not-answered"}>
+                                {board.commentCount > 0 ? "완료" : "미완료"}
+                            </td>
+                        )}
                     </tr>
                 ))}
                 </tbody>
