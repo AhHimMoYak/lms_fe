@@ -75,7 +75,7 @@ function Render() {
             <Route path="course" element={<CourseList />} />
             <Route path="institution" element={<InstitutionPage />} />
 
-            <Route path="course/:courseProvideId" element={<CourseFrame />}>
+            <Route path="course/:courseId" element={<CourseFrame />}>
               <Route path="" element={<CourseDetailed />} />
               <Route path="contents" element={<CourseDetailed />} />
               <Route path="live" element={<LiveDetail />} />
@@ -117,7 +117,7 @@ function Render() {
               />
             </Route>
 
-            <Route path="course/:courseProvideId" element={<CourseFrame />}>
+            <Route path="course/:courseId" element={<CourseFrame />}>
               <Route path="" element={<CourseDetailed />} />
               <Route path="contents" element={<CourseDetailed />} />
               <Route path="modify" element={<ModifyCourse />} />
