@@ -8,7 +8,7 @@
     width: 80%;
     border-collapse: collapse; /* 테두리와 셀 사이의 간격 제거 */
     border-radius: 0.5em;
-    margin-left: 8%;
+    margin: auto;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -20,14 +20,15 @@
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .board-total-table th {
     background-color: #cce1ff;
     padding: 1em 0.8em;
     border-bottom: 0.1em solid #ddd;
     text-align: center;
     font-size: 0.8em;
-    width: 20%;
 }
+
 .board-total-table tr {
     background-color: #f9f9f9; /* 기본 배경색 */
     transition: background-color 0.3s; /* 배경색 전환 애니메이션 */
@@ -36,13 +37,13 @@
     text-align: center;
     font-size: 1em;
 }
+
 .board-table th {
     background-color: #cce1ff;
     padding: 1em 0.8em;
     border-bottom: 0.1em solid #ddd;
     text-align: center;
     font-size: 0.8em;
-    width: 25%;
 }
 
 /* 테이블 행 기본 스타일 */
@@ -71,12 +72,15 @@
     border-bottom: 0.1em solid #ddd;
     text-align: center;
 }
+
 .answered {
     color: #218838;
 }
+
 .not-answered {
     color: firebrick;
 }
+
 /* 페이지네이션 스타일 */
 .board-pagination {
     display: flex;
@@ -102,4 +106,73 @@
 
 .board-pagination button:disabled {
     cursor: not-allowed;
+}
+
+/* 필터 버튼 스타일 */
+.filter-buttons {
+    display: flex;
+    gap: 0.5em;
+    margin-bottom: 1em;
+    justify-content: center;
+}
+
+.filter-buttons button {
+    padding: 0.5em 1.5em;
+    border: none;
+    border-radius: 1em;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.filter-buttons button:nth-child(1) {
+    background-color: #cce1ff;
+    color: #666666;
+}
+
+.filter-buttons button:nth-child(2) {
+    background-color: #cce1ff;
+    color: #666666;
+}
+
+.filter-buttons button:nth-child(3) {
+    background-color: #cce1ff;
+    color: #666666;
+}
+
+.filter-buttons button.active {
+    background-color: #b2c7ff;
+    color: #212121;
+}
+/* 글쓰기 버튼과 필터 버튼 컨테이너 스타일 */
+.action-buttons-container {
+    width: 80%;
+    margin : auto;
+    display: flex;
+    justify-content: space-between; /* 양쪽 끝으로 배치 */
+    align-items: center;
+
+}
+
+/* 필터 버튼 스타일 */
+.filter-buttons {
+    display: flex;
+    gap: 0.5em;
+}
+
+
+/* 글쓰기 버튼 스타일 */
+.write-button {
+    padding: 0.5em 1.5em;
+    border: none;
+    border-radius: 20px; /* 둥글게 설정 */
+    background-color: #007bff; /* 파란색 */
+    color: white;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.write-button:hover {
+    background-color: #0056b3; /* 호버 시 어두운 파란색 */
 }
