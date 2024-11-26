@@ -21,7 +21,7 @@ function CourseDetailed() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchData(`/course/${courseId}/detail`, "get");
+        fetchData(`/courses/${courseId}/details`, "get");
     }, [courseId]);
 
     const toggleCurriculum = (index) => {
@@ -59,7 +59,7 @@ function CourseDetailed() {
         console.log(curriculumId);
         if (curriculumId && contentId) {
             console.log(curriculumId);
-            contentFetchData(`course/${curriculumId}/curriculum/${curriculumId}/contents/${contentId}`, "get");
+            contentFetchData(`courses/${curriculumId}/curriculums/${curriculumId}/contents/${contentId}`, "get");
         }
     }, [curriculumId, contentId]);
 
@@ -68,7 +68,7 @@ function CourseDetailed() {
             console.log(contentData.fileInfo);
             if (contentType === "MATERIAL") {
                 const downloadLink = document.createElement("a");
-                downloadLink.href = `http://localhost:8080/file/material/${contentData.fileInfo}`; // 서버의 파일 URL
+                downloadLink.href = `http://localhost:8080/files/materials/${contentData.fileInfo}`; // 서버의 파일 URL
                 downloadLink.download = "meterial"; // 파일명 지정 (서버에서 받은 파일명 사용 가능)
 
                 // a 태그 클릭 이벤트 트리거로 다운로드 시작
