@@ -56,7 +56,7 @@ function Render() {
     <Routes>
       <Route path="/signin" element={<Login />} />
       <Route path="/signup" element={<Register />} />
-      <Route path="/stream/video" element={<VideoPlayer />} />
+      <Route path="/stream/videos" element={<VideoPlayer />} />
 
       <Route element={<BasicFrame />}>
         <Route path="/" element={<Main />} />
@@ -64,36 +64,36 @@ function Render() {
           path="/courses/:courseId/curriculums/:curriculumId/contents"
           element={<CreateCourse_v2 />}
         />
-        <Route path="course" element={<Video />} />
-        <Route path="/course/:courseId" element={<VideoExplain />} />
-        <Route path="/live/:streamkey" element={<LiveStream />} />
+        <Route path="courses" element={<Video />} />
+        <Route path="/courses/:courseId" element={<VideoExplain />} />
+        <Route path="/lives/:streamkey" element={<LiveStream />} />
 
         <Route element={<AuthChecker />}>
           <Route path="mypage/*" element={<MypageFrame />}>
             <Route path="" element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="course" element={<CourseList />} />
-            <Route path="institution" element={<InstitutionPage />} />
+            <Route path="courses" element={<CourseList />} />
+            <Route path="institutions" element={<InstitutionPage />} />
 
-            <Route path="course/:courseId" element={<CourseFrame />}>
+            <Route path="courses/:courseId" element={<CourseFrame />}>
               <Route path="" element={<CourseDetailed />} />
               <Route path="contents" element={<CourseDetailed />} />
-              <Route path="live" element={<LiveDetail />} />
+              <Route path="lives" element={<LiveDetail />} />
 
-              <Route path="board/:type" element={<BoardList />} />
-              <Route path="board/:type/post" element={<BoardPost />} />
-              <Route path="board/:type/:boardId" element={<BoardDetailed />} />
-              <Route path="board/:boardId/edit" element={<BoardEdit />} />
+              <Route path="boards/:type" element={<BoardList />} />
+              <Route path="boards/:type/post" element={<BoardPost />} />
+              <Route path="boards/:type/:boardId" element={<BoardDetailed />} />
+              <Route path="boards/:boardId/edit" element={<BoardEdit />} />
             </Route>
             <Route path="qna" element={<BoardTotalList />} />
 
-            <Route path="user/*" element={<UserInformFrame />}>
+            <Route path="users/*" element={<UserInformFrame />}>
               <Route path="" element={<PasswordPrompt />} />
               <Route path="reconfirm" element={<PasswordPrompt />} />
               <Route path="update" element={<UpdateUser />} />
             </Route>
 
-            <Route path=":courseId/exam" element={<QuizFormFrame />}>
+            <Route path=":courseId/exams" element={<QuizFormFrame />}>
               <Route path="" element={<ExamList />} />
               <Route path="create" element={<CreateExam />} />
               <Route path=":examId" element={<ExamDetail />} />
@@ -153,12 +153,12 @@ function Render() {
             <Route path="employees/*" element={<EmployeeList />} />
             <Route path="employees/info" element={<EmployeeDetailed />} />
             <Route
-              path="employees/affiliation"
+              path="employees/affiliations"
               element={<EmployeeAffiliation />}
             />
-            <Route path="course-provide/list" element={<CourseProvideList />} />
+            <Route path="course-provides/list" element={<CourseProvideList />} />
             <Route
-              path="course-provide/submit"
+              path="course-provides/submit"
               element={<SubmitEmployeeList />}
             />
             <Route path="info" element={<CompanyDetailed />} />
