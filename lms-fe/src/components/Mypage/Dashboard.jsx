@@ -42,6 +42,7 @@ function Dashboard() {
 
     useEffect(() => {
         fetchData(`/course`, "GET");
+        //TODO 교육기관일때와 회사원일때 다르게
     }, []);
 
     useEffect(() => {
