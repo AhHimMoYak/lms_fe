@@ -20,14 +20,14 @@ function BoardPost() {
             type:type,
             title: title,
             content: content,
-            course:  courseData.title
+            course:  courseData.title,
         };
-        fetchData(`https://api.ahimmoyak.click/board/v1/course`, "POST", requestDTO);
+        fetchData(`https://api.ahimmoyak.click/board/v1/courses`, "POST", requestDTO);
     };
     useEffect(() => {
-        courseProvideFetchData(`/course/${courseId}/detail`,"GET");
+        courseProvideFetchData(`/courses/${courseId}/details`,"GET");
     }, []);
-console.log(courseData);
+
     useEffect(() => {
         if (data) {
             alert("글 작성 성공!");
