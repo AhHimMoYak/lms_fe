@@ -5,28 +5,35 @@ import "../../styles/CoursePost.css";
 
 function CreateCourse() {
     const { data, fetchData } = useAxios();
+    const { data: institutionData, fetchData: institutionFetchData } = useAxios();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         title: "",
         category: "",
         introduction: "",
+        instructor: ""
     });
 
     useEffect(() => {
         if (data) {
             alert("코스가 성공적으로 생성되었습니다.");
-            navigate("/education/course");
+            navigate(`/education/manage/${data}/curriculum/create`);
         }
     }, [data]);
+
+    useEffect(() => {
+        institutionFetchData(`/institutions/details`,"GET");
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        fetchData("/course", "post", {
+        fetchData("/courses", "post", {
             title: formData.title,
             introduction: formData.introduction,
             category: formData.category,
-
+            instructor: formData.instructor,
+            institution: institutionData
         });
     };
     const handleChange = (e) => {
@@ -53,7 +60,18 @@ function CreateCourse() {
                         onChange={handleChange}
                         required
                     />
-                    <select className="input-field" id="category" name="category" value={formData.category} onChange={handleChange} required>
+                    <input
+                        className="input-field"
+                        type="text"
+                        id="instructor"
+                        name="instructor"
+                        placeholder="강사"
+                        value={formData.instructor}
+                        onChange={handleChange}
+                        required
+                    />
+                    <select className="input-field" id="category" name="category" value={formData.category}
+                            onChange={handleChange} required>
                         <option value="">카테고리 선택</option>
                         <option value="ALL">전체</option>
                         <option value="BUSINESS_MANAGEMENT">사업관리</option>
@@ -91,7 +109,7 @@ function CreateCourse() {
                     onChange={handleChange}
                     required
                 />
-                <button type="submit" className="submit-total-button">
+                <button type="submit" className="submit-total-button" >
                     등록
                 </button>
             </form>
