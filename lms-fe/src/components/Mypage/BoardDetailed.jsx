@@ -10,7 +10,7 @@ function BoardDetailed() {
     const {data, fetchData} = useAxios();
     const {data: deleteData, fetchData: deleteFetchData} = useAxios();
     const navigate = useNavigate();
-    const {courseProvideId, boardId}= useParams();
+    const {courseId, boardId}= useParams();
 
     useEffect(() => {
         if (boardId) {
@@ -22,8 +22,8 @@ function BoardDetailed() {
     }, [boardId]);
 
     const onClickEdit = () => {
-        navigate(`/mypage/course/${courseProvideId}/board/${boardId}/edit`);
-        // navigate(`/education/course/${courseProvideId}/board/${boardId}/edit`);  // TODO 교육기관일때 이동해야하는 곳
+        navigate(`/mypage/course/${courseId}/board/${boardId}/edit`);
+        // navigate(`/education/course/${courseId}/board/${boardId}/edit`);  // TODO 교육기관일때 이동해야하는 곳
     }
 
     const onClickDelete = () => {
@@ -36,20 +36,20 @@ function BoardDetailed() {
     useEffect(() => {
         if (deleteData==='') {
             if(decodeTokenTutor()){
-                navigate(`/education/course/${courseProvideId}/board/${data.type}`);
+                navigate(`/education/course/${courseId}/board/${data.type}`);
             }
             else {
-                navigate(`/mypage/course/${courseProvideId}/board/${data.type}`);
+                navigate(`/mypage/course/${courseId}/board/${data.type}`);
             }
         }
     }, [deleteData]);
 
     const handleList = () => {
         if(decodeTokenTutor()){
-            navigate(`/education/course/${courseProvideId}/board/${data.type}`);
+            navigate(`/education/course/${courseId}/board/${data.type}`);
         }
         else{
-            navigate(`/mypage/course/${courseProvideId}/board/${data.type}`);
+            navigate(`/mypage/course/${courseId}/board/${data.type}`);
         }
     }
 
@@ -66,7 +66,7 @@ function BoardDetailed() {
                 <h2>QnA 게시판</h2>
                 <div className="board-header-info">
                     <p>{data.userName}</p>
-                    <p>{format(new Date(data.updatedAt), "yy/MM/dd HH:mm")}</p>
+                    <p>{format(new Date(data.updatedAt), "yy/MM/dd HH:mm")}  {data.updatedAt !== data.createdAt && " (수정됨)"}</p>
                 </div>
             </div>
             <div className="board-content">

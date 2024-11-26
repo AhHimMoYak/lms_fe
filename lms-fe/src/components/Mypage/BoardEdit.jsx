@@ -5,7 +5,7 @@ import "../../styles/Mypage/Board.css"
 import { decodeTokenTutor } from "../../authentication/decodeTokenTutor.jsx";
 
 function BoardEdit() {
-    const { courseProvideId, boardId } = useParams();
+    const { courseId, boardId } = useParams();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const { data, fetchData } = useAxios();
@@ -28,9 +28,9 @@ function BoardEdit() {
 
     const handleList = () => {
         if (decodeTokenTutor()) {
-            navigate(`/education/course/${courseProvideId}/board/${data.type}`);
+            navigate(`/education/course/${courseId}/board/${data.type}`);
         } else {
-            navigate(`/mypage/course/${courseProvideId}/board/${data.type}`);
+            navigate(`/mypage/course/${courseId}/board/${data.type}`);
         }
     };
 
@@ -46,11 +46,11 @@ function BoardEdit() {
         if (updateData) {
             alert("수정되었습니다.");
             if(decodeTokenTutor()){
-                navigate(`/education/course/${courseProvideId}/board/${data.type}/${boardId}`);
+                navigate(`/education/course/${courseId}/board/${data.type}/${boardId}`);
             }
 
             else{
-                navigate(`/mypage/course/${courseProvideId}/${data.type}/board/${boardId}`);
+                navigate(`/mypage/course/${courseId}/${data.type}/board/${boardId}`);
             }
         }
     }, [updateData]);

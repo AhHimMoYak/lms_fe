@@ -10,8 +10,6 @@ function CreateCourse() {
         title: "",
         category: "",
         introduction: "",
-        beginDate: "",
-        endDate: "",
     });
 
     useEffect(() => {
@@ -23,16 +21,12 @@ function CreateCourse() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!formData.beginDate || !formData.endDate) {
-            alert("시작 날짜와 종료 날짜는 필수입니다.");
-            return;
-        }
+
         fetchData("/course", "post", {
             title: formData.title,
             introduction: formData.introduction,
             category: formData.category,
-            beginDate: new Date(formData.beginDate),
-            endDate: new Date(formData.endDate),
+
         });
     };
     const handleChange = (e) => {
