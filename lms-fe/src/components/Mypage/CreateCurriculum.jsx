@@ -7,17 +7,17 @@ import "../../styles/CreateCurriculum.css"
 function CreateCurriculum() {
     const {courseId} = useParams();
     const {data, fetchData} = useAxios();
+    const {data: curriculumData, fetchData: curriculumFetchData} = useAxios();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         title: '',
-        idx:'',
-        curriculums:[]
+        curriculums: []
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const newIdx = formData.curriculums.length + 1;
-         fetchData(`/course/${courseId}/curriculum`, "post",
+        fetchData(`/courses/${courseId}/curriculums`, "post",
             {
                 title: formData.title,
                 idx: newIdx
@@ -29,18 +29,30 @@ function CreateCurriculum() {
     }
 
     useEffect(() => {
+        curriculumFetchData(`http://localhost:8080/api/v1/courses/${courseId}/curriculums`, "get");
+    }, [courseId]);
+
+    useEffect(() => {
         if (data) {
-            console.log(data);
             setFormData((prevState) => ({
                 ...prevState,
                 curriculums: [
                     ...prevState.curriculums,
-                    {idx: prevState.curriculums.length + 1, title: prevState.title,curriculumId: data},
+                    {idx: prevState.curriculums.length + 1, title: prevState.title, curriculumId: data.curriculumId},
                 ],
                 title: '',
             }));
         }
     }, [data]);
+
+    useEffect(() => {
+        if (curriculumData) {
+            setFormData((prevState) => ({
+                ...prevState,
+                curriculums: curriculumData
+            }));
+        }
+    }, [curriculumData]);
 
     const handleTitleChange = (e) => {
         const {value} = e.target;
@@ -49,6 +61,10 @@ function CreateCurriculum() {
             title: value
         }));
     };
+
+    const clickToMoveCreateCurriculum = (curriculumId) => {
+        navigate(`/education/manage/courses/${courseId}/curriculums/${curriculumId}/contents`);
+    }
 
     return (
         <div className="curriculum-container">
@@ -77,7 +93,7 @@ function CreateCurriculum() {
                             }
                         }}> {curriculum.title}</button>
                         <div id={`content-${index}`} className="content" style={{display: 'none'}}>
-                            <MediaUpload courseId={courseId} curriculumId={curriculum.curriculumId}/>
+                            {<button className="create-curriculum-button" onClick={() => clickToMoveCreateCurriculum(curriculum.curriculumId)}>컨텐츠 생성</button>}
                         </div>
                     </div>
                 ))}
