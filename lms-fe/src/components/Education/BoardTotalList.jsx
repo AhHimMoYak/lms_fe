@@ -2,22 +2,44 @@ import { useEffect, useState } from "react";
 import "../../styles/Mypage/BoardList.css";
 import useAxios from "../../hooks/api/useAxios.jsx";
 import { useNavigate, useParams } from "react-router-dom";
-import {format} from "date-fns";
+import { format } from "date-fns";
 
 function BoardTotalList() {
-    const [boards, setBoards] = useState([]); // 전체 게시글 리스트
-    const [lastEvaluatedKeys, setLastEvaluatedKeys] = useState([]); // 각 페이지의 키들을 저장
-    const [loading, setLoading] = useState(false); // 로딩 상태 관리
-    const [page, setPage] = useState(0); // 현재 페이지 인덱스
+    const [boards, setBoards] = useState([]);
+    const [institutionId, setInstitutionId] = useState(null);
+    const [lastEvaluatedKeys, setLastEvaluatedKeys] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [page, setPage] = useState(0);
     const [filter, setFilter] = useState("all");
     const { type } = useParams();
-    const limit = 10; // 페이지당 항목 수
+    const limit = 10;
     const navigate = useNavigate();
+    const { data: institutionData, fetchData: institutionFetchData } = useAxios();
     const { data, fetchData } = useAxios();
 
-    const institutionId = 1;
+    useEffect(() => {
+        institutionFetchData('http://localhost:8080/api/v1/institutions/details', "get");
+    }, [type]);
+
+    useEffect(() => {
+        if (institutionData) {
+            setInstitutionId(institutionData.id);
+        }
+    }, [institutionData]);
+
+    useEffect(() => {
+        // Fetch boards only after institutionId is set
+        if (institutionId) {
+            setPage(0);
+            setBoards([]);
+            setLastEvaluatedKeys([]);
+            fetchBoards(null, true);
+        }
+    }, [institutionId, type]);
 
     const fetchBoards = async (lastKey = null, reset = false) => {
+        if (!institutionId) return;
+
         setLoading(true);
         try {
             const keyParam = lastKey ? `&lastEvaluatedKey=${encodeURIComponent(JSON.stringify(lastKey))}` : '';
@@ -39,15 +61,6 @@ function BoardTotalList() {
         setLoading(false);
     };
 
-
-    useEffect(() => {
-        setPage(0);
-        setBoards([]);
-        setLastEvaluatedKeys([]);
-        fetchBoards(null, true);
-    }, [type]);
-
-
     useEffect(() => {
         if (data) {
             setBoards(data.items);
@@ -55,7 +68,6 @@ function BoardTotalList() {
         }
     }, [data]);
 
-    // 다음 페이지로 이동
     const handleNextPage = () => {
         if (lastEvaluatedKeys[page]) {
             setPage((prevPage) => prevPage + 1);
@@ -63,7 +75,6 @@ function BoardTotalList() {
         }
     };
 
-    // 이전 페이지로 이동
     const handlePreviousPage = () => {
         if (page > 0) {
             setPage((prevPage) => prevPage - 1);
