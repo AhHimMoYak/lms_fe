@@ -8,7 +8,7 @@ function BoardPost() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const {data, fetchData} = useAxios();
-    const {data:courseData, fetchData:courseProvideFetchData} = useAxios();
+    const {data:courseData, fetchData:courseFetchData} = useAxios();
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
@@ -25,7 +25,7 @@ function BoardPost() {
         fetchData(`https://api.ahimmoyak.click/board/v1/courses`, "POST", requestDTO);
     };
     useEffect(() => {
-        courseProvideFetchData(`/courses/${courseId}/details`,"GET");
+        courseFetchData(`/courses/${courseId}/details`,"GET");
     }, []);
 
     useEffect(() => {
