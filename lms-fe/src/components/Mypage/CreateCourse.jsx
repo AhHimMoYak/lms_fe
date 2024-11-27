@@ -25,6 +25,7 @@ function CreateCourse() {
         institutionFetchData(`/institutions/details`,"GET");
     }, []);
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
