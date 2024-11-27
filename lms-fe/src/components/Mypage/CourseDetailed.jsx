@@ -28,7 +28,6 @@ function CourseDetailed() {
         setActiveCurriculum((prevState) => (prevState.includes(index) ? prevState.filter((i) => i !== index) : [...prevState, index]));
     };
 
-    console.log(data);
 
     const clickContent = ({ curriculumId, contentId, contentType }) => {
         setCurriculumId(curriculumId);
