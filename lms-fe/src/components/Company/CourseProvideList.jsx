@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "/src/styles/Company/CourseProvideList.css";
 
 const CourseProvideList = () => {
-    const { data, err, fetchData } = useAxios();
+    const { data, fetchData } = useAxios();
     const [companyName, setCompanyName] = useState("");
     const [filterEmployees, setFilterEmployees] = useState([]);
     const [filteredByStatus, setFilteredByStatus] = useState([]);
@@ -28,7 +28,7 @@ const CourseProvideList = () => {
     };
 
     useEffect(() => {
-        fetchData("/company/courseProvide/list", "GET");
+        fetchData("http://localhost:8083/api/v1/companies/courseProvides/list", "GET");
     }, []);
 
     useEffect(() => {
