@@ -108,7 +108,10 @@ function Render() {
               <Route
                 path=":courseId/curriculum/create"
                 element={<CreateCurriculum />}
-              />
+              />        <Route
+                path="courses/:courseId/curriculums/:curriculumId/contents"
+                element={<CreateCourse_v2 />}
+            />
             </Route>
 
             <Route path="course/:courseId" element={<CourseFrame />}>

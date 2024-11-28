@@ -95,7 +95,7 @@ function Comment() {
                                 <div className="comment-item">
                                     <div className="comment-header">
                                         <p className="comment-userName">{comment.userName}</p>
-                                        <p className="comment-date">{format(new Date(comment.updatedAt), "yy/MM/dd HH:mm")}</p>
+                                        <p className="comment-date">{format(new Date(comment.updatedAt), "yy/MM/dd HH:mm")}{comment.updatedAt !== comment.createdAt && "(수정됨)"}  </p>
                                     </div>
                                     <p>{comment.content}</p>
                                     <div className="comment-actions">

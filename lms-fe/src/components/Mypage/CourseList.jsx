@@ -9,21 +9,27 @@ function CourseList() {
     const [pageSize, setPageSize] = useState(8); // 페이지 크기 설정
     const query = new URLSearchParams(useLocation().search);
     const page = parseInt(query.get("page")) || 1;
-    const {data: courseData, error, fetchData: fetchUserCourse} = useAxios();
+    const {data: courseData, fetchData: fetchUserCourse} = useAxios();
 
     useEffect(() => {
-        fetchUserCourse(`/course`, "GET");
+        if(decodeTokenTutor()){  //TODO 회사원일때, 교육기관일때 다름
+            fetchUserCourse(`/course`, "GET");
+            // fetchUserCourse('http://localhost:8083/api/v1/company/courseProvide/list', "GET");
+        } else {
+            fetchUserCourse('/company/courseProvide/list', "GET");
+        }
     }, []);
 
     useEffect(() => {
 
     }, [courseData]);
 
-    const handleRowClick = (courseid) => {
-        if (decodeTokenTutor()) {
-            navigate(`/education/course/${courseid}`);
+    const handleRowClick = (courseId) => {
+        if (decodeTokenTutor()) {  //TODO 교육기관과 회사원 나누기
+            // navigate(`/education/course/${courseId}`);
+            navigate(`/mypage/course/${courseId}`);
         } else {
-            navigate(`/mypage/course/${courseid}`);
+            navigate(`/mypage/course/${courseId}`);
         }
     };
 
@@ -69,9 +75,9 @@ function CourseList() {
                         currentCourses.map((courseItem, index) => (
                             <tr key={index} onClick={() => handleRowClick(currentCourses[index].id)}
                                 className="course-clickable-row">
-                                <td>No.{(page - 1) * pageSize + index + 1}</td>
+                                <td>{(page - 1) * pageSize + index + 1}</td>
                                 <td>{courseItem.title}</td>
-                                <td>{courseItem.tutor || "N/A"}</td>
+                                <td>{courseItem.instructor || "N/A"}</td>
                             </tr>
                         ))
                     ) : (
