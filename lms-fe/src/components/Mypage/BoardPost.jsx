@@ -25,7 +25,7 @@ function BoardPost() {
         fetchData(`https://api.ahimmoyak.click/board/v1/courses`, "POST", requestDTO);
     };
     useEffect(() => {
-        courseFetchData(`/courses/${courseId}/details`,"GET");
+        courseFetchData(`http://localhost:8080/api/v1/courses/${courseId}/details`,"GET");
     }, []);
 
     useEffect(() => {
