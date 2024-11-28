@@ -1,5 +1,5 @@
-import { Routes, Route } from "react-router-dom";
-import { AuthChecker } from "./authentication/AuthChecker";
+import {Route, Routes} from "react-router-dom";
+import {AuthChecker} from "./authentication/AuthChecker";
 import BasicFrame from "./components/BasicFrame.jsx";
 
 import CourseFrame from "./components/Mypage/CourseFrame.jsx";
@@ -38,18 +38,19 @@ import BoardTotalFrame from "./components/Education/BoardTotalFrame.jsx";
 import BoardListTotal from "./pages/Mypage/BoardListTotal.jsx";
 import ManagementPage from "./pages/Mypage/ManagementPage.jsx";
 import InstitutionPage from "./pages/Mypage/InstitutionPage.jsx";
-import AnswerQuiz from "./pages/Quiz/AnswerQuiz.jsx";
 import EmployeeDetailed from "./pages/Company/EmployeeDetailed.jsx";
-import CreateExam from "./pages/Quiz/CreateExam.jsx";
 import ExamDetail from "./pages/Quiz/ExamDetail.jsx";
 import UpdateExam from "./pages/Quiz/UpdateExam.jsx";
-import ExamList from "./pages/Quiz/ExamList.jsx";
 import CreateCompany from "./pages/Mypage/CreateCompany.jsx";
 import SubmitEmployeeList from "./pages/Company/SubmitEmployeeList.jsx";
 import CompanyEdit from "./pages/Company/CompanyEdit.jsx";
 import EmployeeAffiliation from "./pages/Company/EmployeeAffiliation.jsx";
 import QuizFormFrame from "./pages/Quiz/QuizFormFrame.jsx";
 import CreateCourse_v2 from "./components/Mypage/CreateCourse_v2/CreateCourse_v2.jsx";
+import ApplyExam from "./pages/Quiz/ApplyExam.jsx";
+import GetExam from "./components/Education/Exam_v2/GetExam.jsx";
+import CreateExam from "./components/Education/Exam_v2/CreateExam.jsx";
+import TakeExam from "./components/Education/Exam_v2/TakeExam.jsx";
 
 function Render() {
   return (
@@ -75,10 +76,11 @@ function Render() {
             <Route path="course" element={<CourseList />} />
             <Route path="institution" element={<InstitutionPage />} />
 
-            <Route path="course/:courseProvideId" element={<CourseFrame />}>
+            <Route path="course/:courseId" element={<CourseFrame />}>
               <Route path="" element={<CourseDetailed />} />
               <Route path="contents" element={<CourseDetailed />} />
               <Route path="live" element={<LiveDetail />} />
+              <Route path=":examId/take" element={<TakeExam />} />
 
               <Route path="board/:type" element={<BoardList />} />
               <Route path="board/:type/post" element={<BoardPost />} />
@@ -91,14 +93,6 @@ function Render() {
               <Route path="" element={<PasswordPrompt />} />
               <Route path="reconfirm" element={<PasswordPrompt />} />
               <Route path="update" element={<UpdateUser />} />
-            </Route>
-
-            <Route path=":courseId/exam" element={<QuizFormFrame />}>
-              <Route path="" element={<ExamList />} />
-              <Route path="create" element={<CreateExam />} />
-              <Route path=":examId" element={<ExamDetail />} />
-              <Route path=":examId/update" element={<UpdateExam />} />
-              <Route path=":examId/answer" element={<AnswerQuiz />} />
             </Route>
           </Route>
 
@@ -117,7 +111,7 @@ function Render() {
               />
             </Route>
 
-            <Route path="course/:courseProvideId" element={<CourseFrame />}>
+            <Route path="course/:courseId" element={<CourseFrame />}>
               <Route path="" element={<CourseDetailed />} />
               <Route path="contents" element={<CourseDetailed />} />
               <Route path="modify" element={<ModifyCourse />} />
@@ -130,6 +124,15 @@ function Render() {
               <Route path="board/:type/post" element={<BoardPost />} />
               <Route path="board/:type/:boardId" element={<BoardDetailed />} />
               <Route path="board/:boardId/edit" element={<BoardEdit />} />
+
+              <Route path="exam" element={<QuizFormFrame />}>
+                <Route path="" element={<GetExam />} />
+                <Route path="create" element={<CreateExam />} />
+                <Route path=":examId" element={<ExamDetail />} />
+                <Route path=":examId/update" element={<UpdateExam />} />
+                <Route path=":examId/apply" element={<ApplyExam />}/>
+              </Route>
+
             </Route>
             <Route path="board/*" element={<BoardTotalFrame />}>
               <Route path=":type" element={<BoardListTotal />} />
