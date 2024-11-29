@@ -13,10 +13,11 @@ function CourseList() {
 
     useEffect(() => {
         if(decodeTokenTutor()){  //TODO 회사원일때, 교육기관일때 다름
-            fetchUserCourse(`/course`, "GET");
+            fetchUserCourse(`/courses`, "GET");
             // fetchUserCourse('http://localhost:8083/api/v1/company/courseProvide/list', "GET");
         } else {
-            fetchUserCourse('/company/courseProvide/list', "GET");
+            fetchUserCourse(`/courses`, "GET");
+            // fetchUserCourse('/company/courseProvide/list', "GET");
         }
     }, []);
 
