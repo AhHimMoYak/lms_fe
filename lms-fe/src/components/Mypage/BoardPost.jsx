@@ -4,34 +4,39 @@ import useAxios from "../../hooks/api/useAxios.jsx";
 import "../../styles/Mypage/Board.css";
 
 function BoardPost() {
-    const {courseProvideId,type} = useParams();
+    const {courseId,type} = useParams();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const {data, fetchData} = useAxios();
+    const {data:courseData, fetchData:courseProvideFetchData} = useAxios();
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const requestDTO = {
-            institutionId : "2",
-            courseProvideId : courseProvideId,
+            institutionId : courseData.institutionId,
+            courseId : courseId,
             userName:"난중에고치기",
             type:type,
             title: title,
-            content: content
+            content: content,
+            course:  courseData.title
         };
-        fetchData(`https://api.ahimmoyak.click/board/v1/courseProvide`, "POST", requestDTO);
+        fetchData(`https://api.ahimmoyak.click/board/v1/course`, "POST", requestDTO);
     };
-
+    useEffect(() => {
+        courseProvideFetchData(`/course/${courseId}/detail`,"GET");
+    }, []);
+console.log(courseData);
     useEffect(() => {
         if (data) {
             alert("글 작성 성공!");
-            navigate(`/mypage/course/${courseProvideId}/board/${type}`);
+            navigate(`/mypage/course/${courseId}/board/${type}`);
         }
     }, [data]);
 
     const handleList = () => {
-        navigate(`/mypage/course/${courseProvideId}/board/${type}`);
+        navigate(`/mypage/course/${courseId}/board/${type}`);
         // navigate(`/education/course/${courseProvideId}/board/${type}`);  // TODO 교육기간
     }
 

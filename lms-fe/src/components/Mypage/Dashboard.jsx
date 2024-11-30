@@ -18,11 +18,11 @@ function Dashboard() {
             navigate(`/mypage/course/${courseId}`);
         }
     };
-    const clickDetailBoard = (courseProvideId,type,boardId) => {
+    const clickDetailBoard = (courseId,type,boardId) => {
         if (decodeTokenTutor()) {
-            navigate(`/mypage/course/${courseProvideId}/board/${type}/${boardId}`);
+            navigate(`/mypage/course/${courseId}/board/${type}/${boardId}`);
         } else {
-            navigate(`/mypage/course/${courseProvideId}/board/${type}/${boardId}`);
+            navigate(`/mypage/course/${courseId}/board/${type}/${boardId}`);
         }
     };
     const clickListCourse = () => {
@@ -45,7 +45,7 @@ function Dashboard() {
     }, []);
 
     useEffect(() => {
-        fetchBoardData(`https://api.ahimmoyak.click/board/v1/userName/${userName}?limit=${limit}`, "GET");
+        fetchBoardData(`https://api.ahimmoyak.click/board/v1/user-name/${userName}?limit=${limit}`, "GET");
     }, []);
     console.log(boardData);
     return (
@@ -84,7 +84,7 @@ function Dashboard() {
                     </thead>
                     <tbody>
                         {boardData?.items?.map((board, index) => (
-                            <tr key={board.boardId} className="qna-table-row" onClick={() => clickDetailBoard(board.courseProvideId,board.type,board.id)}>
+                            <tr key={board.boardId} className="qna-table-row" onClick={() => clickDetailBoard(board.courseId,board.type,board.id)}>
                                 <td className="que-idx">{index + 1}</td>
                                 <td className="qna-course">{board.course}</td>
                                 <td className="qna-title">{board.title}</td>
