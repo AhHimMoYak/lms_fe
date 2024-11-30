@@ -43,6 +43,11 @@ function UploadContents({
 
     try {
       const encodedFileName = btoa(unescape(encodeURIComponent(file.name)));
+      
+      // 비디오 길이를 추출하고 포맷하기
+      const videoDuration = file.type.startsWith("video/") ? await getVideoDuration(file) : null;
+      const formattedVideoDuration = videoDuration ? formatDuration(videoDuration) : null;
+
       const requestBody = {
         curriculumId,
         courseId,
@@ -52,6 +57,7 @@ function UploadContents({
         contentType: file.type,
         contentTitle,
         fileSize,
+        videoDuration: formattedVideoDuration,
       };
 
       const urlResponse = await fetch(BASE_URL + "/v1/files/upload", {
@@ -65,8 +71,8 @@ function UploadContents({
         throw new Error(errorData.error || "Pre-signed URL 생성 실패");
       }
 
-      const { uploadUrl, contentId, s3Url, contentType } =
-        await urlResponse.json();
+      const { uploadUrl, contentId, s3Url, contentType, videoDuration: serverVideoDuration } =
+        await urlResponse.json(); // videoDuration을 serverVideoDuration으로 변경
 
       const xhr = new XMLHttpRequest();
       xhr.open("PUT", uploadUrl, true);
@@ -105,6 +111,7 @@ function UploadContents({
               fileSize,
               s3Url,
               contentType,
+              videoDuration: formattedVideoDuration, // 포맷된 비디오 길이
             };
 
             onUploadComplete(newContent);
@@ -122,6 +129,30 @@ function UploadContents({
     } catch (error) {
       alert(`업로드 실패: ${error.message}`);
     }
+  };
+
+  const getVideoDuration = (file) => {
+    return new Promise((resolve, reject) => {
+      const videoElement = document.createElement("video");
+
+      videoElement.onloadedmetadata = function () {
+        resolve(videoElement.duration); // 초 단위로 비디오 길이 반환
+      };
+
+      videoElement.onerror = function () {
+        reject("비디오 길이 추출 실패");
+      };
+
+      const objectURL = URL.createObjectURL(file);
+      videoElement.src = objectURL;
+    });
+  };
+
+  // 비디오 길이를 "분:초" 형식으로 포맷하는 함수
+  const formatDuration = (duration) => {
+    const minutes = Math.floor(duration / 60);
+    const seconds = Math.floor(duration % 60);
+    return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
 
   return (
