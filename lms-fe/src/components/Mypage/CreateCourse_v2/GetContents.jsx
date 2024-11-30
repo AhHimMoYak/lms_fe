@@ -26,6 +26,7 @@ function GetContents({ idx, originalFileName, fileSize, uploadedAt, content, onD
           <div className="contentTitleContainer">{content.contentTitle}</div>
           <div className="fileNameContainer">파일명 : {originalFileName}</div>
           <div className="fileSizeContainer">파일 사이즈 : {formatFileSize(fileSize)}</div>
+          <div>영상 길이 : {content.videoDuration}</div>
           <div className="contentTypeContainer">
             <a href={content.s3Url} target="_blank" rel="noopener noreferrer">
               {content.contentType}
