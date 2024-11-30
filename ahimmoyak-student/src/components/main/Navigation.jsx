@@ -8,7 +8,7 @@ const Navigation = () => {
     <>
     <div className="fixed top-0 left-0 h-full w-56 bg-gray-800 text-white pl-4">
       <div className="h-16 flex items-center border-b border-gray-700 mb-4">
-        <NavLink to={'/'} className="flex align-middle">
+        <NavLink to={'/'} className="flex align-middle items-center">
           <img src={logo} alt="logo" className="w-10" />
           <h1 className="ml-2 text-xl font-bold">아힘모약 LMS</h1>
         </NavLink>
