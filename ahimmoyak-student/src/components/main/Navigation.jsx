@@ -38,7 +38,7 @@ const Navigation = () => {
 
           ))}
         </ul>
-        <a className={`flex items-center space-x-2 p-2 rounded-lg mb-1 absolute bottom-0 hover:bg-gray-600 mb-4`}
+        <a className={`flex items-center space-x-2 p-2 rounded-lg mb-1 absolute bottom-0 hover:bg-gray-600 mb-4 `}
            href='https://ahimmoyak.click'>
           <LogOut className="h-5 w-5"/>
           <span>메인으로</span>
