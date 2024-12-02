@@ -1,5 +1,6 @@
 import {NavLink, useLocation} from "react-router-dom";
 import logo from "../../assets/logo.png";
+import {LogOut} from "lucide-react";
 
 const Navigation = () => {
   const location = useLocation();
@@ -16,14 +17,14 @@ const Navigation = () => {
       <nav>
         <ul className="space-y-2">
           {[
-            { path: '/', label: '대시보드' },
-            { path: '/course', label: '수강 중인 코스' },
-            { path: '/qna', label: '질의응답' }
+            {path: '/', label: '대시보드'},
+            {path: '/course', label: '수강 중인 코스'},
+            {path: '/qna', label: '질의응답'}
           ].map(item => (
             <li key={item.path}>
               <NavLink
                 to={item.path}
-                className={({ isActive }) =>
+                className={({isActive}) =>
                   `block p-3 rounded ${
                     isActive
                       ? 'bg-blue-600'
@@ -34,8 +35,14 @@ const Navigation = () => {
                 {item.label}
               </NavLink>
             </li>
+
           ))}
         </ul>
+        <a className={`flex items-center space-x-2 p-2 rounded-lg mb-1 absolute bottom-0 hover:bg-gray-600 mb-4`}
+           href='https://ahimmoyak.click'>
+          <LogOut className="h-5 w-5"/>
+          <span>메인으로</span>
+        </a>
       </nav>
     </div>
     </>
