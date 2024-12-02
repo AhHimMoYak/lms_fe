@@ -17,7 +17,7 @@ const Layout = () => {
     <div className="flex h-screen bg-gray-100">
       <div className="w-64 bg-white shadow-lg">
         <div className="p-4 border-b">
-          <h1 className="text-xl font-bold">교육기관 관리</h1>
+          <h1 className="text-xl font-bold">교육기관 관리-테스트</h1>
         </div>
         <nav className="p-4">
           {menuItems.map(({ path, text, icon: Icon }) => (
