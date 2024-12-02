@@ -1,5 +1,5 @@
 import { Outlet, useLocation, Link } from 'react-router-dom';
-import { BookOpen, BookOpenText, FileText, Building2, Home } from 'lucide-react';
+import { BookOpen, BookOpenText, FileText, Building2, Home, LogOut} from 'lucide-react';
 
 const Layout = () => {
   const location = useLocation();
@@ -32,6 +32,10 @@ const Layout = () => {
               <span>{text}</span>
             </Link>
           ))}
+        <a className={`flex items-center space-x-2 p-2 rounded-lg mb-1 absolute bottom-0 hover:bg-gray-100 mb-4`} href='https://ahimmoyak.click'>
+          <LogOut className="h-5 w-5" />
+          <span>메인으로</span>
+        </a>
         </nav>
       </div>
 

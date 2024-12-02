@@ -1,5 +1,5 @@
 import { Outlet, useLocation, Link } from 'react-router-dom';
-import { Users, BookOpen, BookOpenText, FileText, Building2, Home } from 'lucide-react';
+import { Users, BookOpen, BookOpenText, FileText, Building2, Home, LogOut } from 'lucide-react';
 
 const Layout = () => {
   const location = useLocation();
@@ -21,7 +21,7 @@ const Layout = () => {
           <h1 className="text-xl font-bold">회사 교육관리</h1>
         </div>
         <nav className="p-4">
-          {menuItems.map(({ path, text, icon: Icon }) => (
+          {menuItems.map(({path, text, icon: Icon}) => (
             <Link
               key={path}
               to={path}
@@ -29,10 +29,15 @@ const Layout = () => {
                 currentPath === path ? 'bg-blue-100 text-blue-600' : 'hover:bg-gray-100'
               }`}
             >
-              <Icon className="h-5 w-5" />
+              <Icon className="h-5 w-5"/>
               <span>{text}</span>
             </Link>
           ))}
+          <a className={`flex items-center space-x-2 p-2 rounded-lg mb-1 absolute bottom-0 hover:bg-gray-100 mb-4`}
+             href='https://ahimmoyak.click'>
+            <LogOut className="h-5 w-5"/>
+            <span>메인으로</span>
+          </a>
         </nav>
       </div>
 
