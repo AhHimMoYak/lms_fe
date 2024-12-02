@@ -1,0 +1,244 @@
+.create-course-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 80vw;
+  max-width: 900px;
+  height: 15rem;
+  margin: 2rem auto;
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.create-course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.x-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #ccc;
+  transition: color 0.2s ease;
+}
+
+.x-icon:hover {
+  color: #e74c3c;
+}
+
+.getContentsContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.idxContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #2c3e50;
+  text-align: center;
+  width: 15%;
+  height: 85%;
+  padding: 1rem;
+  background-color: #ecf0f1;
+  border-radius: 8px;
+}
+
+.fileInfoContainer {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  padding-left: 1rem;
+}
+
+.fileNameContainer,
+.contentTypeContainer,
+.dateContainer {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin-bottom: 8px;
+  word-wrap: break-word;
+}
+
+.fileNameContainer {
+  font-weight: 500;
+  text-align: center;
+}
+
+.contentTitleContainer {
+  font-size: 2.5rem;
+  color: #7f8c8d;
+  margin-bottom: 16px;
+}
+
+.contentTypeContainer {
+  font-size: 1.2rem;
+  color: #34495e;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.s3UrlContainer a {
+  text-decoration: none;
+  color: #3498db;
+  font-size: 1.2rem;
+}
+
+.s3UrlContainer a:hover {
+  text-decoration: underline;
+}
+
+.dateContainer {
+  font-size: 1rem;
+  color: #95a5a6;
+  text-align: right;
+}
+
+.x-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #ccc;
+  transition: color 0.2s ease;
+}
+
+.x-icon:hover {
+  color: #e74c3c;
+}
+
+.plus-icon,
+.x-icon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.plus-icon:hover,
+.x-icon:hover {
+  color: #3498db;
+}
+
+.upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.upload-area > input {
+  width: 100%;
+  height: 3rem;
+  border: none;
+  background-color: rgb(139, 240, 243);
+  border-radius: 10px;
+  padding: 0 1rem;
+}
+
+.upload-area > input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 1rem;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  position: relative;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  background-color: #4caf50;
+  border-radius: 10px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  text-align: center;
+  color: white;
+  font-size: 14px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.save-contents-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  position: fixed;
+  bottom: 175px;
+  right: 2rem;
+  width: 100%;
+  height: 50px;
+  z-index: 1000;
+}
+
+.save-contents-button {
+  display: flex;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  transform-origin: center;
+}
+
+.save-contents-button:hover {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.save-contents-icon {
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 24px;
+  z-index: 9999;
+}
