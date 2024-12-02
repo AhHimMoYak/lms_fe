@@ -10,6 +10,7 @@ const RegisterPage = () => {
     password: '',
     confirmPassword: '',
     name: '',
+    phone: '',
     agreeToTerms: false
   });
 
@@ -84,6 +85,16 @@ const RegisterPage = () => {
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
                 error={errors.email}
+                required
+              />
+
+              <InputField
+                label="휴대폰 번호"
+                type="tel"
+                placeholder="'-' 없이 입력해주세요"
+                value={formData.phoneNumber}
+                onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})}
+                error={errors.phoneNumber}
                 required
               />
 

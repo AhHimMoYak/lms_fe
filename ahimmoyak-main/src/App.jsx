@@ -12,6 +12,7 @@ import RoleSelectionPage from "./pages/role/RoleSelectionPage.jsx";
 import EmployeeRegistrationPage from "./pages/role/EmployeeRegistrationPage.jsx";
 import InstitutionRegistrationPage from "./pages/role/InstitutionRegistrationPage.jsx";
 import CompanyRegistrationPage from "./pages/role/CompanyRegistrationPage.jsx";
+import UserInfoPage from "./pages/user/UserInfoPage.jsx";
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
               <Route path="/signup" element={<RegisterPage />} />
               <Route path="/email" element={<EmailVerificationPage />} />
               <Route path="/more_info" element={<AdditionalInfoPage />} />
+              <Route path="/mypage" element={<UserInfoPage/>}/>
 
               <Route path="/register" element={<RoleSelectionPage />} />
               <Route path="/register/employee" element={<EmployeeRegistrationPage/>}/>

@@ -6,19 +6,19 @@ const ServicesPage = () => {
       title: "학습자 포털",
       description: "개인화된 학습 경험과 진도 관리를 통해 효율적인 학습을 시작하세요.",
       icon: <Users className="w-16 h-16 text-blue-500" />,
-      link: "http://localhost:5174"
+      link: "https://lms.ahimmoyak.click"
     },
     {
       title: "교육기관 포털",
       description: "교육 콘텐츠를 효과적으로 관리하고 학습자들과 소통하세요.",
       icon: <GraduationCap className="w-16 h-16 text-blue-500" />,
-      link: "/institute"
+      link: "https://institution.ahimmoyak.click"
     },
     {
       title: "기업 포털",
       description: "임직원 교육을 체계적으로 관리하고 성과를 분석하세요.",
       icon: <Building2 className="w-16 h-16 text-blue-500" />,
-      link: "/corporate"
+      link: "https://company.ahimmoyak.click"
     }
   ];
 

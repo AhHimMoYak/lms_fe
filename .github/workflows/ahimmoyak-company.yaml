@@ -1,11 +1,13 @@
-name: Deploy with AWS (Develop)
+name: Deploy with AWS (ahimmoyak-company)
 
 on:
   pull_request:
     branches:
-      - develop
+      - main
     types:
       - closed
+    paths:
+      - ahimmoyak-company/**
 
 jobs:
   deploy:
@@ -35,8 +37,8 @@ jobs:
 
       - name: S3 업로드
         run: |
-          aws s3 sync ./dist s3://${{secrets.AWS_S3_BUCKET_DEV}} --delete
+          aws s3 sync ./dist s3://${{secrets.AWS_S3_BUCKET_COMPANY}} --delete
 
       - name: CloudFront 캐시 무효화
         run: |
-          aws cloudfront create-invalidation --distribution-id ${{secrets.CLOUDFRONT_DISTRIBUTION_ID_DEV}} --path "/*"
+          aws cloudfront create-invalidation --distribution-id ${{secrets.CLOUDFRONT_DISTRIBUTION_ID_COMPANY}} --path "/*"

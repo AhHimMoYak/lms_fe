@@ -1,4 +1,4 @@
-name: Deploy with AWS (Release)
+name: Deploy with AWS (ahimmoyak-institution)
 
 on:
   pull_request:
@@ -6,6 +6,8 @@ on:
       - main
     types:
       - closed
+    paths:
+      - ahimmoyak-institution/**
 
 jobs:
   deploy:
@@ -35,8 +37,8 @@ jobs:
 
       - name: S3 업로드
         run: |
-          aws s3 sync ./dist s3://${{secrets.AWS_S3_BUCKET}} --delete
+          aws s3 sync ./dist s3://${{secrets.AWS_S3_BUCKET_INSTITUTION}} --delete
 
       - name: CloudFront 캐시 무효화
         run: |
-          aws cloudfront create-invalidation --distribution-id ${{secrets.CLOUDFRONT_DISTRIBUTION_ID}} --path "/*"
+          aws cloudfront create-invalidation --distribution-id ${{secrets.CLOUDFRONT_DISTRIBUTION_ID_INSTITUTION}} --path "/*"
