@@ -2,32 +2,33 @@ import { useEffect, useState } from "react";
 import "../../styles/Mypage/BoardList.css";
 import useAxios from "../../hooks/api/useAxios.jsx";
 import { useNavigate, useParams } from "react-router-dom";
+import {format} from "date-fns";
 
 function BoardTotalList() {
     const [boards, setBoards] = useState([]); // 전체 게시글 리스트
     const [lastEvaluatedKeys, setLastEvaluatedKeys] = useState([]); // 각 페이지의 키들을 저장
     const [loading, setLoading] = useState(false); // 로딩 상태 관리
     const [page, setPage] = useState(0); // 현재 페이지 인덱스
+    const [filter, setFilter] = useState("all");
     const { type } = useParams();
     const limit = 10; // 페이지당 항목 수
     const navigate = useNavigate();
     const { data, fetchData } = useAxios();
 
-    const institutionId = "2";
+    const institutionId = 1;
 
     const fetchBoards = async (lastKey = null, reset = false) => {
         setLoading(true);
         try {
             const keyParam = lastKey ? `&lastEvaluatedKey=${encodeURIComponent(JSON.stringify(lastKey))}` : '';
-            await fetchData(`https://api.ahimmoyak.click/board/v1/institution/${institutionId}/${type}?limit=${limit}${keyParam}`, "GET");
-
-            if (data && data.items) {
-                setBoards((prevBoards) => reset ? data.items : [
+            const response = await fetchData(`https://api.ahimmoyak.click/board/v1/institutions/${institutionId}/${type}?limit=${limit}${keyParam}`, "GET");
+            if (response && response.items) {
+                setBoards((prevBoards) => reset ? response.items : [
                     ...prevBoards,
-                    ...data.items.filter((item) => !prevBoards.some((board) => board.id === item.id))
+                    ...response.items.filter((item) => !prevBoards.some((board) => board.id === item.id))
                 ]);
 
-                const newLastEvaluatedKey = data.lastEvaluatedKey || null;
+                const newLastEvaluatedKey = response.lastEvaluatedKey || null;
                 if (newLastEvaluatedKey && !reset) {
                     setLastEvaluatedKeys((prevKeys) => [...prevKeys, newLastEvaluatedKey]);
                 }
@@ -38,13 +39,14 @@ function BoardTotalList() {
         setLoading(false);
     };
 
-    // 컴포넌트가 처음 렌더링될 때 또는 type이 변경될 때 데이터를 불러옵니다.
+
     useEffect(() => {
-        setPage(0); // type이 변경될 때 페이지 번호를 초기화합니다.
-        setBoards([]); // 기존 데이터를 초기화합니다.
-        setLastEvaluatedKeys([]); // 기존 키 데이터를 초기화합니다.
-        fetchBoards(null, true); // 새 데이터를 불러옵니다.
+        setPage(0);
+        setBoards([]);
+        setLastEvaluatedKeys([]);
+        fetchBoards(null, true);
     }, [type]);
+
 
     useEffect(() => {
         if (data) {
@@ -70,33 +72,57 @@ function BoardTotalList() {
         }
     };
 
-    const handleBoardDetail = (courseProvideId, type, boardId) => {
-        navigate(`/education/course/${courseProvideId}/board/${type}/${boardId}`);
+    const handleBoardDetail = (courseId, type, boardId) => {
+        navigate(`/education/course/${courseId}/board/${type}/${boardId}`);
     };
+
+    const filteredBoards = boards.filter((board) => {
+        if (filter === "answered") return board.commentCount > 0;
+        if (filter === "notAnswered") return board.commentCount === 0;
+        return true; // 'all'인 경우
+    });
 
     return (
         <div className="board-list-container">
             <h2>{type} 게시판</h2>
+            {type !== "Notice" && (
+                <div className="filter-buttons">
+                    <button onClick={() => setFilter("all")} className={filter === "all" ? "active" : ""}>
+                        전체
+                    </button>
+                    <button onClick={() => setFilter("answered")} className={filter === "answered" ? "active" : ""}>
+                        답변 완료
+                    </button>
+                    <button onClick={() => setFilter("notAnswered")}
+                            className={filter === "notAnswered" ? "active" : ""}>
+                        미답변
+                    </button>
+                </div>
+            )}
             <table className="board-total-table">
                 <thead>
                 <tr>
                     <th>No.</th>
                     <th>코스명</th>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>답변 여부</th>
+                    <th className="title">제목</th>
+                    <th className="author">작성자</th>
+                    <th className="date">날짜</th>
+                    {type !== "Notice" && <th>답변 여부</th>}
                 </tr>
                 </thead>
                 <tbody>
-                {boards.map((board, index) => (
-                    <tr key={board.id} onClick={() => handleBoardDetail(board.courseProvideId, board.type, board.id)}>
+                {filteredBoards.map((board, index) => (
+                    <tr key={board.id} onClick={() => handleBoardDetail(board.courseId, board.type, board.id)}>
                         <td>{page * limit + index + 1}</td>
                         <td>{board.course}</td>
                         <td>{board.title.length > 13 ? `${board.title.substring(0, 13)}...` : board.title}</td>
                         <td>{board.userName}</td>
-                        <td className={board.commentCount > 0 ? "answered" : "not-answered"}>
-                            {board.commentCount > 0 ? "완료" : "미완료"}
-                        </td>
+                        <td>{format(new Date(board.createdAt), "yy/MM/dd HH:mm")}</td>
+                        {type !== "Notice" && (
+                            <td className={board.commentCount > 0 ? "answered" : "not-answered"}>
+                                {board.commentCount > 0 ? "완료" : "미완료"}
+                            </td>
+                        )}
                     </tr>
                 ))}
                 </tbody>
