@@ -29,7 +29,7 @@ const NoticeDetail = () => {
             <button className="px-4 py-2 text-sm text-blue-600">수정</button>
             <button className="px-4 py-2 text-sm text-red-600">삭제</button>
             <button
-              onClick={() => navigate(-1)}
+              onClick={() => navigate(`/courses/${courseId}?tab=notice`)}
               className="px-4 py-2 bg-gray-200 rounded text-sm"
             >
               목록

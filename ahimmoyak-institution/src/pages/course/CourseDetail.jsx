@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useParams, useSearchParams} from 'react-router-dom';
 import { Clock, User, Plus, ChevronDown, ChevronUp, Edit2, Trash2, Building2 } from 'lucide-react';
 import Tabs from "../../components/course/Tabs.jsx";
 import InfoTab from "../../components/course/InfoTab.jsx";
@@ -19,6 +19,7 @@ const CourseDetail = () => {
   const [editedCourse, setEditedCourse] = useState(null);
   const [showContentModal, setShowContentModal] = useState(false);
   const [selectedChapterId, setSelectedChapterId] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const courseData = {
     title: 'React 기초부터 실전까지',
@@ -73,6 +74,15 @@ const CourseDetail = () => {
     { id: 'live', label: '라이브방송' }
   ];
 
+  useEffect(() => {
+    setActiveTab(searchParams.get('tab') || "info");
+  }, [searchParams]);
+
+  const handleTapChange = (tab) => {
+    setActiveTab(tab);
+    setSearchParams({tab: tab});
+  }
+
   const handleEditCourse = () => {
     setEditedCourse({
       title: courseData.title,
@@ -119,7 +129,7 @@ const CourseDetail = () => {
             <p className="text-gray-600">{courseData.description}</p>
           </div>
 
-          <Tabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab}/>
+          <Tabs tabs={tabs} activeTab={activeTab} onTabChange={handleTapChange}/>
         </div>
 
         {activeTab === 'curriculum' && (
