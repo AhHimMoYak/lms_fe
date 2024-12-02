@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const CheckExam = () => {
-    const [courseId, setCourseId] = useState("");
+    const [courseProvideId, setCourseProvideId] = useState("");
     const [examId, setExamId] = useState("");
     const [results, setResults] = useState([]);
     const [error, setError] = useState("");
@@ -14,9 +14,10 @@ const CheckExam = () => {
 
         try {
             const response = await axios.get(
-                `https://api.ahimmoyak.click/exam/v1/${courseId}/${examId}/check`
+                `https://api.ahimmoyak.click/exam/v1/${courseProvideId}/${examId}/check`
             );
             setResults(response.data.data); // 결과 설정
+            console.log(response);
         } catch (err) {
             if (err.response) {
                 setError(err.response.data.error); // 서버 에러 메시지 표시
@@ -31,12 +32,12 @@ const CheckExam = () => {
             <h1>시험 결과 확인</h1>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>과목 ID:</label>
+                    <label>코스 제공 ID:</label>
                     <input
                         type="text"
-                        value={courseId}
-                        onChange={(e) => setCourseId(e.target.value)}
-                        placeholder="과목 ID를 입력하세요"
+                        value={courseProvideId}
+                        onChange={(e) => setCourseProvideId(e.target.value)}
+                        placeholder="코스 제공 ID를 입력하세요"
                         required
                     />
                 </div>
