@@ -135,12 +135,14 @@ function CreateCourse_v2() {
   };
 
   const saveContents = async () => {
-    const contentList = contents.map(content => ({
+
+    const contentList = contents.map((content, sortIndex) => ({
       contentId: content.contentId,
-      idx: content.idx,
+      idx: sortIndex + 1,
       contentTitle: content.contentTitle,
       contentType: content.contentType.toUpperCase(),
-      s3Url: content.s3Url
+      s3Url: content.s3Url,
+      videoDuration: content.videoDuration,
     }));
 
     setLoading(true);

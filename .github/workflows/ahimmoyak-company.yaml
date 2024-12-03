@@ -1,11 +1,13 @@
-name: Deploy with AWS (Develop)
+name: Deploy with AWS (ahimmoyak-company)
 
 on:
   pull_request:
     branches:
-      - develop
+      - main
     types:
       - closed
+    paths:
+      - ahimmoyak-company/**
 
 jobs:
   deploy:
@@ -21,9 +23,11 @@ jobs:
           node-version: '20'
 
       - name: npm 라이브러리 설치
+        working-directory: ./ahimmoyak-company
         run: npm install
 
       - name: 프로젝트 빌드
+        working-directory: ./ahimmoyak-company
         run: npm run build
 
       - name: AWS Resource 에 접근할 수 있도록 AWS credentials 설정
@@ -34,9 +38,10 @@ jobs:
           aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
 
       - name: S3 업로드
+        working-directory: ./ahimmoyak-company
         run: |
-          aws s3 sync ./dist s3://${{secrets.AWS_S3_BUCKET_DEV}} --delete
+          aws s3 sync ./dist s3://${{secrets.AWS_S3_BUCKET_COMPANY}} --delete
 
       - name: CloudFront 캐시 무효화
         run: |
-          aws cloudfront create-invalidation --distribution-id ${{secrets.CLOUDFRONT_DISTRIBUTION_ID_DEV}} --path "/*"
+          aws cloudfront create-invalidation --distribution-id ${{secrets.CLOUDFRONT_DISTRIBUTION_ID_COMPANY}} --path "/*"
