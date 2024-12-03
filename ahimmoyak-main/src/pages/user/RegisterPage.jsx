@@ -11,6 +11,8 @@ const RegisterPage = () => {
     confirmPassword: '',
     name: '',
     phone: '',
+    birthdate: '',
+    gender: '',
     agreeToTerms: false
   });
 
@@ -95,6 +97,27 @@ const RegisterPage = () => {
                 value={formData.phoneNumber}
                 onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})}
                 error={errors.phoneNumber}
+                required
+              />
+
+              <InputField
+                label="생년월일"
+                type="date"
+                placeholder="'-' 없이 입력해주세요"
+                value={formData.birthdate}
+                onChange={(e) => setFormData({...formData, birthdate: e.target.value})}
+                error={errors.birthdate}
+                required
+              />
+
+              <InputField
+                label="성별"
+                type="select"
+                placeholder="'-' 없이 입력해주세요"
+                options={['남', '여']}
+                value={formData.gender}
+                onChange={(e) => setFormData({...formData, gender: e.target.value})}
+                error={errors.gender}
                 required
               />
 
