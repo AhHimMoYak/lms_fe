@@ -56,6 +56,7 @@ function Comment() {
     const handleCommentDelete = (commentId) => {
         const requestDTO = {
             boardId: boardId,
+            institutionComment: (decodeTokenTutor())? 1:0,
         };
         commentDeleteFetchData(`https://api.ahimmoyak.click/board/v1/comments/${commentId}`, "DELETE",requestDTO);
     };
