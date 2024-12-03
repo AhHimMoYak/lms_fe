@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams, useSearchParams} from 'react-router-dom';
+import {Route, Routes, useNavigate, useParams, useSearchParams} from 'react-router-dom';
 import { Clock, User, Plus, ChevronDown, ChevronUp, Edit2, Trash2, Building2 } from 'lucide-react';
 import Tabs from "../../components/course/Tabs.jsx";
 import InfoTab from "../../components/course/InfoTab.jsx";
@@ -10,6 +10,10 @@ import NoticeTab from "../../components/course/NoticeTab.jsx";
 import QnATab from "../../components/course/QnATab.jsx";
 import ExamTab from "../../components/course/ExamTab.jsx";
 import LiveStreamTab from "../../components/course/LiveStreamTab.jsx";
+import NoticeDetail from "./NoticeDetail.jsx";
+import NoticeCreate from "./NoticeCreate.jsx";
+import QnADetail from "./QnADetail.jsx";
+import ExamManagement from "./ExamManagement.jsx";
 
 const CourseDetail = () => {
   const { courseId } = useParams();
@@ -67,21 +71,15 @@ const CourseDetail = () => {
   const tabs = [
     { id: 'info', label: '코스 정보' },
     { id: 'curriculum', label: '커리큘럼 관리' },
-    { id: 'offerings', label: '코스제공 현황' },
+    { id: 'provide', label: '코스제공 현황' },
     { id: 'notice', label: '공지사항' },
     { id: 'qna', label: '질문게시판' },
     { id: 'exam', label: '시험관리' },
     { id: 'live', label: '라이브방송' }
   ];
 
-  useEffect(() => {
-    setActiveTab(searchParams.get('tab') || "info");
-  }, [searchParams]);
+  const navigate = useNavigate();
 
-  const handleTapChange = (tab) => {
-    setActiveTab(tab);
-    setSearchParams({tab: tab});
-  }
 
   const handleEditCourse = () => {
     setEditedCourse({
@@ -129,21 +127,11 @@ const CourseDetail = () => {
             <p className="text-gray-600">{courseData.description}</p>
           </div>
 
-          <Tabs tabs={tabs} activeTab={activeTab} onTabChange={handleTapChange}/>
+          <Tabs tabs={tabs} activeTab={activeTab}/>
         </div>
 
-        {activeTab === 'curriculum' && (
-          <CurriculumTab
-            chapters={courseData.curriculum}
-            expandedChapter={expandedCurriculum}
-            onExpand={setExpandedCurriculum}
-            onAddChapter={handleSaveChapter}
-            onAddContent={handleAddContent}
-          />
-        )}
-
-        {activeTab === 'info' && (
-          <InfoTab
+        <Routes>
+          <Route path='info' element={<InfoTab
             course={courseData}
             isEditing={isEditing}
             editedCourse={editedCourse}
@@ -151,28 +139,28 @@ const CourseDetail = () => {
             onSave={handleSaveEdit}
             onCancel={() => setIsEditing(false)}
             onEditChange={setEditedCourse}
-          />
-        )}
+          />}/>
+          <Route path='curriculum' element={<CurriculumTab
+            chapters={courseData.curriculum}
+            expandedChapter={expandedCurriculum}
+            onExpand={setExpandedCurriculum}
+            onAddChapter={handleSaveChapter}
+            onAddContent={handleAddContent}
+          />}/>
+          <Route path='provide' element={<ProvideTab provides={courseData.provides}/>}/>
 
-        {activeTab === 'offerings' && (
-          <ProvideTab provides={courseData.provides}/>
-        )}
+          <Route path='notice' element={<NoticeTab/>}/>
+          <Route path="notice/:noticeId" element={<NoticeDetail/>}/>
+          <Route path="notice/new" element={<NoticeCreate/>}/>
 
-        {activeTab === 'notice' && (
-          <NoticeTab/>
-        )}
+          <Route path='qna' element={<QnATab/>}/>
+          <Route path='qna/:qnaId' element={<QnADetail/>}/>
 
-        {activeTab === 'qna' && (
-          <QnATab/>
-        )}
+          <Route path='exam' element={<ExamTab/>}/>
+          <Route path='exam/:examId' element={<ExamManagement/>}/>
 
-        {activeTab === 'exam' && (
-          <ExamTab/>
-        )}
-
-        {activeTab === 'live' && (
-          <LiveStreamTab/>
-        )}
+          <Route path='live' element={<LiveStreamTab/>}/>
+        </Routes>
 
         {showContentModal && (
           <AddContentModal

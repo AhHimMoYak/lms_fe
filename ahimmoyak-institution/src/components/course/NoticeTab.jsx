@@ -9,7 +9,10 @@ const NoticeTab = () => {
     <div className="bg-white rounded-lg shadow">
       <div className="p-4 border-b flex justify-between items-center">
         <h2 className="text-lg font-medium">공지사항</h2>
-        <button className="bg-blue-600 text-white px-3 py-2 rounded-lg">
+        <button
+          onClick={() => navigate(`/courses/${courseId}/notice/new`)}
+          className="bg-blue-600 text-white px-3 py-2 rounded-lg"
+        >
           공지 작성
         </button>
       </div>

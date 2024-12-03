@@ -34,7 +34,7 @@ const CourseList = () => {
           {courses.map((course) => (
             <div
               key={course.id}
-              onClick={() => navigate(`/courses/${course.id}`)}
+              onClick={() => navigate(`/courses/${course.id}/info`)}
               className="p-4 hover:bg-gray-50 cursor-pointer"
             >
               <div className="flex justify-between items-center">
