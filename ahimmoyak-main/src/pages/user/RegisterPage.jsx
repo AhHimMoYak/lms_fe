@@ -1,6 +1,7 @@
 import {useState} from "react";
 import InputField from "../../components/user/InputField.jsx";
 import {Link, useNavigate} from "react-router-dom";
+import google_icon from "../../assets/google_login.svg";
 
 
 const RegisterPage = () => {
@@ -189,8 +190,10 @@ const RegisterPage = () => {
               </div>
 
               <div className="mt-6 grid grid-cols-1 gap-3">
-                <button className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                  Google
+                <button
+                  className="w-full flex items-center justify-center space-x-2 py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                  <img src={google_icon} className="h-5 w-5" alt="Google Icon"/>
+                  <span>Google로 계속</span>
                 </button>
               </div>
             </div>
