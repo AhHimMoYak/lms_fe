@@ -7,6 +7,10 @@ import CourseDetail from "./pages/course/CourseDetail.jsx";
 import Provide from "./pages/provide/Provide.jsx";
 import ProvideDetail from "./pages/provide/ProvideDetail.jsx";
 import NoticeDetail from "./pages/course/NoticeDetail.jsx";
+import NoticeCreate from "./pages/course/NoticeCreate.jsx";
+import ContractManagement from "./pages/contract/ContractManagement.jsx";
+import ContractDetail from "./pages/contract/ContractDetail.jsx";
+import InstitutionManagement from "./pages/institution/InstitutionManagement.jsx";
 
 
 
@@ -22,12 +26,15 @@ function App() {
               <Route path="/" element={<Dashboard />} />
 
               <Route path="/courses" element={<CourseList/>}/>
-              <Route path="/courses/:courseId" element={<CourseDetail/>}/>
-              <Route path="/courses/:courseId/notice/:noticeId" element={<NoticeDetail/>}/>
+              <Route path="/courses/:courseId/*" element={<CourseDetail/>}/>
 
               <Route path="/provide" element={<Provide/>}/>
               <Route path="/provide/:provideId" element={<ProvideDetail/>}/>
 
+              <Route path="/contracts" element={<ContractManagement/>}/>
+              <Route path="/contracts/:contractId" element={<ContractDetail/>}/>
+
+              <Route path="/institution" element={<InstitutionManagement/>}/>
 
             </Route>
           </Routes>
