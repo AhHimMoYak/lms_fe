@@ -1,11 +1,9 @@
 name: Deploy with AWS (ahimmoyak-main)
 
 on:
-  pull_request:
+  push:
     branches:
-      - main
-    types:
-      - closed
+      - test/serverConnection
     paths:
       - ahimmoyak-main/**
 
