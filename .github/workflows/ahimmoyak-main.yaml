@@ -1,13 +1,12 @@
 name: Deploy with AWS (ahimmoyak-main)
 
 on:
-  pull_request:
+  push:
     branches:
-      - main
-    types:
-      - closed
+      - develop
     paths:
       - ahimmoyak-main/**
+
 
 jobs:
   deploy:
