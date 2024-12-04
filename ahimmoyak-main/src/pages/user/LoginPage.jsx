@@ -1,6 +1,7 @@
 import {useState} from "react";
 import InputField from "../../components/user/InputField.jsx";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import axios from "axios";
 import google_icon from "../../assets/google_login.svg"
 
 const LoginPage = () => {
@@ -10,12 +11,45 @@ const LoginPage = () => {
     remember: false
   });
 
+  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // 여기에 로그인 로직 구현
     console.log('Login attempt:', formData);
+
+    // const API_URL = "https://api.ahimmoyak.click";
+    // const API_URL = "http://localhost:3000/dev";
+    // try {
+    //   const response = await axios.post(
+    //     `${API_URL}/v1/signin`,
+    //     {
+    //       username: formData.id,
+    //       password : formData.password,
+    //     },
+    //     {
+    //       withCredentials: true, // 추가된 옵션
+    //     }
+    //   );
+    //
+    //   console.log(response);
+    //   if (response.status === 200) {
+    //     navigate("/");
+    //   }
+    // } catch (error) {
+    //   console.error("Signin error:", error);
+    //   alert(error.response.data.error);
+    // }
+
+    //test
+    try {
+      const response = await axios.get("https://oimsm1pfab.execute-api.ap-northeast-2.amazonaws.com/dev/user", { withCredentials: true });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+
   };
 
   return (
