@@ -13,43 +13,54 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
+  const API_URL = "https://api.ahimmoyak.click"
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // 여기에 로그인 로직 구현
     console.log('Login attempt:', formData);
 
-    // const API_URL = "https://api.ahimmoyak.click";
-    // const API_URL = "http://localhost:3000/dev";
-    // try {
-    //   const response = await axios.post(
-    //     `${API_URL}/v1/signin`,
-    //     {
-    //       username: formData.id,
-    //       password : formData.password,
-    //     },
-    //     {
-    //       withCredentials: true, // 추가된 옵션
-    //     }
-    //   );
-    //
-    //   console.log(response);
-    //   if (response.status === 200) {
-    //     navigate("/");
-    //   }
-    // } catch (error) {
-    //   console.error("Signin error:", error);
-    //   alert(error.response.data.error);
-    // }
-
-    //test
     try {
-      const response = await axios.get("https://oimsm1pfab.execute-api.ap-northeast-2.amazonaws.com/dev/user", { withCredentials: true });
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
+      const response = await axios.post(
+        `${API_URL}/auth/v1/signin`,
+        {
+          username: formData.id,
+          password : formData.password,
+        },
+        {
+          withCredentials: true, // 추가된 옵션
+        }
+      );
 
+      console.log(response);
+      if (response.status === 200) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Signin error:", error);
+      alert(error.response.data.error);
+    }
+  };
+
+  const handleGoogleSignUp = async () => {
+    console.log("Sign up with Google");
+
+    try {
+      const response = await axios.get(`${API_URL}/auth/v1/google?mode=signin`, {
+        withCredentials: true,
+      });
+
+      console.log(response);
+      if (response.status === 200) {
+        console.log("get url ok");
+        if (response.data.requiredUrl) {
+          window.location.href = response.data.requiredUrl;
+        }
+      }
+    } catch (error) {
+      console.error("Error during Google login redirect:", error);
+      alert("Failed to initiate Google login. Please try again.");
+    }
   };
 
   return (
@@ -126,7 +137,7 @@ const LoginPage = () => {
               </div>
 
               <div className="mt-6 grid grid-cols-1 gap-3">
-                <button className="w-full flex items-center justify-center space-x-2 py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <button onClick={handleGoogleSignUp} className="w-full flex items-center justify-center space-x-2 py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                   <img src={google_icon} className="h-5 w-5" alt="Google Icon" />
                   <span>Google로 계속</span>
                 </button>
