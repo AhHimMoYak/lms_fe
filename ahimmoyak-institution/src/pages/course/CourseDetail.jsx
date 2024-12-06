@@ -164,7 +164,7 @@ const CourseDetail = () => {
 
         {showContentModal && (
           <AddContentModal
-            chapterId={selectedChapterId}
+            curriculumId={selectedChapterId}
             onClose={() => setShowContentModal(false)}
             onAdd={() => {
               // 콘텐츠 추가 로직
