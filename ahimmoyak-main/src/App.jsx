@@ -13,12 +13,20 @@ import EmployeeRegistrationPage from "./pages/role/EmployeeRegistrationPage.jsx"
 import InstitutionRegistrationPage from "./pages/role/InstitutionRegistrationPage.jsx";
 import CompanyRegistrationPage from "./pages/role/CompanyRegistrationPage.jsx";
 import UserInfoPage from "./pages/user/UserInfoPage.jsx";
+import {useState} from "react";
+import {useKonamiCode} from "./utils/EasterEgg.jsx";
 
 function App() {
 
+  const [easterEgg, setEasterEgg] = useState(false);
+  useKonamiCode(() => {
+    setEasterEgg(true);
+    setTimeout(() => setEasterEgg(false), 5000); // 10초 후 원상복구
+  });
+
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-gray-100">
+      <div className={`min-h-screen bg-gray-100 ${easterEgg? "flying" : ""}`}>
         <Header/>
         <div className="">
           <Routes>

@@ -66,12 +66,12 @@ const Header = () => {
                   className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5">
                   {isLoggedIn ? (
                     <>
-                      <a
-                        href="/profile"
+                      <Link
+                        to={"/mypage"}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
-                        프로필
-                      </a>
+                        마이페이지
+                      </Link>
                       <button
                         onClick={() => {
                           setIsLoggedIn(false);

@@ -1,7 +1,7 @@
 import {Eye, EyeOff} from "lucide-react";
 import {useState} from "react";
 
-const InputField = ({ label, type = "text", value, onChange, error, ...props }) => {
+const InputField = ({ label, type = "text", value, onChange, options, error, ...props }) => {
   const [showPassword, setShowPassword] = useState(false);
   const inputType = type === "password" && showPassword ? "text" : type;
 
@@ -11,14 +11,28 @@ const InputField = ({ label, type = "text", value, onChange, error, ...props }) 
         {label}
       </label>
       <div className="relative">
-        <input
-          type={inputType}
-          value={value}
-          onChange={onChange}
-          className={`block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm
-            ${error ? 'border-red-300' : 'border-gray-300'}`}
-          {...props}
-        />
+        {type !== "select" ? (
+          <input
+            type={inputType}
+            value={value}
+            onChange={onChange}
+            className={`block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm
+              ${error ? 'border-red-300' : 'border-gray-300'}`}
+            {...props}
+          />
+        ) : (
+          <select className={`block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm
+                  ${error ? 'border-red-300' : 'border-gray-300'}`}
+                  onChange={onChange}
+                  {...props}
+                  >
+            <option value="select">선택</option>
+            {options.map((option) => (
+              <option key={option} value={option} selected={value === option}>{option}</option>
+            ))}
+          </select>
+        )
+        }
         {type === "password" && (
           <button
             type="button"

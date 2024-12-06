@@ -1,6 +1,7 @@
 import {useState} from "react";
 import InputField from "../../components/user/InputField.jsx";
 import {Link, useNavigate} from "react-router-dom";
+import google_icon from "../../assets/google_login.svg";
 
 
 const RegisterPage = () => {
@@ -11,6 +12,8 @@ const RegisterPage = () => {
     confirmPassword: '',
     name: '',
     phone: '',
+    birthdate: '',
+    gender: '',
     agreeToTerms: false
   });
 
@@ -98,6 +101,27 @@ const RegisterPage = () => {
                 required
               />
 
+              <InputField
+                label="생년월일"
+                type="date"
+                placeholder="'-' 없이 입력해주세요"
+                value={formData.birthdate}
+                onChange={(e) => setFormData({...formData, birthdate: e.target.value})}
+                error={errors.birthdate}
+                required
+              />
+
+              <InputField
+                label="성별"
+                type="select"
+                placeholder="'-' 없이 입력해주세요"
+                options={['남', '여']}
+                value={formData.gender}
+                onChange={(e) => setFormData({...formData, gender: e.target.value})}
+                error={errors.gender}
+                required
+              />
+
               <div className="flex items-center">
                 <input
                   id="agree"
@@ -133,8 +157,10 @@ const RegisterPage = () => {
               </div>
 
               <div className="mt-6 grid grid-cols-1 gap-3">
-                <button className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                  Google
+                <button
+                  className="w-full flex items-center justify-center space-x-2 py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                  <img src={google_icon} className="h-5 w-5" alt="Google Icon"/>
+                  <span>Google로 계속</span>
                 </button>
               </div>
             </div>
