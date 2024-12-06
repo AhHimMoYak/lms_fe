@@ -52,10 +52,68 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
 
   const courseId = getCourseIdFromUrl();
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setFile(selectedFile);
+
+      try {
+        // 파일 이름을 Base64로 인코딩
+        const encodedFileName = btoa(unescape(encodeURIComponent(selectedFile.name)));
+
+        // 비디오 길이 추출 및 포맷
+        const videoDuration = selectedFile.type.startsWith('video/') ? await getVideoDuration(selectedFile) : null;
+        const formattedVideoDuration = videoDuration ? formatDuration(videoDuration) : null;
+
+        // 요청에 필요한 데이터 구성
+        const requestBody = {
+          curriculumId,
+          courseId,
+          institutionId,
+          idx,
+          fileName: encodedFileName,
+          contentType: selectedFile.type,
+          contentTitle,
+          fileSize: selectedFile.size,
+          videoDuration: formattedVideoDuration,
+        };
+
+        // Presigned URL 요청
+        const urlResponse = await axios.post(
+            'https://api.ahimmoyak.click/builder/v1/files/upload',
+            requestBody,
+            {
+              headers: { 'Content-Type': 'application/json' },
+              withCredentials: true,
+            }
+        );
+
+        if (!urlResponse.data.uploadUrl) {
+          throw new Error('Presigned URL을 받을 수 없습니다.');
+        }
+
+        const { uploadUrl, contentId, s3Url, contentType } = urlResponse.data;
+
+        // 파일을 S3로 업로드
+        const uploadResponse = await axios.put(uploadUrl, selectedFile, {
+          headers: {
+            'Content-Type': selectedFile.type, // 파일의 MIME 타입 설정
+          },
+        });
+
+        if (uploadResponse.status !== 200) {
+          throw new Error('파일 업로드 실패');
+        }
+
+        console.log('파일 업로드 성공');
+
+        // 업로드 완료 후 데이터 추가
+        onAdd({ fileName: selectedFile.name });
+        onClose();
+      } catch (error) {
+        console.error('업로드 오류:', error);
+        alert('파일 업로드 중 오류가 발생했습니다.');
+      }
     }
   };
 
@@ -63,7 +121,7 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
     setContentTitle(e.target.value);
   };
 
-  const handleAddContent = async () => {
+  const handleAddContent = () => {
     if (!file) {
       alert('파일을 선택하세요!');
       return;
@@ -72,64 +130,6 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
     if (!contentTitle.trim()) {
       alert('콘텐츠 제목을 입력하세요!');
       return;
-    }
-
-    try {
-      // 파일 이름을 Base64로 인코딩
-      const encodedFileName = btoa(unescape(encodeURIComponent(file.name)));
-
-      // 비디오 길이 추출 및 포맷
-      const videoDuration = file.type.startsWith('video/') ? await getVideoDuration(file) : null;
-      const formattedVideoDuration = videoDuration ? formatDuration(videoDuration) : null;
-
-      // 요청에 필요한 데이터 구성
-      const requestBody = {
-        curriculumId,
-        courseId,
-        institutionId,
-        idx,
-        fileName: encodedFileName,
-        contentType: file.type,
-        contentTitle,
-        fileSize: file.size,
-        videoDuration: formattedVideoDuration,
-      };
-
-      const urlResponse = await axios.post(
-          'https://api.ahimmoyak.click/builder/v1/files/upload',
-          requestBody,
-          {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          }
-      );
-
-      console.log(urlResponse);
-
-      if (!urlResponse.data.uploadUrl) {
-        throw new Error('Presigned URL을 받을 수 없습니다.');
-      }
-
-      const { uploadUrl, contentId, s3Url, contentType } = await urlResponse.data;
-
-      console.log("uploadUrl : " + uploadUrl);
-
-      const uploadResponse = await axios.put(uploadUrl, file, {
-        headers: {
-          'Content-Type': file.type,
-        },
-      });
-
-      if (uploadResponse.status !== 200) {
-        throw new Error('파일 업로드 실패');
-      }
-
-      console.log('파일 업로드 성공');
-      onAdd({ fileName: file.name });
-      onClose();
-    } catch (error) {
-      console.error('업로드 오류:', error);
-      alert('파일 업로드 중 오류가 발생했습니다.');
     }
   };
 
