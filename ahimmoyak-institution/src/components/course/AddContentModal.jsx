@@ -5,19 +5,23 @@ import { X, Upload } from 'lucide-react';
 const Modal = ({ title, children, onClose }) => (
     <div
         className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-        onClick={(e) => e.stopPropagation()} // 배경 클릭 시 닫히지 않도록 설정
+        onClick={(e) => e.stopPropagation()}
     >
-      <div className="bg-white rounded-lg p-6 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+      <div
+          className="bg-white rounded-lg p-6 w-full max-w-md"
+          onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-medium">{title}</h3>
-          <button onClick={onClose}><X className="w-5 h-5" /></button>
+          <button onClick={onClose}>
+            <X className="w-5 h-5" />
+          </button>
         </div>
         {children}
       </div>
     </div>
 );
 
-// 비디오 길이를 가져오는 함수
 const getVideoDuration = (file) => {
   return new Promise((resolve) => {
     const video = document.createElement('video');
@@ -25,14 +29,13 @@ const getVideoDuration = (file) => {
 
     video.onloadedmetadata = () => {
       window.URL.revokeObjectURL(video.src);
-      resolve(video.duration); // 초 단위 반환
+      resolve(video.duration);
     };
 
     video.src = URL.createObjectURL(file);
   });
 };
 
-// 초 단위를 "MM:SS"로 변환하는 함수
 const formatDuration = (seconds) => {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = Math.floor(seconds % 60);
@@ -42,11 +45,11 @@ const formatDuration = (seconds) => {
 const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
   const [file, setFile] = useState(null);
   const [contentTitle, setContentTitle] = useState('');
-  const [fileObject, setFileObject] = useState(null); // 반환값 저장 상태 추가
+  const [fileObject, setFileObject] = useState(null);
   const fileInputRef = useRef(null);
 
-  const institutionId = '123'; // 임의 값
-  const idx = 1; // 임의 값
+  const institutionId = '123';  // 임의의 값
+  const idx = 1;  // 임의의 값
 
   const getCourseIdFromUrl = () => {
     const url = window.location.href;
@@ -62,14 +65,15 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
       setFile(selectedFile);
 
       try {
-        // 파일 이름을 Base64로 인코딩
         const encodedFileName = btoa(unescape(encodeURIComponent(selectedFile.name)));
 
-        // 비디오 길이 추출 및 포맷
-        const videoDuration = selectedFile.type.startsWith('video/') ? await getVideoDuration(selectedFile) : null;
-        const formattedVideoDuration = videoDuration ? formatDuration(videoDuration) : null;
+        const videoDuration = selectedFile.type.startsWith('video/')
+            ? await getVideoDuration(selectedFile)
+            : null;
+        const formattedVideoDuration = videoDuration
+            ? formatDuration(videoDuration)
+            : null;
 
-        // 요청에 필요한 데이터 구성
         const requestBody = {
           curriculumId,
           courseId,
@@ -82,7 +86,6 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
           videoDuration: formattedVideoDuration,
         };
 
-        // Presigned URL 요청
         const urlResponse = await axios.post(
             'https://api.ahimmoyak.click/builder/v1/files/upload',
             requestBody,
@@ -98,13 +101,9 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
 
         const { uploadUrl } = urlResponse.data;
 
-        console.log("urlResponse.data.s3Key : " + urlResponse.data.s3Key);
-        console.log("urlResponse.data.s3Url : " + urlResponse.data.s3Url);
-
-        // 파일을 S3로 업로드
         const uploadResponse = await axios.put(uploadUrl, selectedFile, {
           headers: {
-            'Content-Type': selectedFile.type, // 파일의 MIME 타입 설정
+            'Content-Type': selectedFile.type,
           },
         });
 
@@ -114,7 +113,6 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
 
         console.log('파일 업로드 성공');
 
-        // 응답 데이터를 상태에 저장
         setFileObject({
           curriculumId,
           courseId,
@@ -124,15 +122,13 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
           contentType: selectedFile.type,
           fileSize: selectedFile.size,
           videoDuration: formattedVideoDuration,
-          s3Key: urlResponse.data.s3Key, // presigned URL로부터 얻은 s3Key
-          s3Url: urlResponse.data.s3Url, // presigned URL로부터 얻은 s3Url
-          originalFileName: selectedFile.name, // 원본 파일 이름
+          s3Key: urlResponse.data.s3Key,
+          s3Url: urlResponse.data.s3Url,
+          originalFileName: selectedFile.name,
           contentTitle,
         });
 
-        // 업로드 완료 후 데이터 추가
         onAdd({ fileName: selectedFile.name });
-
       } catch (error) {
         console.error('업로드 오류:', error);
         alert('파일 업로드 중 오류가 발생했습니다.');
@@ -155,7 +151,6 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
       return;
     }
 
-    // `fileObject`를 콘솔로 출력
     console.log(fileObject);
   };
 
