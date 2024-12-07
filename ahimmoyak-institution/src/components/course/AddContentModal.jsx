@@ -98,6 +98,9 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
 
         const { uploadUrl } = urlResponse.data;
 
+        console.log("urlResponse.data.s3Key : " + urlResponse.data.s3Key);
+        console.log("urlResponse.data.s3Url : " + urlResponse.data.s3Url);
+
         // 파일을 S3로 업로드
         const uploadResponse = await axios.put(uploadUrl, selectedFile, {
           headers: {
@@ -121,6 +124,10 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
           contentType: selectedFile.type,
           fileSize: selectedFile.size,
           videoDuration: formattedVideoDuration,
+          s3Key: urlResponse.data.s3Key, // presigned URL로부터 얻은 s3Key
+          s3Url: urlResponse.data.s3Url, // presigned URL로부터 얻은 s3Url
+          originalFileName: selectedFile.name, // 원본 파일 이름
+          contentTitle,
         });
 
         // 업로드 완료 후 데이터 추가
