@@ -3,8 +3,11 @@ import { useState, useRef } from 'react';
 import { X, Upload } from 'lucide-react';
 
 const Modal = ({ title, children, onClose }) => (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md">
+    <div
+        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+        onClick={(e) => e.stopPropagation()} // 배경 클릭 시 닫히지 않도록 설정
+    >
+      <div className="bg-white rounded-lg p-6 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-medium">{title}</h3>
           <button onClick={onClose}><X className="w-5 h-5" /></button>
@@ -39,6 +42,7 @@ const formatDuration = (seconds) => {
 const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
   const [file, setFile] = useState(null);
   const [contentTitle, setContentTitle] = useState('');
+  const [fileObject, setFileObject] = useState(null); // 반환값 저장 상태 추가
   const fileInputRef = useRef(null);
 
   const institutionId = '123'; // 임의 값
@@ -92,7 +96,7 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
           throw new Error('Presigned URL을 받을 수 없습니다.');
         }
 
-        const { uploadUrl, contentId, s3Url, contentType } = urlResponse.data;
+        const { uploadUrl } = urlResponse.data;
 
         // 파일을 S3로 업로드
         const uploadResponse = await axios.put(uploadUrl, selectedFile, {
@@ -107,9 +111,21 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
 
         console.log('파일 업로드 성공');
 
+        // 응답 데이터를 상태에 저장
+        setFileObject({
+          curriculumId,
+          courseId,
+          institutionId,
+          idx,
+          fileName: encodedFileName,
+          contentType: selectedFile.type,
+          fileSize: selectedFile.size,
+          videoDuration: formattedVideoDuration,
+        });
+
         // 업로드 완료 후 데이터 추가
         onAdd({ fileName: selectedFile.name });
-        onClose();
+
       } catch (error) {
         console.error('업로드 오류:', error);
         alert('파일 업로드 중 오류가 발생했습니다.');
@@ -131,6 +147,9 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
       alert('콘텐츠 제목을 입력하세요!');
       return;
     }
+
+    // `fileObject`를 콘솔로 출력
+    console.log(fileObject);
   };
 
   return (
