@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import IVSBroadcastClient from 'amazon-ivs-web-broadcast';
 import { Camera, Mic, MicOff, Video, VideoOff, Monitor } from 'lucide-react';
 
-const BroadcastPage = () => {
-  const [client, setClient] = useState(null);
+const BroadcastPage = ({ingestEndpoint, streamKey}) => {
   const [isStreaming, setIsStreaming] = useState(false);
   const [isMicOn, setIsMicOn] = useState(true);
   const [isCameraOn, setIsCameraOn] = useState(true);
@@ -12,15 +11,28 @@ const BroadcastPage = () => {
   const [audioDevices, setAudioDevices] = useState([]);
   const [selectedCamera, setSelectedCamera] = useState('');
   const [selectedMic, setSelectedMic] = useState('');
+  const [client, setClient] = useState(null);
 
   const canvasRef = useRef(null);
   const streamConfig = IVSBroadcastClient.STANDARD_LANDSCAPE;
+  const cameraStreamRef = useRef(null);
+  const audioStreamRef = useRef(null);
+
 
   useEffect(() => {
-    initializeClient();
-    getDevices();
-    setMediaStream()
+      initializeClient();
+      getDevices();
   }, []);
+
+  useEffect(() => {
+    if (client && selectedCamera && selectedMic) {
+      setMediaStream().then(r => {
+        if (canvasRef.current) {
+          client.attachPreview(canvasRef.current);
+        }
+      });
+    }
+  }, [selectedCamera, selectedMic])
 
   const initializeClient = async () => {
     try {
@@ -31,9 +43,8 @@ const BroadcastPage = () => {
 
       setClient(broadcastClient);
 
-      if (canvasRef.current) {
-        broadcastClient.attachPreview(canvasRef.current);
-      }
+
+
     } catch (error) {
       console.error('Failed to create broadcast client:', error);
     }
@@ -57,6 +68,23 @@ const BroadcastPage = () => {
 
   const setMediaStream = async () => {
     try {
+
+      if (
+        cameraStreamRef.current?.getVideoTracks()[0]?.getSettings().deviceId === selectedCamera &&
+        audioStreamRef.current?.getAudioTracks()[0]?.getSettings().deviceId === selectedMic
+      ) {
+        return;
+      }
+
+      if (cameraStreamRef.current) {
+        cameraStreamRef.current.getTracks().forEach(track => track.stop());
+        client.removeVideoInputDevice('camera');
+      }
+      if (audioStreamRef.current) {
+        audioStreamRef.current.getTracks().forEach(track => track.stop());
+        client.removeAudioInputDevice('microphone');
+      }
+
       const cameraStream = await navigator.mediaDevices.getUserMedia({
         video: {
           deviceId: selectedCamera,
@@ -65,12 +93,15 @@ const BroadcastPage = () => {
         },
         audio: false,
       });
+      cameraStreamRef.current = cameraStream;
 
       const audioStream = await navigator.mediaDevices.getUserMedia({
         audio: { deviceId: selectedMic },
         video: false,
       });
+      audioStreamRef.current = audioStream;
 
+      const {width: renderWidth, height: renderHeight} = canvasRef.current.getBoundingClientRect();
       client.addVideoInputDevice(cameraStream, 'camera', { index: 1 });
       client.addAudioInputDevice(audioStream, 'microphone');
     }catch (error){
@@ -105,9 +136,11 @@ const BroadcastPage = () => {
           client.removeVideoInputDevice('screen');
         }
         client.addVideoInputDevice(screenStream, 'screen', { index: 0 });
+        client.updateVideoDeviceComposition('camera', { index: 1, width: 1920/4, height: 1080/4, x: 1920/4*3, y: 1080/4*3});
         setIsScreenSharing(true);
       } else {
         client.removeVideoInputDevice('screen');
+        client.updateVideoDeviceComposition('camera', { index: 1 });
         setIsScreenSharing(false);
       }
     } catch (error) {
@@ -134,18 +167,18 @@ const BroadcastPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 p-6">
+    <div className="min-h-screen  p-6">
       <div className="max-w-6xl mx-auto space-y-6">
         <div className="relative bg-black rounded-lg overflow-hidden aspect-video">
-          <canvas ref={canvasRef} className="w-full h-full" />
+          <canvas id="preview" ref={canvasRef} className="w-full h-full block" ></canvas>
         </div>
 
-        <div className="flex flex-wrap gap-4 justify-between items-center bg-gray-800 p-4 rounded-lg">
+        <div className="flex flex-wrap gap-4 justify-between items-center bg-gray-200 p-4 rounded-lg">
           <div className="flex gap-4">
             <select
               value={selectedCamera}
               onChange={(e) => setSelectedCamera(e.target.value)}
-              className="bg-gray-700 text-white rounded-lg px-4 py-2 w-48 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="bg-gray-400 text-white rounded-lg px-4 py-2 w-48 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="" disabled>Select Camera</option>
               {videoDevices.map((device) => (
@@ -158,7 +191,7 @@ const BroadcastPage = () => {
             <select
               value={selectedMic}
               onChange={(e) => setSelectedMic(e.target.value)}
-              className="bg-gray-700 text-white rounded-lg px-4 py-2 w-48 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="bg-gray-400 text-white rounded-lg px-4 py-2 w-48 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="" disabled>Select Microphone</option>
               {audioDevices.map((device) => (
@@ -174,7 +207,7 @@ const BroadcastPage = () => {
               onClick={toggleCamera}
               className={`p-2 rounded-lg ${
                 isCameraOn
-                  ? 'bg-gray-700 text-white hover:bg-gray-600'
+                  ? 'bg-gray-400 text-white hover:bg-gray-600'
                   : 'bg-red-600 text-white hover:bg-red-700'
               } transition-colors`}
             >
@@ -185,7 +218,7 @@ const BroadcastPage = () => {
               onClick={toggleMic}
               className={`p-2 rounded-lg ${
                 isMicOn
-                  ? 'bg-gray-700 text-white hover:bg-gray-600'
+                  ? 'bg-gray-400 text-white hover:bg-gray-600'
                   : 'bg-red-600 text-white hover:bg-red-700'
               } transition-colors`}
             >
@@ -197,7 +230,7 @@ const BroadcastPage = () => {
               className={`p-2 rounded-lg ${
                 isScreenSharing
                   ? 'bg-red-600 text-white hover:bg-red-700'
-                  : 'bg-gray-700 text-white hover:bg-gray-600'
+                  : 'bg-gray-400 text-white hover:bg-gray-600'
               } transition-colors`}
             >
               <Monitor size={24} />
@@ -211,7 +244,7 @@ const BroadcastPage = () => {
                   : 'bg-blue-600 text-white hover:bg-blue-700'
               } transition-colors`}
             >
-              {isStreaming ? "Stop Stream" : "Start Stream"}
+              {isStreaming ? "방송종료" : "방송시작"}
             </button>
           </div>
         </div>
