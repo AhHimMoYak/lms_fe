@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight, Building2, User, Clock, Search } from 'lucide-react';
+import { ChevronRight, Building2, User, Clock, Search, ChartBarStacked } from 'lucide-react';
+import {useState} from "react";
+import {getCategory} from "../../utils/getCategory.js";
 
 const CourseSearch = () => {
   const navigate = useNavigate();
@@ -9,6 +11,7 @@ const CourseSearch = () => {
       title: 'React 개발 실무',
       institution: '테크 아카데미',
       instructor: '김강사',
+      category: "카테고리1",
       duration: 60,
       price: 1200000,
       maxStudents: 30
@@ -18,11 +21,20 @@ const CourseSearch = () => {
       title: '프로젝트 관리',
       institution: '비즈니스 스쿨',
       instructor: '박강사',
+      category: "카테고리1",
       duration: 40,
       price: 800000,
       maxStudents: 25
     }
   ];
+
+  const [search, setSearch] = useState('');
+  const [searchCategory, setSearchCategory] = useState('');
+
+  const handleSearch = () => {
+    //검색 로직
+    console.log(`search: ${search}, searchCategory: ${searchCategory}`);
+  }
 
   return (
     <>
@@ -32,14 +44,29 @@ const CourseSearch = () => {
         </div>
       </header>
       <main className="p-6">
-        <div className="mb-6">
-          <div className="relative w-96">
-            <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+        <div className="mb-6 flex">
+          <div className="relative w-52">
+            <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"/>
             <input
               type="text"
               placeholder="교육과정 검색..."
               className="pl-10 pr-4 py-2 border rounded-lg w-full"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
+          </div>
+          <div className="relative w-52">
+            <ChartBarStacked className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"/>
+            <select className="pl-10 pr-4 py-2 border rounded-lg w-full"
+                    onChange={(e) => setSearchCategory(e.target.value)}
+                    defaultValue={"all"}
+            >
+              <option value="all">전체</option>
+              {getCategory().map(category => <option key={category.value} value={category.value}>{category.title}</option>)}
+            </select>
+          </div>
+          <div className="relative w-20">
+            <button className="py-2 border rounded-lg w-full bg-blue-500 text-white" onClick={handleSearch}>검색</button>
           </div>
         </div>
 
@@ -50,6 +77,7 @@ const CourseSearch = () => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">과정명</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">교육기관</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">강사</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">카테고리</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">교육기간</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">수강인원</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">수강료</th>
@@ -66,26 +94,31 @@ const CourseSearch = () => {
                 <td className="px-6 py-4 whitespace-nowrap font-medium">{course.title}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
-                    <Building2 className="h-4 w-4 mr-2 text-gray-400" />
+                    <Building2 className="h-4 w-4 mr-2 text-gray-400"/>
                     {course.institution}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
-                    <User className="h-4 w-4 mr-2 text-gray-400" />
+                    <User className="h-4 w-4 mr-2 text-gray-400"/>
                     {course.instructor}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
-                    <Clock className="h-4 w-4 mr-2 text-gray-400" />
+                    {course.category}
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="flex items-center">
+                    <Clock className="h-4 w-4 mr-2 text-gray-400"/>
                     {course.duration}일
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">최대 {course.maxStudents}명</td>
                 <td className="px-6 py-4 whitespace-nowrap">{course.price.toLocaleString()}원</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">
-                  <ChevronRight className="h-5 w-5 ml-auto text-gray-400" />
+                  <ChevronRight className="h-5 w-5 ml-auto text-gray-400"/>
                 </td>
               </tr>
             ))}
