@@ -2,12 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Search, Users } from "lucide-react";
 import StudentSelectModal from "../../components/contract/StudentSelectModal.jsx";
 import axios from "axios";
+import stringSimilarity from "string-similarity";
 
 const ContractManagement = () => {
   const [showStudentModal, setShowStudentModal] = useState(false);
   const [selectedContract, setSelectedContract] = useState(null);
-  const API_URL = "http://localhost:8080";
   const [contracts, setContracts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태 추가
+  const API_URL = "http://localhost:8080";
+
+  // 텍스트 정규화 함수
+  const normalizeText = (text) => {
+    return text.toLowerCase().replace(/\s+/g, "").replace(/[^a-z0-9가-힣]/gi, "");
+  };
 
   const fetchContracts = async () => {
     try {
@@ -47,6 +54,21 @@ const ContractManagement = () => {
     setShowStudentModal(true);
   };
 
+  const filteredContracts = contracts.filter((contract) => {
+    const normalizedTitle = normalizeText(contract.title); // 제목 정규화
+    const normalizedQuery = normalizeText(searchQuery); // 검색어 정규화
+
+    if (normalizedTitle.includes(normalizedQuery)) {
+      return true;
+    }
+
+    const similarity = stringSimilarity.compareTwoStrings(
+        normalizedTitle,
+        normalizedQuery
+    );
+    return similarity > 0.5;
+  });
+
   return (
       <>
         <header className="bg-white shadow">
@@ -61,6 +83,8 @@ const ContractManagement = () => {
               <input
                   type="text"
                   placeholder="계약 검색..."
+                  value={searchQuery} // 검색어 상태를 입력 필드와 연결
+                  onChange={(e) => setSearchQuery(e.target.value)} // 상태 업데이트
                   className="pl-10 pr-4 py-2 border rounded-lg w-full"
               />
             </div>
@@ -77,10 +101,19 @@ const ContractManagement = () => {
                   교육기관
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  강사
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                   신청일
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                   시작일
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  종료일
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  계약금
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                   인원
@@ -94,12 +127,15 @@ const ContractManagement = () => {
               </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-              {contracts.map((contract) => (
+              {filteredContracts.map((contract) => (
                   <tr key={contract.courseId} className="hover:bg-gray-50">
                     <td className="px-6 py-4">{contract.title}</td>
                     <td className="px-6 py-4">{contract.institutionName}</td>
+                    <td className="px-6 py-4">{contract.instructor}</td>
                     <td className="px-6 py-4">{contract.creationDate}</td>
                     <td className="px-6 py-4">{contract.beginDate}</td>
+                    <td className="px-6 py-4">{contract.endDate}</td>
+                    <td className="px-6 py-4">{contract.deposit}원</td>
                     <td className="px-6 py-4">{contract.attendeeCount}명</td>
                     <td className="px-6 py-4">
                     <span className={getStatusBadge(contract.state)}>
