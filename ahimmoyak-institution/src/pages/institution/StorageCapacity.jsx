@@ -1,26 +1,27 @@
 import { useState, useEffect } from "react";
-import AxiosManager from "../components/authentication/AxiosManager.jsx";
+import AxiosManager from "../../components/authentication/AxiosManager.jsx";
 
 const StorageCapacity = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [usagePercentage, setUsagePercentage] = useState(0); // 초기 사용량
     const axiosInstance = AxiosManager();
     const fileName = "content-storage";
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                axiosInstance
-                    .get(`analysis/api/aggrid/${fileName}`)
-                    .then((response) => {
-                        setData(response.data);
-                        setLoading(false);
-                    })
-                    .catch((error) => {
-                        setError(error.message);
-                        setLoading(false);
-                    });
+                const response = await axiosInstance.get(`analysis/api/aggrid/${fileName}`);
+                const { totalCapacityGB, usedCapacityGB } = response.data;
+                setData(response.data);
+                setLoading(false);
+
+                // 애니메이션 효과 추가
+                const calculatedPercentage = ((usedCapacityGB / totalCapacityGB) * 100).toFixed(1);
+                setTimeout(() => {
+                    setUsagePercentage(calculatedPercentage);
+                }, 500); // 로딩 후 애니메이션 시작 지연 시간
             } catch (error) {
                 setError(error.message);
                 setLoading(false);
@@ -43,7 +44,6 @@ const StorageCapacity = () => {
     }
 
     const { totalCapacityGB, usedCapacityGB } = data;
-    const usagePercentage = ((usedCapacityGB / totalCapacityGB) * 100).toFixed(1);
 
     return (
         <div
@@ -66,10 +66,7 @@ const StorageCapacity = () => {
                     textAlign: "left"
                 }}
             >
-        <span role="img" aria-label="cloud">
-          ☁️
-        </span>{" "}
-                저장용량
+                <span role="img" aria-label="cloud">☁️</span> 저장용량
             </div>
             <div
                 style={{
@@ -88,22 +85,23 @@ const StorageCapacity = () => {
                         width: `${usagePercentage}%`,
                         backgroundColor: "#4caf50",
                         height: "100%",
-                        position: "relative"
+                        position: "relative",
+                        transition: "width 2s ease-in-out" // 애니메이션 효과 추가
                     }}
                 >
-          <span
-              style={{
-                  position: "absolute",
-                  left: "10px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  color: "#ffffff",
-                  fontSize: "12px",
-                  fontWeight: "bold"
-              }}
-          >
-            {usedCapacityGB}GB 사용
-          </span>
+                    <span
+                        style={{
+                            position: "absolute",
+                            left: "10px",
+                            top: "50%",
+                            transform: "translateY(-50%)",
+                            color: "#ffffff",
+                            fontSize: "12px",
+                            fontWeight: "bold"
+                        }}
+                    >
+                        {usedCapacityGB}GB 사용
+                    </span>
                 </div>
                 <span
                     style={{
@@ -116,14 +114,14 @@ const StorageCapacity = () => {
                         fontWeight: "bold"
                     }}
                 >
-          {totalCapacityGB}GB
-        </span>
+                    {totalCapacityGB}GB
+                </span>
             </div>
             <div
                 style={{
                     display: "flex",
                     justifyContent: "flex-end",
-                    marginTop: "16px" // 버튼과 차트 사이 간격 추가
+                    marginTop: "16px"
                 }}
             >
                 <button

@@ -2,7 +2,7 @@ import { useMemo, useState, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import AxiosManager from "../components/authentication/AxiosManager.jsx";
+import AxiosManager from "../../components/authentication/AxiosManager.jsx";
 const CompanyAttendanceGrid = () => {
     const [rawCourseData, setRawCourseData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -11,7 +11,7 @@ const CompanyAttendanceGrid = () => {
     const axiosInstance  = AxiosManager();
 
     useEffect(() => {
-        // API 호출
+
         const fetchCourseData = async () => {
             try {
                 axiosInstance.get(
@@ -31,7 +31,6 @@ const CompanyAttendanceGrid = () => {
         fetchCourseData();
     }, []);
 
-    // 각 회사별 강좌 연결 횟수 및 출석율 계산
     const gridData = useMemo(() => {
         if (!rawCourseData.length) return [];
 
@@ -71,7 +70,6 @@ const CompanyAttendanceGrid = () => {
             .sort((a, b) => b.averageAttendanceRate - a.averageAttendanceRate);
     }, [rawCourseData]);
 
-    // 컬럼 정의
     const columnDefs = [
         { headerName: "회사명", field: "companyName", sortable: true, filter: true },
         {
@@ -87,7 +85,6 @@ const CompanyAttendanceGrid = () => {
         { headerName: "총 완료 수강생 수", field: "completedTotal", sortable: true, filter: true },
     ];
 
-    // 로딩 및 에러 처리
     if (loading) return <p>로딩 중...</p>;
     if (error) return <p>에러 발생: {error}</p>;
 

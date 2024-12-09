@@ -1,10 +1,9 @@
 import {useEffect, useMemo, useState} from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import axios from "axios";
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'ag-grid-enterprise';
-import AxiosManager from "../components/authentication/AxiosManager.jsx";
+import AxiosManager from "../../components/authentication/AxiosManager.jsx";
 
 
 const CourseProvideGrid = () => {

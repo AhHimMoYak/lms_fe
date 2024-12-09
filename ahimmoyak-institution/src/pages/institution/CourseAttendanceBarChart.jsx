@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as echarts from 'echarts';
-import axios from "axios";
-import AxiosManager from "../components/authentication/AxiosManager.jsx";
+import AxiosManager from "../../components/authentication/AxiosManager.jsx";
 
 const CourseAttendanceChart = () => {
     const [selectedCourse, setSelectedCourse] = useState(null);
@@ -13,7 +12,6 @@ const CourseAttendanceChart = () => {
 
 
     useEffect(() => {
-        // 데이터를 API를 통해 가져오기
         const fetchData = () => {
             axiosInstance.get(`analysis/api/echart/${chart}/${fileName}`)
                 .then(response => {
@@ -31,7 +29,6 @@ const CourseAttendanceChart = () => {
 
     useEffect(() => {
         if (selectedCourse && rawCourseData.length > 0) {
-            // 선택된 강좌의 회사 데이터를 가져오기
             const selectedCourseData = rawCourseData.find(course => course.courseName === selectedCourse);
             if (selectedCourseData) {
                 const processedData = selectedCourseData.companies.map(company => ({
@@ -45,7 +42,6 @@ const CourseAttendanceChart = () => {
     }, [selectedCourse, rawCourseData]);
 
     useEffect(() => {
-        // 차트 생성 및 옵션 설정
         const chartDom = document.getElementById('course-attendance-chart');
         if (chartDom) {
             const myChart = echarts.init(chartDom);
@@ -53,11 +49,11 @@ const CourseAttendanceChart = () => {
                 title: {
                     text: `${selectedCourse ? `${selectedCourse}의 회사별 출석율` : '강좌를 선택하세요'}`,
                     left: 'center',
-                    top: '5%', // 제목 위치를 위쪽으로 조정
+                    top: '5%',
                     textStyle: {
-                        fontSize: 16, // 제목 글씨 크기
+                        fontSize: 16,
                         fontWeight: 'bold',
-                        lineHeight: 24, // 텍스트 간 간격
+                        lineHeight: 24,
                     },
                 },
                 tooltip: {
@@ -67,9 +63,9 @@ const CourseAttendanceChart = () => {
                     },
                 },
                 grid: {
-                    left: '25%', // Y축의 충분한 공간 확보
+                    left: '25%',
                     right: '10%',
-                    top: '20%', // 제목과 차트 간격 확보
+                    top: '20%',
                     bottom: '10%',
                 },
                 xAxis: {
@@ -81,10 +77,10 @@ const CourseAttendanceChart = () => {
                     type: 'category',
                     data: chartData.map(company => company.companyName),
                     name: '회사명',
-                    nameGap: 30, // Y축 제목과 축 사이 간격
+                    nameGap: 30,
                     axisLabel: {
-                        fontSize: 12, // 축 이름 글씨 크기 조정
-                        rotate: 0, // 텍스트 회전 각도
+                        fontSize: 12,
+                        rotate: 0,
                     },
                 },
                 series: [
@@ -107,10 +103,8 @@ const CourseAttendanceChart = () => {
                 ],
             };
 
-            // 차트에 옵션 적용
             myChart.setOption(option);
 
-            // 리사이즈 이벤트 추가
             const handleResize = () => {
                 myChart.resize();
             };

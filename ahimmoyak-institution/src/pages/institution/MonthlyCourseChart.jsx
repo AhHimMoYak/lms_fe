@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import * as echarts from 'echarts';
-import AxiosManager from "../components/authentication/AxiosManager.jsx";
+import AxiosManager from "../../components/authentication/AxiosManager.jsx";
 
 const MonthlyCourseChart = () => {
     const [selectedSeries, setSelectedSeries] = useState('all');
