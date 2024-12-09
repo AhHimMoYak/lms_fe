@@ -26,11 +26,21 @@ const CourseList = () => {
     setIsAddingCourse(true);
   }
 
-  const submitAddCourse = (newCourse) => {
-    setIsAddingCourse(false);
-    // 코스추가 로직
-    console.log(newCourse)
-  }
+  const submitAddCourse = async (newCourse) => {
+    try {
+      // 서버에 새로운 코스 추가 요청
+      const response = await axios.post('http://localhost:8080/v1/institutions/courses?userId=3', newCourse);
+
+      console.log('새로운 코스 추가 완료:', response.data);
+
+      navigate(`/courses/${response.data.courseId}/info`);
+    } catch (error) {
+      console.error('코스 추가 중 오류 발생:', error);
+    } finally {
+      // 추가 상태를 비활성화
+      setIsAddingCourse(false);
+    }
+  };
 
   return (
     <>
@@ -62,18 +72,18 @@ const CourseList = () => {
                 <div>
                   <h3 className="font-medium">{course.title}</h3>
                   <div className="flex gap-4 mt-1 text-sm text-gray-500">
-                  <span className="flex items-center gap-1">
-                    <Clock className="w-4 h-4"/> {course.period}일
-                  </span>
+          <span className="flex items-center gap-1">
+            <Clock className="w-4 h-4" /> {course.period}일
+          </span>
                     <span className="flex items-center gap-1">
-                    <User className="w-4 h-4"/> {course.instructor}
-                  </span>
+            <User className="w-4 h-4" /> {course.instructor}
+          </span>
                     <span className="flex items-center gap-1">
-                    <ChartBarStacked className="w-4 h-4"/> {course.category}
-                  </span>
+            <ChartBarStacked className="w-4 h-4" /> {course.categoryTitle}
+          </span>
                   </div>
                 </div>
-                <ChevronRight className="w-5 h-5 text-gray-400"/>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
               </div>
             </div>
           ))}

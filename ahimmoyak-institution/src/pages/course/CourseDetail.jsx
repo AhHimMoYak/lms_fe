@@ -58,13 +58,13 @@ const CourseDetail = () => {
                     "title": editedCourse.title,
                     "introduction": editedCourse.introduction,
                     "instructor": editedCourse.instructor,
-                    "period": editedCourse.period
+                    "period": editedCourse.period,
+                    "category": editedCourse.category
                 });
         } catch (error) {
             console.log(error)
         }
     }
-
 
     const handleEditCourse = () => {
         setEditedCourse({
@@ -80,7 +80,6 @@ const CourseDetail = () => {
     const handleSaveEdit = () => {
         setCourseData({...courseData, ...editedCourse});
         setIsEditing(false);
-
         updateCourse();
 
     };
@@ -128,7 +127,7 @@ const CourseDetail = () => {
               <User className="w-4 h-4"/> {courseData.instructor}
             </span>
               <span className="flex items-center gap-1">
-              <ChartBarStacked className="w-4 h-4"/> {courseData.category}
+              <ChartBarStacked className="w-4 h-4"/> {courseData.categoryTitle}
             </span>
                         </div>
                         <p className="text-gray-600">{courseData.introduction}</p>

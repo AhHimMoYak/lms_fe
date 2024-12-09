@@ -127,11 +127,15 @@ const ContractDetail = () => {
                   <div className="space-y-3">
                     <div>
                       <div className="text-sm text-gray-500">교육기간</div>
-                      <div>{contract.period }일</div>
+                      <div>{contract.period}일</div>
                     </div>
                     <div>
                       <div className="text-sm text-gray-500">강사</div>
                       <div>{contract.instructor}</div>
+                    </div>
+                    <div>
+                      <div className="text-sm text-gray-500">수강료</div>
+                      <div>{contract.deposit.toLocaleString()}원</div>
                     </div>
                   </div>
                 </div>
