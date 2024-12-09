@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { Plus, Search, Edit, Trash } from 'lucide-react';
+import axios from "axios";
 
 const EmployeeManagement = () => {
   const [employees] = useState([

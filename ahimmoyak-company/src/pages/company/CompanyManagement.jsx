@@ -1,23 +1,53 @@
-import React, { useState } from 'react';
-import { Building2, Mail, Phone, MapPin, Globe, Edit2 } from 'lucide-react';
+import React, {useEffect, useState} from 'react';
+import {Building2, Mail, Phone, MapPin, Globe, Edit2, BriefcaseBusiness, UserCheck, UserPen, User} from 'lucide-react';
+import axios from "axios";
 
 const CompanyManagement = () => {
+
   const [isEditing, setIsEditing] = useState(false);
   const [companyData, setCompanyData] = useState({
-    name: '테크솔루션',
-    businessNumber: '123-45-67890',
-    address: '서울시 강남구 테헤란로 123',
-    email: 'contact@techsolution.com',
-    phone: '02-1234-5678',
-    website: 'www.techsolution.com',
-    employees: 128,
-    description: '혁신적인 IT 솔루션을 제공하는 기업'
+    companyName: '',
+    businessNumber: '',
+    email: '',
+    phone: '',
+    ownerName: ''
   });
 
-  const handleSubmit = (e) => {
+  const API_URL = "http://localhost:8080"
+
+  const fetchCompanyData = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/v1/companies/info?userId=2`, {
+        withCredentials: true,
+      });
+      setCompanyData(response.data)
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    fetchCompanyData();
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsEditing(false);
+
+    try {
+      const response = await axios.patch(
+          `${API_URL}/v1/companies?name=${companyData.companyName}`,
+          companyData,
+          {
+            withCredentials: true,
+          }
+      );
+      console.log("수정 성공:", response.data);
+      setIsEditing(false);
+    } catch (e) {
+      console.error("수정 중 오류 발생:", e.response || e.message);
+    }
   };
+
 
   return (
     <>
@@ -42,26 +72,18 @@ const CompanyManagement = () => {
                 icon={<Building2 />}
                 label="회사명"
                 name="name"
-                value={companyData.name}
+                value={companyData.companyName}
                 isEditing={isEditing}
-                onChange={(e) => setCompanyData({...companyData, name: e.target.value})}
+                onChange={(e) => setCompanyData({...companyData, companyName: e.target.value})}
               />
 
               <Field
+                icon={<BriefcaseBusiness />}
                 label="사업자등록번호"
                 name="businessNumber"
                 value={companyData.businessNumber}
                 //isEditing={isEditing}
                 onChange={(e) => setCompanyData({...companyData, businessNumber: e.target.value})}
-              />
-
-              <Field
-                icon={<MapPin />}
-                label="주소"
-                name="address"
-                value={companyData.address}
-                isEditing={isEditing}
-                onChange={(e) => setCompanyData({...companyData, address: e.target.value})}
               />
 
               <Field
@@ -84,30 +106,30 @@ const CompanyManagement = () => {
               />
 
               <Field
-                icon={<Globe />}
-                label="웹사이트"
-                name="website"
-                value={companyData.website}
+                icon={<User />}
+                label="대표자"
+                name="ownerName"
+                value={companyData.ownerName}
                 isEditing={isEditing}
-                onChange={(e) => setCompanyData({...companyData, website: e.target.value})}
+                onChange={(e) => setCompanyData({...companyData, ownerName: e.target.value})}
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                회사 소개
-              </label>
-              {isEditing ? (
-                <textarea
-                  className="w-full p-2 border rounded-lg"
-                  rows={4}
-                  value={companyData.description}
-                  onChange={(e) => setCompanyData({...companyData, description: e.target.value})}
-                />
-              ) : (
-                <p className="text-gray-600">{companyData.description}</p>
-              )}
-            </div>
+            {/*<div>*/}
+            {/*  <label className="block text-sm font-medium text-gray-700 mb-2">*/}
+            {/*    회사 소개*/}
+            {/*  </label>*/}
+            {/*  {isEditing ? (*/}
+            {/*    <textarea*/}
+            {/*      className="w-full p-2 border rounded-lg"*/}
+            {/*      rows={4}*/}
+            {/*      value={companyData.description}*/}
+            {/*      onChange={(e) => setCompanyData({...companyData, description: e.target.value})}*/}
+            {/*    />*/}
+            {/*  ) : (*/}
+            {/*    <p className="text-gray-600">{companyData.description}</p>*/}
+            {/*  )}*/}
+            {/*</div>*/}
 
             {isEditing && (
               <div className="flex justify-end">
