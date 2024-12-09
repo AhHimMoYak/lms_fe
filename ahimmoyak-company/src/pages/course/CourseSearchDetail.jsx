@@ -32,8 +32,8 @@ const CourseSearchDetail = () => {
 
   if (!courseData) {
     return (
-        <div className="p-6">
-          <p>로딩 중...</p>
+        <div className="flex items-center justify-center h-screen">
+          <p className="text-xl font-semibold">데이터 로딩중 ...</p>
         </div>
     );
   }
