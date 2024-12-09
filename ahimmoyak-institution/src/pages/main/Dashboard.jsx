@@ -143,7 +143,7 @@ const Dashboard = () => {
           </div>
 
           <Card>
-            <h2 className="text-lg font-bold mb-4">강좌 인기 통계</h2>
+            <h2 className="text-lg font-bold mb-4">코스 통계</h2>
             <CoursePopularityChart/>
           </Card>
 
@@ -174,7 +174,7 @@ const Dashboard = () => {
 
           <Card>
             <div ref={evaluationTableRef}>
-              <h2 className="text-lg font-bold mb-4">진행중인 코스 - 데이터 테이블</h2>
+              <h2 className="text-lg font-bold mb-4">총 코스 - 데이터 테이블</h2>
               <CourseEvaluationGrid/>
             </div>
           </Card>
