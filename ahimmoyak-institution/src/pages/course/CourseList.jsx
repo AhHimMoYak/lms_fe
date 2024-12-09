@@ -1,15 +1,23 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PlusCircle, ChevronRight, Clock, User } from 'lucide-react';
+import axios from 'axios';
 
 // 코스 목록 페이지
 const CourseList = () => {
   const navigate = useNavigate();
-  const courses = [
-    { id: 1, title: 'React 기초부터 실전까지', duration: 30, instructor: '김강사', students: 234 },
-    { id: 2, title: 'Python 데이터 분석', duration: 45, instructor: '이강사', students: 189 },
-    { id: 3, title: 'AWS 클라우드 마스터', duration: 60, instructor: '박강사', students: 156 }
-  ];
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/v1/institutions/courses?userId=3')
+        .then(response => {
+          setCourses(response.data);
+        })
+        .catch(error => {
+          console.log('오류', error)
+        })
+
+  }, []);
 
   return (
     <>
@@ -42,7 +50,7 @@ const CourseList = () => {
                   <h3 className="font-medium">{course.title}</h3>
                   <div className="flex gap-4 mt-1 text-sm text-gray-500">
                   <span className="flex items-center gap-1">
-                    <Clock className="w-4 h-4"/> {course.duration}일
+                    <Clock className="w-4 h-4"/> {course.period}일
                   </span>
                     <span className="flex items-center gap-1">
                     <User className="w-4 h-4"/> {course.instructor}

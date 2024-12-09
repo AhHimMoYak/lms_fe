@@ -13,12 +13,12 @@ function VideoExplain() {
     const [isEnrolled, setIsEnrolled] = useState();
 
     useEffect(() => {
-        fetchCourseData(`/course/${courseId}`, "get");
+        fetchCourseData(`/courses/${courseId}`, "get");
     }, [courseId]);
 
     useEffect(() => {
         if (courseData) {
-            fetchEnrollId(`/course/${courseId}/enrollId`, "GET");
+            fetchEnrollId(`/courses/${courseId}/enrollId`, "GET");
             console.log("API response:", courseData);
         }
     }, [courseData]);

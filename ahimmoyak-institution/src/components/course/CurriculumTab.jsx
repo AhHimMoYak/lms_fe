@@ -1,7 +1,7 @@
 import {Edit2, Trash2, Plus, ChevronUp, ChevronDown} from "lucide-react";
 import {useState} from "react";
 
-const CurriculumTab = ({ chapters, expandedChapter, onExpand, onAddChapter, onAddContent }) => {
+const CurriculumTab = ({ chapters, expandedChapter, onExpand, onAddChapter, onAddContent, onDeleteContent }) => {
   const [isAddingChapter, setIsAddingChapter] = useState(false);
   const [newChapter, setNewChapter] = useState({ title: ''});
 
@@ -55,7 +55,7 @@ const CurriculumTab = ({ chapters, expandedChapter, onExpand, onAddChapter, onAd
                   </button>
                 </div>
                 <div className="space-y-2">
-                  {chapter.contents.map((content) => (
+                  {chapter.contentList.map((content) => (
                     <ContentItem key={content.id} content={content} />
                   ))}
                 </div>
@@ -110,10 +110,10 @@ const ContentItem = ({ content }) => (
       </p>
     </div>
     <div className="flex gap-2">
-      <button className="text-gray-400 hover:text-gray-600">
-        <Edit2 className="w-4 h-4" />
-      </button>
-      <button className="text-gray-400 hover:text-gray-600">
+      {/*<button className="text-gray-400 hover:text-gray-600">*/}
+      {/*  <Edit2 className="w-4 h-4" />*/}
+      {/*</button>*/}
+      <button className="text-gray-400 hover:text-gray-600" onClick={() => onDeleteContent(content.id)}>
         <Trash2 className="w-4 h-4" />
       </button>
     </div>
