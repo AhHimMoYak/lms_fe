@@ -82,7 +82,7 @@ const NoticeTab = () => {
                         <div className="flex justify-between">
                             <h3 className="font-medium">{notice.title}</h3>
                             <div className="text-sm text-gray-500">
-                                {notice.date} · 조회 {notice.view}
+                                {notice.date} · 조회 {Math.floor(notice.view / 2)}
                             </div>
                         </div>
                     </div>

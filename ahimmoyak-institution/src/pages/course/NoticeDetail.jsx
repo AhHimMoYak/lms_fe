@@ -92,7 +92,7 @@ const NoticeDetail = () => {
                                     ? new Date(editedNotice.date).toISOString().split('T')[0]
                                     : `${new Date(editedNotice.date).toISOString().split('T')[0]} (수정됨)`}
                                 </span>
-                                <span>조회 {editedNotice?.view ?? 0}</span>
+                                <span>조회 {Math.floor(editedNotice.view / 2)}</span>
                             </div>
                             <div className="mt-6 whitespace-pre-line">{editedNotice.content}</div>
                         </>

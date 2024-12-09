@@ -19,7 +19,7 @@ const NoticeDetail = () => {
               author: data.userName,
               createdAt: data.createdAt,
               date: data.updatedAt,
-              view: data.view || 0,
+              view: data.view / 2 || 0,
             });
           })
           .catch((error) => {
@@ -60,7 +60,7 @@ const NoticeDetail = () => {
                   </svg>
                   <span>{notice.data}</span>
                 </div>
-                <div>조회 {notice.view}</div>
+                <div>조회 {Math.floor(notice.view / 2)}</div>
               </div>
             </div>
 

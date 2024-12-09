@@ -59,7 +59,7 @@ const NoticeBoard = () => {
             <div className={`p-4 hover:bg-gray-200 ${index !== notices.length - 1 ? 'border-b' : ''}`}>
               <div className="flex justify-between items-start mb-2">
                 <h3 className="font-medium">{notice.title}</h3>
-                <span className="text-sm text-gray-500">조회 {notice.view}</span>
+                <span className="text-sm text-gray-500">조회 {Math.floor(notice.view / 2)}</span>
               </div>
               <div className="text-sm text-gray-500 flex space-x-4">
                 <div className="flex items-center gap-1">
