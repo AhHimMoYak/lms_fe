@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Route, Routes, useNavigate, useParams, useSearchParams} from 'react-router-dom';
-import {Clock, User} from 'lucide-react';
+import { Clock, User, Plus, ChevronDown, ChevronUp, Edit2, Trash2, Building2, ChartBarStacked } from 'lucide-react';
 import axios from 'axios';
 import Tabs from "../../components/course/Tabs.jsx";
 import InfoTab from "../../components/course/InfoTab.jsx";
@@ -71,7 +71,8 @@ const CourseDetail = () => {
             title: courseData.title,
             period: courseData.period,
             instructor: courseData.instructor,
-            introduction: courseData.introduction
+            introduction: courseData.introduction,
+            category: courseData.category
         });
         setIsEditing(true);
     };
@@ -125,6 +126,9 @@ const CourseDetail = () => {
             </span>
                             <span className="flex items-center gap-1">
               <User className="w-4 h-4"/> {courseData.instructor}
+            </span>
+              <span className="flex items-center gap-1">
+              <ChartBarStacked className="w-4 h-4"/> {courseData.category}
             </span>
                         </div>
                         <p className="text-gray-600">{courseData.introduction}</p>
