@@ -1,14 +1,14 @@
 import React, { useRef } from 'react';
 import { BookOpen, Users, Building2, Bell } from 'lucide-react';
-import CompanyGrid from "../CompanyGrid.jsx";
-import CompanyAttendanceGrid from "../CompanyAttendanceGrid.jsx";
-import CourseAttendanceBarChart from "../CourseAttendanceBarChart.jsx";
-import CoursePopularityChart from "../CoursePopularityChart.jsx";
-import MonthlyCourseChart from "../MonthlyCourseChart.jsx";
-import QuarterPieChart from "../QuarterPieChart.jsx";
-import CourseProvideGrid from "../CourseProvideGrid.jsx";
-import CourseEvaluationGrid from "../CourseEvaluationGrid.jsx";
-import StorageCapacity from "../StorageCapacity.jsx";
+import CompanyGrid from "../institution/CompanyGrid.jsx";
+import CompanyAttendanceGrid from "../institution/CompanyAttendanceGrid.jsx";
+import CourseAttendanceBarChart from "../institution/CourseAttendanceBarChart.jsx";
+import CoursePopularityChart from "../institution/CoursePopularityChart.jsx";
+import MonthlyCourseChart from "../institution/MonthlyCourseChart.jsx";
+import QuarterPieChart from "../institution/QuarterPieChart.jsx";
+import CourseProvideGrid from "../institution/CourseProvideGrid.jsx";
+import CourseEvaluationGrid from "../institution/CourseEvaluationGrid.jsx";
+import StorageCapacity from "../institution/StorageCapacity.jsx";
 
 const Card = ({ children }) => (
     <div className="bg-white rounded-lg shadow p-6 mb-8">{children}</div>
@@ -34,11 +34,14 @@ const Dashboard = () => {
     { course: 'AWS 클라우드 마스터', company: 'C기업', period: '2024.02-2024.07', students: 156 },
   ];
 
+  // 참조를 위한 useRef 생성
   const courseDetailsRef = useRef(null);
+  const evaluationTableRef = useRef(null);
 
-  const handleCourseClick = () => {
-    if (courseDetailsRef.current) {
-      courseDetailsRef.current.scrollIntoView({
+  // 참조된 섹션으로 스크롤 이동
+  const handleCourseClick = (ref) => {
+    if (ref.current) {
+      ref.current.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       });
@@ -52,7 +55,9 @@ const Dashboard = () => {
             <h2 className="text-xl font-semibold">대시보드</h2>
           </div>
         </header>
+
         <main className="p-8 max-w-7xl mx-auto space-y-8">
+
           {/* 통계 카드 섹션 */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat) => {
@@ -64,11 +69,18 @@ const Dashboard = () => {
                         <p className="text-sm font-medium text-gray-500">{stat.title}</p>
                         <p className="text-2xl font-bold mt-1">{stat.value}</p>
                       </div>
-                      <Icon className="h-8 w-8 text-gray-400" />
+                      <Icon className="h-8 w-8 text-gray-400"/>
                     </div>
+
                   </Card>
               );
             })}
+            <button
+                onClick={() => handleCourseClick(evaluationTableRef)}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            >
+              강좌 보기
+            </button>
           </div>
 
           {/* 코스 현황 섹션 */}
@@ -76,8 +88,9 @@ const Dashboard = () => {
             <Card>
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-bold">코스 운영 현황</h2>
+
                 <button
-                    onClick={handleCourseClick}
+                    onClick={() => handleCourseClick(courseDetailsRef)}
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                 >
                   테이블 데이터 보기
@@ -114,22 +127,24 @@ const Dashboard = () => {
               </div>
             </Card>
           </div>
+
           <StorageCapacity/>
+
           {/* 기타 통계 섹션 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card>
               <h2 className="text-lg font-bold mb-4">월별 통계</h2>
-              <MonthlyCourseChart />
+              <MonthlyCourseChart/>
             </Card>
             <Card>
               <h2 className="text-lg font-bold mb-4">분기별 통계</h2>
-              <QuarterPieChart />
+              <QuarterPieChart/>
             </Card>
           </div>
 
           <Card>
             <h2 className="text-lg font-bold mb-4">강좌 인기 통계</h2>
-            <CoursePopularityChart />
+            <CoursePopularityChart/>
           </Card>
 
           {/* 출석율 섹션 */}
@@ -138,11 +153,11 @@ const Dashboard = () => {
             <div className="flex flex-wrap gap-8">
               <div className="flex-1">
                 <h3 className="text-md font-bold mb-2">회사별 총 출석율</h3>
-                <CompanyAttendanceGrid />
+                <CompanyAttendanceGrid/>
               </div>
               <div className="flex-1">
                 <h3 className="text-md font-bold mb-2">코스별 회사 출석율</h3>
-                <CourseAttendanceBarChart />
+                <CourseAttendanceBarChart/>
               </div>
             </div>
           </Card>
@@ -151,14 +166,17 @@ const Dashboard = () => {
           <Card>
             <div ref={courseDetailsRef}>
               <h2 className="text-lg font-bold mb-4">진행중인 코스 운영 현황 - 데이터 테이블</h2>
-              <CourseProvideGrid />
+              <CourseProvideGrid/>
               <h2 className="text-lg font-bold mt-8 mb-4">체결된 회사 정보 - 데이터 테이블</h2>
-              <CompanyGrid />
+              <CompanyGrid/>
             </div>
           </Card>
 
           <Card>
-            <CourseEvaluationGrid/>
+            <div ref={evaluationTableRef}>
+              <h2 className="text-lg font-bold mb-4">진행중인 코스 - 데이터 테이블</h2>
+              <CourseEvaluationGrid/>
+            </div>
           </Card>
 
         </main>
