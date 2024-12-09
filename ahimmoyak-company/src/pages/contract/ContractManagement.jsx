@@ -15,6 +15,28 @@ const ContractManagement = () => {
     return text.toLowerCase().replace(/\s+/g, "").replace(/[^a-z0-9가-힣]/gi, "");
   };
 
+  const stateLabels = {
+    PENDING: { label: "수강 신청", color: "bg-blue-100 text-blue-700" },
+    DECLINED: { label: "수강 거절", color: "bg-red-100 text-red-700" },
+    ACCEPTED: { label: "수강 수락", color: "bg-green-100 text-green-700" },
+    ATTENDEE_PENDING: { label: "수강인원 선택중", color: "bg-yellow-100 text-yellow-700" },
+    NOT_STARTED: { label: "교육과정 대기중", color: "bg-gray-100 text-gray-700" },
+    ONGOING: { label: "교육과정 진행중", color: "bg-teal-100 text-teal-700" },
+    FINISHED: { label: "교육과정 종료", color: "bg-purple-100 text-purple-700" },
+    REMOVED: { label: "교육과정 삭제", color: "bg-gray-300 text-gray-500" },
+  };
+
+  const getStatusBadge = (state) => {
+    const stateInfo = stateLabels[state];
+    return stateInfo
+        ? `px-2 py-1 rounded-full text-sm ${stateInfo.color}`
+        : "bg-gray-100 text-gray-700";
+  };
+
+  const translateState = (state) => {
+    return stateLabels[state]?.label || "알 수 없음";
+  };
+
   const fetchContracts = async () => {
     try {
       const response = await axios.get(
@@ -33,20 +55,6 @@ const ContractManagement = () => {
   useEffect(() => {
     fetchContracts();
   }, []);
-
-  const getStatusBadge = (state) => {
-    const styles = {
-      PENDING: "bg-yellow-100 text-yellow-800",
-      ACCEPTED: "bg-blue-100 text-blue-800",
-      DECLINED: "bg-red-100 text-red-800",
-      ATTENDEE_PENDING: "bg-purple-100 text-purple-800",
-      NOT_STARTED: "bg-green-100 text-green-800",
-      ONGOING: "bg-indigo-100 text-indigo-800",
-    };
-    return `px-2 py-1 rounded-full text-sm ${
-        styles[state] || "bg-gray-100 text-gray-800"
-    }`;
-  };
 
   const handleStudentSelect = (contract) => {
     setSelectedContract(contract);
@@ -138,7 +146,7 @@ const ContractManagement = () => {
                     <td className="px-6 py-4">{contract.attendeeCount}명</td>
                     <td className="px-6 py-4">
                     <span className={getStatusBadge(contract.state)}>
-                      {contract.state}
+                      {translateState(contract.state)}
                     </span>
                     </td>
                     <td className="px-6 py-4">
