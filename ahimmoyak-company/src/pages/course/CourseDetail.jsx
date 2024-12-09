@@ -12,6 +12,7 @@ const CourseDetail = () => {
     institution: '테크 아카데미',
     instructor: '김강사',
     introduction: "이교육과정은 좋은 교육과정입니다.",
+    category: "카테고리1",
     period: '2024-01-15 ~ 2024-03-15',
     curriculum: [
       {
@@ -58,6 +59,7 @@ const CourseDetail = () => {
         <div className="bg-white rounded-lg shadow p-6 mb-6 space-y-2">
           <p>교육기관: {courseData.institution} | 강사: {courseData.instructor}</p>
           <p>교육기간: {courseData.period}</p>
+          <p>카테고리: {courseData.category}</p>
           <p>소개: {courseData.introduction}</p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

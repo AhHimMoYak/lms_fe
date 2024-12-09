@@ -1,4 +1,5 @@
 import {Edit2} from "lucide-react";
+import {getCategory} from "../../utils/getCategory.js";
 
 const InfoTab = ({ course, isEditing, editedCourse, onEdit, onSave, onCancel, onEditChange }) => (
   <div className="bg-white rounded-lg shadow p-6 space-y-4">
@@ -33,7 +34,17 @@ const InfoTab = ({ course, isEditing, editedCourse, onEdit, onSave, onCancel, on
             />
           </div>
           <div>
-            <label className="block mb-1">소개글</label>
+            <label className="block mb-1">카테고리</label>
+            <select
+              className="w-full border rounded p-2"
+              defaultValue={editedCourse.catagory}
+              onChange={e => onEditChange({...editedCourse, category: e.target.value})}
+            >
+              {getCategory().map(category => <option key={category.value} value={category.value}>{category.title}</option>)}
+            </select>
+          </div>
+          <div>
+          <label className="block mb-1">소개글</label>
             <textarea
               className="w-full border rounded p-2 h-32"
               value={editedCourse.description}
@@ -65,6 +76,10 @@ const InfoTab = ({ course, isEditing, editedCourse, onEdit, onSave, onCancel, on
             <div className="flex gap-2">
               <span className="text-gray-500">강사:</span>
               <span>{course.instructor}</span>
+            </div>
+            <div className="flex gap-2">
+              <span className="text-gray-500">카테고리:</span>
+              <span>{course.category}</span>
             </div>
           </div>
         </div>

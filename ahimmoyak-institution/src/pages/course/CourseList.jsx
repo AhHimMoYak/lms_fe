@@ -1,15 +1,28 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PlusCircle, ChevronRight, Clock, User } from 'lucide-react';
+import { PlusCircle, ChevronRight, Clock, User, ChartBarStacked } from 'lucide-react';
+import AddCourseModal from "../../components/course/AddCourseModal.jsx";
 
 // 코스 목록 페이지
 const CourseList = () => {
   const navigate = useNavigate();
   const courses = [
-    { id: 1, title: 'React 기초부터 실전까지', duration: 30, instructor: '김강사', students: 234 },
-    { id: 2, title: 'Python 데이터 분석', duration: 45, instructor: '이강사', students: 189 },
-    { id: 3, title: 'AWS 클라우드 마스터', duration: 60, instructor: '박강사', students: 156 }
+    { id: 1, title: 'React 기초부터 실전까지', duration: 30, instructor: '김강사', students: 234, category: "카테고리1" },
+    { id: 2, title: 'Python 데이터 분석', duration: 45, instructor: '이강사', students: 189, category: "카테고리1" },
+    { id: 3, title: 'AWS 클라우드 마스터', duration: 60, instructor: '박강사', students: 156, category: "카테고리2" }
   ];
+
+  const [isAddingCourse, setIsAddingCourse] = useState(false);
+
+  const handleAddCourse = () => {
+    setIsAddingCourse(true);
+  }
+
+  const submitAddCourse = (newCourse) => {
+    setIsAddingCourse(false);
+    // 코스추가 로직
+    console.log(newCourse)
+  }
 
   return (
     <>
@@ -22,7 +35,7 @@ const CourseList = () => {
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">코스 관리</h1>
           <button
-            onClick={() => navigate('/courses/create')}
+            onClick={() => handleAddCourse()}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2"
           >
             <PlusCircle className="w-5 h-5"/>
@@ -47,6 +60,9 @@ const CourseList = () => {
                     <span className="flex items-center gap-1">
                     <User className="w-4 h-4"/> {course.instructor}
                   </span>
+                    <span className="flex items-center gap-1">
+                    <ChartBarStacked className="w-4 h-4"/> {course.category}
+                  </span>
                   </div>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400"/>
@@ -55,6 +71,9 @@ const CourseList = () => {
           ))}
         </div>
       </div>
+      {isAddingCourse && (
+        <AddCourseModal onAdd={submitAddCourse} onClose={() => setIsAddingCourse(false)} />
+      )}
     </>
   );
 };
