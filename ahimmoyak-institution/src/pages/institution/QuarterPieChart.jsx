@@ -24,7 +24,7 @@ const aggregateQuarterlyData = (data) => {
 };
 
 const QuarterlyCoursePieChart = () => {
-    const fileName = "quarter-course-data";
+    const fileName = "monthly-course-data";
     const chart = "basic-pie";
     const [quarterlyData, setQuarterlyData] = useState([]);
     const [loading, setLoading] = useState(true);
