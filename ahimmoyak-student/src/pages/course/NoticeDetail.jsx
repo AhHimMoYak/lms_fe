@@ -1,40 +1,38 @@
-import PostNavigation from "../../components/board/PostNavigation.jsx";
 import {NavLink, useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import AxiosManager from "../../components/authentication/AxiosManager.jsx";
 
 const NoticeDetail = () => {
+  const {courseId,noticeId} = useParams();
+  const [notice, setNotice] = useState('');
+  const axiosInstance = AxiosManager();
 
-  const {courseId} = useParams();
+  useEffect(() => {
+    if (noticeId) {
+      axiosInstance.get(`board/v1/${noticeId}`)
+          .then((response) => {
+            const data = response.data;
+            console.log(response);
+            setNotice({
+              title: data.title,
+              content: data.content,
+              author: data.userName,
+              createdAt: data.createdAt,
+              date: data.updatedAt,
+              view: data.view || 0,
+            });
+          })
+          .catch((error) => {
+            console.error("Failed to fetch notice details: ", error);
+          });
+    } else {
+      console.error("Invalid noticeId: ", noticeId);
+    }
+  }, [noticeId]);
 
-  // 예시 데이터
-  const sampleNotice = {
-    id: 1,
-    title: "2024학년도 1학기 온라인 강의 안내",
-    content: "안녕하세요. 2024학년도 1학기 온라인 강의 운영에 대해 안내드립니다...",
-    author: "관리자",
-    type: "notice",
-    createdAt: "2024-03-25",
-    viewCount: 128
-  };
-  const samplePrev = {
-    id: 0,
-    title: "2023학년도 2학기 온라인 강의 안내",
-    content: "안녕하세요. 2024학년도 1학기 온라인 강의 운영에 대해 안내드립니다...",
-    author: "관리자",
-    type: "notice",
-    createdAt: "2024-03-25",
-    viewCount: 128
-  };
-  const sampleNext = {
-    id: 2,
-    title: "2024학년도 2학기 온라인 강의 안내",
-    content: "안녕하세요. 2024학년도 1학기 온라인 강의 운영에 대해 안내드립니다...",
-    author: "관리자",
-    type: "notice",
-    createdAt: "2024-03-25",
-    viewCount: 128
-  };
-
-  const data = sampleNotice;
+  if (!notice) {
+    return <div>로딩 중...</div>;
+  }
 
   return (
     <>
@@ -46,7 +44,7 @@ const NoticeDetail = () => {
           <div className="p-6">
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <h2 className="text-xl font-bold">{data.title}</h2>
+                <h2 className="text-xl font-bold">{notice.title}</h2>
               </div>
 
               <div className="flex items-center text-sm text-gray-500 gap-4 pb-4 border-b border-gray-200">
@@ -54,27 +52,23 @@ const NoticeDetail = () => {
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
-                  <span>{data.author}</span>
+                  <span>{notice.author}</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  <span>{data.createdAt}</span>
+                  <span>{notice.data}</span>
                 </div>
-                <div>조회 {data.viewCount}</div>
+                <div>조회 {notice.view}</div>
               </div>
             </div>
 
             <div className="py-8 min-h-[200px]">
-              {data.content}
+              {notice.content}
             </div>
 
-            {/* 이전/다음 글 네비게이션 */}
-            <PostNavigation
-              prevPost={samplePrev}
-              nextPost={sampleNext}
-            />
+
           </div>
         </div>
 
