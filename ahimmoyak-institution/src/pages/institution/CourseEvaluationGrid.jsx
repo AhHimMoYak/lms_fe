@@ -20,6 +20,13 @@ const CourseEvaluationGrid = () => {
             cellStyle: params => getCourseStyle(params)
         },
         {
+            headerName: "강사 이름",
+            field: "instructorName",
+            sortable: true,
+            filter: true,
+            cellStyle: params => getCourseStyle(params)
+        },
+        {
             headerName: "시작 날짜",
             field: "validPeriod.startDate",
             sortable: true,
@@ -48,9 +55,15 @@ const CourseEvaluationGrid = () => {
         const endDate = new Date(params.data?.validPeriod?.endDate);
 
         if (endDate < today) {
-            return { color: "gray", fontWeight: "normal" };  // 종료된 코스
+            // 종료된 코스 (아주 연한 색상)
+            return {
+                backgroundColor: "#f9f9f9",
+                color: "#c0c0c0",
+                fontWeight: "normal"
+            };
         }
-        return { fontWeight: "bold" };  // 진행 중인 코스
+        // 진행 중인 코스 (기본값 유지)
+        return {};
     };
 
     // JSON 데이터 로드
