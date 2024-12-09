@@ -77,7 +77,15 @@ const QuestionDetail = () => {
       institutionComment: 0, // 강사일 경우 1, 아니면 0
       is_institution: "false", // 강사 여부
     };
-
+    const newCommentObj = {
+      id: Date.now(), // Temporary ID until the server assigns one
+      userName: user,
+      content: newComment,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      is_institution: "true",
+    };
+    setComments((prevComments) => [...prevComments, newCommentObj]);
     try {
       await axiosInstance.post(`board/v1/${qnaId}/comments`, requestDTO);
       setNewComment("");
@@ -97,6 +105,13 @@ const QuestionDetail = () => {
     const requestDto = {
       content: editedComment
     }
+    setComments((prevComments) =>
+        prevComments.map((comment) =>
+            comment.id === editingCommentId
+                ? { ...comment, content: editedComment, updatedAt: new Date().toISOString() }
+                : comment
+        )
+    );
     try {
       await axiosInstance.patch(`board/v1/comments/${editingCommentId}`, requestDto);
       setEditingCommentId(null);
@@ -111,6 +126,9 @@ const QuestionDetail = () => {
   const deleteComment = async (commentId) => {
     const isConfirmed = window.confirm("댓글을 삭제하시겠습니까?");
     if (isConfirmed) {
+      setComments((prevComments) =>
+          prevComments.filter((comment) => comment.id !== commentId)
+      );
       try {
         await axiosInstance.delete(`board/v1/${boardId}/${commentId}`);
         const commentResponse = await axiosInstance.get(`board/v1/${qnaId}/comments`);
@@ -142,6 +160,7 @@ const QuestionDetail = () => {
   const handleDelete = async () => {
     const isConfirmed = window.confirm("정말로 삭제하시겠습니까?");
     if (isConfirmed) {
+
       axiosInstance
           .delete(`board/v1/${qnaId}`)
           .then((response) => {
