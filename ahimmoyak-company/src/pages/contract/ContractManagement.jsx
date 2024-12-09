@@ -11,7 +11,6 @@ const ContractManagement = () => {
   const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태 추가
   const API_URL = "http://localhost:8080";
 
-  // 텍스트 정규화 함수
   const normalizeText = (text) => {
     return text.toLowerCase().replace(/\s+/g, "").replace(/[^a-z0-9가-힣]/gi, "");
   };
