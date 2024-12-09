@@ -9,14 +9,7 @@ const Courses = () => {
   const [courses, setCourses] = useState([]);
 
   const stateLabels = {
-    PENDING: { label: "수강 신청", color: "bg-blue-100 text-blue-700" },
-    DECLINED: { label: "수강 거절", color: "bg-red-100 text-red-700" },
-    ACCEPTED: { label: "수강 수락", color: "bg-green-100 text-green-700" },
-    ATTENDEE_PENDING: { label: "수강인원 선택중", color: "bg-yellow-100 text-yellow-700" },
-    NOT_STARTED: { label: "교육과정 대기중", color: "bg-gray-100 text-gray-700" },
     ONGOING: { label: "교육과정 진행중", color: "bg-teal-100 text-teal-700" },
-    FINISHED: { label: "교육과정 종료", color: "bg-purple-100 text-purple-700" },
-    REMOVED: { label: "교육과정 삭제", color: "bg-gray-300 text-gray-500" },
   };
 
   const translateState = (state) => {
@@ -31,7 +24,10 @@ const Courses = () => {
         withCredentials: true,
       });
       console.log('Courses Data:', response.data);
-      setCourses(response.data);
+
+      // Filter the courses to show only those with state "ONGOING"
+      const ongoingCourses = response.data.filter(course => course.state === "ONGOING");
+      setCourses(ongoingCourses);
     } catch (error) {
       console.error('Error fetching courses:', error.response?.data || error.message);
     }
@@ -70,7 +66,7 @@ const Courses = () => {
                     <tr
                         key={course.id}
                         className="hover:bg-gray-50 cursor-pointer"
-                        onClick={() => navigate(`/courses/${course.id}`)}
+                        onClick={() => navigate(`/courses/${course.courseId}`)}
                     >
                       <td className="px-6 py-4 whitespace-nowrap font-medium">{course.title}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -96,9 +92,9 @@ const Courses = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">{course.attendeeCount}명</td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 py-1 text-sm font-medium rounded-full ${color}`}>
-                        {label}
-                      </span>
+                    <span className={`px-2 py-1 text-sm font-medium rounded-full ${color}`}>
+                      {label}
+                    </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right">
                         <ChevronRight className="h-5 w-5 ml-auto text-gray-400" />
