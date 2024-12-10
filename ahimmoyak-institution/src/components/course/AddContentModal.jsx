@@ -22,30 +22,11 @@ const Modal = ({ title, children, onClose }) => (
     </div>
 );
 
-const getVideoDuration = (file) => {
-  return new Promise((resolve) => {
-    const video = document.createElement('video');
-    video.preload = 'metadata';
-
-    video.onloadedmetadata = () => {
-      window.URL.revokeObjectURL(video.src);
-      resolve(video.duration);
-    };
-
-    video.src = URL.createObjectURL(file);
-  });
-};
-
-const formatDuration = (seconds) => {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = Math.floor(seconds % 60);
-  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-};
-
 const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
   const [file, setFile] = useState(null);
   const [contentTitle, setContentTitle] = useState('');
   const [fileObject, setFileObject] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0); // 업로드 진행 상태
   const fileInputRef = useRef(null);
 
   const institutionId = '123';  // 임의의 값
@@ -67,11 +48,6 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
       try {
         const encodedFileName = btoa(unescape(encodeURIComponent(selectedFile.name)));
 
-        const videoDuration = selectedFile.type.startsWith('video/')
-            ? await getVideoDuration(selectedFile)
-            : null;
-        const formattedVideoDuration = videoDuration ? formatDuration(videoDuration) : null;
-
         const requestBody = {
           curriculumId,
           courseId,
@@ -81,10 +57,7 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
           contentType: selectedFile.type,
           contentTitle,
           fileSize: selectedFile.size,
-          videoDuration: formattedVideoDuration,
         };
-
-        console.log("호출");
 
         // **1. Presigned URL 요청**
         const urlResponse = await axios.post(
@@ -95,8 +68,6 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
               withCredentials: true,
             }
         );
-
-        console.log("Server response:", urlResponse.data);
 
         const { presignedUrls, uploadId, s3Key, s3Url } = urlResponse.data;
 
@@ -114,22 +85,24 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
           const end = Math.min(selectedFile.size, start + CHUNK_SIZE);
           const chunk = selectedFile.slice(start, end);
 
-          const uploadUrl = presignedUrls[i]; // 각 청크에 대응하는 Presigned URL 사용
-          console.log("uploadUrl : " + uploadUrl);
+          const uploadUrl = presignedUrls[i];
+
           try {
             const uploadResponse = await axios.put(uploadUrl, chunk, {
               headers: { 'Content-Type': selectedFile.type },
+              onUploadProgress: (progressEvent) => {
+                // 각 청크의 업로드 진행률 계산
+                const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                setUploadProgress(((i + progress / 100) / totalChunks) * 100);
+              }
             });
 
             if (uploadResponse.status !== 200) {
               throw new Error(`청크 업로드 실패 (파트 ${i + 1})`);
             }
 
-            console.log("Upload successful:", uploadResponse);
-
             const etag = uploadResponse.headers.etag;
             if (etag) {
-              console.log("etag : " + etag);
               etags.push({ PartNumber: i + 1, ETag: etag });
             } else {
               throw new Error(`etag가 누락된 청크 업로드 실패 (파트 ${i + 1})`);
@@ -161,8 +134,6 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
             }
         );
 
-        console.log(completeResponse);
-
         if (completeResponse.status === 200) {
           console.log('파일 업로드 완료');
           setFileObject({
@@ -173,7 +144,6 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
             fileName: encodedFileName,
             contentType: selectedFile.type,
             fileSize: selectedFile.size,
-            videoDuration: formattedVideoDuration,
             s3Key,
             s3Url,
             originalFileName: selectedFile.name,
@@ -190,9 +160,6 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
       }
     }
   };
-
-
-
 
   const handleTitleChange = (e) => {
     setContentTitle(e.target.value);
@@ -246,6 +213,15 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
                   onChange={handleFileChange}
               />
             </div>
+          </div>
+          <div className="mt-2">
+            <div className="w-full bg-gray-200 rounded-full h-2.5">
+              <div
+                  className="bg-blue-600 h-2.5 rounded-full"
+                  style={{ width: `${uploadProgress}%` }}
+              ></div>
+            </div>
+            <p className="text-sm text-gray-500 mt-1">{Math.round(uploadProgress)}% 완료</p>
           </div>
           <button
               onClick={handleAddContent}
