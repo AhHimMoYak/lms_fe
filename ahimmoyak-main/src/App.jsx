@@ -15,6 +15,7 @@ import CompanyRegistrationPage from "./pages/role/CompanyRegistrationPage.jsx";
 import UserInfoPage from "./pages/user/UserInfoPage.jsx";
 import {useState} from "react";
 import {useKonamiCode} from "./utils/EasterEgg.jsx";
+import {AuthProvider} from "./components/authentication/AuthProvider.jsx";
 
 function App() {
 
@@ -25,31 +26,36 @@ function App() {
   });
 
   return (
-    <BrowserRouter>
-      <div className={`min-h-screen bg-gray-100 ${easterEgg? "flying" : ""}`}>
-        <Header/>
-        <div className="">
-          <Routes>
-            <Route>
-              <Route path="/" element={<IntroductionPage />} />
-              <Route path='/services' element={<ServicesPage />} />
+      <AuthProvider>
+        <BrowserRouter>
+          <div className={`min-h-screen bg-gray-100 ${easterEgg? "flying" : ""}`}>
+            <Header/>
+            <div className="">
+              <Routes>
+                <Route>
+                  <Route path="/" element={<IntroductionPage />} />
+                  <Route path='/services' element={<ServicesPage />} />
 
-              <Route path="/signin" element={<LoginPage />} />
-              <Route path="/signup" element={<RegisterPage />} />
-              <Route path="/email" element={<EmailVerificationPage />} />
-              <Route path="/more_info" element={<AdditionalInfoPage />} />
-              <Route path="/mypage" element={<UserInfoPage/>}/>
+                  <Route path="/signin" element={<LoginPage />} />
+                  <Route path="/signup" element={<RegisterPage />} />
+                  <Route path="/email" element={<EmailVerificationPage />} />
+                  <Route path="/more_info" element={<AdditionalInfoPage />} />
+                  <Route path="/mypage" element={<UserInfoPage/>}/>
 
-              <Route path="/register" element={<RoleSelectionPage />} />
-              <Route path="/register/employee" element={<EmployeeRegistrationPage/>}/>
-              <Route path="/register/company" element={<CompanyRegistrationPage/>}/>
-              <Route path="/register/institution" element={<InstitutionRegistrationPage/>}/>
-            </Route>
-          </Routes>
-        </div>
-        <Footer/>
-      </div>
-    </BrowserRouter>
+                  <Route path="/register" element={<RoleSelectionPage />} />
+                  <Route path="/register/employee" element={<EmployeeRegistrationPage/>}/>
+                  <Route path="/register/company" element={<CompanyRegistrationPage/>}/>
+                  <Route path="/register/institution" element={<InstitutionRegistrationPage/>}/>
+                </Route>
+              </Routes>
+            </div>
+            <Footer/>
+          </div>
+        </BrowserRouter>
+      </AuthProvider>
+
+
+
   );
 }
 
