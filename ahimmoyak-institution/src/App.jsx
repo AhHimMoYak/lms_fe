@@ -37,9 +37,9 @@ function App() {
 
               <Route path="/institution" element={<InstitutionManagement/>}/>
 
-              <Route path="/live" element={<BroadcastPage/>}/>
 
             </Route>
+              <Route path="/live" element={<BroadcastPage/>}/>
           </Routes>
         </div>
       </div>
