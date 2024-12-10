@@ -3,6 +3,7 @@ import InputField from "../../components/user/InputField.jsx";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import google_icon from "../../assets/google_login.svg"
+import {useAuth} from "../../components/authentication/AuthProvider.jsx";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -13,13 +14,12 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
-  const API_URL = "https://api.ahimmoyak.click"
+  const { setIsLoggedIn } = useAuth();
+  const API_URL = import.meta.env.VITE_SEVER_API_URL
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // 여기에 로그인 로직 구현
-    console.log('Login attempt:', formData);
-
     try {
       const response = await axios.post(
         `${API_URL}/auth/v1/signin`,
@@ -31,9 +31,8 @@ const LoginPage = () => {
           withCredentials: true, // 추가된 옵션
         }
       );
-
-      console.log(response);
       if (response.status === 200) {
+        setIsLoggedIn(true);
         navigate("/");
       }
     } catch (error) {
@@ -43,8 +42,6 @@ const LoginPage = () => {
   };
 
   const handleGoogleSignUp = async () => {
-    console.log("Sign up with Google");
-
     try {
       const response = await axios.get(`${API_URL}/auth/v1/google?mode=signin`, {
         withCredentials: true,
@@ -53,6 +50,7 @@ const LoginPage = () => {
       console.log(response);
       if (response.status === 200) {
         console.log("get url ok");
+        setIsLoggedIn(true);
         if (response.data.requiredUrl) {
           window.location.href = response.data.requiredUrl;
         }
