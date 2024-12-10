@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { ChevronDown, ChevronRight, Building2, User, Clock } from 'lucide-react';
+import { ChevronDown, ChevronRight, Building2, User, Clock, ChartBarStacked } from 'lucide-react';
 import ContractRequestModal from "../../components/contract/ContractRequestModal.jsx";
 
 const CourseSearchDetail = () => {
@@ -13,6 +13,7 @@ const CourseSearchDetail = () => {
     title: 'React 개발 실무',
     institution: '테크 아카데미',
     instructor: '김강사',
+    category: "카테고리1",
     duration: 60,
     price: 1200000,
     maxStudents: 30,
@@ -46,15 +47,19 @@ const CourseSearchDetail = () => {
           <h2 className="text-xl font-semibold">{courseData.title}</h2>
           <div className="mt-2 text-gray-600 space-y-1">
             <div className="flex items-center">
-              <Building2 className="h-4 w-4 mr-2" />
+              <Building2 className="h-4 w-4 mr-2"/>
               <span>{courseData.institution}</span>
             </div>
             <div className="flex items-center">
-              <User className="h-4 w-4 mr-2" />
+              <User className="h-4 w-4 mr-2"/>
               <span>강사: {courseData.instructor}</span>
             </div>
             <div className="flex items-center">
-              <Clock className="h-4 w-4 mr-2" />
+              <ChartBarStacked className="h-4 w-4 mr-2"/>
+              <span>카테고리: {courseData.category}</span>
+            </div>
+            <div className="flex items-center">
+              <Clock className="h-4 w-4 mr-2"/>
               <span>교육기간: {courseData.duration}일</span>
             </div>
           </div>

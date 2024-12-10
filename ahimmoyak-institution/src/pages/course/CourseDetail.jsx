@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Route, Routes, useNavigate, useParams, useSearchParams} from 'react-router-dom';
-import { Clock, User, Plus, ChevronDown, ChevronUp, Edit2, Trash2, Building2 } from 'lucide-react';
+import { Clock, User, Plus, ChevronDown, ChevronUp, Edit2, Trash2, Building2, ChartBarStacked } from 'lucide-react';
 import Tabs from "../../components/course/Tabs.jsx";
 import InfoTab from "../../components/course/InfoTab.jsx";
 import CurriculumTab from "../../components/course/CurriculumTab.jsx";
@@ -30,6 +30,7 @@ const CourseDetail = () => {
     duration: 30,
     instructor: '김강사',
     description: 'React의 기초부터 실전까지 배우는 종합 과정입니다.',
+    category: "카테고리1",
     curriculum: [
       {
         id: 1,
@@ -85,7 +86,8 @@ const CourseDetail = () => {
       title: courseData.title,
       duration: courseData.duration,
       instructor: courseData.instructor,
-      description: courseData.description
+      description: courseData.description,
+      category: courseData.category
     });
     setIsEditing(true);
   };
@@ -121,6 +123,9 @@ const CourseDetail = () => {
             </span>
               <span className="flex items-center gap-1">
               <User className="w-4 h-4"/> {courseData.instructor}
+            </span>
+              <span className="flex items-center gap-1">
+              <ChartBarStacked className="w-4 h-4"/> {courseData.category}
             </span>
             </div>
             <p className="text-gray-600">{courseData.description}</p>

@@ -10,6 +10,7 @@ const Courses = () => {
       title: 'React 개발 실무',
       institution: '테크 아카데미',
       instructor: '김강사',
+      category: "카테고리1",
       startDate: '2024-01-15',
       endDate: '2024-03-15',
       enrolledCount: 15,
@@ -20,6 +21,7 @@ const Courses = () => {
       title: '프로젝트 관리',
       institution: '비즈니스 스쿨',
       instructor: '박강사',
+      category: "카테고리1",
       startDate: '2024-02-01',
       endDate: '2024-03-30',
       enrolledCount: 12,
@@ -42,6 +44,7 @@ const Courses = () => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">과정명</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">교육기관</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">강사</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">카테고리</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">교육기간</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">수강인원</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">상태</th>
@@ -58,19 +61,24 @@ const Courses = () => {
                 <td className="px-6 py-4 whitespace-nowrap font-medium">{course.title}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
-                    <Building2 className="h-4 w-4 mr-2 text-gray-400" />
+                    <Building2 className="h-4 w-4 mr-2 text-gray-400"/>
                     {course.institution}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
-                    <User className="h-4 w-4 mr-2 text-gray-400" />
+                    <User className="h-4 w-4 mr-2 text-gray-400"/>
                     {course.instructor}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
-                    <Clock className="h-4 w-4 mr-2 text-gray-400" />
+                    {course.category}
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="flex items-center">
+                    <Clock className="h-4 w-4 mr-2 text-gray-400"/>
                     {course.startDate} ~ {course.endDate}
                   </div>
                 </td>
@@ -81,7 +89,7 @@ const Courses = () => {
                     </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">
-                  <ChevronRight className="h-5 w-5 ml-auto text-gray-400" />
+                  <ChevronRight className="h-5 w-5 ml-auto text-gray-400"/>
                 </td>
               </tr>
             ))}
