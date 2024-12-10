@@ -168,14 +168,14 @@ const CourseDetail = () => {
         </Routes>
 
         {showContentModal && (
-          <AddContentModal
-            chapterId={selectedChapterId}
-            onClose={() => setShowContentModal(false)}
-            onAdd={() => {
-              // 콘텐츠 추가 로직
-              setShowContentModal(false);
-            }}
-          />
+            <AddContentModal
+                curriculumId={selectedChapterId}
+                onClose={() => setShowContentModal(false)} // 모달 닫기
+                onAdd={() => {
+                  // 콘텐츠 추가 로직
+                  // setShowContentModal(false); // 콘텐츠 추가 후 모달 닫기
+                }}
+            />
         )}
       </div>
     </>
