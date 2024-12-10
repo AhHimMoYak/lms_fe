@@ -1,22 +1,20 @@
 import {useParams} from "react-router-dom";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import LiveStreamTab from "../../components/live/LiveStreamTab.jsx";
+import axios from 'axios';
 
 const ProvideDetail = () => {
   const { provideId } = useParams();
   const [expandedExam, setExpandedExam] = useState(null);
-
-  const offering = {
-    id: 1,
-    courseTitle: 'React 기초부터 실전까지',
-    company: 'A기업',
-    startDate: '2024-01',
-    endDate: '2024-06',
-    status: '진행중',
-    students: [
-      { id: 1, name: '김학생', progress: 75, lastAccess: '2024-01-15' },
-      { id: 2, name: '이학생', progress: 60, lastAccess: '2024-01-14' }
-    ],
+  const [extendStudents, setExtendStudents] = useState(false);
+  const [offering, setOffering] = useState({
+    courseTitle: '',
+    companyName: '',
+    beginDate: '',
+    endDate: '',
+    state: '',
+    learnerList: [],
     exams: [
       {
         id: 1,
@@ -24,8 +22,8 @@ const ProvideDetail = () => {
         questionCount: 20,
         duration: 60,
         results: [
-          { studentId: 1, status: '완료', score: 85, submitDate: '2024-01-10' },
-          { studentId: 2, status: '미응시', score: null, submitDate: null }
+          {studentId: 1, status: '완료', score: 85, submitDate: '2024-01-10'},
+          {studentId: 2, status: '미응시', score: null, submitDate: null}
         ]
       },
       {
@@ -34,12 +32,29 @@ const ProvideDetail = () => {
         questionCount: 30,
         duration: 90,
         results: [
-          { studentId: 1, status: '미응시', score: null, submitDate: null },
-          { studentId: 2, status: '미응시', score: null, submitDate: null }
+          {studentId: 1, status: '미응시', score: null, submitDate: null},
+          {studentId: 2, status: '미응시', score: null, submitDate: null}
         ]
       }
     ]
-  };
+  });
+
+  console.log("provide:", provideId); // 디버깅용
+  useEffect(() => {
+    axios
+        .get(`http://localhost:8080/v1/institutions/${provideId}/startCourseProvideDetails?userId=3`)
+        .then((response) => {
+          console.log(response.data); // API 응답 확인
+          // API 응답 데이터와 기존 목데이터 병합
+          setOffering((prevState) => ({
+            ...prevState,
+            ...response.data, // API 데이터 병합
+          }));
+        })
+        .catch((error) => {
+          console.error('데이터 로드 실패:', error);
+        });
+  }, [provideId]);
 
   return (
     <>
@@ -65,9 +80,9 @@ const ProvideDetail = () => {
                 <div className="flex-1">
                   <div className="text-sm text-gray-500">상태</div>
                   <div className={`inline-block px-2 py-1 rounded text-sm ${
-                    offering.status === '진행중' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
+                    offering.state === '진행중' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
                   }`}>
-                    {offering.status}
+                    {offering.state}
                   </div>
                 </div>
               </div>
@@ -76,24 +91,32 @@ const ProvideDetail = () => {
         </div>
 
         <div className="bg-white rounded-lg shadow">
-          <div className="p-4 border-b">
+          <div
+            className="p-4 border-b flex justify-between items-center cursor-pointer"
+            onClick={() => setExtendStudents(!extendStudents)}
+          >
             <h2 className="text-lg font-medium">수강생 목록</h2>
+            {extendStudents ?
+              <ChevronUp className="w-5 h-5"/> :
+              <ChevronDown className="w-5 h-5"/>
+            }
           </div>
+          {extendStudents && (
           <div className="divide-y">
-            {offering.students.map(student => (
-              <div key={student.id} className="p-4">
+            {offering.learnerList.map(student => (
+              <div key={student.enrollmentId} className="p-4">
                 <div className="flex justify-between items-center">
                   <div>
-                    <div className="font-medium">{student.name}</div>
+                    <div className="font-medium">{student.enrollmentName}</div>
                   </div>
                   <div className="text-right">
                     <div className="font-medium">진도율 {student.progress}%</div>
-                    <div className="text-sm text-gray-500">최근접속 {student.lastAccess}</div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
+            )}
         </div>
 
         <div className="bg-white rounded-lg shadow">
@@ -158,6 +181,8 @@ const ProvideDetail = () => {
             ))}
           </div>
         </div>
+
+        <LiveStreamTab/>
       </div>
     </>
   );
