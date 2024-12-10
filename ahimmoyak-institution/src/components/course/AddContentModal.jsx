@@ -70,9 +70,7 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
         const videoDuration = selectedFile.type.startsWith('video/')
             ? await getVideoDuration(selectedFile)
             : null;
-        const formattedVideoDuration = videoDuration
-            ? formatDuration(videoDuration)
-            : null;
+        const formattedVideoDuration = videoDuration ? formatDuration(videoDuration) : null;
 
         const requestBody = {
           curriculumId,
@@ -86,6 +84,9 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
           videoDuration: formattedVideoDuration,
         };
 
+        console.log("호출");
+
+        // **1. Presigned URL 요청**
         const urlResponse = await axios.post(
             'https://api.ahimmoyak.click/builder/v1/files/upload',
             requestBody,
@@ -95,46 +96,103 @@ const AddContentModal = ({ curriculumId, onClose, onAdd }) => {
             }
         );
 
-        if (!urlResponse.data.uploadUrl) {
-          throw new Error('Presigned URL을 받을 수 없습니다.');
+        console.log("Server response:", urlResponse.data);
+
+        const { presignedUrls, uploadId, s3Key, s3Url } = urlResponse.data;
+
+        if (!presignedUrls || presignedUrls.length === 0) {
+          throw new Error('Presigned URL을 받을 수 없습니다. 서버 응답 확인 필요.');
         }
 
-        const { uploadUrl } = urlResponse.data;
+        // **2. 파일 청크 분할 및 업로드**
+        const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB
+        const totalChunks = Math.ceil(selectedFile.size / CHUNK_SIZE);
 
-        const uploadResponse = await axios.put(uploadUrl, selectedFile, {
-          headers: {
-            'Content-Type': selectedFile.type,
-          },
-        });
+        const etags = [];
+        for (let i = 0; i < totalChunks; i++) {
+          const start = i * CHUNK_SIZE;
+          const end = Math.min(selectedFile.size, start + CHUNK_SIZE);
+          const chunk = selectedFile.slice(start, end);
 
-        if (uploadResponse.status !== 200) {
-          throw new Error('파일 업로드 실패');
+          const uploadUrl = presignedUrls[i]; // 각 청크에 대응하는 Presigned URL 사용
+          console.log("uploadUrl : " + uploadUrl);
+          try {
+            const uploadResponse = await axios.put(uploadUrl, chunk, {
+              headers: { 'Content-Type': selectedFile.type },
+            });
+
+            if (uploadResponse.status !== 200) {
+              throw new Error(`청크 업로드 실패 (파트 ${i + 1})`);
+            }
+
+            console.log("Upload successful:", uploadResponse);
+
+            const etag = uploadResponse.headers.etag;
+            if (etag) {
+              console.log("etag : " + etag);
+              etags.push({ PartNumber: i + 1, ETag: etag });
+            } else {
+              throw new Error(`etag가 누락된 청크 업로드 실패 (파트 ${i + 1})`);
+            }
+          } catch (error) {
+            console.error("Error uploading file chunk:", error);
+            if (error.response) {
+              console.error("Response error:", error.response.data);
+            } else if (error.request) {
+              console.error("No response received:", error.request);
+            } else {
+              console.error("Error setting up request:", error.message);
+            }
+            throw new Error(`청크 업로드 중 오류 발생 (파트 ${i + 1})`);
+          }
         }
 
-        console.log('파일 업로드 성공');
+        // **3. 업로드 완료 요청**
+        const completeResponse = await axios.post(
+            'https://api.ahimmoyak.click/builder/v1/files/complete-multipart',
+            {
+              uploadId,
+              parts: etags,
+              s3Key,
+            },
+            {
+              headers: { 'Content-Type': 'application/json' },
+              withCredentials: true,
+            }
+        );
 
-        setFileObject({
-          curriculumId,
-          courseId,
-          institutionId,
-          idx,
-          fileName: encodedFileName,
-          contentType: selectedFile.type,
-          fileSize: selectedFile.size,
-          videoDuration: formattedVideoDuration,
-          s3Key: urlResponse.data.s3Key,
-          s3Url: urlResponse.data.s3Url,
-          originalFileName: selectedFile.name,
-          contentTitle,
-        });
+        console.log(completeResponse);
 
-        onAdd({ fileName: selectedFile.name });
+        if (completeResponse.status === 200) {
+          console.log('파일 업로드 완료');
+          setFileObject({
+            curriculumId,
+            courseId,
+            institutionId,
+            idx,
+            fileName: encodedFileName,
+            contentType: selectedFile.type,
+            fileSize: selectedFile.size,
+            videoDuration: formattedVideoDuration,
+            s3Key,
+            s3Url,
+            originalFileName: selectedFile.name,
+            contentTitle,
+          });
+
+          onAdd({ fileName: selectedFile.name });
+        } else {
+          throw new Error('업로드 완료 처리 실패');
+        }
       } catch (error) {
         console.error('업로드 오류:', error);
-        alert('파일 업로드 중 오류가 발생했습니다.');
+        alert(`파일 업로드 중 오류가 발생했습니다: ${error.message}`);
       }
     }
   };
+
+
+
 
   const handleTitleChange = (e) => {
     setContentTitle(e.target.value);
