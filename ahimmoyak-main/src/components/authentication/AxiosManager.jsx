@@ -6,7 +6,7 @@ const AxiosManager = () => {
 
   // axiosInstance 생성
   const axiosInstance = axios.create({
-    baseURL: 'https://api.ahimmoyak.click',
+    baseURL: import.meta.env.VITE_SEVER_API_URL,
     withCredentials: true, // 쿠키 포함
   });
 
@@ -19,7 +19,7 @@ const AxiosManager = () => {
           console.log('401 error detected, attempting to refresh token.');
 
           // /auth/refresh 요청 (기본 axios 사용)
-          await axios.get('https://api.ahimmoyak.click/auth/refresh', {
+          await axios.get(`${import.meta.env.VITE_SEVER_API_URL}/auth/refresh`, {
             withCredentials: true, // 쿠키 포함
           });
 
