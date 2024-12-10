@@ -10,7 +10,7 @@ import AddContentModal from "../../components/course/AddContentModal.jsx";
 import NoticeTab from "../../components/course/NoticeTab.jsx";
 import QnATab from "../../components/course/QnATab.jsx";
 import ExamTab from "../../components/course/ExamTab.jsx";
-import LiveStreamTab from "../../components/course/LiveStreamTab.jsx";
+import LiveStreamTab from "../../components/live/LiveStreamTab.jsx";
 import NoticeDetail from "./NoticeDetail.jsx";
 import NoticeCreate from "./NoticeCreate.jsx";
 import QnADetail from "./QnADetail.jsx";

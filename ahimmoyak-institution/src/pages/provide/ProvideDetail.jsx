@@ -1,11 +1,13 @@
 import {useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import LiveStreamTab from "../../components/live/LiveStreamTab.jsx";
 import axios from 'axios';
 
 const ProvideDetail = () => {
   const { provideId } = useParams();
   const [expandedExam, setExpandedExam] = useState(null);
+  const [extendStudents, setExtendStudents] = useState(false);
   const [offering, setOffering] = useState({
     courseTitle: '',
     companyName: '',
@@ -69,11 +71,11 @@ const ProvideDetail = () => {
               <div className="flex gap-4">
                 <div className="flex-1">
                   <div className="text-sm text-gray-500">회사명</div>
-                  <div className="font-medium">{offering.companyName}</div>
+                  <div className="font-medium">{offering.company}</div>
                 </div>
                 <div className="flex-1">
                   <div className="text-sm text-gray-500">제공기간</div>
-                  <div className="font-medium">{offering.beginDate} ~ {offering.endDate}</div>
+                  <div className="font-medium">{offering.startDate} ~ {offering.endDate}</div>
                 </div>
                 <div className="flex-1">
                   <div className="text-sm text-gray-500">상태</div>
@@ -89,9 +91,17 @@ const ProvideDetail = () => {
         </div>
 
         <div className="bg-white rounded-lg shadow">
-          <div className="p-4 border-b">
+          <div
+            className="p-4 border-b flex justify-between items-center cursor-pointer"
+            onClick={() => setExtendStudents(!extendStudents)}
+          >
             <h2 className="text-lg font-medium">수강생 목록</h2>
+            {extendStudents ?
+              <ChevronUp className="w-5 h-5"/> :
+              <ChevronDown className="w-5 h-5"/>
+            }
           </div>
+          {extendStudents && (
           <div className="divide-y">
             {offering.learnerList.map(student => (
               <div key={student.enrollmentId} className="p-4">
@@ -106,6 +116,7 @@ const ProvideDetail = () => {
               </div>
             ))}
           </div>
+            )}
         </div>
 
         <div className="bg-white rounded-lg shadow">
@@ -170,6 +181,8 @@ const ProvideDetail = () => {
             ))}
           </div>
         </div>
+
+        <LiveStreamTab/>
       </div>
     </>
   );
