@@ -22,7 +22,7 @@ const ContractDetail = () => {
           console.error('데이터 로드 실패:', error);
           setLoading(false); // 로딩 종료
         });
-  }, [contractId]);
+  }, [contractId]);``
 
 
 
