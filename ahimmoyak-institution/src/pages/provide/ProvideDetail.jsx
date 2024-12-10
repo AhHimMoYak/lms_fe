@@ -1,10 +1,12 @@
 import {useParams} from "react-router-dom";
 import React, {useState} from "react";
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import LiveStreamTab from "../../components/live/LiveStreamTab.jsx";
 
 const ProvideDetail = () => {
   const { provideId } = useParams();
   const [expandedExam, setExpandedExam] = useState(null);
+  const [extendStudents, setExtendStudents] = useState(false);
 
   const offering = {
     id: 1,
@@ -76,24 +78,33 @@ const ProvideDetail = () => {
         </div>
 
         <div className="bg-white rounded-lg shadow">
-          <div className="p-4 border-b">
+          <div
+            className="p-4 border-b flex justify-between items-center cursor-pointer"
+            onClick={() => setExtendStudents(!extendStudents)}
+          >
             <h2 className="text-lg font-medium">수강생 목록</h2>
+            {extendStudents ?
+              <ChevronUp className="w-5 h-5"/> :
+              <ChevronDown className="w-5 h-5"/>
+            }
           </div>
-          <div className="divide-y">
-            {offering.students.map(student => (
-              <div key={student.id} className="p-4">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <div className="font-medium">{student.name}</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="font-medium">진도율 {student.progress}%</div>
-                    <div className="text-sm text-gray-500">최근접속 {student.lastAccess}</div>
+          {extendStudents && (
+            <div className="divide-y">
+              {offering.students.map(student => (
+                <div key={student.id} className="p-4">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <div className="font-medium">{student.name}</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-medium">진도율 {student.progress}%</div>
+                      <div className="text-sm text-gray-500">최근접속 {student.lastAccess}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="bg-white rounded-lg shadow">
@@ -158,6 +169,8 @@ const ProvideDetail = () => {
             ))}
           </div>
         </div>
+
+        <LiveStreamTab/>
       </div>
     </>
   );

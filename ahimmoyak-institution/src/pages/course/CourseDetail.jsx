@@ -9,7 +9,7 @@ import AddContentModal from "../../components/course/AddContentModal.jsx";
 import NoticeTab from "../../components/course/NoticeTab.jsx";
 import QnATab from "../../components/course/QnATab.jsx";
 import ExamTab from "../../components/course/ExamTab.jsx";
-import LiveStreamTab from "../../components/course/LiveStreamTab.jsx";
+import LiveStreamTab from "../../components/live/LiveStreamTab.jsx";
 import NoticeDetail from "./NoticeDetail.jsx";
 import NoticeCreate from "./NoticeCreate.jsx";
 import QnADetail from "./QnADetail.jsx";
@@ -76,7 +76,6 @@ const CourseDetail = () => {
     { id: 'notice', label: '공지사항' },
     { id: 'qna', label: '질문게시판' },
     { id: 'exam', label: '시험관리' },
-    { id: 'live', label: '라이브방송' }
   ];
 
   const navigate = useNavigate();
