@@ -1,12 +1,29 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {User, ChevronDown} from 'lucide-react'
 import logo from '../assets/logo.png'
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import axios from "axios";
+import {useAuth} from "./authentication/AuthProvider.jsx";
 
 const Header = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // 실제로는 인증 상태 관리 필요
+  const { isLoggedIn, setIsLoggedIn, checkAuthStatus } = useAuth(); // 실제로는 인증 상태 관리 필요
+  const API_URL = import.meta.env.VITE_SEVER_API_URL
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    checkAuthStatus(); // 페이지 진입 시 인증 상태 확인
+  }, []);
+
+
+  const handleSignOut = async () => {
+    const response = await axios.get(`${API_URL}/auth/v1/signout`, {withCredentials: true});
+    console.log(response);
+    setIsLoggedIn(false);
+    navigate("/");
+    console.log("signout");
+  }
 
   return (
     <header className="bg-white shadow-sm fixed w-full top-0 z-50">
@@ -76,6 +93,7 @@ const Header = () => {
                         onClick={() => {
                           setIsLoggedIn(false);
                           setIsUserMenuOpen(false);
+                          handleSignOut();
                         }}
                         className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
