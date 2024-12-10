@@ -68,14 +68,14 @@ const CreateCompany = () => {
         const updatedFormData = {
             ...formData
         };
-        fetchCompany('/company', "POST", updatedFormData);
+        fetchCompany('/companies', "POST", updatedFormData);
 
     }
 
     useEffect(() => {
         if (company) {
             alert("회사등록이 완료되었습니다");
-            navigate("/company/info")
+            navigate("/companys/info")
         }
     }, [company]);
 

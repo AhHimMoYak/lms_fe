@@ -1,74 +1,122 @@
-import {CheckCircle, ChevronDown, ChevronRight, PlayCircle, FileText, Clock} from "lucide-react";
-import {useState} from "react";
-import {NavLink, useParams} from "react-router-dom";
+import {
+  CheckCircle,
+  ChevronDown,
+  ChevronRight,
+  PlayCircle,
+  FileText,
+  Clock,
+} from "lucide-react";
+import { useState, useEffect } from "react";
+import { NavLink, useParams } from "react-router-dom";
+import axios from "axios";
 
 const Lecture = () => {
-
-  const {courseId} = useParams();
-
+  const { courseId } = useParams();
   const [openSections, setOpenSections] = useState([0]);
-  const curriculum = [
-    {
-      id: 1,
-      title: '1. React 기초',
-      completed: true,
-      contents: [
-        { id: "111", idx: 1, title: 'React 소개', type: 'video', duration: '15:30', completed: true },
-        { id: "222", idx: 2, title: 'Node.js 설치 및 설정', type: 'video', duration: '23:15', completed: true },
-        { id: "333", idx: 3, title: 'React 예시 코드 강의자료', type: 'file', completed: true }
-      ]
-    },
-    {
-      id: 2,
-      title: '2. React Hooks',
-      completed: false,
-      contents: [
-        { id: "444", idx: 1, title: 'useState 완벽 가이드', type: 'video', duration: '28:45', completed: true },
-        { id: "555", idx: 2, title: 'useEffect 심화', type: 'video', duration: '32:10', completed: false }
-      ]
-    }
-  ];
+  const [curriculum, setCurriculum] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!courseId) return;
+
+    axios
+      .get(`http://localhost:8080/v1/students/courses/${courseId}/detail?userId=11`)
+      .then((response) => {
+        const courseData = response.data;
+        if (courseData && courseData.curriculumList) {
+          const processedCurriculum = courseData.curriculumList.map((section) => {
+            const contentList = section.contentList.map((content) => ({
+              id: content.id,
+              idx: content.id,
+              title: content.title,
+              type: content.type ? content.type.toLowerCase() : "unknown",
+              duration: content.videoDurations || null,
+              completed: content.state === "COMPLETED",
+            }));
+
+            return {
+              id: section.id,
+              title: section.title,
+              contents: contentList,
+              completed: contentList.every((content) => content.completed),
+            };
+          });
+
+          setCurriculum(processedCurriculum);
+        } else {
+          setCurriculum([]);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("데이터 로드 실패:", error);
+        setError("강좌 정보를 불러오지 못했습니다.");
+        setLoading(false);
+      });
+  }, [courseId]);
+
+  if (loading) {
+    return <div>로딩 중...</div>;
+  }
+
+  if (error) {
+    return <div>에러: {error}</div>;
+  }
 
   return (
     <div className="space-y-4">
       <h1 className="text-lg font-bold">강좌 목록</h1>
       {curriculum.map((section, index) => (
-        <div key={index} className="bg-white rounded-lg shadow overflow-hidden">
+        <div
+          key={section.id}
+          className="bg-white rounded-lg shadow overflow-hidden"
+        >
           <button
             className="w-full px-4 py-3 flex items-center justify-between hover:bg-gray-50"
-            onClick={() => setOpenSections(prev =>
-              prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
-            )}
+            onClick={() =>
+              setOpenSections((prev) =>
+                prev.includes(index)
+                  ? prev.filter((i) => i !== index)
+                  : [...prev, index]
+              )
+            }
           >
             <div className="flex items-center space-x-3">
-              {section.completed ?
-                <CheckCircle className="w-5 h-5 text-green-500" /> :
+              {section.completed ? (
+                <CheckCircle className="w-5 h-5 text-green-500" />
+              ) : (
                 <div className="w-5 h-5 rounded-full border-2 border-gray-300" />
-              }
+              )}
               <span className="font-medium">{section.title}</span>
             </div>
-            {openSections.includes(index) ?
-              <ChevronDown className="w-5 h-5" /> :
+            {openSections.includes(index) ? (
+              <ChevronDown className="w-5 h-5" />
+            ) : (
               <ChevronRight className="w-5 h-5" />
-            }
+            )}
           </button>
           {openSections.includes(index) && (
             <div className="divide-y">
               {section.contents.map((content) => (
                 <NavLink
                   to={`/course/${courseId}/curriculum/${section.id}/content/${content.id}`}
-                  key={content.idx} className="px-4 py-3 flex items-center hover:bg-gray-50">
+                  key={content.idx}
+                  className="px-4 py-3 flex items-center hover:bg-gray-50"
+                >
                   <div className="w-5 h-5 ml-8 mr-3">
-                    {content.completed ?
-                      <CheckCircle className="w-5 h-5 text-green-500" /> :
+                    {content.completed ? (
+                      <CheckCircle className="w-5 h-5 text-green-500" />
+                    ) : (
                       <div className="w-5 h-5 rounded-full border-2 border-gray-300" />
-                    }
+                    )}
                   </div>
                   <div className="flex items-center flex-1">
-                    {content.type === 'video' ?
-                      <PlayCircle className="w-5 h-5 mr-3 text-gray-400" /> :
+                    {content.type === "video" ? (
+                      <PlayCircle className="w-5 h-5 mr-3 text-gray-400" />
+                    ) : (
                       <FileText className="w-5 h-5 mr-3 text-gray-400" />
-                    }
+                    )}
                     <span className="flex-1">{content.title}</span>
                     {content.duration && (
                       <span className="text-sm text-gray-500">

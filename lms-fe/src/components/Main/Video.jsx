@@ -30,8 +30,8 @@ function Video() {
             setLoading(true);
 
             const url = selectedCategory && selectedCategory !== "ALL"
-                ? `/course/all?category=${selectedCategory}&page=${currentPage}&size=12`
-                : `/course/all?page=${currentPage}&size=12`;
+                ? `/courses/all?category=${selectedCategory}&page=${currentPage}&size=12`
+                : `/courses/all?page=${currentPage}&size=12`;
 
             await fetchData(url, "GET");
             setLoading(false);
@@ -53,7 +53,7 @@ function Video() {
     const courses = response ? response.content : [];
 
     const handleCardClick = (courseId) => {
-        navigate(`/course/${courseId}`);
+        navigate(`/courses/${courseId}`);
     };
 
     return (
