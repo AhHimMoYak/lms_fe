@@ -1,10 +1,5 @@
-import React, { useRef } from 'react';
-import { BookOpen, Users, Building2, Bell } from 'lucide-react';
 import CompanyGrid from "../institution/CompanyGrid.jsx";
 import CompanyAttendanceGrid from "../institution/CompanyAttendanceGrid.jsx";
-import CourseAttendanceBarChart from "../institution/CourseAttendanceBarChart.jsx";
-import CoursePopularityChart from "../institution/CoursePopularityChart.jsx";
-import MonthlyCourseChart from "../institution/MonthlyCourseChart.jsx";
 
 import CourseProvideGrid from "../institution/CourseProvideGrid.jsx";
 import CourseEvaluationGrid from "../institution/CourseEvaluationGrid.jsx";
@@ -13,30 +8,40 @@ import QuarterPieChart2 from "../institution/QuarterPieChart2.jsx";
 import CourseAttendanceBarChart2 from "../institution/CourseAttendanceBarChart2.jsx";
 import CoursePopularityChart2 from "../institution/CoursePopularityChart2.jsx";
 import MonthlyCourseChart2 from "../institution/MonthlyCourseChart2.jsx";
+import React, { useState, useEffect, useRef } from "react";
+import { BookOpen, Users, Building2, Bell } from "lucide-react";
+import axios from "axios";
 
 const Card = ({ children }) => (
-    <div className="bg-white rounded-lg shadow p-6 mb-8">{children}</div>
+    <div className="bg-white rounded-lg shadow p-6">{children}</div>
 );
 
 const Dashboard = () => {
-  const stats = [
-    { title: '총 코스', value: '15', icon: BookOpen },
-    { title: '코스제공 수', value: '24', icon: Building2 },
-    { title: '총 수강생', value: '1,234', icon: Users },
-    { title: '새 계약신청', value: '12', icon: Bell },
-  ];
+  const [stats, setStats] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const courses = [
-    { name: 'React 기초부터 실전까지', duration: '30일', providingCount: 3 },
-    { name: 'Python 데이터 분석', duration: '45일', providingCount: 2 },
-    { name: 'AWS 클라우드 마스터', duration: '60일', providingCount: 4 },
-  ];
+  useEffect(() => {
+    // API 호출
+    axios
+        .get("http://localhost:8080/v1/institutions/dashboard?userId=3")
+        .then((response) => {
+          const {
+            totalCourse,
+            totalCourseProvide,
+            totalEnrollment,
+            totalProgressCourseProvide,
+            progressCourseProvideList,
+          } = response.data;
 
-  const provides = [
-    { course: 'React 기초부터 실전까지', company: 'A기업', period: '2024.01-2024.06', students: 234 },
-    { course: 'Python 데이터 분석', company: 'B기업', period: '2024.03-2024.08', students: 189 },
-    { course: 'AWS 클라우드 마스터', company: 'C기업', period: '2024.02-2024.07', students: 156 },
-  ];
+          setStats([
+            { title: "총 코스", value: totalCourse, icon: BookOpen },
+            { title: "코스제공 수", value: totalCourseProvide, icon: Building2 },
+            { title: "총 수강생", value: totalEnrollment, icon: Users },
+            { title: "진행 중 코스", value: totalProgressCourseProvide, icon: Bell },
+        ]);
+
+
 
   // 참조를 위한 useRef 생성
   const courseDetailsRef = useRef(null);
@@ -51,6 +56,26 @@ const Dashboard = () => {
       });
     }
   };
+          // 코스 현황 데이터 설정
+          setCourses(
+              progressCourseProvideList.map((course) => ({
+                name: course.courseTitle,
+                duration: `${course.period}일`,
+                providingCount: course.companyProvided,
+              }))
+          );
+
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("대시보드 데이터 로드 실패:", error);
+          setLoading(false);
+        });
+  }, []);
+
+  if (loading) {
+    return <div className="p-8 text-center text-gray-500">로딩 중...</div>;
+  }
 
   return (
       <div>
@@ -59,11 +84,9 @@ const Dashboard = () => {
             <h2 className="text-xl font-semibold">대시보드</h2>
           </div>
         </header>
-
-        <main className="p-8 max-w-7xl mx-auto space-y-8">
-
-          {/* 통계 카드 섹션 */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <main className="p-8 max-w-7xl mx-auto">
+          {/* 통계 카드 */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             {stats.map((stat) => {
               const Icon = stat.icon;
               return (
@@ -73,67 +96,49 @@ const Dashboard = () => {
                         <p className="text-sm font-medium text-gray-500">{stat.title}</p>
                         <p className="text-2xl font-bold mt-1">{stat.value}</p>
                       </div>
-                      <Icon className="h-8 w-8 text-gray-400"/>
+                      <Icon className="h-8 w-8 text-gray-400" />
                     </div>
-
                   </Card>
               );
             })}
-            <button
-                onClick={() => handleCourseClick(evaluationTableRef)}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-            >
-              강좌 보기
-            </button>
+              <button
+                  onClick={() => handleCourseClick(evaluationTableRef)}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+              >
+                  강좌 보기
+              </button>
           </div>
 
+          {/* 코스 현황 */}
+          <Card>
+            <div className="mb-4">
+              <h2 className="text-lg font-bold">코스 현황</h2>
+            </div>
+            <div className="space-y-4">
+              {courses.map((course) => (
+                  <div key={course.name} className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium">{course.name}</p>
+                      <p className="text-sm text-gray-500">기간: {course.duration}</p>
+                    </div>
+                    <span className="text-sm text-blue-600">
+                  {course.providingCount}개사 제공중
+                </span>
+                      <button
+                          onClick={() => handleCourseClick(courseDetailsRef)}
+                          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                      >
+                          테이블 데이터 보기
+                      </button>
+                  </div>
+              ))}
+            </div>
+          </Card>
           {/* 코스 현황 섹션 */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <Card>
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-bold">코스 운영 현황</h2>
-
-                <button
-                    onClick={() => handleCourseClick(courseDetailsRef)}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-                >
-                  테이블 데이터 보기
-                </button>
-              </div>
-              <div className="space-y-4">
-                {courses.map((course) => (
-                    <div
-                        key={course.name}
-                        className="flex items-center justify-between cursor-pointer"
-                    >
-                      <div>
-                        <p className="font-medium">{course.name}</p>
-                        <p className="text-sm text-gray-500">기간: {course.duration}</p>
-                      </div>
-                      <span className="text-sm text-blue-600">{course.providingCount}개사 운영중</span>
-                    </div>
-                ))}
-              </div>
-            </Card>
-
-            <Card>
-              <h2 className="text-lg font-bold mb-4">최근 코스 운영 현황</h2>
-              <div className="space-y-4">
-                {provides.map((providing) => (
-                    <div key={`${providing.course}-${providing.company}`} className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium">{providing.course}</p>
-                        <p className="text-sm text-gray-500">{providing.company} | {providing.period}</p>
-                      </div>
-                      <span className="text-sm text-gray-600">수강생 {providing.students}명</span>
-                    </div>
-                ))}
-              </div>
-            </Card>
-          </div>
 
           <StorageCapacity/>
-
+          </div>
           {/* 기타 통계 섹션 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card>
@@ -182,7 +187,6 @@ const Dashboard = () => {
               <CourseEvaluationGrid/>
             </div>
           </Card>
-
         </main>
       </div>
   );

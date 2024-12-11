@@ -15,7 +15,7 @@ export default function VideoPlayer() {
 
     useEffect(() => {
         if (info) {
-            setUrl(`http://localhost:8080/file/video/${info}`);
+            setUrl(`http://localhost:8080/files/videos/${info}`);
         }
     }, [info]);
 

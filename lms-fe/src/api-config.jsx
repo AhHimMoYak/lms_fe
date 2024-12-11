@@ -3,7 +3,7 @@ let backendHost;
 const hostname = window && window.location && window.location.hostname;
 
 if (hostname === "localhost") {
-    backendHost = "http://localhost:8080/api/v1";
+    backendHost = "http://khj-alb-438698198.ap-northeast-2.elb.amazonaws.com/api/v1";
 }
 
 if (hostname === "ahimmoyak.click") {

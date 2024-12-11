@@ -1,16 +1,24 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { PlusCircle, ChevronRight, Clock, User, ChartBarStacked } from 'lucide-react';
 import AddCourseModal from "../../components/course/AddCourseModal.jsx";
 
 // 코스 목록 페이지
 const CourseList = () => {
   const navigate = useNavigate();
-  const courses = [
-    { id: 1, title: 'React 기초부터 실전까지', duration: 30, instructor: '김강사', students: 234, category: "카테고리1" },
-    { id: 2, title: 'Python 데이터 분석', duration: 45, instructor: '이강사', students: 189, category: "카테고리1" },
-    { id: 3, title: 'AWS 클라우드 마스터', duration: 60, instructor: '박강사', students: 156, category: "카테고리2" }
-  ];
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/v1/institutions/courses?userId=3')
+        .then(response => {
+          setCourses(response.data);
+        })
+        .catch(error => {
+          console.log('오류', error)
+        })
+
+  }, []);
 
   const [isAddingCourse, setIsAddingCourse] = useState(false);
 
@@ -18,11 +26,21 @@ const CourseList = () => {
     setIsAddingCourse(true);
   }
 
-  const submitAddCourse = (newCourse) => {
-    setIsAddingCourse(false);
-    // 코스추가 로직
-    console.log(newCourse)
-  }
+  const submitAddCourse = async (newCourse) => {
+    try {
+      // 서버에 새로운 코스 추가 요청
+      const response = await axios.post('http://localhost:8080/v1/institutions/courses?userId=3', newCourse);
+
+      console.log('새로운 코스 추가 완료:', response.data);
+
+      navigate(`/courses/${response.data.courseId}/info`);
+    } catch (error) {
+      console.error('코스 추가 중 오류 발생:', error);
+    } finally {
+      // 추가 상태를 비활성화
+      setIsAddingCourse(false);
+    }
+  };
 
   return (
     <>
@@ -54,18 +72,18 @@ const CourseList = () => {
                 <div>
                   <h3 className="font-medium">{course.title}</h3>
                   <div className="flex gap-4 mt-1 text-sm text-gray-500">
-                  <span className="flex items-center gap-1">
-                    <Clock className="w-4 h-4"/> {course.duration}일
-                  </span>
+          <span className="flex items-center gap-1">
+            <Clock className="w-4 h-4" /> {course.period}일
+          </span>
                     <span className="flex items-center gap-1">
-                    <User className="w-4 h-4"/> {course.instructor}
-                  </span>
+            <User className="w-4 h-4" /> {course.instructor}
+          </span>
                     <span className="flex items-center gap-1">
-                    <ChartBarStacked className="w-4 h-4"/> {course.category}
-                  </span>
+            <ChartBarStacked className="w-4 h-4" /> {course.categoryTitle}
+          </span>
                   </div>
                 </div>
-                <ChevronRight className="w-5 h-5 text-gray-400"/>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
               </div>
             </div>
           ))}
@@ -78,71 +96,6 @@ const CourseList = () => {
   );
 };
 
-// 코스 생성 페이지
-const CourseCreate = () => {
-  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // 폼 제출 처리
-    navigate('/courses');
-  };
 
-  return (
-    <div className="p-8 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">새 코스 추가</h1>
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6">
-        <div className="space-y-4">
-          <div>
-            <label className="block font-medium mb-1">코스명</label>
-            <input
-              type="text"
-              className="w-full border rounded-lg p-2"
-              required
-            />
-          </div>
-          <div>
-            <label className="block font-medium mb-1">기간 (일)</label>
-            <input
-              type="number"
-              className="w-full border rounded-lg p-2"
-              required
-            />
-          </div>
-          <div>
-            <label className="block font-medium mb-1">강사명</label>
-            <input
-              type="text"
-              className="w-full border rounded-lg p-2"
-              required
-            />
-          </div>
-          <div>
-            <label className="block font-medium mb-1">소개글</label>
-            <textarea
-              className="w-full border rounded-lg p-2 h-32"
-              required
-            />
-          </div>
-        </div>
-        <div className="mt-6 flex gap-3">
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg"
-          >
-            저장
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate('/courses')}
-            className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg"
-          >
-            취소
-          </button>
-        </div>
-      </form>
-    </div>
-  );
-};
-
-export { CourseList, CourseCreate };
+export { CourseList };

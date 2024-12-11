@@ -1,5 +1,5 @@
 import {X, Upload} from 'lucide-react'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {getCategory} from "../../utils/getCategory.js";
 
 const Modal = ({ title, children, onClose }) => (
@@ -24,6 +24,12 @@ const AddCourseModal = ({ chapterId, onClose, onAdd }) => {
     category: "",
   });
 
+  const [categorys, setCategorys] = useState([]);
+
+  useEffect(() => {
+    getCategory().then(category => setCategorys(category));
+  }, []);
+
   return(
     <Modal title="코스 추가" onClose={onClose}>
       <div className="space-y-4">
@@ -46,7 +52,7 @@ const AddCourseModal = ({ chapterId, onClose, onAdd }) => {
         <div>
           <label className="block mb-1">카테고리</label>
           <select className="w-full border rounded p-2" onChange={e => setNewCourse({ ...newCourse, category: e.target.value })}>
-            {getCategory().map(category => <option key={category.value} value={category.value}>{category.title}</option>)}
+            {categorys.map(category => <option key={category.value} value={category.value}>{category.title}</option>)}
           </select>
         </div>
 
