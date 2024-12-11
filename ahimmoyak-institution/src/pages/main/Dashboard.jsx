@@ -5,10 +5,14 @@ import CompanyAttendanceGrid from "../institution/CompanyAttendanceGrid.jsx";
 import CourseAttendanceBarChart from "../institution/CourseAttendanceBarChart.jsx";
 import CoursePopularityChart from "../institution/CoursePopularityChart.jsx";
 import MonthlyCourseChart from "../institution/MonthlyCourseChart.jsx";
-import QuarterPieChart from "../institution/QuarterPieChart.jsx";
+
 import CourseProvideGrid from "../institution/CourseProvideGrid.jsx";
 import CourseEvaluationGrid from "../institution/CourseEvaluationGrid.jsx";
 import StorageCapacity from "../institution/StorageCapacity.jsx";
+import QuarterPieChart2 from "../institution/QuarterPieChart2.jsx";
+import CourseAttendanceBarChart2 from "../institution/CourseAttendanceBarChart2.jsx";
+import CoursePopularityChart2 from "../institution/CoursePopularityChart2.jsx";
+import MonthlyCourseChart2 from "../institution/MonthlyCourseChart2.jsx";
 
 const Card = ({ children }) => (
     <div className="bg-white rounded-lg shadow p-6 mb-8">{children}</div>
@@ -134,17 +138,17 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card>
               <h2 className="text-lg font-bold mb-4">월별 통계</h2>
-              <MonthlyCourseChart/>
+              <MonthlyCourseChart2/>
             </Card>
             <Card>
               <h2 className="text-lg font-bold mb-4">분기별 통계</h2>
-              <QuarterPieChart/>
+              <QuarterPieChart2 />
             </Card>
           </div>
 
           <Card>
             <h2 className="text-lg font-bold mb-4">코스 통계</h2>
-            <CoursePopularityChart/>
+            <CoursePopularityChart2/>
           </Card>
 
           {/* 출석율 섹션 */}
@@ -157,7 +161,7 @@ const Dashboard = () => {
               </div>
               <div className="flex-1">
                 <h3 className="text-md font-bold mb-2">코스별 회사 출석율</h3>
-                <CourseAttendanceBarChart/>
+                <CourseAttendanceBarChart2 />
               </div>
             </div>
           </Card>
