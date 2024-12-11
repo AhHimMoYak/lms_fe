@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import AxiosManager from "../../components/authentication/AxiosManager.jsx";
+import axios from "axios";
 
 const QnAForm = () => {
     const {courseId} = useParams();
+    const [getCourseId, setGetCourseId] = useState("");
     const navigate = useNavigate();
     const axiosInstance = AxiosManager();
 
@@ -13,6 +15,12 @@ const QnAForm = () => {
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    useEffect(() => {
+        axios.get(`http://localhost:8085/v1/students/courses/${courseId}/courseId`)
+            .then(response => {
+                setGetCourseId(response.data.courseId)})
+    }, []);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -29,7 +37,7 @@ const QnAForm = () => {
             return;
         }
         const requestDTO = {
-            courseId: courseId,
+            courseId: getCourseId,
             type: "qna",
             title: formData.title,
             content: formData.content,
