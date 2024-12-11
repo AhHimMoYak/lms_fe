@@ -27,7 +27,7 @@ const CompanyRegistrationPage = () => {
           }
       );
       alert("회사 등록이 완료되었습니다!");
-      window.location.href = "https://company.ahimmoyak.click";
+      window.location.href = import.meta.env.VITE_COMPANY_API_URL;
     } catch (e) {
       console.error("Error creating company:", e);
       alert("회사 등록 중 오류가 발생했습니다.");

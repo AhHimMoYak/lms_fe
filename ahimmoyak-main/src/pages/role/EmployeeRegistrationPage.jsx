@@ -3,6 +3,7 @@ import { ArrowRight, X } from "lucide-react";
 import axios from "axios";
 import InputField from "../../components/user/InputField.jsx";
 
+
 const EmployeeRegistrationPage = () => {
   const [companySearch, setCompanySearch] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
@@ -75,7 +76,7 @@ const EmployeeRegistrationPage = () => {
       });
 
       alert("소속 등록이 완료되었습니다!");
-      window.location.href = "https://lms.ahimmoyak.click";
+      window.location.href = import.meta.env.VITE_STUDENT_API_URL;
     } catch (error) {
       console.error("Error adding affiliation:", error);
       alert("소속 등록 중 오류가 발생했습니다.");
