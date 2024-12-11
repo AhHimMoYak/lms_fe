@@ -1,11 +1,16 @@
-export const getCategory = () => {
-  const mock = [
-    {value: "category1", title: "카테고리1"},
-    {value: "category2", title: "카테고리2"},
-    {value: "category3", title: "카테고리3"},
-  ]
+import axios from 'axios';
 
-  // 서버에서 카테고리 목록 받아오는 로직
-
-  return mock;
+const getCategory = async () => {
+  let categorys =[]
+  await axios.get('http://localhost:8080/v1/companies/courses/category')
+      .then(response => {
+        categorys = response.data;
+      })
+      .catch(error => {
+        console.log('오류', error)
+      })
+  sessionStorage.setItem("category", categorys)
+  return categorys;
 }
+
+export {getCategory};
