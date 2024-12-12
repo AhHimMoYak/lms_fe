@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import {format} from "date-fns";
 import "../styles/Comment.css"
 import {Button} from "@mui/material";
+import {decodeTokenTutor} from "../authentication/decodeTokenTutor.jsx";
 
 function Comment() {
     const { data, fetchData } = useAxios();
@@ -20,11 +21,6 @@ function Comment() {
         fetchData(`https://api.ahimmoyak.click/board/v1/${boardId}/comments`, "GET");
     }, [boardId]);
 
-    useEffect(() => {
-        if (data) {
-            console.log(data);
-        }
-    }, [data]);
 
     const commentPostClick = async (e) =>{
         e.preventDefault();
@@ -32,7 +28,9 @@ function Comment() {
         const requestDTO = {
             userName: "지금은 하드코딩",
             boardId: boardId,
-            content: comment
+            content: comment,
+            institutionComment: (decodeTokenTutor())? 1:0,  //TODO 교육기관일때 1 이고 회사원일대 0으로 들어가야함.
+            is_institution: (decodeTokenTutor()) ? "ture":"false"  //TODO 교육기관일때 ture 이고 회사원일대 false 들어가야함.
         };
         await commentFetchData(`https://api.ahimmoyak.click/board/v1/${boardId}/comments`,"POST",requestDTO);
         setComment("");
@@ -58,6 +56,7 @@ function Comment() {
     const handleCommentDelete = (commentId) => {
         const requestDTO = {
             boardId: boardId,
+            institutionComment: (decodeTokenTutor())? 1:0,
         };
         commentDeleteFetchData(`https://api.ahimmoyak.click/board/v1/comments/${commentId}`, "DELETE",requestDTO);
     };

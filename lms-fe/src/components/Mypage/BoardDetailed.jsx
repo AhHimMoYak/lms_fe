@@ -14,7 +14,6 @@ function BoardDetailed() {
 
     useEffect(() => {
         if (boardId) {
-            console.log(`Fetching data for boardId: ${boardId}`);
             fetchData(`https://api.ahimmoyak.click/board/v1/${boardId}`, "GET");
         } else {
             console.error("Invalid boardId: ", boardId);

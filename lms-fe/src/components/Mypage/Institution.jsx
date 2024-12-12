@@ -74,7 +74,7 @@ const Institution = () => {
             ...formData
         };
 
-        fetchInstitution('/institution', "POST", updatedFormData);
+        fetchInstitution('/institutions', "POST", updatedFormData);
     };
 
     useEffect(() => {

@@ -11,7 +11,7 @@ const Management = () => {
     const [isDetailLoading, setIsDetailLoading] = useState(false);
 
     useEffect(() => {
-        fetchData("/institution", "GET");
+        fetchData("/institutions", "GET");
     }, []);
 
     useEffect(() => {
@@ -22,10 +22,10 @@ const Management = () => {
 
     const handleAccept = async (courseProvideId) => {
         try {
-            await patchData(`/institution/${courseProvideId}/response`, "PATCH", {state: "ACCEPTED"});
+            await patchData(`/institutions/${courseProvideId}/response`, "PATCH", {state: "ACCEPTED"});
             alert("수락하셨습니다.");
             // 수락 후 데이터를 다시 가져와서 업데이트
-            await fetchData("/institution", "GET");
+            await fetchData("/institutions", "GET");
         } catch (error) {
             console.error("수락에 실패했습니다:", error);
             alert("수락에 실패했습니다.");

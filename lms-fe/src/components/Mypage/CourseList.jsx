@@ -16,8 +16,7 @@ function CourseList() {
             fetchUserCourse(`/courses`, "GET");
             // fetchUserCourse('http://localhost:8083/api/v1/company/courseProvide/list', "GET");
         } else {
-            fetchUserCourse(`/courses`, "GET");
-            // fetchUserCourse('/company/courseProvide/list', "GET");
+            fetchUserCourse('/companies/courseProvide/list', "GET");
         }
     }, []);
 

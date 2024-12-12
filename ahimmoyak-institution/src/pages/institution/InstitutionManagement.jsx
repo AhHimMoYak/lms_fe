@@ -1,24 +1,45 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Building2, Mail, Phone, MapPin, Globe, Edit2 } from 'lucide-react';
+import axios from 'axios';
 
 const InstitutionManagement = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [companyData, setCompanyData] = useState({
-    name: '에듀컴퍼니',
-    businessNumber: '123-45-67890',
-    certificateNumber: '111-22-33-456',
-    address: '서울시 강남구 테헤란로 123',
-    email: 'contact@techsolution.com',
-    phone: '02-1234-5678',
-    website: 'www.techsolution.com',
-    employees: 128,
-    description: '혁신적인 IT 솔루션을 제공하는 기업'
+    // name: '에듀컴퍼니',
+    // businessNumber: '123-45-67890',
+    // certificateNumber: '111-22-33-456',
+    // address: '서울시 강남구 테헤란로 123',
+    // email: 'contact@techsolution.com',
+    // phone: '02-1234-5678',
+    // website: 'www.techsolution.com',
+    // employees: 128,
+    // description: '혁신적인 IT 솔루션을 제공하는 기업'
   });
+  useEffect(() => {
+    axios.get('http://localhost:8080/v1/institutions/details?userId=3')
+        .then(response => {
+          setCompanyData(response.data);
+        })
+        .catch(error => {
+          console.log('오류', error)
+        })
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsEditing(false);
-  };
+  }, []);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        axios.patch('http://localhost:8080/v1/institutions?userId=3', {
+            ...companyData,
+        })
+            .then((response) => {
+                console.log('업데이트 성공:', response.data);
+                setIsEditing(false);
+            })
+            .catch((error) => {
+                console.error('업데이트 실패:', error);
+            });
+    };
 
   return (
     <>
@@ -43,9 +64,9 @@ const InstitutionManagement = () => {
                 icon={<Building2 />}
                 label="교육기관명"
                 name="name"
-                value={companyData.name}
+                value={companyData.institutionName}
                 isEditing={isEditing}
-                onChange={(e) => setCompanyData({...companyData, name: e.target.value})}
+                onChange={(e) => setCompanyData({...companyData, institutionName: e.target.value})}
               />
 
               <Field
@@ -68,9 +89,9 @@ const InstitutionManagement = () => {
               <Field
                 label="교육사업자인증번호"
                 name="businessNumber"
-                value={companyData.certificateNumber}
+                value={companyData.certifiedNumber}
                 //isEditing={isEditing}
-                onChange={(e) => setCompanyData({...companyData, certificateNumber: e.target.value})}
+                onChange={(e) => setCompanyData({...companyData, certifiedNumber: e.target.value})}
               />
 
               <Field
@@ -95,10 +116,10 @@ const InstitutionManagement = () => {
               <Field
                 icon={<Globe />}
                 label="웹사이트"
-                name="website"
-                value={companyData.website}
+                name="webSite"
+                value={companyData.webSite}
                 isEditing={isEditing}
-                onChange={(e) => setCompanyData({...companyData, website: e.target.value})}
+                onChange={(e) => setCompanyData({...companyData, webSite: e.target.value})}
               />
             </div>
 

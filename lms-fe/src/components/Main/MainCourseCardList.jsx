@@ -21,7 +21,7 @@ function MainCourseCardList() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchData(`/course/all`, "get");
+        fetchData(`/courses/all`, "get");
     }, []);
 
     useEffect(() => {
@@ -33,7 +33,7 @@ function MainCourseCardList() {
     }, [data]);
 
     const clickDetailCourse = (courseId) => {
-        navigate(`/course/${courseId}`);
+        navigate(`/courses/${courseId}`);
     };
 
     const sliderSettings = {

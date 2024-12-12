@@ -32,7 +32,7 @@ const AxiosManager = () => {
           console.error('Token refresh failed. Redirecting to /:', refreshError);
 
           // 토큰 갱신 실패 시 /로 리다이렉트
-          navigate('https://local.ahimmoyak.click');
+          window.location.href = 'https://local.ahimmoyak.click';
           return Promise.reject(refreshError);
         }
       }
