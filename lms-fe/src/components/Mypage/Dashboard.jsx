@@ -1,15 +1,18 @@
 import useAxios from "../../hooks/api/useAxios.jsx";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "../../styles/Mypage/Dashboard.css";
 import { useNavigate } from "react-router-dom";
 import { decodeTokenTutor } from "../../authentication/decodeTokenTutor.jsx";
 
 function Dashboard() {
     const { data, fetchData } = useAxios();
-    const navigate = useNavigate();
+    const { data: institutionData, fetchData: fetchInstitutionData } = useAxios();
     const { data: boardData, fetchData: fetchBoardData } = useAxios();
+    const [institutionId, setInstitutionId] = useState(null);
+    const navigate = useNavigate();
     const limit = 5;
     const userName = "난중에고치기";
+    const type = "QnA";
 
     const clickDetailCourse = (courseId) => {
         if (decodeTokenTutor()) {
@@ -18,13 +21,15 @@ function Dashboard() {
             navigate(`/mypage/course/${courseId}`);
         }
     };
-    const clickDetailBoard = (courseId,type,boardId) => {
+
+    const clickDetailBoard = (courseId, type, boardId) => {
         if (decodeTokenTutor()) {
             navigate(`/mypage/course/${courseId}/board/${type}/${boardId}`);
         } else {
             navigate(`/mypage/course/${courseId}/board/${type}/${boardId}`);
         }
     };
+
     const clickListCourse = () => {
         if (decodeTokenTutor()) {
             navigate("/education/course");
@@ -32,6 +37,7 @@ function Dashboard() {
             navigate("/mypage/course");
         }
     };
+
     const clickListQnA = () => {
         if (decodeTokenTutor()) {
             navigate("/education/qna");
@@ -41,13 +47,34 @@ function Dashboard() {
     };
 
     useEffect(() => {
-        fetchData(`/course`, "GET");
+        fetchInstitutionData('http://localhost:8080/api/v1/institutions/details', "GET");
+        //TODO 교육기관일때와 회사원일때 다르게
+        }, []);
+
+    useEffect(() => {
+        if (institutionData) {
+            setInstitutionId(institutionData.id);
+        }
+    }, [institutionData]);
+
+    useEffect(() => {
+        // Fetch courses once when component mounts
+        fetchData(`/courses`, "GET");
     }, []);
 
     useEffect(() => {
-        fetchBoardData(`https://api.ahimmoyak.click/board/v1/user-name/${userName}?limit=${limit}`, "GET");
-    }, []);
-    console.log(boardData);
+        // Fetch boards only after institutionId is set
+        if (institutionId) {
+            if (decodeTokenTutor()) {
+                // 교육기관일 때
+                fetchBoardData(`https://api.ahimmoyak.click/board/v1/institutions/${institutionId}/${type}?limit=${limit}`, "GET");
+            } else {
+                // 회사원일 때
+                fetchBoardData(`https://api.ahimmoyak.click/board/v1/user-name/${userName}?limit=${limit}`, "GET");
+            }
+        }
+    }, [institutionId]);
+
     return (
         <div className="dashboard-container">
             <div className="dashboard-header">
@@ -68,31 +95,31 @@ function Dashboard() {
             </div>
             <div className="qna-list-container">
                 <div className="dashboard-header">
-                    <h2 className="dashboard-title">작성한 QnA</h2>
+                    <h2 className="dashboard-title">QnA 게시판</h2>
                     <button className="more-button" onClick={clickListQnA}>
                         더보기
                     </button>
                 </div>
                 <table className="write-qna-table">
                     <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>코스명</th>
-                            <th>제목</th>
-                            <th>답변</th>
-                        </tr>
+                    <tr>
+                        <th>No.</th>
+                        <th>코스명</th>
+                        <th>제목</th>
+                        <th>답변</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {boardData?.items?.map((board, index) => (
-                            <tr key={board.boardId} className="qna-table-row" onClick={() => clickDetailBoard(board.courseId,board.type,board.id)}>
-                                <td className="que-idx">{index + 1}</td>
-                                <td className="qna-course">{board.course}</td>
-                                <td className="qna-title">{board.title}</td>
-                                <td className={board.commitCount > 0 ? "qna-answered" : "qna-not-answered"}>
-                                    {board.commitCount > 0 ? "완료" : "미답변"}
-                                </td>
-                            </tr>
-                        ))}
+                    {boardData?.items?.map((board, index) => (
+                        <tr key={board.boardId} className="qna-table-row" onClick={() => clickDetailBoard(board.courseId, board.type, board.id)}>
+                            <td className="que-idx">{index + 1}</td>
+                            <td className="qna-course">{board.course}</td>
+                            <td className="qna-title">{board.title}</td>
+                            <td className={board.commitCount > 0 ? "qna-answered" : "qna-not-answered"}>
+                                {board.commitCount > 0 ? "완료" : "미답변"}
+                            </td>
+                        </tr>
+                    ))}
                     </tbody>
                 </table>
             </div>

@@ -26,10 +26,10 @@ const Course = () => {
           <Route path="live" element={<LiveList/>}/>
 
           <Route path="notice" element={<NoticeBoard/>}/>
-          <Route path="notice/:postId" element={<NoticeDetail/>}/>
+          <Route path="notice/:noticeId" element={<NoticeDetail/>}/>
 
           <Route path="qna" element={<QnABoard/>}/>
-          <Route path="qna/:postId" element={<QnADetail/>}/>
+          <Route path="qna/:qnaId" element={<QnADetail/>}/>
           <Route path="qna/write" element={<QnAForm/>}/>
 
           <Route path="exam" element={<ExamList/>}/>

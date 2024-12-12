@@ -36,7 +36,6 @@ function BoardEdit() {
 
     useEffect(() => {
         if(data){
-            console.log(data);
             setTitle(data.title);
             setContent(data.content);
         }
