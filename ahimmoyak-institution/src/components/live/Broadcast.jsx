@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import IVSBroadcastClient from 'amazon-ivs-web-broadcast';
 import { Camera, Mic, MicOff, Video, VideoOff, Monitor } from 'lucide-react';
 
-const BroadcastPage = ({ingestEndpoint, streamKey}) => {
+const Broadcast = ({ingestEndpoint, streamKey}) => {
   const [isStreaming, setIsStreaming] = useState(false);
   const [isMicOn, setIsMicOn] = useState(true);
   const [isCameraOn, setIsCameraOn] = useState(true);
@@ -167,7 +167,7 @@ const BroadcastPage = ({ingestEndpoint, streamKey}) => {
   };
 
   return (
-    <div className="min-h-screen  p-6">
+    <div className="">
       <div className="max-w-6xl mx-auto space-y-6">
         <div className="relative bg-black rounded-lg overflow-hidden aspect-video">
           <canvas id="preview" ref={canvasRef} className="w-full h-full block" ></canvas>
@@ -180,7 +180,7 @@ const BroadcastPage = ({ingestEndpoint, streamKey}) => {
               onChange={(e) => setSelectedCamera(e.target.value)}
               className="bg-gray-400 text-white rounded-lg px-4 py-2 w-48 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="" disabled>Select Camera</option>
+              <option value="" disabled>카메라 선택</option>
               {videoDevices.map((device) => (
                 <option key={device.deviceId} value={device.deviceId}>
                   {device.label || `Camera ${device.deviceId.slice(0, 5)}`}
@@ -193,7 +193,7 @@ const BroadcastPage = ({ingestEndpoint, streamKey}) => {
               onChange={(e) => setSelectedMic(e.target.value)}
               className="bg-gray-400 text-white rounded-lg px-4 py-2 w-48 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="" disabled>Select Microphone</option>
+              <option value="" disabled>마이크 선택</option>
               {audioDevices.map((device) => (
                 <option key={device.deviceId} value={device.deviceId}>
                   {device.label || `Microphone ${device.deviceId.slice(0, 5)}`}
@@ -253,4 +253,4 @@ const BroadcastPage = ({ingestEndpoint, streamKey}) => {
   );
 };
 
-export default BroadcastPage;
+export default Broadcast;

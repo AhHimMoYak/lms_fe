@@ -8,6 +8,7 @@ const ProvideDetail = () => {
   const { provideId } = useParams();
   const [expandedExam, setExpandedExam] = useState(null);
   const [extendStudents, setExtendStudents] = useState(false);
+  const [isDataFetched, setIsDataFetched] = useState(false);
   const [offering, setOffering] = useState({
     courseTitle: '',
     companyName: '',
@@ -50,6 +51,7 @@ const ProvideDetail = () => {
             ...prevState,
             ...response.data, // API 데이터 병합
           }));
+          setIsDataFetched(true);
         })
         .catch((error) => {
           console.error('데이터 로드 실패:', error);
@@ -71,7 +73,7 @@ const ProvideDetail = () => {
               <div className="flex gap-4">
                 <div className="flex-1">
                   <div className="text-sm text-gray-500">회사명</div>
-                  <div className="font-medium">{offering.company}</div>
+                  <div className="font-medium">{offering.companyName}</div>
                 </div>
                 <div className="flex-1">
                   <div className="text-sm text-gray-500">제공기간</div>
@@ -181,8 +183,9 @@ const ProvideDetail = () => {
             ))}
           </div>
         </div>
-
-        <LiveStreamTab/>
+        {isDataFetched && (
+          <LiveStreamTab provideInfo={{...offering, provideId: provideId}}/>
+        )}
       </div>
     </>
   );
