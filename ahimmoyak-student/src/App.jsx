@@ -7,6 +7,7 @@ import CourseList from "./pages/main/CourseList.jsx";
 import QnA from "./pages/main/QnA.jsx";
 import Course from "./pages/course/Course.jsx";
 import IVSPlayer from "./components/live/IVSPlayer.jsx";
+import LivePage from "./pages/live/LivePage.jsx";
 
 
 function App() {
@@ -25,7 +26,8 @@ function App() {
             </Route>
             <Route path="/course/:courseId/*" element={<Course />} />
 
-            <Route path="/live" element={<IVSPlayer streamUrl={'https://24312cd67dc1.ap-northeast-2.playback.live-video.net/api/video/v1/ap-northeast-2.503561434552.channel.BHyH8cwOvWOf.m3u8'}/>}/>
+            <Route path="/live" element={<IVSPlayer streamUrl={"https://24312cd67dc1.ap-northeast-2.playback.live-video.net/api/video/v1/ap-northeast-2.503561434552.channel.BHyH8cwOvWOf.m3u8"}/>}/>
+            <Route path="/live/:liveId" element={<LivePage/>}/>
           </Routes>
         </div>
       </div>
