@@ -31,7 +31,7 @@ const QnA = () => {
             try {
                 // 게시글 데이터 가져오기
                 const response = await axiosInstance.get(
-                    `board/v1/user-name/${username}`
+                    `board/v1/student/${username}`
                 );
                 console.log(response);
                 const posts = response.data.items || [];
