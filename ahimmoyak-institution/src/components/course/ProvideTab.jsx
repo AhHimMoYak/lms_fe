@@ -19,16 +19,18 @@ const ProvideTab = ({ provides }) => {
                   <Building2 className="w-4 h-4 text-gray-400" />
                   <h3 className="font-medium">{provide.company}</h3>
                   <span className={`text-sm px-2 py-1 rounded ${
-                    provide.status === '진행중'
+                    provide.state === 'ONGOING'
                       ? 'bg-green-100 text-green-800'
-                      : 'bg-blue-100 text-blue-800'
+                      : (provide.state === 'NOT_STARTED'
+                            ? 'bg-blue-100 text-blue-800'
+                            : 'bg-red-100 text-red-800')
                   }`}>
-                  {provide.status}
+                  {provide.state === 'ONGOING' ? "진행중" : (provide.state === 'NOT_STARTED' ? "시작안됨" : "종료됨")}
                 </span>
                 </div>
                 <div className="mt-1 text-sm text-gray-500">
-                  {provide.startDate} ~ {provide.endDate}
-                  <span className="ml-3">수강생 {provide.students}명</span>
+                  {provide.beginDate} ~ {provide.endDate}
+                  <span className="ml-3">수강생 {provide.attendeeCount}명</span>
                 </div>
               </div>
               <div className="flex items-center gap-2">

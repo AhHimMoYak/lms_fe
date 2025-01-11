@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import AddContents from "./AddContents";
 import UploadContents from "./UploadContents";
 import GetContents from "./GetContents";
@@ -15,7 +15,7 @@ function CreateCourse_v2() {
   const [curIdx, setCurIdx] = useState(1);
   const [draggedIdx, setDraggedIdx] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchContents = async () => {
       try {
@@ -149,7 +149,7 @@ function CreateCourse_v2() {
   
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/course/${courseId}/curriculums/${curriculumId}/save`,
+        `http://localhost:8080/api/v1/courses/${courseId}/curriculums/${curriculumId}/save`,
         {
           method: "PUT",
           headers: {
@@ -172,9 +172,14 @@ function CreateCourse_v2() {
     }
   };
 
+  const handlerBack = ()=> {
+    navigate(`/education/manage/${courseId}/curriculum/create`);
+  }
+
   return (
     <>
       <h1>컨텐츠 구성</h1>
+      <button onClick={handlerBack}>이전</button>
       {contents.map((content, idx) => (
         <div
           key={content.id}

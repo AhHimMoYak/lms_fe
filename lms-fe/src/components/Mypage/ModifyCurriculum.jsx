@@ -5,7 +5,6 @@ import "/src/styles/ModifyCurriculum.css";
 
 function ModifyCurriculum({curriculumId}) {
     const {data, fetchData} = useAxios();
-    const navigate = useNavigate();
     const {courseId} = useParams();
     const [formData, setFormData] = useState({
         title: "",
@@ -23,7 +22,7 @@ function ModifyCurriculum({curriculumId}) {
             alert("제목은 필수입니다.");
             return;
         }
-        fetchData(`/course/${courseId}/curriculum/${curriculumId}`, "PATCH", {
+        fetchData(`/courses/${courseId}/curriculums/${curriculumId}`, "PATCH", {
             title: formData.title,
         }).then(() => {
             alert("커리큘럼이 성공적으로 수정되었습니다.");

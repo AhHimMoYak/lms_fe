@@ -22,13 +22,14 @@ function CreateCourse() {
     }, [data]);
 
     useEffect(() => {
-        institutionFetchData(`/institution/detail`,"GET");
+        institutionFetchData(`/institutions/details`,"GET");
     }, []);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        fetchData("/course", "post", {
+        fetchData("/courses", "post", {
             title: formData.title,
             introduction: formData.introduction,
             category: formData.category,

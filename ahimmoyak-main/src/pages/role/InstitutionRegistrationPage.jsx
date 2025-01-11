@@ -1,20 +1,45 @@
 import {useState} from "react";
 import InputField from "../../components/user/InputField.jsx";
+import axios from 'axios';
+
+import {useNavigate} from "react-router-dom";
 
 const InstitutionRegistrationPage = () => {
   const [formData, setFormData] = useState({
     name: '',
-    representative: '',
+    ownerName: '',
     businessNumber: '',
-    instituteNumber: '',
+    certifiedNumber: '',
     email: '',
-    phoneNumber: ''
+    phone: ''
   });
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // 교육기관 등록 로직 구현
-    console.log('Institute registration:', formData);
+
+    console.log("handleSubmit invoked with data:", formData);
+
+    try {
+      const response = await axios.post(
+        'http://localhost:8080/v1/students/visitor/institutions?userId=6',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true,
+        }
+      );
+      console.log("Request successful:", response.data);
+      alert('교육기관이 등록되었습니다.');
+
+      navigate("/services");
+    } catch (error) {
+      console.error("Request failed:", error.response?.data || error.message);
+      alert('교육기관 등록 중 오류 발생');
+    }
   };
 
   return (
@@ -41,8 +66,8 @@ const InstitutionRegistrationPage = () => {
 
               <InputField
                 label="대표자명"
-                value={formData.representative}
-                onChange={(e) => setFormData({...formData, representative: e.target.value})}
+                value={formData.ownerName}
+                onChange={(e) => setFormData({...formData, ownerName: e.target.value})}
                 required
               />
 
@@ -56,8 +81,8 @@ const InstitutionRegistrationPage = () => {
 
               <InputField
                 label="기관인증번호"
-                value={formData.instituteNumber}
-                onChange={(e) => setFormData({...formData, instituteNumber: e.target.value})}
+                value={formData.certifiedNumber}
+                onChange={(e) => setFormData({...formData, certifiedNumber: e.target.value})}
                 required
               />
 
@@ -73,8 +98,8 @@ const InstitutionRegistrationPage = () => {
                 label="대표 전화번호"
                 type="tel"
                 placeholder="'-' 없이 입력해주세요"
-                value={formData.phoneNumber}
-                onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})}
+                value={formData.phone}
+                onChange={(e) => setFormData({...formData, phone: e.target.value})}
                 required
               />
 

@@ -11,6 +11,8 @@ import NoticeCreate from "./pages/course/NoticeCreate.jsx";
 import ContractManagement from "./pages/contract/ContractManagement.jsx";
 import ContractDetail from "./pages/contract/ContractDetail.jsx";
 import InstitutionManagement from "./pages/institution/InstitutionManagement.jsx";
+import Broadcast from "./components/live/Broadcast.jsx";
+import LivePage from "./pages/live/LivePage.jsx";
 
 
 
@@ -36,6 +38,7 @@ function App() {
 
               <Route path="/institution" element={<InstitutionManagement/>}/>
 
+              <Route path="/live/:liveId" element={<LivePage/>}/>
             </Route>
           </Routes>
         </div>

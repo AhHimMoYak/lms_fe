@@ -1,123 +1,132 @@
 import Pagination from "../../components/board/Pagination.jsx";
-import {useState} from "react";
-import {NavLink, useParams} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, useParams } from "react-router-dom";
+import AxiosManager from "../../components/authentication/AxiosManager.jsx";
 
 const QnABoard = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [filter, setFilter] = useState('all');
-  const [sort, setSort] = useState('latest');
-  const itemsPerPage = 10;
+    const [questions, setQuestions] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [filter, setFilter] = useState("all");
+    const [lastEvaluatedKeys, setLastEvaluatedKeys] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [totalPages, setTotalPages] = useState(1);
+    const axiosInstance = AxiosManager();
+    const limit = 10;
+    const { courseId } = useParams();
 
-  const {courseId} = useParams();
+    const fetchQuestions = async (keyParam = null) => {
+        setLoading(true);
 
-  // 전체 질문 데이터
-  const allQuestions = Array(25).fill(null).map((_, i) => ({
-    id: i + 1,
-    title: `Q${i + 1}: useEffect 의존성 배열 관련 질문입니다.`,
-    content: 'useEffect의 의존성 배열을 비워두면 어떤 경우에 문제가 발생할 수 있나요?',
-    author: `학생${i + 1}`,
-    createAt: '2024-03-25',
-    isAnswered: Math.random() > 0.5,
-    comments: Math.floor(Math.random() * 5)
-  }));
+        try {
+            const keyParamQuery = keyParam
+                ? `&lastEvaluatedKey=${encodeURIComponent(JSON.stringify(keyParam))}`
+                : "";
+            const response = await axiosInstance.get(
+                `board/v1/courses/${courseId}/qna?limit=${limit}${keyParamQuery}`);
 
-  // 필터링 및 정렬 적용
-  const filteredQuestions = allQuestions.filter(q => {
-    if (filter === 'answered') return q.isAnswered;
-    if (filter === 'waiting') return !q.isAnswered;
-    return true;
-  });
+            if (response.data) {
+                const { items, totalCount, lastEvaluatedKey } = response.data;
+                setTotalPages(Math.ceil(totalCount / limit));
+                setQuestions(items);
+                setLastEvaluatedKeys((prevKeys) => {
+                    const updatedKeys = [...prevKeys];
+                    updatedKeys[currentPage - 1] = lastEvaluatedKey;
+                    return updatedKeys;
+                });
+            }
+        } catch (error) {
+            console.error("Error fetching questions:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-  const sortedQuestions = [...filteredQuestions].sort((a, b) => {
-    if (sort === 'latest') return b.id - a.id;
-    return b.comments - a.comments;
-  });
+    useEffect(() => {
+        fetchQuestions(null);
+    }, [filter]);
 
-  // 현재 페이지의 질문만 표시
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentQuestions = sortedQuestions.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(sortedQuestions.length / itemsPerPage);
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
 
-  return (
-    <div className="space-y-6">
-      <h1 className="text-lg font-bold mb-4">질문게시판</h1>
-      <div className="flex justify-between items-center">
-        <div className="flex space-x-4">
-          <select
-            className="px-3 py-2 border rounded"
-            value={filter}
-            onChange={(e) => {
-              setFilter(e.target.value);
-              setCurrentPage(1); // 필터 변경 시 첫 페이지로
-            }}
-          >
-            <option value="all">전체 보기</option>
-            <option value="answered">답변 완료</option>
-            <option value="waiting">답변 대기중</option>
-          </select>
-          <select
-            className="px-3 py-2 border rounded"
-            value={sort}
-            onChange={(e) => {
-              setSort(e.target.value);
-              setCurrentPage(1); // 정렬 변경 시 첫 페이지로
-            }}
-          >
-            <option value="latest">최신순</option>
-            <option value="comments">답변순</option>
-          </select>
-        </div>
-        <NavLink
-          to={`/course/${courseId}/qna/write`}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-          질문하기
-        </NavLink>
-      </div>
+        const keyParam = lastEvaluatedKeys[page - 2] || null;
+        fetchQuestions(keyParam);
+    };
 
-      <div className="space-y-2">
-        {currentQuestions.map(question => (
-          <div key={question.id} className="bg-white rounded-lg shadow-sm p-4">
-            <NavLink to={`/course/${courseId}/qna/${question.id}`}>
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="font-medium">{question.title}</h3>
-                <span className={`px-2 py-1 text-sm rounded ${
-                  question.isAnswered
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-yellow-100 text-yellow-800'
-                }`}>
-                  {question.isAnswered ? '답변 완료' : '답변 대기중'}
-                </span>
-              </div>
-              <div className="flex justify-between items-center text-sm text-gray-500">
+    const filteredQuestions = questions.filter((q) => {
+        if (filter === "answered") return q.institutionComment > 0;
+        if (filter === "notAnswered") return q.institutionComment === 0;
+        return true;
+    });
+
+
+    return (
+        <div className="space-y-6">
+            <h1 className="text-lg font-bold mb-4">질문게시판</h1>
+            <div className="flex justify-between items-center">
                 <div className="flex space-x-4">
-                  <div className="flex items-center gap-1">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                    </svg>
-                    <span>{question.author}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
-                    <span>{question.createAt}</span>
-                  </div>
-                </div>
-              </div>
-            </NavLink>
-          </div>
-        ))}
-      </div>
+                    <select
+                        className="px-3 py-2 border rounded"
+                        value={filter}
+                        onChange={(e) => {
+                            setFilter(e.target.value);
+                            setCurrentPage(1); // 필터 변경 시 페이지 초기화
+                            fetchQuestions(null); // 새로운 필터로 데이터 새로 가져오기
+                        }}
+                    >
+                        <option value="all">전체 보기</option>
+                        <option value="answered">답변 완료</option>
+                        <option value="notAnswered">답변 대기중</option>
+                    </select>
 
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-      />
-    </div>
-  );
+                </div>
+                <NavLink
+                    to={`/course/${courseId}/qna/write`}
+                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                >
+                    질문하기
+                </NavLink>
+            </div>
+
+            <div className="space-y-2">
+                {filteredQuestions.map((question) => (
+                    <div key={question.id} className="bg-white rounded-lg shadow-sm p-4">
+                        <NavLink to={`/course/${courseId}/qna/${question.id}`}>
+                            <div className="flex justify-between items-start mb-2">
+                                <h3 className="font-medium">
+                                    {question.title.length > 20 ? `${question.title.slice(0, 20)}...` : question.title}
+                                </h3>
+                                <span
+                                    className={`px-2 py-1 text-sm rounded ${
+                                        question.institutionComment > 0
+                                            ? "bg-green-100 text-green-800"
+                                            : "bg-yellow-100 text-yellow-800"
+                                    }`}
+                                >
+                                    {question.institutionComment > 0 ? "답변 완료" : "답변 대기중"}
+                                </span>
+                            </div>
+                            <div className="flex justify-between items-center text-sm text-gray-500">
+                                <div className="flex space-x-4">
+                                    <span>{question.userName}</span>
+                                    <span>{question.createdAt === question.updatedAt
+                                        ? new Date(question.updatedAt).toISOString().split('T')[0]
+                                        : `${new Date(question.updatedAt).toISOString().split('T')[0]} (수정됨)`}</span>
+                                </div>
+                            </div>
+                        </NavLink>
+                    </div>
+                ))}
+            </div>
+
+            {loading && <p>로딩 중...</p>}
+
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+            />
+        </div>
+    );
 };
+
 export default QnABoard;

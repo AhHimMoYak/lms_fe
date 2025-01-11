@@ -8,7 +8,7 @@ function BoardPost() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const {data, fetchData} = useAxios();
-    const {data:courseData, fetchData:courseProvideFetchData} = useAxios();
+    const {data:courseData, fetchData:courseFetchData} = useAxios();
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
@@ -20,14 +20,14 @@ function BoardPost() {
             type:type,
             title: title,
             content: content,
-            course:  courseData.title
+            course:  courseData.title,
         };
-        fetchData(`https://api.ahimmoyak.click/board/v1/course`, "POST", requestDTO);
+        fetchData(`https://api.ahimmoyak.click/board/v1/courses`, "POST", requestDTO);
     };
     useEffect(() => {
-        courseProvideFetchData(`/course/${courseId}/detail`,"GET");
+        courseFetchData(`http://localhost:8080/api/v1/courses/${courseId}/details`,"GET");
     }, []);
-console.log(courseData);
+
     useEffect(() => {
         if (data) {
             alert("글 작성 성공!");

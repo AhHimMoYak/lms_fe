@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 const EmployeeList = () => {
 
     const navigate = useNavigate();
-    const {data, err, fetchData} = useAxios();
+    const {data, fetchData} = useAxios();
 
     const [searchTerm, setSearchTerm] = useState("");
     const [filterEmployees, setFilterEmployees] = useState([]);
@@ -17,7 +17,7 @@ const EmployeeList = () => {
     const [sort, setSort] = useState({key: '', direction: ''});
 
     useEffect(() => {
-        fetchData("/company/employees", "GET");
+        fetchData("http://localhost:8083/api/v1/companies/employees", "GET");
     }, []);
 
     useEffect(() => {

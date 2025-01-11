@@ -17,15 +17,48 @@ const RegisterPage = () => {
     agreeToTerms: false
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({
+    id:'',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    name: '',
+    phone: '',
+    birthdate: '',
+    gender: '',
+    agreeToTerms: false
+  });
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // 여기에 회원가입 로직 구현
-    console.log('Register attempt:', formData);
-    navigate(`/email`)
+
+    if (formData.password !== formData.confirmPassword) {
+      setErrors({...errors, confirmPassword: '비밀번호가 일치하지 않습니다'})
+      return;
+    }
+
+    try {
+      const response = await axios.post(`${API_URL}/signup`, {
+        username,
+        email,
+        password,
+        birthdate,
+        gender,
+        name,
+        phone_number,
+      });
+
+      console.log(response);
+      if (response.status === 200) {
+        navigate(`/email`)
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      alert("회원 가입 오류");
+    }
   };
 
   return (

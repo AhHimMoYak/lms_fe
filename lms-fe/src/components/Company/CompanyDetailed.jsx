@@ -7,10 +7,10 @@ import {useNavigate} from "react-router-dom";
 const CompanyDetailed = () => {
 
     const navigate = useNavigate();
-    const {data, err, fetchData} = useAxios();
+    const {data, fetchData} = useAxios();
 
     useEffect(() => {
-        fetchData('/company/info', "GET")
+        fetchData('http://localhost:8083/api/v1/companies/info', "GET")
     }, []);
 
     const handleUpdate = (name) => {
